@@ -47,6 +47,7 @@ test("mastery system covers every lesson and capstone", async () => {
   assert.match(app, /Reset course progress/);
   assert.match(app, /lesson\.quiz\.options/);
   assert.match(app, /lesson\.quiz\.explanation/);
-  assert.match(app, /Mark as understood/);
+  assert.match(app, /Record mastery/);
+  assert.match(app, /quizPassed/);
   for (const capstone of ["gpt2-from-scratch", "llama3-case-study", "tulu3-case-study"]) assert.match(app, new RegExp(`"${capstone}"`));
 });

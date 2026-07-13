@@ -149,7 +149,7 @@ function HomeView({ completed, nextLesson, openLesson }: { completed: number; ne
 
     <section className="learning-promise">
       <div><span className="big-stat">28</span><span>connected lessons</span></div>
-      <div><span className="big-stat">12</span><span>hands-on labs</span></div>
+      <div><span className="big-stat">18</span><span>hands-on labs</span></div>
       <div><span className="big-stat">2×</span><span>depth in every topic</span></div>
       <div className="promise-copy"><Icon name="map" /><p><strong>Built for the curious beginner.</strong> Plain language first. Mathematics, trade-offs, and implementation details when they become useful.</p></div>
     </section>
@@ -162,6 +162,7 @@ function LessonView({ lesson, progress, setProgress, openLesson }: { lesson: Les
   const previous = lessons[index - 1];
   const next = lessons[index + 1];
   const selectedAnswer = progress.quizAnswers[lesson.id];
+  const quizPassed = selectedAnswer === lesson.quiz.answer;
   const isComplete = progress.completed.includes(lesson.id);
   const track = trackFor(lesson.track);
 
@@ -194,6 +195,8 @@ function LessonView({ lesson, progress, setProgress, openLesson }: { lesson: Les
       <aside className="misconception panel"><span className="stamp">MYTH → REALITY</span><p>{lesson.misconception}</p></aside>
     </section>
 
+    {lesson.sources && <aside className="source-notes"><span className="eyebrow">Primary sources</span><div>{lesson.sources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label}<span>↗</span></a>)}</div><p>Named case-study claims are versioned. Open the source and map each claim to its release date before generalizing it.</p></aside>}
+
     {lesson.lab && <LessonLab type={lesson.lab} lesson={lesson} />}
 
     {(["gpt2-from-scratch", "llama3-case-study", "tulu3-case-study"] as string[]).includes(lesson.id) && <SynthesisMap lesson={lesson} openLesson={openLesson} />}
@@ -210,8 +213,8 @@ function LessonView({ lesson, progress, setProgress, openLesson }: { lesson: Les
     </section>
 
     <section className="lesson-complete">
-      <div><span className="eyebrow">Field note {lesson.number} of {lessons.length}</span><h2>{isComplete ? "Filed in your field guide." : "Ready to mark this lesson complete?"}</h2></div>
-      <button className={isComplete ? "completed-button" : "primary-button"} onClick={toggleComplete}>{isComplete ? <><Icon name="check" /> Completed</> : <>Mark as understood <span>✓</span></>}</button>
+      <div><span className="eyebrow">Field note {lesson.number} of {lessons.length}</span><h2>{isComplete ? "Filed in your field guide." : quizPassed ? "Knowledge check passed." : "Pass the check to record mastery."}</h2></div>
+      <button disabled={!isComplete && !quizPassed} className={isComplete ? "completed-button" : "primary-button"} onClick={toggleComplete}>{isComplete ? <><Icon name="check" /> Mastered</> : quizPassed ? <>Record mastery <span>✓</span></> : <>Mastery locked <span>○</span></>}</button>
     </section>
     <nav className="lesson-pagination" aria-label="Lesson pagination">
       {previous ? <button onClick={() => openLesson(previous.id)}><span>← Previous</span><strong>{previous.title}</strong></button> : <span />}

@@ -2,7 +2,7 @@
   "meta": {
     "objective": "Create a self-contained, highly engaging website that teaches every component of the supplied LLM curriculum from scratch, with simple and deep explanations, interactive components, and independent grading of every component to at least 85% effectiveness and accuracy.",
     "createdAt": "2026-07-13T06:52:20Z",
-    "updatedAt": "2026-07-13T07:07:17Z",
+    "updatedAt": "2026-07-13T07:08:51Z",
     "runStatus": "in_progress"
   },
   "tasks": [
@@ -235,23 +235,68 @@
         "The GPT-2, LLaMA 3, and Tulu 3 case studies synthesize earlier concepts"
       ],
       "details": "Implement quiz interactions, mastery feedback, completion controls, persisted progress, and capstone synthesis links.",
-      "status": "todo",
-      "attempt": 0,
+      "status": "done",
+      "attempt": 1,
       "runMajorChecks": true,
       "priority": 4,
       "blockerReason": "",
-      "nextTaskId": "",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "nextTaskId": "T005",
+      "changedFiles": [
+        "app/course-app.tsx",
+        "app/globals.css",
+        "tests/course-data.test.mjs"
+      ],
+      "validationCommands": [
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Build and rendered tests passed"
+        },
+        {
+          "command": "node --test tests/course-data.test.mjs",
+          "status": "pass",
+          "evidence": "4 curriculum tests passed"
+        },
+        {
+          "command": "npm run lint",
+          "status": "pass",
+          "evidence": "No lint errors"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "Feedback-rich check per lesson",
+          "status": "pass",
+          "details": "28 quizzes with immediate correctness and conceptual explanations"
+        },
+        {
+          "criterion": "Persistent resettable progress",
+          "status": "pass",
+          "details": "Local progress, track counters, overall percentage, and reset confirmation"
+        },
+        {
+          "criterion": "Visible mastery",
+          "status": "pass",
+          "details": "Track and overall completion displayed"
+        },
+        {
+          "criterion": "Case-study synthesis",
+          "status": "pass",
+          "details": "GPT-2, Llama 3, and Tulu 3 maps link prerequisite concepts"
+        }
+      ],
+      "attemptedAt": "2026-07-13T07:08:51Z",
+      "completedAt": "2026-07-13T07:08:51Z",
+      "evidence": [
+        "6 tests and lint passed"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "0ed74ed4298c2ad0f0a73b1da2c65006cbf75b55",
+        "message": "Task T004: Assessment and mastery system"
       }
     },
     {
