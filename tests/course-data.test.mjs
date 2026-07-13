@@ -6,11 +6,11 @@ const source = await readFile(new URL("../app/course-data.ts", import.meta.url),
 
 const expectedTopics = [
   "Introduction", "Tokenization", "The Embedding Layer", "Positional Encoding", "Attention",
-  "Layers of Understanding", "Learning to Predict", "Instruction Tuning and RLHF", "GPT-2 from Scratch",
+  "Layers of Understanding", "Learning to Predict", "Instruction Tuning and RLHF", "GPT-2 → nanochat: Build the Stack",
   "Overview", "Training Objectives and Architectural Details", "Scaling Laws and Optimization",
   "Training Data Engineering", "Training Infrastructure and Systems", "Advanced Pretraining Objectives",
-  "Evaluation During Pretraining", "Case Study — LLaMA 3", "Supervised Fine-Tuning",
-  "Preference Optimization", "Tools and Safety Tuning", "Case Study on Tulu 3", "Distillation", "LoRA",
+  "Evaluation During Pretraining", "Case Study — OLMo 3 Model Flow", "Supervised Fine-Tuning",
+  "Preference Optimization", "Tools and Safety Tuning", "Case Study — Tülu 3 → DR Tulu", "Distillation", "LoRA",
   "Mixture of Experts (MoE)", "Optimizers", "RL Fundamentals", "RLHF"
 ];
 
@@ -50,4 +50,5 @@ test("mastery system covers every lesson and capstone", async () => {
   assert.match(app, /Record mastery/);
   assert.match(app, /quizPassed/);
   for (const capstone of ["gpt2-from-scratch", "llama3-case-study", "tulu3-case-study"]) assert.match(app, new RegExp(`"${capstone}"`));
+  assert.equal((source.match(/capstone: \{ question:/g) ?? []).length, 3);
 });

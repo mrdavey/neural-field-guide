@@ -1,7 +1,8 @@
-# Independent curriculum grading report — second pass
+# Independent curriculum grading report — current capstone update
 
-Reviewed after revision: `app/course-data.ts`, `app/lesson-labs.tsx`, `app/course-app.tsx`, and `app/globals.css`  
-Scope: all 28 lessons, the 18 distinct lab designs used across 24 lesson placements, case-study sources/synthesis maps, quiz behavior, and mastery tracking.  
+Current pass: Lessons 9, 17, and 22 re-graded after major capstone revisions in `app/course-data.ts`, `app/course-app.tsx`, and `app/globals.css`; the other 25 scores are preserved from the prior full pass.
+
+Scope includes the capstone workbench, source links, relevant labs, quizzes, and mastery tracking.
 Threshold: **85.0 overall**; a score below 85.0 is not rounded up.
 
 ## Rubric and calculation
@@ -24,7 +25,7 @@ Every overall score is calculated as:
 | 6 | Layers of Understanding | 92 | 90 | 90 | 93 | **91.1** | Pass |
 | 7 | Learning to Predict | 91 | 87 | 88 | 90 | **89.1** | Pass |
 | 8 | Instruction Tuning and RLHF | 90 | 85 | 84 | 91 | **87.5** | Pass |
-| 9 | GPT-2 from Scratch | 94 | 91 | 92 | 91 | **92.4** | Pass |
+| 9 | GPT-2 → nanochat: Build the Stack | 96 | 94 | 93 | 96 | **94.9** | Pass |
 | 10 | Pre-Training: Overview | 91 | 89 | 91 | 90 | **90.2** | Pass |
 | 11 | Training Objectives and Architectural Details | 92 | 89 | 90 | 90 | **90.5** | Pass |
 | 12 | Scaling Laws and Optimization | 90 | 87 | 92 | 90 | **89.3** | Pass |
@@ -32,12 +33,12 @@ Every overall score is calculated as:
 | 14 | Training Infrastructure and Systems | 93 | 89 | 91 | 94 | **91.4** | Pass |
 | 15 | Advanced Pretraining Objectives | 92 | 89 | 91 | 93 | **90.9** | Pass |
 | 16 | Evaluation During Pretraining | 93 | 90 | 90 | 94 | **91.6** | Pass |
-| 17 | Case Study — LLaMA 3 | 94 | 88 | 84 | 92 | **90.2** | Pass |
+| 17 | Case Study — OLMo 3 Model Flow | 96 | 94 | 92 | 95 | **94.6** | Pass |
 | 18 | Post-Training: Overview | 90 | 84 | 76 | 89 | **85.7** | Pass |
 | 19 | Supervised Fine-Tuning | 91 | 85 | 76 | 88 | **86.4** | Pass |
 | 20 | Preference Optimization | 92 | 87 | 90 | 91 | **89.9** | Pass |
 | 21 | Tools and Safety Tuning | 94 | 88 | 78 | 94 | **89.5** | Pass |
-| 22 | Case Study on Tulu 3 | 93 | 88 | 85 | 94 | **90.2** | Pass |
+| 22 | Case Study — Tülu 3 → DR Tulu | 96 | 94 | 91 | 96 | **94.6** | Pass |
 | 23 | Distillation | 90 | 86 | 89 | 89 | **88.4** | Pass |
 | 24 | LoRA | 94 | 90 | 92 | 92 | **92.1** | Pass |
 | 25 | Mixture of Experts (MoE) | 92 | 88 | 92 | 93 | **90.7** | Pass |
@@ -46,7 +47,7 @@ Every overall score is calculated as:
 | 28 | RLHF | 91 | 86 | 80 | 91 | **87.6** | Pass |
 
 Minimum: **85.7**, Post-Training Overview.  
-Mean overall: **89.8**.  
+Mean overall: **90.2**.
 Lessons below 85: **none (0 of 28)**.
 
 ## Individual audit notes
@@ -83,9 +84,9 @@ Excellent compact treatment of teacher forcing, per-token cross-entropy, backpro
 
 Accurate introductory bridge through SFT, reward-model/PPO RLHF, DPO, reference constraints, proxy failure, and annotator assumptions. It overlaps later lessons by design. The preference comparison supplies relevant active engagement and the alignment misconception is strong.
 
-### 9. GPT-2 from Scratch — 92.4
+### 9. GPT-2 → nanochat: Build the Stack — 94.9
 
-The title is now supported by an explicit forward path, final LayerNorm, shifted-label construction, minimal training-loop pseudocode, train/eval distinction, KV-cache note, exact tensor arithmetic, shape-tracing lab, and stronger quiz. It accurately distinguishes GPT-2’s learned absolute positions, pre-norm blocks, GELU MLPs, and causal decoder structure from generic generation.
+This is now a genuine architecture capstone rather than only a component summary. It precisely separates GPT-2’s learned absolute positions, pre-LayerNorm, GELU blocks, and typically tied vocabulary head from current nanochat’s RoPE, RMSNorm/QK norm, ReLU², untied weights, and GQA support. It correctly identifies the causal decoder and `[B,T]→[B,T,d]→[B,T,V]` contract—not every internal component—as the stable lineage. The nanochat source supports the end-to-end stages, compute-family depth dial, March 2026 1.65-hour 8×H100 leaderboard result, DCLM CORE criterion, and roughly 168-hour reference entry. The GPT shape lab plus design brief and answer checklist create strong guided synthesis. The workbench does not capture or grade a written learner response, so active-learning credit is high rather than maximal.
 
 ### 10. Pre-Training Overview — 90.2
 
@@ -115,9 +116,9 @@ The previous taxonomy problem is resolved. The lesson now identifies inputs, tar
 
 The new NLL→perplexity calculation, healthy/overfit/spike traces, diagnosis interaction, contamination caveat, confidence-interval warning, and intrinsic/capability/systems-health distinction turn the dashboard list into diagnostic teaching. For maximal rigor the overfit trace could draw train and validation curves together, but the text explicitly states the assumed falling train loss.
 
-### 17. Case Study — LLaMA 3 — 90.2
+### 17. Case Study — OLMo 3 Model Flow — 94.6
 
-The release-boundary issue is fixed. April 2024 Llama 3 8B/70B facts are explicitly separated from July 2024 Llama 3.1’s 405B/128K-context herd. The 32-query/8-KV-head calculation correctly demonstrates a 4× reduction in cached K/V elements for those projections. Primary Meta sources are linked and the quiz tests version attribution. The UI title retains the older stylization “LLaMA,” while the content consistently uses Meta’s “Llama”; changing the title would improve naming consistency but not technical accuracy.
+This is an excellent match for the pre-training track because the cited system exposes data, staged checkpoints, training code, evaluations, and lineage. Ai2’s primary material supports the 5.9T-token Dolma 3 Mix, 100B-token Dolmino stage, approximately 50B-token Longmino stage, 7B/32B families, up-to-1,024-H100 run, and 7.7K tokens/device/second 7B throughput claim. The scenario correctly asks learners to localize a deficit to a stage, select intrinsic/capability/systems metrics, and design a controlled ablation. The timeline, pipeline lab, source links, misconception, and evidence checklist make this the strongest case-study pedagogy in the course.
 
 ### 18. Post-Training Overview — 85.7
 
@@ -135,9 +136,9 @@ Accurate Bradley–Terry reward-model framing, PPO/KL pipeline, DPO policy/refer
 
 Excellent defense-in-depth lesson: schemas, action choice, argument validation, observations, safe completion, over-/under-refusal, prompt injection, excessive agency, exfiltration, side effects, and runtime permissions are all correctly distinguished. It could benefit from a schema/authorization simulator, but it already teaches the essential security boundary accurately.
 
-### 22. Case Study on Tulu 3 — 90.2
+### 22. Case Study — Tülu 3 → DR Tulu — 94.6
 
-The previous omissions are resolved. The lesson now names RLVR, contrasts a programmatic verifier with a learned preference reward model, lays out curation → SFT → on-policy/length-normalized DPO → RLVR, explains length bias, and demonstrates both a valid checker and a false-positive verifier. Primary Ai2 sources are linked. The generic preference lab is less case-specific than the prose, but the case now has enough concrete evidence and active recall to pass comfortably.
+The capstone accurately connects Tülu 3’s curation/SFT/off- and on-policy DPO/RLVR recipe to DR Tulu’s Qwen3-based 8B model, information-seeking SFT, online GRPO-style RLER, evolving positive/negative rubrics, citation rewards, and MCP-mediated search/browsing stack. Ai2’s primary pages support the 405B scaling claim, long- and short-form improvements, and remaining HealthBench headroom. The lesson now correctly classifies citation grounding, cost, and evaluator drift as training/evaluation concerns while separating external runtime permissions as a security boundary the learned policy cannot replace. The exact-verifier versus open-ended-rubric example is pedagogically excellent, and the design brief forces the learner to match reward source, tools, runtime controls, cost, and evaluation to the task. The generic preference lab remains less specific than the new workbench, but the combined activity is strong.
 
 ### 23. Distillation — 88.4
 
@@ -171,14 +172,14 @@ Accurate classic SFT → comparisons → reward model → PPO pipeline, with cli
 | Positional lab changed token and position together | **Resolved** | A fixed token is moved while content remains constant. |
 | RL lab conflated reward and advantage | **Resolved** | Return and baseline are separate; advantage and selected-action logit update are explicit. |
 | Advanced-objective stages/losses were conflated | **Resolved** | CE, contrastive, routing, KL, and outcome-reward signals are assigned explicit roles/stages. |
-| Llama 3 and 3.1 facts were mixed | **Resolved** | April and July 2024 releases are separated and sourced. |
+| Earlier Llama 3/3.1 case-study facts were mixed | **Superseded** | The capstone now uses the fully inspectable OLMo 3 model flow instead. |
 | Introduction called the next token inherently useful | **Resolved** | Likelihood prediction is separated from usefulness shaping. |
 | Toy labs looked like empirical model outputs | **Substantially resolved** | Attention, position, scaling, MoE, and RL carry explicit toy/illustrative labels. The tokenizer’s instruction also says “toy.” |
 | Masked example claimed right context without a right-hand token | **Resolved** | Content and lab now use `Birds [MASK] long distances` with target `fly`. |
 
-## Outstanding factual issues
+## Outstanding factual/pedagogical issues
 
-**None found in this grading pass.** The last masked-context inconsistency is resolved in both the lesson content and shared objectives lab.
+**None found in the current pass.** The GPT-2/nanochat architecture boundary and learned-policy/runtime-permission boundary are both explicit and accurate.
 
 ## Course-wide assessment
 
@@ -188,9 +189,12 @@ Accurate classic SFT → comparisons → reward model → PPO pipeline, with cli
 - The consistent two-depth explanation, mental model, key ideas, worked example, misconception correction, lab where applicable, delayed quiz feedback, and gated mastery now form a coherent pedagogical loop.
 - Named case studies now expose primary sources and version-aware claims. Their synthesis maps remain navigation/review tools rather than graded synthesis exercises, but the revised case-study content itself is sufficient.
 
-## Primary sources used for case-study verification
+## Primary sources used for capstone verification
 
-- Meta, “Introducing Meta Llama 3”: https://ai.meta.com/blog/meta-llama-3/
-- Meta, “The Llama 3 Herd of Models”: https://ai.meta.com/research/publications/the-llama-3-herd-of-models/
+- Karpathy, nanochat repository and time-to-GPT-2 leaderboard: https://github.com/karpathy/nanochat
+- Karpathy, build-nanogpt: https://github.com/karpathy/build-nanogpt
+- Ai2, “Olmo 3: Charting a path through the model flow”: https://allenai.org/blog/olmo3
+- Ai2, Dolma 3 data recipes: https://github.com/allenai/dolma3
 - Ai2, Tülu project: https://allenai.org/tulu
-- Ai2, “Tülu 3: The next era in open post-training”: https://allenai.org/blog/tulu-3-technical
+- Ai2, “Scaling the Tülu 3 post-training recipes”: https://allenai.org/blog/tulu-3-405b
+- Ai2, “DR Tulu: An open, end-to-end training recipe for long-form deep research”: https://allenai.org/blog/dr-tulu

@@ -225,10 +225,18 @@ function LessonView({ lesson, progress, setProgress, openLesson }: { lesson: Les
 
 function SynthesisMap({ lesson, openLesson }: { lesson: Lesson; openLesson: (id: string) => void }) {
   const maps: Record<string, { title: string; intro: string; links: string[] }> = {
-    "gpt2-from-scratch": { title: "Assemble the architecture", intro: "GPT-2 is where the individual mechanisms become one executable forward pass.", links: ["tokenization", "embedding-layer", "positional-encoding", "attention", "learning-to-predict"] },
-    "llama3-case-study": { title: "Trace a pre-training program", intro: "Llama 3 connects model design to the data, compute, and evaluation system around it.", links: ["objectives-details", "scaling-laws", "data-engineering", "infrastructure", "pretraining-evaluation"] },
-    "tulu3-case-study": { title: "Trace a post-training recipe", intro: "Tülu 3 connects demonstrations, preferences, tool/safety behavior, and measurable outcomes.", links: ["sft", "preference-optimization", "tools-safety", "rl-fundamentals", "rlhf"] }
+    "gpt2-from-scratch": { title: "From diagram to running system", intro: "GPT-2 keeps the machinery legible; nanochat shows what seven years of systems progress changes around it.", links: ["tokenization", "embedding-layer", "positional-encoding", "attention", "learning-to-predict"] },
+    "llama3-case-study": { title: "Audit an open pre-training flow", intro: "OLMo 3 connects data mixtures, objectives, distributed training, checkpoints, and evaluations with inspectable evidence.", links: ["objectives-details", "scaling-laws", "data-engineering", "infrastructure", "pretraining-evaluation"] },
+    "tulu3-case-study": { title: "Design the post-training stack", intro: "Tülu 3 establishes the general assistant recipe; DR Tulu extends it into tools, trajectories, and open-ended research rewards.", links: ["sft", "preference-optimization", "tools-safety", "rl-fundamentals", "rlhf"] }
   };
   const map = maps[lesson.id];
-  return <section className="synthesis-map"><div><span className="eyebrow">Capstone synthesis</span><h2>{map.title}</h2><p>{map.intro}</p></div><div className="synthesis-links">{map.links.map((id, index) => <button key={id} onClick={() => openLesson(id)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{lessonById[id].title}</strong><small>Review concept ↗</small></button>)}</div></section>;
+  return <section className="synthesis-map">
+    <div className="synthesis-intro"><span className="eyebrow">Capstone synthesis</span><h2>{map.title}</h2><p>{map.intro}</p></div>
+    {lesson.capstone && <div className="capstone-workbench">
+      <div className="capstone-question"><span>YOUR DESIGN BRIEF</span><strong>{lesson.capstone.question}</strong></div>
+      <div className="capstone-timeline">{lesson.capstone.timeline.map((item, index) => <div key={item.stage}><span>{String(index + 1).padStart(2, "0")}</span><h3>{item.stage}</h3><p>{item.evidence}</p></div>)}</div>
+      <div className="decision-checklist"><span className="eyebrow">A strong answer must</span>{lesson.capstone.decisions.map((decision) => <p key={decision}><span>✓</span>{decision}</p>)}</div>
+    </div>}
+    <div className="synthesis-review"><span className="eyebrow">Review the evidence chain</span><div className="synthesis-links">{map.links.map((id, index) => <button key={id} onClick={() => openLesson(id)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{lessonById[id].title}</strong><small>Review concept ↗</small></button>)}</div></div>
+  </section>;
 }
