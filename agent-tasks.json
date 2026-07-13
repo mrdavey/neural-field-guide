@@ -2,7 +2,7 @@
   "meta": {
     "objective": "Create a self-contained, highly engaging website that teaches every component of the supplied LLM curriculum from scratch, with simple and deep explanations, interactive components, and independent grading of every component to at least 85% effectiveness and accuracy.",
     "createdAt": "2026-07-13T06:52:20Z",
-    "updatedAt": "2026-07-13T06:58:50Z",
+    "updatedAt": "2026-07-13T07:03:26Z",
     "runStatus": "in_progress"
   },
   "tasks": [
@@ -88,23 +88,62 @@
         "Keyboard focus, contrast, reduced motion, semantic landmarks, and touch targets are supported"
       ],
       "details": "Replace the starter with the finished course shell in app/page.tsx and app/globals.css; add client-side course navigation and local progress persistence.",
-      "status": "todo",
-      "attempt": 0,
+      "status": "done",
+      "attempt": 1,
       "runMajorChecks": true,
       "priority": 2,
       "blockerReason": "",
-      "nextTaskId": "",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "nextTaskId": "T003",
+      "changedFiles": [
+        "app/course-app.tsx",
+        "app/page.tsx",
+        "app/globals.css",
+        "app/lesson-labs.tsx",
+        "tests/rendered-html.test.mjs",
+        "package.json",
+        "package-lock.json"
+      ],
+      "validationCommands": [
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Production build and 2 rendered-page tests passed"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "Engaging landing and course entry",
+          "status": "pass",
+          "details": "Narrative hero, track map, and resume action implemented"
+        },
+        {
+          "criterion": "Responsive searchable navigation",
+          "status": "pass",
+          "details": "Desktop sidebar and mobile course-map drawer implemented"
+        },
+        {
+          "criterion": "Progressive disclosure",
+          "status": "pass",
+          "details": "Plain English and Under the hood explanation modes"
+        },
+        {
+          "criterion": "Accessible interaction",
+          "status": "pass",
+          "details": "Semantic landmarks, focus styles, reduced motion, and responsive touch controls included"
+        }
+      ],
+      "attemptedAt": "2026-07-13T07:03:26Z",
+      "completedAt": "2026-07-13T07:03:26Z",
+      "evidence": [
+        "npm test: pass"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "129f8f80fa0a852144129e59b64587fafa784a74",
+        "message": "Task T002: Immersive course interface"
       }
     },
     {

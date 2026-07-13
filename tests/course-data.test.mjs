@@ -31,3 +31,12 @@ test("every lesson follows the complete teaching schema", () => {
   assert.equal((source.match(/quiz: \{ question:/g) ?? []).length, 28);
   assert.equal((source.match(/explanation: "/g) ?? []).length, 28);
 });
+
+test("the difficult concepts are wired to interactive labs", async () => {
+  const labs = await readFile(new URL("../app/lesson-labs.tsx", import.meta.url), "utf8");
+  for (const type of ["tokens", "vectors", "positions", "attention", "prediction", "scaling", "optimizer", "preference", "lora", "moe", "distillation", "rl"]) {
+    assert.ok(source.includes(`lab: "${type}"`), `Missing ${type} lesson wiring`);
+    assert.ok(labs.includes(`${type}: { title:`), `Missing ${type} teaching metadata`);
+  }
+  assert.doesNotMatch(labs, /instruments are being calibrated|lab-placeholder/);
+});

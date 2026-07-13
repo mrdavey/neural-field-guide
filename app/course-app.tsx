@@ -28,11 +28,14 @@ export function CourseApp() {
   const [mobileNav, setMobileNav] = useState(false);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) setProgress({ ...emptyProgress, ...JSON.parse(saved) });
-    } catch { /* Local progress is optional. */ }
-    setReady(true);
+    const timer = window.setTimeout(() => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) setProgress({ ...emptyProgress, ...JSON.parse(saved) });
+      } catch { /* Local progress is optional. */ }
+      setReady(true);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -97,13 +100,13 @@ export function CourseApp() {
       </aside>
 
       <main className="main-stage">
-        {current ? <LessonView lesson={current} progress={progress} setProgress={setProgress} openLesson={openLesson} /> : <HomeView percent={percent} completed={completed} nextLesson={nextLesson} openLesson={openLesson} />}
+        {current ? <LessonView key={current.id} lesson={current} progress={progress} setProgress={setProgress} openLesson={openLesson} /> : <HomeView completed={completed} nextLesson={nextLesson} openLesson={openLesson} />}
       </main>
     </div>
   );
 }
 
-function HomeView({ percent, completed, nextLesson, openLesson }: { percent: number; completed: number; nextLesson: Lesson; openLesson: (id: string) => void }) {
+function HomeView({ completed, nextLesson, openLesson }: { completed: number; nextLesson: Lesson; openLesson: (id: string) => void }) {
   return <div className="home-view">
     <section className="hero">
       <div className="hero-copy">
@@ -155,8 +158,6 @@ function LessonView({ lesson, progress, setProgress, openLesson }: { lesson: Les
   const selectedAnswer = progress.quizAnswers[lesson.id];
   const isComplete = progress.completed.includes(lesson.id);
   const track = trackFor(lesson.track);
-
-  useEffect(() => setDepth("simple"), [lesson.id]);
 
   const answerQuiz = (answer: number) => setProgress((current) => ({ ...current, quizAnswers: { ...current.quizAnswers, [lesson.id]: answer } }));
   const toggleComplete = () => setProgress((current) => ({ ...current, completed: current.completed.includes(lesson.id) ? current.completed.filter((id) => id !== lesson.id) : [...current.completed, lesson.id] }));
