@@ -2,7 +2,7 @@
   "meta": {
     "objective": "Create a self-contained, highly engaging website that teaches every component of the supplied LLM curriculum from scratch, with simple and deep explanations, interactive components, and independent grading of every component to at least 85% effectiveness and accuracy.",
     "createdAt": "2026-07-13T06:52:20Z",
-    "updatedAt": "2026-07-13T06:52:20Z",
+    "updatedAt": "2026-07-13T06:58:50Z",
     "runStatus": "in_progress"
   },
   "tasks": [
@@ -18,23 +18,59 @@
         "The dependency-ordered learning path and course progress model are defined"
       ],
       "details": "Create the content model and course data in app/course-data.ts; initialize the site metadata and test coverage for curriculum completeness.",
-      "status": "todo",
-      "attempt": 0,
+      "status": "done",
+      "attempt": 1,
       "runMajorChecks": false,
       "priority": 1,
       "blockerReason": "",
-      "nextTaskId": "",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "nextTaskId": "T002",
+      "changedFiles": [
+        "app/course-data.ts",
+        "app/layout.tsx",
+        "tests/course-data.test.mjs",
+        "PLAN_LOG.md"
+      ],
+      "validationCommands": [
+        {
+          "command": "node --test tests/course-data.test.mjs",
+          "status": "pass",
+          "evidence": "2 passed"
+        },
+        {
+          "command": "npx tsc --noEmit",
+          "status": "skip",
+          "evidence": "Starter Cloudflare ambient types are supplied by the build runtime, not standalone tsc"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "All 28 topics represented",
+          "status": "pass",
+          "details": "Coverage test passed"
+        },
+        {
+          "criterion": "Complete teaching schema",
+          "status": "pass",
+          "details": "All 28 include simple/deep/mental model/key ideas/example/misconception/quiz"
+        },
+        {
+          "criterion": "Dependency path defined",
+          "status": "pass",
+          "details": "Prerequisite IDs and ordered lesson numbers included"
+        }
+      ],
+      "attemptedAt": "2026-07-13T06:58:50Z",
+      "completedAt": "2026-07-13T06:58:50Z",
+      "evidence": [
+        "tests/course-data.test.mjs: 2 passed"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "e41459ebe6ae04ee155174443bc8bd627c5101b1",
+        "message": "Task T001: Course architecture and curriculum model"
       }
     },
     {
