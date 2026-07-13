@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "objective": "Create a self-contained, highly engaging website that teaches every component of the supplied LLM curriculum from scratch, with simple and deep explanations, interactive components, and independent grading of every component to at least 85% effectiveness and accuracy.",
+    "createdAt": "2026-07-13T06:52:20Z",
+    "updatedAt": "2026-07-13T06:52:20Z",
+    "runStatus": "in_progress"
+  },
+  "tasks": [
+    {
+      "taskId": "T001",
+      "repo": "/Users/dt/Documents/LLMs from scratch",
+      "title": "Course architecture and curriculum model",
+      "objective": "Create the complete curriculum map, pedagogical structure, and reusable lesson schema for all 28 topics shown in the supplied curriculum screenshots.",
+      "dependsOn": [],
+      "acceptanceCriteria": [
+        "All 28 curriculum topics are represented exactly once and grouped into Architecture, Pre-Training, Post-Training, and Advanced tracks",
+        "Every topic has a simple explanation, deep explanation, key ideas, mental model, worked example, misconception, and knowledge check",
+        "The dependency-ordered learning path and course progress model are defined"
+      ],
+      "details": "Create the content model and course data in app/course-data.ts; initialize the site metadata and test coverage for curriculum completeness.",
+      "status": "todo",
+      "attempt": 0,
+      "runMajorChecks": false,
+      "priority": 1,
+      "blockerReason": "",
+      "nextTaskId": "",
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "",
+      "completedAt": "",
+      "evidence": [],
+      "ledgerRefs": [],
+      "blockers": [],
+      "commit": {
+        "sha": "",
+        "message": ""
+      }
+    },
+    {
+      "taskId": "T002",
+      "repo": "/Users/dt/Documents/LLMs from scratch",
+      "title": "Immersive course interface",
+      "objective": "Build a responsive, accessible course experience with a memorable visual system and low-friction navigation across all lessons.",
+      "dependsOn": [
+        "T001"
+      ],
+      "acceptanceCriteria": [
+        "Landing view clearly communicates the learning journey and lets learners enter the course",
+        "Desktop and mobile navigation support tracks, search, previous/next lesson movement, and progress",
+        "Lesson view progressively discloses simple and deep explanations without overwhelming beginners",
+        "Keyboard focus, contrast, reduced motion, semantic landmarks, and touch targets are supported"
+      ],
+      "details": "Replace the starter with the finished course shell in app/page.tsx and app/globals.css; add client-side course navigation and local progress persistence.",
+      "status": "todo",
+      "attempt": 0,
+      "runMajorChecks": true,
+      "priority": 2,
+      "blockerReason": "",
+      "nextTaskId": "",
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "",
+      "completedAt": "",
+      "evidence": [],
+      "ledgerRefs": [],
+      "blockers": [],
+      "commit": {
+        "sha": "",
+        "message": ""
+      }
+    },
+    {
+      "taskId": "T003",
+      "repo": "/Users/dt/Documents/LLMs from scratch",
+      "title": "Interactive learning laboratories",
+      "objective": "Add hands-on visual simulations that make the hardest LLM concepts manipulable and concrete.",
+      "dependsOn": [
+        "T002"
+      ],
+      "acceptanceCriteria": [
+        "Tokenization, embeddings, positional encoding, attention, next-token prediction, scaling, optimization, LoRA, MoE, distillation, and preference learning have relevant interactive demonstrations",
+        "Every lab explains what to change, what to observe, and why the result matters",
+        "Labs remain usable with keyboard controls and on narrow screens"
+      ],
+      "details": "Create reusable interactive lesson labs and connect each to the appropriate curriculum topics.",
+      "status": "todo",
+      "attempt": 0,
+      "runMajorChecks": true,
+      "priority": 3,
+      "blockerReason": "",
+      "nextTaskId": "",
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "",
+      "completedAt": "",
+      "evidence": [],
+      "ledgerRefs": [],
+      "blockers": [],
+      "commit": {
+        "sha": "",
+        "message": ""
+      }
+    },
+    {
+      "taskId": "T004",
+      "repo": "/Users/dt/Documents/LLMs from scratch",
+      "title": "Assessment and mastery system",
+      "objective": "Add active-recall quizzes, immediate explanatory feedback, lesson completion, and a capstone learning path.",
+      "dependsOn": [
+        "T003"
+      ],
+      "acceptanceCriteria": [
+        "Every lesson has a meaningful knowledge check with explanatory feedback",
+        "Progress persists locally and can be reset",
+        "Track and overall completion are visible",
+        "The GPT-2, LLaMA 3, and Tulu 3 case studies synthesize earlier concepts"
+      ],
+      "details": "Implement quiz interactions, mastery feedback, completion controls, persisted progress, and capstone synthesis links.",
+      "status": "todo",
+      "attempt": 0,
+      "runMajorChecks": true,
+      "priority": 4,
+      "blockerReason": "",
+      "nextTaskId": "",
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "",
+      "completedAt": "",
+      "evidence": [],
+      "ledgerRefs": [],
+      "blockers": [],
+      "commit": {
+        "sha": "",
+        "message": ""
+      }
+    },
+    {
+      "taskId": "T005",
+      "repo": "/Users/dt/Documents/LLMs from scratch",
+      "title": "Independent curriculum grading and iteration",
+      "objective": "Have a separate grading agent evaluate every curriculum topic for accuracy and teaching effectiveness, then revise until every topic scores at least 85%.",
+      "dependsOn": [
+        "T004"
+      ],
+      "acceptanceCriteria": [
+        "A grading report contains an accuracy score and teaching-effectiveness score for all 28 topics",
+        "Every topic achieves an overall score of at least 85% after revisions",
+        "All grader-identified high-impact gaps are addressed",
+        "Build, tests, and final objective verification pass"
+      ],
+      "details": "Run an independent grading agent against the course data and implementation, iterate on content and interactions, preserve grading evidence, and complete final build/validation.",
+      "status": "todo",
+      "attempt": 0,
+      "runMajorChecks": true,
+      "priority": 5,
+      "blockerReason": "",
+      "nextTaskId": "",
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "",
+      "completedAt": "",
+      "evidence": [],
+      "ledgerRefs": [],
+      "blockers": [],
+      "commit": {
+        "sha": "",
+        "message": ""
+      }
+    }
+  ]
+}
