@@ -2,8 +2,8 @@
   "meta": {
     "objective": "Create a self-contained, highly engaging website that teaches every component of the supplied LLM curriculum from scratch, with simple and deep explanations, interactive components, and independent grading of every component to at least 85% effectiveness and accuracy.",
     "createdAt": "2026-07-13T06:52:20Z",
-    "updatedAt": "2026-07-13T07:08:51Z",
-    "runStatus": "in_progress"
+    "updatedAt": "2026-07-13T07:25:41Z",
+    "runStatus": "complete"
   },
   "tasks": [
     {
@@ -314,23 +314,71 @@
         "Build, tests, and final objective verification pass"
       ],
       "details": "Run an independent grading agent against the course data and implementation, iterate on content and interactions, preserve grading evidence, and complete final build/validation.",
-      "status": "todo",
-      "attempt": 0,
+      "status": "done",
+      "attempt": 1,
       "runMajorChecks": true,
       "priority": 5,
       "blockerReason": "",
       "nextTaskId": "",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "changedFiles": [
+        "app/course-data.ts",
+        "app/lesson-labs.tsx",
+        "app/course-app.tsx",
+        "app/globals.css",
+        "public/favicon.svg",
+        "GRADING_REPORT.md"
+      ],
+      "validationCommands": [
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Production build and 2 rendered-page tests passed"
+        },
+        {
+          "command": "node --test tests/course-data.test.mjs",
+          "status": "pass",
+          "evidence": "4 curriculum tests passed"
+        },
+        {
+          "command": "npm run lint",
+          "status": "pass",
+          "evidence": "No lint errors"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "Per-topic grading report",
+          "status": "pass",
+          "details": "Accuracy, teaching, active learning, misconception, and weighted overall scores for all 28"
+        },
+        {
+          "criterion": "Every topic >=85",
+          "status": "pass",
+          "details": "Minimum 85.7; mean 89.8"
+        },
+        {
+          "criterion": "All high-impact gaps addressed",
+          "status": "pass",
+          "details": "Third grader confirmation states no outstanding factual issues"
+        },
+        {
+          "criterion": "Final checks pass",
+          "status": "pass",
+          "details": "Build, 6 tests, lint, and diff check pass"
+        }
+      ],
+      "attemptedAt": "2026-07-13T07:25:41Z",
+      "completedAt": "2026-07-13T07:25:41Z",
+      "evidence": [
+        "GRADING_REPORT.md: all 28 pass, minimum 85.7, mean 89.8"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "e72d939159e726536a0bcfbf7480a136d50d2de2",
+        "message": "Task T005: Independently grade and refine curriculum"
       }
     }
   ]
