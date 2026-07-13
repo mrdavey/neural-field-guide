@@ -40,3 +40,13 @@ test("the difficult concepts are wired to interactive labs", async () => {
   }
   assert.doesNotMatch(labs, /instruments are being calibrated|lab-placeholder/);
 });
+
+test("mastery system covers every lesson and capstone", async () => {
+  const app = await readFile(new URL("../app/course-app.tsx", import.meta.url), "utf8");
+  assert.match(app, /STORAGE_KEY/);
+  assert.match(app, /Reset course progress/);
+  assert.match(app, /lesson\.quiz\.options/);
+  assert.match(app, /lesson\.quiz\.explanation/);
+  assert.match(app, /Mark as understood/);
+  for (const capstone of ["gpt2-from-scratch", "llama3-case-study", "tulu3-case-study"]) assert.match(app, new RegExp(`"${capstone}"`));
+});

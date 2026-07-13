@@ -26,6 +26,7 @@ export function CourseApp() {
   const [ready, setReady] = useState(false);
   const [query, setQuery] = useState("");
   const [mobileNav, setMobileNav] = useState(false);
+  const [resetConfirm, setResetConfirm] = useState(false);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -86,9 +87,11 @@ export function CourseApp() {
         <nav aria-label="Course lessons" className="lesson-nav">
           {tracks.map((track) => {
             const trackLessons = filtered.filter((lesson) => lesson.track === track.id);
+            const fullTrack = lessons.filter((lesson) => lesson.track === track.id);
+            const trackDone = fullTrack.filter((lesson) => progress.completed.includes(lesson.id)).length;
             if (!trackLessons.length) return null;
             return <section key={track.id} className="nav-track" style={{ "--track": track.color } as React.CSSProperties}>
-              <div className="nav-track-heading"><span>{track.title}</span><small>{trackLessons.length}</small></div>
+              <div className="nav-track-heading"><span>{track.title}</span><small>{trackDone}/{fullTrack.length}</small></div>
               {trackLessons.map((lesson) => <button key={lesson.id} onClick={() => openLesson(lesson.id)} className={`nav-lesson ${current?.id === lesson.id ? "active" : ""}`} aria-current={current?.id === lesson.id ? "page" : undefined}>
                 <span className="nav-number">{progress.completed.includes(lesson.id) ? <Icon name="check" /> : String(lesson.number).padStart(2, "0")}</span>
                 <span>{lesson.title}</span>
@@ -97,6 +100,9 @@ export function CourseApp() {
           })}
           {filtered.length === 0 && <p className="empty-search">No trail found. Try a broader search.</p>}
         </nav>
+        <div className="progress-reset">
+          {resetConfirm ? <><p>Erase completed lessons and quiz answers?</p><button onClick={() => { setProgress(emptyProgress); setResetConfirm(false); }}>Yes, reset</button><button onClick={() => setResetConfirm(false)}>Cancel</button></> : <button onClick={() => setResetConfirm(true)}>Reset course progress</button>}
+        </div>
       </aside>
 
       <main className="main-stage">
@@ -190,6 +196,8 @@ function LessonView({ lesson, progress, setProgress, openLesson }: { lesson: Les
 
     {lesson.lab && <LessonLab type={lesson.lab} lesson={lesson} />}
 
+    {(["gpt2-from-scratch", "llama3-case-study", "tulu3-case-study"] as string[]).includes(lesson.id) && <SynthesisMap lesson={lesson} openLesson={openLesson} />}
+
     <section className="knowledge-check">
       <div className="quiz-heading"><span className="eyebrow">Retrieval practice</span><h2>Check your understanding</h2><p>Choose first. Explanations appear after you commit.</p></div>
       <div className="quiz-card"><p className="quiz-question">{lesson.quiz.question}</p><div className="quiz-options">
@@ -210,4 +218,14 @@ function LessonView({ lesson, progress, setProgress, openLesson }: { lesson: Les
       {next ? <button className="next" onClick={() => openLesson(next.id)}><span>Next →</span><strong>{next.title}</strong></button> : <button className="next" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}><span>Course complete</span><strong>Return to the top ↑</strong></button>}
     </nav>
   </article>;
+}
+
+function SynthesisMap({ lesson, openLesson }: { lesson: Lesson; openLesson: (id: string) => void }) {
+  const maps: Record<string, { title: string; intro: string; links: string[] }> = {
+    "gpt2-from-scratch": { title: "Assemble the architecture", intro: "GPT-2 is where the individual mechanisms become one executable forward pass.", links: ["tokenization", "embedding-layer", "positional-encoding", "attention", "learning-to-predict"] },
+    "llama3-case-study": { title: "Trace a pre-training program", intro: "Llama 3 connects model design to the data, compute, and evaluation system around it.", links: ["objectives-details", "scaling-laws", "data-engineering", "infrastructure", "pretraining-evaluation"] },
+    "tulu3-case-study": { title: "Trace a post-training recipe", intro: "Tülu 3 connects demonstrations, preferences, tool/safety behavior, and measurable outcomes.", links: ["sft", "preference-optimization", "tools-safety", "rl-fundamentals", "rlhf"] }
+  };
+  const map = maps[lesson.id];
+  return <section className="synthesis-map"><div><span className="eyebrow">Capstone synthesis</span><h2>{map.title}</h2><p>{map.intro}</p></div><div className="synthesis-links">{map.links.map((id, index) => <button key={id} onClick={() => openLesson(id)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{lessonById[id].title}</strong><small>Review concept ↗</small></button>)}</div></section>;
 }

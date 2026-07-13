@@ -2,7 +2,7 @@
   "meta": {
     "objective": "Create a self-contained, highly engaging website that teaches every component of the supplied LLM curriculum from scratch, with simple and deep explanations, interactive components, and independent grading of every component to at least 85% effectiveness and accuracy.",
     "createdAt": "2026-07-13T06:52:20Z",
-    "updatedAt": "2026-07-13T07:03:26Z",
+    "updatedAt": "2026-07-13T07:07:17Z",
     "runStatus": "in_progress"
   },
   "tasks": [
@@ -160,23 +160,64 @@
         "Labs remain usable with keyboard controls and on narrow screens"
       ],
       "details": "Create reusable interactive lesson labs and connect each to the appropriate curriculum topics.",
-      "status": "todo",
-      "attempt": 0,
+      "status": "done",
+      "attempt": 1,
       "runMajorChecks": true,
       "priority": 3,
       "blockerReason": "",
-      "nextTaskId": "",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "nextTaskId": "T004",
+      "changedFiles": [
+        "app/lesson-labs.tsx",
+        "app/globals.css",
+        "app/course-app.tsx",
+        "tests/course-data.test.mjs"
+      ],
+      "validationCommands": [
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Build and rendered tests passed"
+        },
+        {
+          "command": "node --test tests/course-data.test.mjs",
+          "status": "pass",
+          "evidence": "3 content and lab coverage tests passed"
+        },
+        {
+          "command": "npm run lint",
+          "status": "pass",
+          "evidence": "No lint errors"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "12 relevant concept labs",
+          "status": "pass",
+          "details": "Tokenization, vectors, positions, attention, prediction, scaling, optimization, preference, LoRA, MoE, distillation, and RL implemented"
+        },
+        {
+          "criterion": "Change-observe-why instruction",
+          "status": "pass",
+          "details": "Every lab has explicit change instruction and causal observation"
+        },
+        {
+          "criterion": "Responsive and keyboard usable",
+          "status": "pass",
+          "details": "Native controls, buttons, labels, focus styles, and narrow layouts included"
+        }
+      ],
+      "attemptedAt": "2026-07-13T07:07:17Z",
+      "completedAt": "2026-07-13T07:07:17Z",
+      "evidence": [
+        "5 tests and lint passed"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "f6bacd63b3f0065d898aa8a9bc3d3aa92be6735c",
+        "message": "Task T003: Interactive learning laboratories"
       }
     },
     {
