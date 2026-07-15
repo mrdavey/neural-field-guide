@@ -1,0 +1,15 @@
+{
+  "artifact": "complete optimizer learning-step reference",
+  "schema_version": "1.0",
+  "generated_utc": "2026-07-13T08:00:00Z",
+  "command": "python reference_optimizer_step.py --epsilon 0.001 --learning-rate 0.1",
+  "environment": {"python": "3.13", "arithmetic": "float64", "optimizer_convention": "PyTorch 2.9 SGD"},
+  "model": {"x": [1.0, 2.0], "w_before": [0.2, -0.1], "target": 1, "shape_x": [2], "shape_w": [2]},
+  "forward_before": {"logit": 0.0, "probability": 0.5, "binary_cross_entropy": 0.6931471805599453},
+  "backward": {"dL_dz": -0.5, "dL_dw": [-0.5, -1.0]},
+  "update": {"learning_rate": 0.1, "w_after": [0.25, 0.0]},
+  "forward_after": {"logit": 0.25, "probability": 0.5621765008857981, "binary_cross_entropy": 0.5759394198788437},
+  "finite_difference": {"epsilon": 0.001, "numeric_gradient": [-0.4999999999999727, -0.9999999999999454], "max_absolute_error": 5.46e-14, "pass_tolerance": 1e-6, "passed": true},
+  "diagnosed_failure": {"treatment": "reverse the descent sign", "w_after": [0.15, -0.2], "loss_after": 0.8259394198788436, "diagnosis": "Adding the gradient moves uphill; the local sign check fails."},
+  "conclusion": "The small descent step lowers loss and agrees with a centered finite difference; this does not guarantee an arbitrarily larger learning rate remains stable."
+}

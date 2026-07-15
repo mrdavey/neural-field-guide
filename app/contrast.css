@@ -1,0 +1,47 @@
+/* Light teaching surfaces must not inherit pale text from the dark panels that contain them. */
+.lesson-view{--muted:#555d6d;--track-text:color-mix(in srgb,var(--track) 32%,var(--ink))}
+.prediction-commit,.vector-map button,.wm-lab-choices button,.wm-lab-detail{color:var(--ink)}
+.prediction-diagnosis button,.practice-diagnosis button{color:var(--ink)}
+.prediction-diagnosis button.active,.practice-diagnosis button.active{color:white}
+.primary-button,.prompt-console-actions button,.technical-validation>header,.studio-cycle{color:var(--ink)}
+.technical-validation>header .eyebrow{color:var(--ink)}
+.sidebar .eyebrow,
+.code-walkthrough .eyebrow,
+.evidence-lab-header .eyebrow,
+.studio-header .eyebrow,
+.fine-tuning-hero .eyebrow,
+.capstone-project-header .eyebrow,
+.capstone-artifact-checks .eyebrow,
+.world-model-transfer>header .eyebrow{color:#b7bfce}
+.code-walkthrough,.evidence-lab-header,.studio-header,.fine-tuning-hero,.capstone-project-header,.capstone-artifact-checks,.world-model-transfer>header{--muted:#b7bfce}
+.capstone-artifact-checks article small{color:#aeb5c6}
+.guided-example .eyebrow,.lesson-complete .eyebrow{color:var(--ink)}
+.depth-toggle button span{color:#aeb5c6}
+.sample-stream em,.pipeline-stations button{color:#aeb5c6}
+.pipeline-stations button.active{color:var(--ink)}
+.machine-label,.machine-row b,.machine-output span{color:#aeb5c6}
+.autosave-note{color:var(--muted)}
+.curve-line{color:#59677f}
+.optimum,.objective-grid span,.judge-card>span,.expert-pool>div,.router-lines>span:last-child{color:#aeb5c6}
+.token-output>span{color:#000}
+.metric-trace i span{color:var(--ink)}
+.budget-map span{background:var(--white);padding:4px 6px;top:16px}
+.lesson-breadcrumb button,
+.chapter-guide-header>.eyebrow,
+.prerequisite-strip button:hover,
+.bridge-prerequisites small,
+.bridge-new small,
+.next-connection h2 b,
+.next-connection-copy>span,
+.specialization-chooser button>small,
+.mechanism-contract>span,
+.contrast-cases article>span,
+.contrast-principle>span,
+.validation-brief span,
+.validation-result span,
+.validation-sources span,
+.capstone-source-pack a>span,
+.world-model-orient-grid article>span,
+.world-model-orient-vocabulary>span,
+.lesson-pagination button:hover{color:var(--track-text)}
+.resource-grid a:hover :is(span,strong,p,small),.synthesis-links button:hover :is(span,strong,small){color:var(--ink)}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "artifact": "tulu-posttraining-result-ledger",
+  "evidence_tier": "completed matched-column release audit",
+  "reviewed": "2026-07-13",
+  "pins": {"code": "allenai/open-instruct@745bf58d321c", "final_model": "allenai/Llama-3.1-Tulu-3.1-8B", "evaluation_source": "published Tülu 3.1 model card and Tülu 3 primary paper"},
+  "matched_metrics": [
+    {"metric": "reported average", "sft": 60.4, "dpo": 64.4, "tulu3_rlvr": 64.8, "tulu3_1_grpo_rlvr": 66.3},
+    {"metric": "MATH 4-shot CoT Flex", "sft": 31.5, "dpo": 42.0, "tulu3_rlvr": 43.7, "tulu3_1_grpo_rlvr": 47.8},
+    {"metric": "GSM8K 8-shot CoT", "sft": 76.2, "dpo": 84.3, "tulu3_rlvr": 87.6, "tulu3_1_grpo_rlvr": 90.0},
+    {"metric": "IFEval prompt loose", "sft": 72.8, "dpo": 81.1, "tulu3_rlvr": 82.4, "tulu3_1_grpo_rlvr": 83.9},
+    {"metric": "Safety six-task average", "sft": 93.1, "dpo": 87.2, "tulu3_rlvr": 85.5, "tulu3_1_grpo_rlvr": 81.2}
+  ],
+  "stage_decisions": [
+    {"stage": "SFT", "keep": true, "reason": "Creates the assistant-format/task starting policy and released checkpoint.", "cost_evidence": "64 H100 GPUs in the documented 8B reproduction topology; exact monetary cost not published.", "rollback": "retain base checkpoint"},
+    {"stage": "DPO", "keep": true, "reason": "+4.0 reported average and large IF/MATH gains versus SFT in matched columns", "regression": "safety 93.1 → 87.2", "rollback": "retain SFT checkpoint and re-evaluate safety mixture"},
+    {"stage": "GRPO RLVR", "keep": "conditional", "reason": "Tülu 3.1 reaches 66.3 average, 47.8 MATH, 90.0 GSM8K, and 83.9 IFEval", "regression": "safety falls to 81.2; HumanEval pass@10 is 84.8 versus 86.2 at SFT", "cost_evidence": "documented 2-node/16-GPU experiment; selected checkpoint episode 1,474,560", "rollback": "ship DPO or earlier RLVR checkpoint if deployment safety gate fails"}
+  ],
+  "recipe_specific": {"learning_rate": 0.0000005, "kl_beta": 0.01, "samples_per_prompt": 16, "effective_batch": 768, "max_response_tokens": 2048, "selected_step": 1920, "selected_episode": 1474560},
+  "runtime_boundary": "Tool credentials, authorization, confirmation, monitoring, receipts, and rollback remain application controls.",
+  "source": "https://huggingface.co/allenai/Llama-3.1-Tulu-3.1-8B"
+}

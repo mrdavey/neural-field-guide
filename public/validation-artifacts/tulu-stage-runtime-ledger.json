@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "artifact": "tulu-stage-runtime-ledger",
+  "evidence_tier": "filled primary-release evidence ledger",
+  "reviewed": "2026-07-13",
+  "pins": {"recipe_commit": "allenai/open-instruct@745bf58d321c", "reported_reproduction_commit": "3f37c29ddc97d2c108a7658692d2d2c3708ef182", "model_family": "Llama 3.1 Tülu 3/3.1 8B"},
+  "stages": [
+    {"stage": "base", "signal": "next-token pretraining inherited from upstream", "incoming": null, "outgoing": "meta-llama/Llama-3.1-8B", "observed_artifact": "published base checkpoint", "learned_change": "general language/code representations"},
+    {"stage": "sft", "signal": "assistant demonstrations", "incoming": "meta-llama/Llama-3.1-8B", "outgoing": "allenai/Llama-3.1-Tulu-3-8B-SFT", "observed_artifact": "published SFT checkpoint", "reported_average": 60.4},
+    {"stage": "dpo", "signal": "chosen/rejected preferences; dpo_norm; beta 5 in pinned recipe", "incoming": "allenai/Llama-3.1-Tulu-3-8B-SFT", "outgoing": "allenai/Llama-3.1-Tulu-3-8B-DPO", "observed_artifact": "published DPO checkpoint", "reported_average": 64.4},
+    {"stage": "online_rlvr", "signal": "verifiable GSM/MATH/IF rewards; GRPO; no reward model", "incoming": "allenai/Llama-3.1-Tulu-3-8B-DPO", "outgoing": "allenai/Llama-3.1-Tulu-3.1-8B", "observed_artifact": "published final checkpoint at step 1920 / episode 1,474,560", "reported_average": 66.3},
+    {"stage": "runtime_control", "signal": "deterministic authorization, not gradient signal", "incoming": "model proposes a call", "outgoing": "authorized or denied effect plus receipt", "observed_artifact": "application policy/credential/audit record, absent from model weights", "guarantee": "identity, scope, confirmation, idempotency, and rollback"}
+  ],
+  "release_evidence": {"sft_to_dpo_average_delta": 4.0, "dpo_to_tulu3_1_average_delta": 1.9, "math": [31.5, 42.0, 47.8], "gsm8k": [76.2, 84.3, 90.0], "ifeval": [72.8, 81.1, 83.9], "safety": [93.1, 87.2, 81.2]},
+  "decision_note": "The recipe improves its reported average and target reasoning/IF metrics, while the safety average regresses. That trade-off must remain visible; weights do not replace runtime authority or a deployment-specific safety gate.",
+  "source": "https://huggingface.co/allenai/Llama-3.1-Tulu-3.1-8B"
+}

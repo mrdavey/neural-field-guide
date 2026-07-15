@@ -1,0 +1,17 @@
+[
+  {
+    "taskId":"C001","repo":"/Users/dt/Documents/LLMs from scratch","dependsOn":[],"title":"Restructure the learning path","objective":"Repair sequencing and duplication while preserving the strongest existing material.","acceptanceCriteria":["Foundations, Architecture, Pre-Training, Post-Training, Inference, Applications, and Advanced tracks have explicit roles","Optimizers, RL Fundamentals, and RLHF are moved to pedagogically correct tracks","The architecture RLHF overview is reframed as a non-duplicative bridge","All lesson numbers and prerequisites form a coherent path"],"details":"Update tracks, lesson placement, numbering, prerequisite ordering, navigation copy, and audit documentation.","runMajorChecks":true,"priority":1
+  },
+  {
+    "taskId":"C002","repo":"/Users/dt/Documents/LLMs from scratch","dependsOn":["C001"],"title":"Add true-beginner foundations","objective":"Teach the mathematical and neural-network prerequisites currently assumed by the architecture lessons.","acceptanceCriteria":["Add tensors/matrix operations, probability/softmax/loss, and gradients/backprop lessons","Every new lesson includes complete teaching schema and active calculation or manipulation","Architecture prerequisites point through the new foundations"],"details":"Add three foundation lessons and interactive tensor, softmax, and gradient labs; position Optimizers as the fourth foundation lesson.","runMajorChecks":true,"priority":2
+  },
+  {
+    "taskId":"C003","repo":"/Users/dt/Documents/LLMs from scratch","dependsOn":["C002"],"title":"Add inference and deployment","objective":"Teach how trained weights become efficient, controllable production generation.","acceptanceCriteria":["Add decoding, generation/KV cache, quantization, serving, and test-time compute lessons","Labs expose probability truncation, KV memory, precision trade-offs, batching, and compute budgets","Lessons distinguish latency, throughput, memory, quality, and cost"],"details":"Create five complete lessons, interactive labs, sources, and prerequisite links.","runMajorChecks":true,"priority":3
+  },
+  {
+    "taskId":"C004","repo":"/Users/dt/Documents/LLMs from scratch","dependsOn":["C003"],"title":"Add applications, reliability, and modern extensions","objective":"Cover the missing work of building, evaluating, securing, and understanding LLM systems.","acceptanceCriteria":["Add context engineering, RAG, agents, evaluation, security, and observability lessons","Add multimodality and interpretability/model-editing lessons","Each lesson includes a relevant diagnostic or design interaction","Safety and runtime authorization are treated as system properties, not weight-only behavior"],"details":"Add eight complete lessons and relevant labs/sources across Applications and Advanced tracks.","runMajorChecks":true,"priority":4
+  },
+  {
+    "taskId":"C005","repo":"/Users/dt/Documents/LLMs from scratch","dependsOn":["C004"],"title":"Deepen interactions and final skeptical audit","objective":"Make the expanded course coherent, active, accessible, and free of curriculum gaps.","acceptanceCriteria":["Automated tests validate all lessons and the expanded teaching schema","Home and navigation accurately describe the expanded course","Every new lab states change/observe/limits and works responsively","Build, lint, tests, dependency audit, and final curriculum audit pass"],"details":"Strengthen tests and UI counts, run full verification, resolve gaps, and update grading/audit evidence.","runMajorChecks":true,"priority":5
+  }
+]

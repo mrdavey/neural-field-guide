@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "course": "worldmodel",
+  "lessonId": "world-model-operations-case-study",
+  "evidenceTier": "deterministic operations fixture",
+  "question": "Does staged release detect compatibility and deadline regressions before full authority?",
+  "fixture": { "deadlineMs": 50, "chanceLimit": 0.05, "stages": ["replay", "shadow", "canary", "bounded expansion"] },
+  "baseline": "weights-only release with task-success monitoring",
+  "changedCase": "normalization changes within compatible shape, then actuator acknowledgement latency rises",
+  "rawRows": [
+    { "bundle": "wm-16", "encoderWidth": 32, "dynamicsWidth": 32, "p99Ms": 38, "gate": "pass" },
+    { "bundle": "wm-17-bad-schema", "encoderWidth": 32, "dynamicsWidth": 64, "p99Ms": 35, "gate": "reject-compatibility" },
+    { "bundle": "wm-17-delay", "encoderWidth": 32, "dynamicsWidth": 32, "p99Ms": 83, "gate": "rollback-deadline" }
+  ],
+  "checks": ["release bundle is immutable", "shadow has no actuator authority", "rollback restores matching schemas and planner config"],
+  "failure": "Mixing encoder and dynamics revisions is rejected before proposals are evaluated.",
+  "decision": "Restore wm-16 after the deadline gate and investigate actuator timing separately from model prediction.",
+  "boundary": "This fixture validates release logic, not a production safety case.",
+  "reviewed": "2026-07-14"
+}

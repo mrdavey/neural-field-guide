@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "artifact": "fim-causal-ablation-result",
+  "evidence_tier": "executed deterministic serialization and paired course fixture",
+  "reviewed": "2026-07-13",
+  "pins": {"token_contract": "bigcode/starcoder2-3b@733247c", "seed": 17, "declared_fim_fraction": 0.5, "loss_token_budget_per_arm": 120000},
+  "command": "node scripts/verify-learning-artifacts.mjs",
+  "sample_serializations": [
+    {"record_id": "fn-001", "mode": "causal", "text_parts": {"prefix": "def area(r):\n", "middle": "    return 3.14159 * r * r\n", "suffix": ""}, "serialized_contract": "prefix + middle", "loss_mask": "all successor positions except first"},
+    {"record_id": "fn-001", "mode": "fim", "text_parts": {"prefix": "def area(r):\n", "middle": "    return 3.14159 * r * r\n", "suffix": "\nprint(area(2))"}, "serialized_contract": "<fim_prefix> prefix <fim_suffix> suffix <fim_middle> middle", "loss_mask": "causal successor loss over transformed stream"}
+  ],
+  "manifest": {"records": 2000, "fim_records": 1000, "causal_records": 1000, "control_loss_tokens": 120000, "treatment_loss_tokens": 120000, "optimizer_schedule_seed_equal": true},
+  "paired_fixture_metrics": [
+    {"arm": "causal-only", "infilling_exact_match": 0.31, "completion_pass_at_1": 0.42, "seeds": [17, 23, 41]},
+    {"arm": "50%-fim", "infilling_exact_match": 0.39, "completion_pass_at_1": 0.415, "seeds": [17, 23, 41]}
+  ],
+  "uncertainty": {"infilling_delta": 0.08, "bootstrap_95_ci": [0.054, 0.106], "completion_delta": -0.005, "completion_regression_gate": -0.02},
+  "decision": "Keep the treatment in this explicitly simulated fixture: the infilling interval excludes zero and completion remains inside the predeclared gate.",
+  "scope_boundary": "Serialization and budget checks are executable. Metric rows are explicitly simulated teaching data, not StarCoder2 release measurements."
+}

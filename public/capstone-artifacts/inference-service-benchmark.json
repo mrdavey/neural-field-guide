@@ -1,0 +1,37 @@
+{
+  "artifact": "inference service benchmark executable fixture",
+  "schema_version": "1.0",
+  "scope": "dependency-free deterministic scheduling fixture; timings teach aggregation and SLO decisions and are not hardware/vLLM performance claims",
+  "manifest": {"generator": "scripts/inference-benchmark-fixture.mjs", "server_semantics_reference": "vLLM v0.23.0 / 91df0fa", "model": "synthetic-decoder-fixture-v1", "hardware": "deterministic course simulator (no accelerator claim)", "client": "local fixture generator", "repetitions": 3, "requests_per_arm": 10, "warmup_requests": 0, "workload": "7 short chats + 3 long reasoning requests per arm"},
+  "command": "node scripts/inference-benchmark-fixture.mjs --verify",
+  "slo": {"p95_ttft_ms_max": 1200, "p95_tpot_ms_max": 45, "goodput_fraction_min": 0.95, "quality_min": 0.83},
+  "raw_requests": [
+    {"id":"static-01","arm":"static","repetition":1,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":0,"queue_ms":130,"ttft_ms":395,"tpot_ms":36,"e2e_ms":2663,"quality":0.842,"status":"ok"},
+    {"id":"static-02","arm":"static","repetition":1,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":250,"queue_ms":178,"ttft_ms":452,"tpot_ms":37,"e2e_ms":2783,"quality":0.84,"status":"ok"},
+    {"id":"static-03","arm":"static","repetition":1,"workload":"long-reasoning","input_tokens":1024,"output_tokens":128,"arrival_ms":500,"queue_ms":556,"ttft_ms":1119,"tpot_ms":44,"e2e_ms":6707,"quality":0.836,"status":"ok"},
+    {"id":"static-04","arm":"static","repetition":1,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":750,"queue_ms":274,"ttft_ms":566,"tpot_ms":39,"e2e_ms":3023,"quality":0.84,"status":"ok"},
+    {"id":"static-05","arm":"static","repetition":2,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":1000,"queue_ms":322,"ttft_ms":623,"tpot_ms":36,"e2e_ms":2891,"quality":0.842,"status":"ok"},
+    {"id":"static-06","arm":"static","repetition":2,"workload":"long-reasoning","input_tokens":1024,"output_tokens":128,"arrival_ms":1250,"queue_ms":700,"ttft_ms":1290,"tpot_ms":43,"e2e_ms":6751,"quality":0.834,"status":"ok"},
+    {"id":"static-07","arm":"static","repetition":2,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":1500,"queue_ms":418,"ttft_ms":737,"tpot_ms":38,"e2e_ms":3131,"quality":0.842,"status":"ok"},
+    {"id":"static-08","arm":"static","repetition":2,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":1750,"queue_ms":466,"ttft_ms":794,"tpot_ms":39,"e2e_ms":3251,"quality":0.84,"status":"ok"},
+    {"id":"static-09","arm":"static","repetition":3,"workload":"long-reasoning","input_tokens":1024,"output_tokens":128,"arrival_ms":2000,"queue_ms":844,"ttft_ms":1461,"tpot_ms":42,"e2e_ms":6795,"quality":0.836,"status":"ok"},
+    {"id":"static-10","arm":"static","repetition":3,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":2250,"queue_ms":562,"ttft_ms":908,"tpot_ms":37,"e2e_ms":3239,"quality":0.84,"status":"ok"},
+    {"id":"continuous-01","arm":"continuous","repetition":1,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":0,"queue_ms":72,"ttft_ms":287,"tpot_ms":31,"e2e_ms":2240,"quality":0.842,"status":"ok"},
+    {"id":"continuous-02","arm":"continuous","repetition":1,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":250,"queue_ms":98,"ttft_ms":322,"tpot_ms":32,"e2e_ms":2338,"quality":0.84,"status":"ok"},
+    {"id":"continuous-03","arm":"continuous","repetition":1,"workload":"long-reasoning","input_tokens":1024,"output_tokens":128,"arrival_ms":500,"queue_ms":284,"ttft_ms":797,"tpot_ms":39,"e2e_ms":5750,"quality":0.836,"status":"ok"},
+    {"id":"continuous-04","arm":"continuous","repetition":1,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":750,"queue_ms":150,"ttft_ms":392,"tpot_ms":34,"e2e_ms":2534,"quality":0.84,"status":"ok"},
+    {"id":"continuous-05","arm":"continuous","repetition":2,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":1000,"queue_ms":176,"ttft_ms":427,"tpot_ms":31,"e2e_ms":2380,"quality":0.842,"status":"ok"},
+    {"id":"continuous-06","arm":"continuous","repetition":2,"workload":"long-reasoning","input_tokens":1024,"output_tokens":128,"arrival_ms":1250,"queue_ms":362,"ttft_ms":902,"tpot_ms":38,"e2e_ms":5728,"quality":0.834,"status":"ok"},
+    {"id":"continuous-07","arm":"continuous","repetition":2,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":1500,"queue_ms":228,"ttft_ms":497,"tpot_ms":33,"e2e_ms":2576,"quality":0.842,"status":"ok"},
+    {"id":"continuous-08","arm":"continuous","repetition":2,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":1750,"queue_ms":254,"ttft_ms":532,"tpot_ms":34,"e2e_ms":2674,"quality":0.84,"status":"ok"},
+    {"id":"continuous-09","arm":"continuous","repetition":3,"workload":"long-reasoning","input_tokens":1024,"output_tokens":128,"arrival_ms":2000,"queue_ms":440,"ttft_ms":1007,"tpot_ms":37,"e2e_ms":5706,"quality":0.836,"status":"ok"},
+    {"id":"continuous-10","arm":"continuous","repetition":3,"workload":"short-chat","input_tokens":128,"output_tokens":64,"arrival_ms":2250,"queue_ms":306,"ttft_ms":602,"tpot_ms":32,"e2e_ms":2618,"quality":0.84,"status":"ok"}
+  ],
+  "aggregates": [
+    {"arm":"static","requests":10,"p50_ttft_ms":737,"p95_ttft_ms":1461,"p95_tpot_ms":44,"goodput_fraction":0.8,"mean_quality":0.8392},
+    {"arm":"continuous","requests":10,"p50_ttft_ms":497,"p95_ttft_ms":1007,"p95_tpot_ms":39,"goodput_fraction":1,"mean_quality":0.8392}
+  ],
+  "calculation_contract": "nearest-rank percentiles over every bundled request row; goodput counts rows meeting TTFT, TPOT, and quality gates",
+  "decision": "accept continuous batching for the fixture",
+  "falsifier": "reject when any rerun misses its predeclared latency, goodput, or quality gate"
+}

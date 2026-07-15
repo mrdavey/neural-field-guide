@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "course": "worldmodel",
+  "lessonId": "dyna-tdmpc-case-study",
+  "evidenceTier": "deterministic teaching fixture",
+  "question": "At 96 transitions, does horizon-3 planning plus terminal value select delayed reward better than horizon-6 shooting?",
+  "fixture": { "states": 6, "actions": ["left", "right"], "discount": 0.9, "modelTransitionBudget": 96, "terminalReward": 10 },
+  "baseline": "horizon-6 shooting without terminal value",
+  "changedCase": "delayed reward branch is swapped while immediate rewards stay zero",
+  "rawRows": [
+    { "method": "h3-plus-value", "candidates": 32, "horizon": 3, "transitions": 96, "chosen": "right", "return": 7.29 },
+    { "method": "h6-no-value", "candidates": 16, "horizon": 6, "transitions": 96, "chosen": "left", "return": 0 }
+  ],
+  "checks": ["budgets equal 96 transitions", "terminal value applied once", "branch swap changes the correct first action"],
+  "failure": "A biased terminal value selects the wrong branch; the artifact retains the failing row and recommends value calibration or longer rollout.",
+  "decision": "The terminal value helps in this delayed-reward fixture under the stated bias-free contract.",
+  "boundary": "No learned latent model or external benchmark was run.",
+  "sourceManifest": [
+    {
+      "family": "Dyna",
+      "evidenceTier": "primary foundational paper",
+      "sourceUrl": "https://doi.org/10.1016/0004-3702(91)90020-D"
+    },
+    {
+      "family": "Dreamer",
+      "evidenceTier": "primary paper",
+      "sourceUrl": "https://arxiv.org/abs/2301.04104"
+    },
+    {
+      "family": "MuZero",
+      "evidenceTier": "primary paper",
+      "sourceUrl": "https://www.nature.com/articles/s41586-020-03051-4"
+    },
+    {
+      "family": "TD-MPC",
+      "evidenceTier": "primary paper",
+      "sourceUrl": "https://proceedings.mlr.press/v162/hansen22a.html"
+    }
+  ],
+  "reviewed": "2026-07-14"
+}

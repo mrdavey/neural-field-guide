@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "course": "worldmodel",
+  "lessonId": "world-model-research-capstone",
+  "evidenceTier": "deterministic research-template fixture",
+  "branch": "geometry",
+  "question": "Under matched cases, does an equivariant transition satisfy a held-out rotation criterion better than a coordinate lookup?",
+  "fixture": { "trainAngles": [0, 90, 180, 270], "testAngles": [45, 135, 225, 315], "seeds": [1, 2, 3], "matchedUpdates": 200, "minimumErrorImprovement": 0.05, "maximumEquivarianceResidual": 0.02 },
+  "baseline": "coordinate lookup with nearest training angle",
+  "changedCase": "held-out 45-degree rotations",
+  "rawRows": [
+    { "angle": 45, "equivariantError": 0.11, "baselineError": 0.12, "equivarianceResidual": 0.015 },
+    { "angle": 135, "equivariantError": 0.12, "baselineError": 0.14, "equivarianceResidual": 0.018 },
+    { "angle": 225, "equivariantError": 0.12, "baselineError": 0.13, "equivarianceResidual": 0.017 },
+    { "angle": 315, "equivariantError": 0.13, "baselineError": 0.13, "equivarianceResidual": 0.016 }
+  ],
+  "summary": { "meanEquivariantError": 0.12, "meanBaselineError": 0.13, "errorImprovement": 0.01, "maximumEquivarianceResidual": 0.018 },
+  "checks": ["both thresholds fixed before final rows", "same input vectors, seeds, update budget, and evaluator", "all changed-case rows retained"],
+  "failure": "When a contact discontinuity is added, the smooth rotation rule fails; this counterexample remains in the report.",
+  "decision": "Not supported: the 0.01 mean error improvement is below the preregistered 0.05 minimum even though the 0.018 residual passes its 0.02 gate.",
+  "boundary": "This course-scale deterministic result is not evidence of general physical reasoning or robot performance.",
+  "sourceManifest": [
+    { "kind": "official preregistration guidance", "url": "https://help.osf.io/article/330-welcome-to-registrations", "use": "Freeze the confirmatory protocol and retain amendments." },
+    { "kind": "primary equivariant world-model paper", "url": "https://proceedings.mlr.press/v162/park22a.html", "use": "Verify the symmetry/equivariance claim and published evidence boundary." }
+  ],
+  "reviewed": "2026-07-14"
+}

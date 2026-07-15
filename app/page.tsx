@@ -1,5 +1,5 @@
-import { CourseApp } from "./course-app";
+import { CourseRootRedirect } from "./route-redirects";
 
 export default function Home() {
-  return <CourseApp />;
+  return <CourseRootRedirect />;
 }

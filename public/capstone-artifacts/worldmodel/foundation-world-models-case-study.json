@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "course": "worldmodel",
+  "lessonId": "foundation-world-models-case-study",
+  "evidenceTier": "sourced comparison template with deterministic decision rules",
+  "question": "Which family has the closest demonstrated interface for one named task?",
+  "fixture": { "columns": ["observations", "actions", "target", "decisionUse", "data", "evaluation", "evidenceTier", "sourceUrl", "limits"], "systems": ["DreamerV3", "MuZero", "V-JEPA 2", "Genie"] },
+  "baseline": "rank by visual aesthetics or scale",
+  "changedCase": "task changes from interactive video generation to image-goal robot planning",
+  "rawRows": [
+    { "system": "DreamerV3", "actionConditioned": true, "decisionUse": "actor-value imagination", "evidence": "primary paper", "sourceUrl": "https://arxiv.org/abs/2301.04104" },
+    { "system": "MuZero", "actionConditioned": true, "decisionUse": "tree search", "evidence": "primary paper", "sourceUrl": "https://www.nature.com/articles/s41586-020-03051-4" },
+    { "system": "V-JEPA 2", "actionConditioned": "post-training component", "decisionUse": "image-goal planning", "evidence": "primary paper and official artifacts", "sourceUrl": "https://ai.meta.com/research/publications/v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning/" },
+    { "system": "Genie", "actionConditioned": "latent controls", "decisionUse": "interactive generation", "evidence": "primary paper; named official release reports remain a separate evidence tier", "sourceUrl": "https://deepmind.google/research/publications/60474/" }
+  ],
+  "checks": ["unknown cells remain unknown", "task requirements precede ranking", "release claims retain source and date"],
+  "failure": "An unknown action-interface cell makes the selection conditional rather than silently awarding a score.",
+  "decision": "For image-goal robotics, begin with demonstrated action-conditioned robot interfaces and retain deployment gaps.",
+  "boundary": "This table does not normalize data, compute, or benchmark outcomes and cannot support a universal ranking.",
+  "reviewed": "2026-07-14"
+}

@@ -1,0 +1,54 @@
+{
+  "artifact": "tiny GPT executable reference run",
+  "schema_version": "1.0",
+  "scope": "dependency-free one-block, one-head causal self-attention language model; a correctness fixture, not a GPT-2 capability reproduction",
+  "provenance": {
+    "generator": "scripts/tiny-gpt-reference.mjs",
+    "seed": 17,
+    "vocabulary": ["a", "b", "c", " "],
+    "sequence": [0, 1, 0, 2, 0],
+    "architecture": {"blocks": 1, "heads": 1, "d_model": 3, "mlp_hidden": 5, "context": 4}
+  },
+  "command": "node scripts/tiny-gpt-reference.mjs",
+  "tests": [
+    {"name": "shifted_labels", "status": "pass", "input": [0, 1, 0, 2], "labels": [1, 0, 2, 0]},
+    {"name": "causal_future_mutation", "status": "pass", "max_earlier_logit_delta": 0},
+    {"name": "shape_contract", "status": "pass", "logits_shape": [1, 4, 4]},
+    {"name": "overfit_sequence", "status": "pass", "loss_start": 1.3642430504134744, "loss_end": 0.5003298273309331},
+    {"name": "resume_equivalence", "status": "pass", "max_weight_delta": 0}
+  ],
+  "metrics": [
+    {"step": 0, "trained_tokens": 0, "loss": 1.3642430504134744},
+    {"step": 3, "trained_tokens": 12, "loss": 1.2899781802960968},
+    {"step": 6, "trained_tokens": 24, "loss": 1.1012384300558042},
+    {"step": 9, "trained_tokens": 36, "loss": 0.7481181247829503},
+    {"step": 12, "trained_tokens": 48, "loss": 0.5003298273309331}
+  ],
+  "sample": {"prompt": "abac", "greedy_completion": "abacacacacac"},
+  "checkpoint": {"step": 6, "parameter_count": 102, "restored": ["all parameter arrays", "step", "fixed training sequence"]},
+  "resume": {
+    "first_half": [
+      {"step": 0, "trained_tokens": 0, "loss": 1.3642430504134744},
+      {"step": 3, "trained_tokens": 12, "loss": 1.2899781802960968},
+      {"step": 6, "trained_tokens": 24, "loss": 1.1012384300558042}
+    ],
+    "second_half": [
+      {"step": 9, "trained_tokens": 36, "loss": 0.7481181247829503},
+      {"step": 12, "trained_tokens": 48, "loss": 0.5003298273309331}
+    ],
+    "max_weight_delta": 0
+  },
+  "ablation": {
+    "treatment": "zero position embeddings",
+    "control_final_loss": 0.5003298273309331,
+    "treatment_final_loss": 0.806301877235756,
+    "treatment_logs": [
+      {"step": 0, "trained_tokens": 0, "loss": 1.3692895978429982},
+      {"step": 3, "trained_tokens": 12, "loss": 1.330664555115274},
+      {"step": 6, "trained_tokens": 24, "loss": 1.250512519721849},
+      {"step": 9, "trained_tokens": 36, "loss": 1.0847869860086885},
+      {"step": 12, "trained_tokens": 48, "loss": 0.806301877235756}
+    ],
+    "decision": "retain learned positions for this order-sensitive fixture"
+  }
+}

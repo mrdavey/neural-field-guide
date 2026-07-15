@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "course": "worldmodel",
+  "lessonId": "uncertainty-ensembles",
+  "evidenceTier": "deterministic teaching fixture",
+  "question": "Does an ensemble-disagreement gate concentrate rejection on high-error transitions?",
+  "fixture": { "threshold": 0.25, "members": 3, "cases": 5 },
+  "baseline": "randomly reject the same number of cases",
+  "changedCase": "two ensemble sets share a confident bias",
+  "rawRows": [
+    { "case": "in-support", "predictions": [1.0, 1.1, 0.9], "target": 1.0, "rejected": false },
+    { "case": "disagree", "predictions": [0.0, 1.0, 2.0], "target": 0.5, "rejected": true },
+    { "case": "shared-bias", "predictions": [3.0, 3.1, 2.9], "target": -1.0, "rejected": false }
+  ],
+  "checks": ["disagreement computed before target is read", "random baseline has equal rejection count", "shared-bias miss remains visible"],
+  "failure": "All members agree on the wrong value outside support, so disagreement alone fails to gate the case.",
+  "decision": "Use disagreement as one diagnostic alongside support and independent constraints.",
+  "boundary": "The gate is not calibrated as a probability of failure.",
+  "reviewed": "2026-07-14"
+}

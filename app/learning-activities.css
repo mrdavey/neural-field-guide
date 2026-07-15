@@ -1,0 +1,92 @@
+.learning-activity-contract{background:var(--paper);border:1px solid var(--line);color:var(--ink);margin:28px 0;overflow:hidden}
+.learning-activity-contract>header{background:var(--ink);color:white;display:grid;gap:10px;grid-template-columns:150px minmax(0,1fr);padding:18px 22px}
+.learning-activity-contract>header>span,.learning-activity-contract li>span{font-family:var(--font-geist-mono);font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.learning-activity-contract>header>span{color:#b7bfce}
+.learning-activity-contract p{font-size:.9rem;line-height:1.65;margin:0}
+.learning-activity-contract ol{display:grid;gap:1px;grid-template-columns:repeat(2,minmax(0,1fr));list-style:none;margin:0;padding:0}
+.learning-activity-contract li{background:var(--white);display:grid;gap:9px;padding:18px 22px}
+.learning-activity-contract li>span{color:var(--track-text,var(--ink))}
+.learning-activity-boundary{background:#fff8cf;border-top:1px solid var(--line);padding:16px 22px}
+
+.activity-prediction-gate{background:var(--paper);border:1px solid var(--line);color:var(--ink);margin-top:20px;min-width:0}
+.activity-prediction-entry{display:grid;gap:14px;padding:22px}
+.activity-prediction-entry label{display:grid;gap:8px}
+.activity-prediction-entry label>strong{font-family:Georgia,serif;font-size:1.55rem;font-weight:400}
+.activity-prediction-entry label>p,.activity-prediction-entry>small{font-size:.84rem;line-height:1.6;margin:0}
+.activity-prediction-entry>small{color:var(--muted)}
+.activity-prediction-entry textarea,.guided-prediction-entry textarea,.guided-next-step textarea,.code-change-challenge textarea{background:var(--white);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:1rem;line-height:1.6;padding:14px;resize:vertical;width:100%}
+.activity-prediction-entry textarea:focus-visible,.guided-prediction-entry textarea:focus-visible,.guided-next-step textarea:focus-visible,.code-change-challenge textarea:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.activity-prediction-entry button,.activity-prediction-locked button,.guided-prediction-entry button,.guided-prediction-locked button,.guided-next-step button,.guided-diagnosis button,.code-change-challenge button{background:var(--track);border:1px solid color-mix(in srgb,var(--track) 70%,var(--ink));color:var(--ink);cursor:pointer;font-family:var(--font-geist-mono);font-size:.66rem;font-weight:800;min-height:44px;padding:11px 14px;text-transform:uppercase}
+.activity-prediction-entry button:disabled,.guided-prediction-entry button:disabled,.guided-next-step button:disabled,.code-change-challenge button:disabled{cursor:not-allowed;opacity:.42}
+.activity-prediction-locked,.guided-prediction-locked{align-items:start;background:#e7f6f3;display:flex;gap:20px;justify-content:space-between;padding:18px 22px}
+.activity-prediction-locked span,.guided-prediction-locked span,.guided-example-setup>span,.lab-observation-guide>span,.code-change-challenge>div>span{font-family:var(--font-geist-mono);font-size:.57rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.activity-prediction-locked p,.guided-prediction-locked p{font-size:.88rem;line-height:1.6;margin:6px 0 0;white-space:pre-wrap}
+.activity-after-commit{min-width:0}
+
+.guided-example{grid-template-columns:1fr!important}
+.guided-example-intro{align-items:start;display:flex;gap:24px;justify-content:space-between}
+.guided-example-intro>div{max-width:720px}
+.guided-example-intro .activity-info-popover{left:auto;right:0}
+.guided-example .learning-activity-contract{margin:0}
+.guided-example-setup{background:#fff8cf;border-left:4px solid var(--ink);padding:18px 20px}
+.guided-example-setup p{margin:8px 0 0}
+.guided-prediction-entry,.guided-next-step{background:var(--white);border:1px solid #c9b95e;display:grid;gap:14px;padding:22px}
+.guided-prediction-entry label,.guided-next-step label,.code-change-challenge label{display:grid;gap:8px}
+.guided-prediction-entry small,.guided-next-step small,.code-change-challenge small{color:var(--muted);font-size:.78rem;line-height:1.55}
+.guided-example .guided-example-steps{display:grid;gap:12px}
+.guided-example .guided-example-steps li{background:var(--white);border:1px solid #c9b95e;display:grid;gap:14px;grid-template-columns:38px minmax(0,1fr);padding:20px;position:static}
+.guided-example .guided-example-steps li:before{content:none}
+.guided-example-steps li>span{font-family:var(--font-geist-mono);font-size:.62rem;font-weight:800}
+.guided-example-steps li small{background:var(--paper);display:block;font-size:.75rem;line-height:1.55;margin-bottom:10px;padding:10px}
+.guided-example-steps li p{margin:0}
+.guided-diagnosis{border-top:1px solid #c9b95e;display:grid;gap:12px;padding-top:20px}
+.guided-diagnosis>span{font-family:var(--font-geist-mono);font-size:.64rem;font-weight:800;text-transform:uppercase}
+.guided-diagnosis>div{display:flex;flex-wrap:wrap;gap:8px}
+.guided-diagnosis button{background:var(--white)}
+.guided-diagnosis button.active{background:var(--ink);border-color:var(--ink);color:white}
+.guided-diagnosis>p{background:var(--white);border-left:4px solid var(--teal);padding:14px}
+.guided-diagnosis>p.retry{border-color:var(--orange)}
+
+.code-walkthrough .learning-activity-contract{margin-top:28px}
+.code-change-challenge{background:var(--paper);border:1px solid var(--line);color:var(--ink);display:grid;gap:16px;margin-top:20px;padding:22px}
+.code-change-challenge>div>p{font-size:.88rem;line-height:1.65;margin:8px 0 0}
+.code-change-committed{background:#e7f6f3;border-left:4px solid var(--teal);display:grid;gap:12px;padding:14px}
+.code-change-committed p{font-size:.84rem;line-height:1.6;margin:0}
+
+.lab-shell>.learning-activity-contract{margin-top:24px}
+.lab-shell>.activity-prediction-gate{margin-top:24px}
+.lab-observation-guide{background:var(--track);color:var(--ink);display:grid;gap:12px;grid-template-columns:170px minmax(0,1fr);padding:18px 22px}
+.lab-observation-guide p{font-size:.9rem;line-height:1.65;margin:0}
+.lab-instrument{margin-top:0!important}
+
+.technical-validation>.learning-activity-contract{margin:0}
+.technical-validation>.activity-prediction-gate{border-left:0;border-right:0;margin:0}
+.technical-validation .activity-after-commit>ol{counter-reset:validation;display:grid;gap:1px;grid-template-columns:repeat(3,1fr);list-style:none;margin:0;padding:0}
+.technical-validation .activity-after-commit>ol li{background:var(--white);counter-increment:validation;font-size:.9rem;line-height:1.65;padding:20px 18px 20px 50px;position:relative}
+.technical-validation .activity-after-commit>ol li:before{background:var(--ink);color:white;content:counter(validation);display:grid;font-family:var(--font-geist-mono);font-size:.5rem;height:24px;left:17px;place-items:center;position:absolute;top:21px;width:24px}
+.world-model-validation .activity-after-commit>ol li>span{display:none}
+
+.mastery-studio>.learning-activity-contract{margin:0}
+.fine-tuning-workshop>.learning-activity-contract{margin:0}
+.workshop-planner>.activity-prediction-gate{border:0;margin:0}
+.workshop-planner>.activity-prediction-gate,.workshop-planner>.activity-prediction-gate>.activity-after-commit,.workshop-planner .planner-readout{min-height:100%}
+.capstone-exemplar-gate{align-items:start;display:grid;gap:12px;justify-items:start}
+.capstone-exemplar-gate>span{color:var(--muted);font-family:var(--font-geist-mono);font-size:.62rem;text-transform:uppercase}
+.capstone-exemplar-gate .reveal-button:disabled{cursor:not-allowed;opacity:.4}
+.capstone-rubric{min-width:0;overflow:hidden}
+.rubric-table{max-width:100%;min-width:0;overflow-x:auto}
+.scroll-story-learning-cue{background:var(--paper);border-left:4px solid var(--story-accent,var(--track));color:var(--ink);display:grid;gap:8px;margin-top:22px;max-width:760px;padding:16px 18px}
+.scroll-story-learning-cue>span{font-family:var(--font-geist-mono);font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.scroll-story-learning-cue>p,.scroll-story-learning-cue>small{font-size:.82rem;line-height:1.65;margin:0}
+.scroll-story-learning-cue>small{color:var(--muted)}
+
+@media(max-width:780px){
+  .learning-activity-contract>header,.lab-observation-guide{grid-template-columns:1fr}
+  .learning-activity-contract ol{grid-template-columns:1fr}
+  .learning-activity-contract li{padding:16px 18px}
+  .activity-prediction-entry,.guided-prediction-entry,.guided-next-step,.code-change-challenge{padding:18px}
+  .activity-prediction-locked,.guided-prediction-locked,.guided-example-intro{display:grid}
+  .guided-example .guided-example-steps li{grid-template-columns:1fr}
+  .guided-diagnosis>div{display:grid}
+  .technical-validation .activity-after-commit>ol{grid-template-columns:1fr}
+}

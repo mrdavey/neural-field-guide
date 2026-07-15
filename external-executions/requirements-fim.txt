@@ -1,0 +1,4 @@
+# The measured FIM probe uses a small model initialized and trained by the runner.
+torch==2.7.1
+tokenizers==0.23.1
+huggingface-hub==0.36.0

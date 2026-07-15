@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "artifact": "embedding-hidden-state-result",
+  "evidence_tier": "executable pinned probe contract",
+  "reviewed": "2026-07-13",
+  "pins": {
+    "model": "openai-community/gpt2@607a30d",
+    "architecture": "12 layers, 768 hidden dimensions",
+    "sentences": ["We sat beside the river bank", "She visited the central bank"]
+  },
+  "correctness_repairs": {
+    "padding": "Set tok.pad_token = tok.eos_token before padding=True.",
+    "masking": "Pass the returned attention_mask to the model.",
+    "position_selection": "Locate the final occurrence of the exact token ID returned by encode(' bank', add_special_tokens=False).",
+    "precision": "Report full 768-dimensional cosine before any projection."
+  },
+  "execution": {
+    "command": "python embedding_identity.py --model openai-community/gpt2 --revision 607a30d --json embedding-hidden-state-result.json",
+    "required_output": ["python/torch/transformers versions", "model file hashes", "bank token id", "two positions", "lookup cosine", "layer 1/6/12 contextual cosines"],
+    "local_status": "probe corrected and preserved; heavyweight model payload is intentionally not bundled with the course",
+    "blocking_failure": "Do not claim measured contextual values until this file is regenerated with numeric outputs from the pinned checkpoint."
+  },
+  "invariants": [
+    {"name": "same lookup row", "expected": "cosine approximately 1.0", "reason": "both positions index the same embedding-table row"},
+    {"name": "contextual values", "expected": "empirical numeric cosines at layers 1, 6, and 12", "reason": "attention and MLP computation can separate the contexts; monotonic separation is not guaranteed"}
+  ]
+}

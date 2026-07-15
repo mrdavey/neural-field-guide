@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "course": "worldmodel",
+  "lessonId": "belief-states-filtering",
+  "evidenceTier": "deterministic teaching fixture",
+  "question": "Does action-aware filtering recover from one misleading observation better than using the latest observation alone?",
+  "fixture": { "states": ["A", "B"], "priorA": 0.5, "transitionStay": 0.8, "observationAccuracy": 0.75, "trajectory": ["A", "A", "B", "B"], "observations": ["A", "B", "B", "B"] },
+  "baseline": "latest observation classifier",
+  "changedCase": "observation at step 2 contradicts the hidden state",
+  "rawRows": [
+    { "step": 1, "hidden": "A", "observed": "A", "posteriorA": 0.75, "baseline": "A" },
+    { "step": 2, "hidden": "A", "observed": "B", "posteriorA": 0.5, "baseline": "B" },
+    { "step": 3, "hidden": "B", "observed": "B", "posteriorA": 0.25, "baseline": "B" },
+    { "step": 4, "hidden": "B", "observed": "B", "posteriorA": 0.1, "baseline": "B" }
+  ],
+  "checks": ["posterior mass sums to one", "transition precedes observation update", "zero-likelihood case triggers explicit smoothing policy"],
+  "failure": "A zero likelihood makes the unnormalized total zero; reject the update or use a predeclared likelihood floor rather than silently returning NaN.",
+  "decision": "The fixture demonstrates filtering arithmetic and recovery behavior only.",
+  "boundary": "No learned model, simulator benchmark, or physical system was measured.",
+  "reviewed": "2026-07-14"
+}

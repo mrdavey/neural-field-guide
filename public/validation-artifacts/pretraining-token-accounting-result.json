@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "artifact": "pretraining-token-accounting-result",
+  "evidence_tier": "executed deterministic course fixture mapped to pinned loader semantics",
+  "reviewed": "2026-07-13",
+  "pins": {"reference_loader": "allenai/OLMo-core@v2.4.0 (1ed8900)", "world_size": 2, "sequence_length": 8, "micro_batch_per_rank": 2, "gradient_accumulation": 1},
+  "command": "node scripts/verify-learning-artifacts.mjs",
+  "raw_rank_rows": [
+    {"step": 0, "rank": 0, "nominal": 16, "visible": 16, "loss_tokens": 16},
+    {"step": 0, "rank": 1, "nominal": 16, "visible": 16, "loss_tokens": 16},
+    {"step": 1, "rank": 0, "nominal": 16, "visible": 11, "loss_tokens": 10},
+    {"step": 1, "rank": 1, "nominal": 16, "visible": 7, "loss_tokens": 6}
+  ],
+  "distributed_reconciliation": [
+    {"step": 0, "nominal": 32, "visible": 32, "loss_tokens": 32, "utilization": 1.0},
+    {"step": 1, "nominal": 32, "visible": 18, "loss_tokens": 16, "utilization": 0.5}
+  ],
+  "run_total": {"configured_nominal": 64, "sum_visible": 50, "sum_loss_tokens": 48, "reconciled": true},
+  "interpretation": "The ordinary packed batch fills every slot. The final fixture proves loss_tokens ≤ visible ≤ nominal on every rank; the training claim uses the reduced sum of 48 loss-bearing labels, not 64 configured slots.",
+  "scope_boundary": "These rows execute the accounting invariant with OLMo-compatible masks; they are not represented as an OLMo 3 training run."
+}

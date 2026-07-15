@@ -1,0 +1,19 @@
+{
+  "artifact": "filled OLMo 3 flow audit and mini-replication",
+  "schema_version": "1.0",
+  "upstream": {"repository": "allenai/OLMo-core", "revision": "v2.4.0 / 1ed8900", "reviewed": "2026-07-13"},
+  "flow": [
+    {"stage": "base", "incoming": "random initialization", "data": "Dolma 3 Mix, 5.9T-token reported budget", "objective": "causal next-token prediction", "artifact": "official OLMo3 pretrain script + checkpoint manifest", "evidence_strength": "reported/released", "unknown": "independent full-scale replication"},
+    {"stage": "Dolmino", "incoming": "base checkpoint", "data": "100B-token targeted mixture", "objective": "continued causal training", "artifact": "official midtraining scripts/mix", "evidence_strength": "reported/released", "unknown": "equal-token causal attribution for every target slice"},
+    {"stage": "Longmino", "incoming": "midtrained checkpoint", "data": "50B-token long-context mixture", "objective": "continued causal training with context extension", "artifact": "official long-context scripts", "evidence_strength": "reported/released", "unknown": "all-distance effective-context behavior"}
+  ],
+  "mini_replication": {"hypothesis": "A 40% verified-code midtraining mixture improves execution without unacceptable broad forgetting.", "model_parameters": 50000000, "entering_checkpoint": "course-base-50m-step-12000", "token_budget_each": 200000000, "control": "100% base mixture", "treatment": "40% verified code + 60% base", "fixed": ["optimizer", "schedule", "batch", "sequence length", "seeds", "loss-bearing tokens"], "seeds": [17, 23, 41]},
+  "simulated_result_rows_for_analysis_practice": [
+    {"arm": "control", "execution_pass_rate": 0.31, "broad_loss": 2.48, "tokens_per_second": 48200},
+    {"arm": "treatment", "execution_pass_rate": 0.39, "broad_loss": 2.53, "tokens_per_second": 47600}
+  ],
+  "result_status": "explicitly simulated learner-analysis rows; not an OLMo result",
+  "decision_rule": "Retain only if paired execution gain clears seed uncertainty and broad loss regression is no worse than 0.03.",
+  "decision_on_fixture": "reject: broad-loss regression 0.05 breaches the predeclared gate despite execution gain",
+  "stop_rules": ["non-finite loss", "provenance/license failure", "evaluation overlap", "broad-loss gate breach"]
+}

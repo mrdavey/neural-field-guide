@@ -1,0 +1,47 @@
+[
+  {
+    "taskId": "M001",
+    "repo": "/Users/dt/Documents/LLMs from scratch",
+    "title": "Add a self-contained LaTeX rendering layer",
+    "objective": "Render explicit inline and display math with professional mathematical typography and accessible source labels.",
+    "dependsOn": [],
+    "acceptanceCriteria": [
+      "The app has a reusable component for inline $...$ and display $$...$$ expressions",
+      "Math rendering is bundled locally rather than depending on a runtime CDN",
+      "Malformed or unmatched delimiters fall back to readable source text"
+    ],
+    "details": "Add KaTeX locally, implement a MathText parser/renderer, import styles, and add visual styling for overflow and surrounding prose.",
+    "runMajorChecks": true,
+    "priority": 1
+  },
+  {
+    "taskId": "M002",
+    "repo": "/Users/dt/Documents/LLMs from scratch",
+    "title": "Annotate and wire course mathematics",
+    "objective": "Make mathematical notation consistently legible throughout lessons, long-form guides, labs, and capstone instructions.",
+    "dependsOn": ["M001"],
+    "acceptanceCriteria": [
+      "All learner-facing prose render paths use the math-aware text component",
+      "Representative tensor shapes, equations, gradients, probability expressions, complexity terms, and low-rank formulas are explicitly delimited",
+      "Ordinary currency, prose, links, editable workspaces, and code-like identifiers remain readable"
+    ],
+    "details": "Wire MathText into course-app, lesson-guide-view, capstone-project-view, and lab labels; annotate high-value expressions in course data and guide/project content.",
+    "runMajorChecks": true,
+    "priority": 2
+  },
+  {
+    "taskId": "M003",
+    "repo": "/Users/dt/Documents/LLMs from scratch",
+    "title": "Audit mathematical rendering",
+    "objective": "Prove notation renders correctly, accessibly, and responsively across the full course.",
+    "dependsOn": ["M002"],
+    "acceptanceCriteria": [
+      "Automated tests cover parsing, rendering hooks, annotated notation, and absence of runtime CDN dependencies",
+      "Production build, all tests, and lint pass",
+      "Desktop and phone browser checks show legible inline/display math without clipping or console errors"
+    ],
+    "details": "Add math-rendering tests, run the complete suite, inspect representative lessons/capstones/labs in the browser, and iterate on any layout or parser gaps.",
+    "runMajorChecks": true,
+    "priority": 3
+  }
+]

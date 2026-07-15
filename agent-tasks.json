@@ -1,384 +1,312 @@
 {
   "meta": {
-    "objective": "Create a self-contained, highly engaging website that teaches every component of the supplied LLM curriculum from scratch, with simple and deep explanations, interactive components, and independent grading of every component to at least 85% effectiveness and accuracy.",
-    "createdAt": "2026-07-13T06:52:20Z",
-    "updatedAt": "2026-07-13T07:25:41Z",
+    "objective": "Remove redundant lesson-title repetition, format lesson live-trace sections as readable rows, and audit every interactive visual so it directly teaches its lesson mechanism.",
+    "createdAt": "2026-07-14T10:37:30Z",
+    "updatedAt": "2026-07-14T11:04:19Z",
     "runStatus": "complete"
   },
   "tasks": [
     {
       "taskId": "T001",
       "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Course architecture and curriculum model",
-      "objective": "Create the complete curriculum map, pedagogical structure, and reusable lesson schema for all 28 topics shown in the supplied curriculum screenshots.",
+      "title": "Remove redundant lesson-title repetition",
+      "objective": "Replace repeated page-title interpolations with concise, section-specific headings that state the learning action or decision.",
       "dependsOn": [],
       "acceptanceCriteria": [
-        "All 28 curriculum topics are represented exactly once and grouped into Architecture, Pre-Training, Post-Training, and Advanced tracks",
-        "Every topic has a simple explanation, deep explanation, key ideas, mental model, worked example, misconception, and knowledge check",
-        "The dependency-ordered learning path and course progress model are defined"
+        "The lesson title remains prominent once at page level and is not mechanically repeated across instructional section headings.",
+        "Every replacement heading remains descriptive, accessible, and specific to the section's educational purpose.",
+        "Tests prevent the removed repetitive title patterns from returning."
       ],
-      "details": "Create the content model and course data in app/course-data.ts; initialize the site metadata and test coverage for curriculum completeness.",
+      "details": "Audit course-app, guide, evidence, further-reading, discussion, mastery, specialization, next-use, and capstone headings. Preserve ARIA context where the lesson title remains useful.",
       "status": "done",
       "attempt": 1,
       "runMajorChecks": false,
-      "priority": 1,
+      "priority": 10,
       "blockerReason": "",
       "nextTaskId": "T002",
       "changedFiles": [
-        "app/course-data.ts",
-        "app/layout.tsx",
-        "tests/course-data.test.mjs",
-        "PLAN_LOG.md"
+        "app/lesson-guide-view.tsx",
+        "app/lesson-evidence-view.tsx",
+        "app/course-app.tsx",
+        "app/llm-discussion-prompt.tsx",
+        "app/capstone-project-view.tsx",
+        "tests/content-ux.test.mjs",
+        "tests/curriculum-progression.test.mjs"
       ],
       "validationCommands": [
         {
-          "command": "node --test tests/course-data.test.mjs",
+          "command": "node --test --experimental-strip-types tests/content-ux.test.mjs tests/curriculum-progression.test.mjs",
           "status": "pass",
-          "evidence": "2 passed"
+          "evidence": "Focused heading and curriculum tests passed."
         },
         {
-          "command": "npx tsc --noEmit",
-          "status": "skip",
-          "evidence": "Starter Cloudflare ambient types are supplied by the build runtime, not standalone tsc"
+          "command": "rg repetitive title interpolation patterns in app",
+          "status": "pass",
+          "evidence": "No visible mechanical lesson-title interpolation remains in the audited shared headings."
         }
       ],
       "acceptanceCheckResults": [
         {
-          "criterion": "All 28 topics represented",
+          "criterion": "The lesson title remains prominent once at page level and is not mechanically repeated across instructional section headings.",
           "status": "pass",
-          "details": "Coverage test passed"
+          "details": "Visible shared headings now name the section action; title remains in the page heading and accessibility context."
         },
         {
-          "criterion": "Complete teaching schema",
+          "criterion": "Every replacement heading remains descriptive, accessible, and specific to the section's educational purpose.",
           "status": "pass",
-          "details": "All 28 include simple/deep/mental model/key ideas/example/misconception/quiz"
+          "details": "Headings now name prediction, mechanism tracing, transfer, verification, evidence, and reflection tasks."
         },
         {
-          "criterion": "Dependency path defined",
+          "criterion": "Tests prevent the removed repetitive title patterns from returning.",
           "status": "pass",
-          "details": "Prerequisite IDs and ordered lesson numbers included"
+          "details": "content-ux regression assertions reject the prior interpolation patterns."
         }
       ],
-      "attemptedAt": "2026-07-13T06:58:50Z",
-      "completedAt": "2026-07-13T06:58:50Z",
+      "attemptedAt": "2026-07-14T11:01:55Z",
+      "completedAt": "2026-07-14T11:01:55Z",
       "evidence": [
-        "tests/course-data.test.mjs: 2 passed"
+        "Focused tests passed 14 Jul 2026",
+        "Browser DOM snapshot confirmed shortened headings on Probability, Softmax & Cross-Entropy."
       ],
       "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1"
+        "PLAN_LOG.md#Plan-1:Verification-1"
       ],
       "blockers": [],
       "commit": {
-        "sha": "e41459ebe6ae04ee155174443bc8bd627c5101b1",
-        "message": "Task T001: Course architecture and curriculum model"
+        "sha": "",
+        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
       }
     },
     {
       "taskId": "T002",
       "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Immersive course interface",
-      "objective": "Build a responsive, accessible course experience with a memorable visual system and low-friction navigation across all lessons.",
+      "title": "Reformat live-trace sections as readable rows",
+      "objective": "Replace the three-column live-trace heading and dense stage presentation with a single-column editorial row flow while preserving the anchored visual narrative.",
       "dependsOn": [
         "T001"
       ],
       "acceptanceCriteria": [
-        "Landing view clearly communicates the learning journey and lets learners enter the course",
-        "Desktop and mobile navigation support tracks, search, previous/next lesson movement, and progress",
-        "Lesson view progressively discloses simple and deep explanations without overwhelming beginners",
-        "Keyboard focus, contrast, reduced motion, semantic landmarks, and touch targets are supported"
+        "Lesson live-trace headers read as rows rather than three parallel columns.",
+        "Stage explanations use one readable text column at desktop, tablet, and mobile widths.",
+        "Sticky scroll behavior, keyboard stage controls, reduced motion, and narrow-screen overflow remain correct."
       ],
-      "details": "Replace the starter with the finished course shell in app/page.tsx and app/globals.css; add client-side course navigation and local progress persistence.",
+      "details": "Update scroll-story markup/CSS only where layout improves comprehension; keep the homepage story behavior coherent.",
       "status": "done",
       "attempt": 1,
-      "runMajorChecks": true,
-      "priority": 2,
+      "runMajorChecks": false,
+      "priority": 20,
       "blockerReason": "",
       "nextTaskId": "T003",
       "changedFiles": [
-        "app/course-app.tsx",
-        "app/page.tsx",
+        "app/scroll-story.tsx",
         "app/globals.css",
-        "app/lesson-labs.tsx",
-        "tests/rendered-html.test.mjs",
-        "package.json",
-        "package-lock.json"
+        "tests/content-ux.test.mjs"
       ],
       "validationCommands": [
         {
-          "command": "npm test",
+          "command": "node --test --experimental-strip-types tests/content-ux.test.mjs",
           "status": "pass",
-          "evidence": "Production build and 2 rendered-page tests passed"
+          "evidence": "Row-flow and sticky-story assertions passed."
+        },
+        {
+          "command": "in-app browser QA at 1440x1000 and 390x844",
+          "status": "pass",
+          "evidence": "Desktop header resolved to one 982px column; narrow header/copy resolved to one 354px column with no horizontal overflow."
         }
       ],
       "acceptanceCheckResults": [
         {
-          "criterion": "Engaging landing and course entry",
+          "criterion": "Lesson live-trace headers read as rows rather than three parallel columns.",
           "status": "pass",
-          "details": "Narrative hero, track map, and resume action implemented"
+          "details": "Eyebrow, title, and introduction now occupy one editorial column."
         },
         {
-          "criterion": "Responsive searchable navigation",
+          "criterion": "Stage explanations use one readable text column at desktop, tablet, and mobile widths.",
           "status": "pass",
-          "details": "Desktop sidebar and mobile course-map drawer implemented"
+          "details": "Copy remains one column and mobile controls scroll horizontally without page overflow."
         },
         {
-          "criterion": "Progressive disclosure",
+          "criterion": "Sticky scroll behavior, keyboard stage controls, reduced motion, and narrow-screen overflow remain correct.",
           "status": "pass",
-          "details": "Plain English and Under the hood explanation modes"
-        },
-        {
-          "criterion": "Accessible interaction",
-          "status": "pass",
-          "details": "Semantic landmarks, focus styles, reduced motion, and responsive touch controls included"
+          "details": "Browser QA measured sticky top 88px at desktop, relative positioning at 390px, unique accessible controls, and zero horizontal overflow."
         }
       ],
-      "attemptedAt": "2026-07-13T07:03:26Z",
-      "completedAt": "2026-07-13T07:03:26Z",
+      "attemptedAt": "2026-07-14T11:01:55Z",
+      "completedAt": "2026-07-14T11:01:55Z",
       "evidence": [
-        "npm test: pass"
+        "Homepage stage button moved the active article while the visual remained anchored at top 88px.",
+        "Probability trace measured one-column header and copy at desktop and narrow widths."
       ],
       "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1"
+        "PLAN_LOG.md#Plan-1:Verification-2"
       ],
       "blockers": [],
       "commit": {
-        "sha": "129f8f80fa0a852144129e59b64587fafa784a74",
-        "message": "Task T002: Immersive course interface"
+        "sha": "",
+        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
       }
     },
     {
       "taskId": "T003",
       "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Interactive learning laboratories",
-      "objective": "Add hands-on visual simulations that make the hardest LLM concepts manipulable and concrete.",
+      "title": "Audit and differentiate every interaction",
+      "objective": "Ensure every lesson's live trace and lab exposes its actual mechanism through an appropriate visual grammar or interaction rather than generic themed motion.",
       "dependsOn": [
         "T002"
       ],
       "acceptanceCriteria": [
-        "Tokenization, embeddings, positional encoding, attention, next-token prediction, scaling, optimization, LoRA, MoE, distillation, and preference learning have relevant interactive demonstrations",
-        "Every lab explains what to change, what to observe, and why the result matters",
-        "Labs remain usable with keyboard controls and on narrow screens"
+        "All 44 lesson motion stories have an explicit concept-to-visual rationale and no lesson falls back to decorative motion.",
+        "Concept families use meaningfully different visual grammars where the mechanism calls for matrices, paths, filters, queues, boundaries, comparisons, routing, or interventions.",
+        "Existing topic-specific labs are audited and any weak interaction is repaired or documented with its evidence boundary."
       ],
-      "details": "Create reusable interactive lesson labs and connect each to the appropriate curriculum topics.",
+      "details": "Audit lesson-motion, Three.js renderer, CSS overlays, and all lesson-labs dispatches. Preserve deterministic seeds, progressive enhancement, and reduced-motion fallback.",
       "status": "done",
       "attempt": 1,
-      "runMajorChecks": true,
-      "priority": 3,
+      "runMajorChecks": false,
+      "priority": 30,
       "blockerReason": "",
       "nextTaskId": "T004",
       "changedFiles": [
-        "app/lesson-labs.tsx",
+        "app/three-story-math.ts",
+        "app/story-mechanism-diagram.tsx",
+        "app/scroll-story.tsx",
         "app/globals.css",
-        "app/course-app.tsx",
-        "tests/course-data.test.mjs"
+        "docs/INTERACTION_AUDIT.md",
+        "tests/three-story.test.mjs"
       ],
       "validationCommands": [
         {
-          "command": "npm test",
+          "command": "node --test --experimental-strip-types tests/three-story.test.mjs",
           "status": "pass",
-          "evidence": "Build and rendered tests passed"
+          "evidence": "All 24 semantic grammars and all 44 lesson motion stories passed coverage checks."
         },
         {
-          "command": "node --test tests/course-data.test.mjs",
+          "command": "npx tsc --noEmit",
           "status": "pass",
-          "evidence": "3 content and lab coverage tests passed"
+          "evidence": "New SVG diagrams and semantic registry type-check."
         },
         {
-          "command": "npm run lint",
+          "command": "in-app browser representative grammar QA",
           "status": "pass",
-          "evidence": "No lint errors"
+          "evidence": "Embedding lookup, attention matrix, security boundary, expert routing, and causal intervention grammars rendered with no page overflow after the popover repair."
         }
       ],
       "acceptanceCheckResults": [
         {
-          "criterion": "12 relevant concept labs",
+          "criterion": "All 44 lesson motion stories have an explicit concept-to-visual rationale and no lesson falls back to decorative motion.",
           "status": "pass",
-          "details": "Tokenization, vectors, positions, attention, prediction, scaling, optimization, preference, LoRA, MoE, distillation, and RL implemented"
+          "details": "Every lesson maps through one of 24 exhaustive semantic contracts with a learning question, representation, and evidence boundary."
         },
         {
-          "criterion": "Change-observe-why instruction",
+          "criterion": "Concept families use meaningfully different visual grammars where the mechanism calls for matrices, paths, filters, queues, boundaries, comparisons, routing, or interventions.",
           "status": "pass",
-          "details": "Every lab has explicit change instruction and causal observation"
+          "details": "24 distinct SVG grammars now carry the meaning above the progressive Three.js field."
         },
         {
-          "criterion": "Responsive and keyboard usable",
+          "criterion": "Existing topic-specific labs are audited and any weak interaction is repaired or documented with its evidence boundary.",
           "status": "pass",
-          "details": "Native controls, buttons, labels, focus styles, and narrow layouts included"
+          "details": "All 34 lab types were reviewed and documented; the shared generic overlay was the weak surface and was replaced, while strong lab controls were retained."
         }
       ],
-      "attemptedAt": "2026-07-13T07:07:17Z",
-      "completedAt": "2026-07-13T07:07:17Z",
+      "attemptedAt": "2026-07-14T11:01:55Z",
+      "completedAt": "2026-07-14T11:01:55Z",
       "evidence": [
-        "5 tests and lint passed"
+        "docs/INTERACTION_AUDIT.md covers 24 live-trace concepts and 34 lab types.",
+        "Browser stage transition on embedding changed active state to ROW LOOKUP while retaining sticky anchoring."
       ],
       "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1"
+        "PLAN_LOG.md#Plan-1:Verification-3"
       ],
       "blockers": [],
       "commit": {
-        "sha": "f6bacd63b3f0065d898aa8a9bc3d3aa92be6735c",
-        "message": "Task T003: Interactive learning laboratories"
+        "sha": "",
+        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
       }
     },
     {
       "taskId": "T004",
       "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Assessment and mastery system",
-      "objective": "Add active-recall quizzes, immediate explanatory feedback, lesson completion, and a capstone learning path.",
+      "title": "Verify and codify readable instructional interactions",
+      "objective": "Add durable interaction-quality checks, perform desktop/narrow/reduced-motion QA, and pass the complete repository verification suite.",
       "dependsOn": [
         "T003"
       ],
       "acceptanceCriteria": [
-        "Every lesson has a meaningful knowledge check with explanatory feedback",
-        "Progress persists locally and can be reset",
-        "Track and overall completion are visible",
-        "The GPT-2, LLaMA 3, and Tulu 3 case studies synthesize earlier concepts"
+        "Focused tests enforce concise headings, row layout, and explicit visual semantics for all lessons.",
+        "Desktop and narrow browser QA confirm readability, focus/touch behavior, sticky flow, and no overflow.",
+        "AGENTS.md records the visual-mechanism and readability review contract; npm run lint and npm test pass."
       ],
-      "details": "Implement quiz interactions, mastery feedback, completion controls, persisted progress, and capstone synthesis links.",
+      "details": "Update tests and documentation after implementation, then run TypeScript, focused tests, lint, and full tests.",
       "status": "done",
       "attempt": 1,
       "runMajorChecks": true,
-      "priority": 4,
-      "blockerReason": "",
-      "nextTaskId": "T005",
-      "changedFiles": [
-        "app/course-app.tsx",
-        "app/globals.css",
-        "tests/course-data.test.mjs"
-      ],
-      "validationCommands": [
-        {
-          "command": "npm test",
-          "status": "pass",
-          "evidence": "Build and rendered tests passed"
-        },
-        {
-          "command": "node --test tests/course-data.test.mjs",
-          "status": "pass",
-          "evidence": "4 curriculum tests passed"
-        },
-        {
-          "command": "npm run lint",
-          "status": "pass",
-          "evidence": "No lint errors"
-        }
-      ],
-      "acceptanceCheckResults": [
-        {
-          "criterion": "Feedback-rich check per lesson",
-          "status": "pass",
-          "details": "28 quizzes with immediate correctness and conceptual explanations"
-        },
-        {
-          "criterion": "Persistent resettable progress",
-          "status": "pass",
-          "details": "Local progress, track counters, overall percentage, and reset confirmation"
-        },
-        {
-          "criterion": "Visible mastery",
-          "status": "pass",
-          "details": "Track and overall completion displayed"
-        },
-        {
-          "criterion": "Case-study synthesis",
-          "status": "pass",
-          "details": "GPT-2, Llama 3, and Tulu 3 maps link prerequisite concepts"
-        }
-      ],
-      "attemptedAt": "2026-07-13T07:08:51Z",
-      "completedAt": "2026-07-13T07:08:51Z",
-      "evidence": [
-        "6 tests and lint passed"
-      ],
-      "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1"
-      ],
-      "blockers": [],
-      "commit": {
-        "sha": "0ed74ed4298c2ad0f0a73b1da2c65006cbf75b55",
-        "message": "Task T004: Assessment and mastery system"
-      }
-    },
-    {
-      "taskId": "T005",
-      "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Independent curriculum grading and iteration",
-      "objective": "Have a separate grading agent evaluate every curriculum topic for accuracy and teaching effectiveness, then revise until every topic scores at least 85%.",
-      "dependsOn": [
-        "T004"
-      ],
-      "acceptanceCriteria": [
-        "A grading report contains an accuracy score and teaching-effectiveness score for all 28 topics",
-        "Every topic achieves an overall score of at least 85% after revisions",
-        "All grader-identified high-impact gaps are addressed",
-        "Build, tests, and final objective verification pass"
-      ],
-      "details": "Run an independent grading agent against the course data and implementation, iterate on content and interactions, preserve grading evidence, and complete final build/validation.",
-      "status": "done",
-      "attempt": 1,
-      "runMajorChecks": true,
-      "priority": 5,
+      "priority": 40,
       "blockerReason": "",
       "nextTaskId": "",
       "changedFiles": [
-        "app/course-data.ts",
-        "app/lesson-labs.tsx",
-        "app/course-app.tsx",
-        "app/globals.css",
-        "public/favicon.svg",
-        "GRADING_REPORT.md"
+        "AGENTS.md",
+        "docs/INTERACTION_AUDIT.md",
+        "tests/agents-guidance.test.mjs",
+        "tests/content-ux.test.mjs",
+        "tests/curriculum-progression.test.mjs",
+        "tests/perfect-learning.test.mjs",
+        "tests/three-story.test.mjs",
+        "app/globals.css"
       ],
       "validationCommands": [
         {
-          "command": "npm test",
+          "command": "npx tsc --noEmit",
           "status": "pass",
-          "evidence": "Production build and 2 rendered-page tests passed"
-        },
-        {
-          "command": "node --test tests/course-data.test.mjs",
-          "status": "pass",
-          "evidence": "4 curriculum tests passed"
+          "evidence": "TypeScript passed after semantic diagram integration."
         },
         {
           "command": "npm run lint",
           "status": "pass",
-          "evidence": "No lint errors"
+          "evidence": "ESLint passed after final edits."
+        },
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Static export, 44 route verification, 13 preserved artifact checks, and all 90 regression tests passed."
+        },
+        {
+          "command": "in-app browser QA at 1440x1000 and 390x844",
+          "status": "pass",
+          "evidence": "Sticky desktop flow, row headings, responsive controls, distinct representative grammars, and overflow checks passed."
         }
       ],
       "acceptanceCheckResults": [
         {
-          "criterion": "Per-topic grading report",
+          "criterion": "Focused tests enforce concise headings, row layout, and explicit visual semantics for all lessons.",
           "status": "pass",
-          "details": "Accuracy, teaching, active learning, misconception, and weighted overall scores for all 28"
+          "details": "Regression tests reject repeated title interpolation, require one-column instructional rows, and exhaustively cover 24 semantic grammars and 44 lesson stories."
         },
         {
-          "criterion": "Every topic >=85",
+          "criterion": "Desktop and narrow browser QA confirm readability, focus/touch behavior, sticky flow, and no overflow.",
           "status": "pass",
-          "details": "Minimum 85.7; mean 89.8"
+          "details": "Stage buttons were unique and keyboard-accessible, desktop stage stayed sticky at 88px, 390px changed to relative flow with horizontal stage-control scrolling, and all observed page overflow was eliminated."
         },
         {
-          "criterion": "All high-impact gaps addressed",
+          "criterion": "AGENTS.md records the visual-mechanism and readability review contract; npm run lint and npm test pass.",
           "status": "pass",
-          "details": "Third grader confirmation states no outstanding factual issues"
-        },
-        {
-          "criterion": "Final checks pass",
-          "status": "pass",
-          "details": "Build, 6 tests, lint, and diff check pass"
+          "details": "The new interaction review contract and audit are documented; final lint and all 90 tests pass."
         }
       ],
-      "attemptedAt": "2026-07-13T07:25:41Z",
-      "completedAt": "2026-07-13T07:25:41Z",
+      "attemptedAt": "2026-07-14T11:04:19Z",
+      "completedAt": "2026-07-14T11:04:19Z",
       "evidence": [
-        "GRADING_REPORT.md: all 28 pass, minimum 85.7, mean 89.8"
+        "GitHub Pages static export verified 44 lesson routes, 411 files, 5.94 MB.",
+        "All 13 preserved learning artifacts verified.",
+        "Browser QA confirmed lookup, attention-matrix, trust-boundary, expert-router, and causal-intervention grammars.",
+        "Security source popover was repaired after browser QA exposed right-edge overflow."
       ],
       "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1"
+        "PLAN_LOG.md#Plan-1:Verification-4"
       ],
       "blockers": [],
       "commit": {
-        "sha": "e72d939159e726536a0bcfbf7480a136d50d2de2",
-        "message": "Task T005: Independently grade and refine curriculum"
+        "sha": "",
+        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
       }
     }
   ]

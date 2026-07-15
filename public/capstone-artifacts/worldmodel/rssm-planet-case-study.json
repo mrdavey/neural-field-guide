@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "course": "worldmodel",
+  "lessonId": "rssm-planet-case-study",
+  "evidenceTier": "deterministic teaching fixture",
+  "question": "Does posterior filtering correct a perturbed start faster than prior-only rollout?",
+  "fixture": { "deterministicWidth": 1, "stochasticValues": [-1, 1], "actions": [1, 0, -1], "observations": [1.2, -0.8, -1.1], "seed": 7 },
+  "baseline": "prior-only rollout",
+  "changedCase": "the second observation contradicts the prior mode",
+  "rawRows": [
+    { "step": 1, "priorMean": 0.6, "posteriorMean": 1.0, "target": 1.0 },
+    { "step": 2, "priorMean": 0.8, "posteriorMean": -0.7, "target": -1.0 },
+    { "step": 3, "priorMean": -0.4, "posteriorMean": -0.9, "target": -1.0 }
+  ],
+  "checks": ["prior has no current-observation input", "posterior consumes current observation", "imagination uses prior path only"],
+  "failure": "A deliberately leaked target observation improves prior error and is rejected by the input-dependency invariant.",
+  "decision": "Posterior filtering corrects this changed trace faster; the result validates information flow, not PlaNet performance.",
+  "boundary": "The values are hand-authored and do not reproduce a neural RSSM training run.",
+  "reviewed": "2026-07-14"
+}

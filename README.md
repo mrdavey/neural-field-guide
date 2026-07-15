@@ -1,98 +1,60 @@
-# vinext-starter
+# Neural Field Guide
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+A self-contained, interactive field guide with two complete courses:
 
-## Prerequisites
+- **Large Language Models** builds from tensors and next-token prediction through pre-training, post-training, inference, retrieval, agents, and advanced architectures.
+- **World Models** builds from controlled dynamics and hidden state through latent state-space models, imagination, planning, video and foundation models, robotics, safety, operations, and advanced research branches.
 
-- Node.js `>=22.13.0`
+The persistent course selector changes the complete curriculum context. Canonical course homes are `/llm/` and `/worldmodel/`; canonical lessons are `/llm/<lesson-id>/` and `/worldmodel/<lesson-id>/`. The root resumes the last selected course, and old flat LLM lesson URLs forward to their `/llm/` locations.
 
-## Quick Start
+## Run the course locally
+
+Prerequisites: Node.js `>=22.13.0`.
 
 ```bash
 npm install
 npm run dev
-npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+Open `http://localhost:3000/`. Learner progress and project notes remain in the browser and are isolated by course. Existing LLM progress using the original storage key is migrated on first use. Neither course requires an account, teacher, external grader, or API.
 
-## Included Shape
+## Verify the course
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```bash
+npm run lint
+npm test
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+The test command builds the site, verifies the preserved learning artifacts, and runs the curriculum and UX regression suite.
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+## Optional external reproductions
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+The course itself is complete without downloading models or running GPU workloads. Four advanced validation exercises require external dependencies or compute:
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+1. compare the pinned GPT-2 and Qwen tokenizer payloads;
+2. measure hidden-state cosines in the pinned GPT-2 checkpoint;
+3. count nominal, visible, and loss-bearing tokens in the pinned OLMo loader;
+4. run a paired causal-versus-FIM model ablation.
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+Complete setup, commands, runners, output contracts, failure criteria, and evidence-promotion steps are in [`external-executions/README.md`](external-executions/README.md).
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+## GitHub Pages deployment target
 
-## Useful Commands
+The course is designed to deploy as a static GitHub Pages site. `npm run build:pages` uses Next.js native static export and writes the publishable site to `out/`. The repository has no Cloudflare worker, Sites project, database binding, or server-side runtime requirement.
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+Read [`docs/GITHUB_PAGES.md`](docs/GITHUB_PAGES.md) before making the repository public or activating deployment. It covers repository choices, privacy and licensing review, root versus project URLs, local dry runs, workflow activation, GitHub settings, live acceptance checks, updates, rollback, custom domains, and troubleshooting.
 
-## Learn More
+## Repository map
 
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+- `AGENTS.md`: quality and consistency contract for future agents and contributors
+- `app/course-catalog.ts`: shared course contract and the two registered course definitions
+- `app/world-models/`: World Models curriculum, sources, labs, code, validations, transfer checks, and capstones
+- `app/`: shared course UI plus the existing LLM curriculum, labs, assessments, and capstones
+- `public/validation-artifacts/`: preserved validation contracts and evidence dossiers
+- `public/capstone-artifacts/`: reference project artifacts
+- `scripts/`: deterministic artifact generators and verifiers
+- `external-executions/`: optional model-backed reproduction runbook and runners
+- `docs/`: publication and maintenance runbooks, including GitHub Pages
+- `tests/`: curriculum, artifact, accessibility, and UX regression checks
+
+Publishing is not activated by default. The course and its grading work locally without a hosted service; when publication is requested, GitHub Pages is the supported target.
