@@ -2,8 +2,8 @@
   "meta": {
     "objective": "Remove repetitive lesson instructions and duplicate content, and ensure every intended interactive lab is visibly present before its prediction/reflection section.",
     "createdAt": "2026-07-16T08:56:22Z",
-    "updatedAt": "2026-07-16T09:00:51Z",
-    "runStatus": "in_progress"
+    "updatedAt": "2026-07-16T09:31:29Z",
+    "runStatus": "completed"
   },
   "tasks": [
     {
@@ -100,7 +100,7 @@
         "npm run lint and npm test pass."
       ],
       "details": "Refactor the three shared lab surfaces, update interaction tests and docs, then run focused and full required checks.",
-      "status": "in_progress",
+      "status": "done",
       "attempt": 1,
       "runMajorChecks": true,
       "priority": 20,
@@ -177,8 +177,9 @@
         }
       ],
       "attemptedAt": "2026-07-16T09:30:26Z",
-      "completedAt": "",
+      "completedAt": "2026-07-16T09:31:29Z",
       "evidence": [
+        "commit de56f90",
         "independent semantic re-review: PASS",
         "60/60 focused tests",
         "npm run lint",
@@ -189,8 +190,8 @@
       ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "de56f90",
+        "message": "Task T002: restore visible labs across curriculum"
       }
     }
   ]
