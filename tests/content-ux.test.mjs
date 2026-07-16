@@ -41,7 +41,7 @@ test("all non-reading learning surfaces explain their execution mode", () => {
   assert.match(workshop, /mode="external"/);
   assert.match(workshop, /mode="simulated"/);
   assert.match(capstone, /<ActivityInfo mode="project"/);
-  assert.match(app, /<ActivityInfo mode="checked" title="This quiz is graded locally"/);
+  assert.match(app, /<ActivityInfo mode="checked" title="Graded locally"/);
 });
 
 test("instruction disclosure supports hover, keyboard, and click or tap", () => {
@@ -77,9 +77,9 @@ test("lesson order follows orient, learn, try, test, extend", () => {
 });
 
 test("content pages use readable single-column prose and generous spacing", () => {
-  assert.match(styles, /\.chapter-narrative\{[^}]*grid-template-columns:1fr!important/);
+  assert.doesNotMatch(guide, /className="chapter-narrative"/);
   assert.match(styles, /\.walkthrough-steps\{[^}]*grid-template-columns:1fr!important/);
-  assert.match(styles, /\.chapter-narrative p\{[^}]*font-size:1rem!important[^}]*line-height:1\.82!important/);
+  assert.match(styles, /\.objective-teaching-sequence p[^}]*\{[^}]*font-size:1rem[^}]*line-height:1\.72/);
   assert.match(styles, /\.lab-shell,.lesson-evidence-lab,.technical-validation,.mastery-studio,.fine-tuning-workshop,.synthesis-map,.knowledge-check\{margin-top:96px!important/);
   assert.match(styles, /\.scroll-story-header\{[^}]*grid-template-columns:minmax\(0,1fr\)/);
   assert.match(styles, /\.lab-intro\{[^}]*grid-template-columns:minmax\(0,1fr\)!important/);
@@ -114,11 +114,11 @@ test("shared lesson surfaces use topic-specific headings instead of repeated fil
   assert.match(app, /motionStory\.stages\[0\]\.title/);
   for (const phrase of [
     "By the end, you can…",
-    "Commit your reasoning before comparing.",
     "Use each term precisely.",
     "Choose the answer your mechanism predicts.",
     "Trace the mechanism, then transfer it.",
   ]) assert.ok(`${app}\n${guide}\n${evidence}`.includes(phrase), phrase);
+  for (const phrase of ["These are learning promises, not a preview checklist", "Use the outcome map to connect each claim", "Choose first. Explanations appear after you commit."]) assert.ok(!`${app}\n${guide}`.includes(phrase), phrase);
   for (const pattern of [
     /Test your model of \{lesson\.title\}/,
     /By the end of \{objectiveLessonTitle\}/,

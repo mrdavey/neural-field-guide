@@ -440,7 +440,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
     {lesson.capstone && <SynthesisMap course={course} lesson={lesson} openLesson={openLesson} />}
 
     <section className="knowledge-check">
-      <div className="quiz-heading"><span className="eyebrow">Retrieval practice</span><h2>Choose the answer your mechanism predicts.</h2><p>Choose first. Explanations appear after you commit.</p><ActivityInfo mode="checked" title="This quiz is graded locally" detail="Choose one answer. The page immediately explains the correct distinction and lets you retry; passing unlocks the local mastery record." /></div>
+      <div className="quiz-heading"><span className="eyebrow">Retrieval practice</span><h2>Choose the answer your mechanism predicts.</h2><ActivityInfo mode="checked" title="Graded locally" detail="Feedback appears after your choice." /></div>
       <div className="quiz-card"><p className="quiz-question"><MathText>{lesson.quiz.question}</MathText></p><div className="quiz-options">
         {lesson.quiz.options.map((option, optionIndex) => {
           const answered = selectedAnswer !== undefined;

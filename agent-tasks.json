@@ -1,134 +1,72 @@
 {
   "meta": {
-    "objective": "Update documentation throughout the project to reflect the latest changes and remove documentation or files that are no longer needed.",
-    "createdAt": "2026-07-15T13:44:36Z",
-    "updatedAt": "2026-07-15T13:58:22Z",
-    "runStatus": "complete"
+    "objective": "Remove repetitive lesson instructions and duplicate content, and ensure every intended interactive lab is visibly present before its prediction/reflection section.",
+    "createdAt": "2026-07-16T08:56:22Z",
+    "updatedAt": "2026-07-16T08:56:22Z",
+    "runStatus": "in_progress"
   },
   "tasks": [
     {
-      "taskId": "DOCS-001",
+      "taskId": "T001",
       "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Refresh and consolidate project documentation",
-      "objective": "Make every maintained document accurately describe the current five-course application, its grading/evidence contracts, external experiment workflow, and verification commands while removing superseded or unreferenced documentation residue.",
+      "title": "Remove redundant lesson scaffolding",
+      "objective": "Keep the detailed objective teaching while removing repeated narrative and verbose procedural framing from every lesson page.",
       "dependsOn": [],
       "acceptanceCriteria": [
-        "Every retained Markdown document agrees with the live course counts, routes, source-of-truth files, grading report, artifact contracts, and GitHub Pages workflow.",
-        "Superseded audits, stale task backups, and obsolete seed files are deleted only after reference and test scans establish that they have no required consumer.",
-        "README and documentation indexes give a new contributor one clear path to curriculum, grading, experiments, hosting, and validation guidance.",
-        "Documentation links and path references resolve, generated inventories/reports remain byte-current, and no active source or test references a deleted file.",
-        "npm run lint, npm test, and both GitHub Pages URL-shape verifications pass."
+        "The By the end section keeps exact objective coverage but no longer includes explanatory meta-copy.",
+        "The duplicate chapter narrative is not rendered after objective coverage.",
+        "Shared activity and scroll-story framing no longer displays Do, Observe, Explain, Complete when, or before-moving instructions.",
+        "Focused content and interaction tests pass."
       ],
-      "details": "Audit README.md, root audit reports, docs/, external-executions/, public runbook mirrors, AGENTS.md repository map/counts, package scripts, tests, and all filename references. Consolidate historical results into canonical current docs, remove redundant reports/backups/seeds, and add mechanical documentation integrity coverage where useful.",
-      "status": "done",
-      "attempt": 1,
+      "details": "Edit shared lesson/activity/scroll renderers and their regression tests; retain evidence boundaries and objective checks.",
+      "status": "in_progress",
+      "attempt": 0,
+      "runMajorChecks": false,
+      "priority": 10,
+      "blockerReason": "",
+      "nextTaskId": "T001",
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "2026-07-16T08:56:22Z",
+      "completedAt": "",
+      "evidence": [],
+      "ledgerRefs": [],
+      "blockers": [],
+      "commit": {
+        "sha": "",
+        "message": ""
+      }
+    },
+    {
+      "taskId": "T002",
+      "repo": "/Users/dt/Documents/LLMs from scratch",
+      "title": "Restore visible interactive labs across the curriculum",
+      "objective": "Render the working lab instrument before any prediction/reflection prompt on every released lesson and prove complete lesson-to-lab wiring.",
+      "dependsOn": [
+        "T001"
+      ],
+      "acceptanceCriteria": [
+        "The LLM Introduction prediction lab renders its interactive instrument immediately.",
+        "LLM, World Model, Generative, RL, and Embodied lab renderers place controls/readouts before concise reflection prompts.",
+        "An executable regression verifies every one of the 182 released lessons has a supported lab.",
+        "The interaction audit documents the new visual order and evidence boundary.",
+        "npm run lint and npm test pass."
+      ],
+      "details": "Refactor the three shared lab surfaces, update interaction tests and docs, then run focused and full required checks.",
+      "status": "todo",
+      "attempt": 0,
       "runMajorChecks": true,
-      "priority": 1,
+      "priority": 20,
       "blockerReason": "",
       "nextTaskId": "",
-      "changedFiles": [
-        "AGENTS.md",
-        "README.md",
-        "docs/README.md",
-        "docs/CURRICULUM_ARCHITECTURE.md",
-        "docs/OBJECTIVE_COVERAGE_REVIEW.md",
-        "docs/INTERACTION_AUDIT.md",
-        "docs/GITHUB_PAGES.md",
-        "external-executions/README.md",
-        "tests/documentation.test.mjs",
-        "tests/mastery-studios.test.mjs",
-        "tests/curriculum-architecture.test.mjs",
-        "tests/external-executions.test.mjs",
-        "COMPONENT_GRADES.md (deleted)",
-        "CONTENT_UX_AUDIT.md (deleted)",
-        "CURRICULUM_AUDIT.md (deleted)",
-        "CURRICULUM_PROGRESSION_REVIEW.md (deleted)",
-        "GRADING_REPORT.md (deleted)",
-        "PLAN_LOG.md.backup.20260714T082630Z (deleted)",
-        "curriculum-improvement-seed.json (deleted)",
-        "curriculum-progression-seed.json (deleted)",
-        "learning-expansion-seed.json (deleted)",
-        "math-rendering-seed.json (deleted)",
-        "task-seed.json (deleted)",
-        "docs/OBJECTIVE_COVERAGE_GRADE.md (deleted)",
-        "docs/WORLD_MODEL_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
-        "docs/GENERATIVE_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
-        "docs/RL_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
-        "docs/EMBODIED_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
-        "docs/WORLD_MODEL_CONTENT_GRADES.md (deleted)",
-        "PLAN_LOG.md",
-        "CHANGES.log",
-        "agent-tasks.json"
-      ],
-      "validationCommands": [
-        {
-          "command": "node --test tests/documentation.test.mjs tests/mastery-studios.test.mjs tests/curriculum-architecture.test.mjs tests/external-executions.test.mjs",
-          "status": "pass",
-          "evidence": "24 tests passed, 0 failed"
-        },
-        {
-          "command": "npm run lint",
-          "status": "pass",
-          "evidence": "ESLint completed without findings"
-        },
-        {
-          "command": "npm test",
-          "status": "pass",
-          "evidence": "Static build, artifact and grade verification, and 152 tests passed"
-        },
-        {
-          "command": "NEXT_PUBLIC_BASE_PATH=/llms-from-scratch npm run build:pages && EXPECTED_PAGES_BASE_PATH=/llms-from-scratch npm run verify:pages",
-          "status": "pass",
-          "evidence": "182 canonical lessons plus 44 legacy forwards verified at project base path"
-        },
-        {
-          "command": "git diff --check && node --test tests/documentation.test.mjs",
-          "status": "pass",
-          "evidence": "Diff hygiene clean and 6 final documentation tests passed"
-        }
-      ],
-      "acceptanceCheckResults": [
-        {
-          "criterion": "Every retained Markdown document agrees with the live course counts, routes, source-of-truth files, grading report, artifact contracts, and GitHub Pages workflow.",
-          "status": "pass",
-          "details": "Canonical docs now describe five courses, 182 lessons, 187 pages, 408 objectives, current routes, four portable accelerator contracts, and seven external execution families."
-        },
-        {
-          "criterion": "Superseded audits, stale task backups, and obsolete seed files are deleted only after reference and test scans establish that they have no required consumer.",
-          "status": "pass",
-          "details": "Reference audit found one historical test consumer, which was repaired; retirement regression checks pass and the newest task safety backup remains."
-        },
-        {
-          "criterion": "README and documentation indexes give a new contributor one clear path to curriculum, grading, experiments, hosting, and validation guidance.",
-          "status": "pass",
-          "details": "README.md and docs/README.md provide the current overview, ownership table, regeneration commands, and retirement policy."
-        },
-        {
-          "criterion": "Documentation links and path references resolve, generated inventories/reports remain byte-current, and no active source or test references a deleted file.",
-          "status": "pass",
-          "details": "Relative-link and retired-file tests pass; verify:grades confirms all 187 generated page rows are current."
-        },
-        {
-          "criterion": "npm run lint, npm test, and both GitHub Pages URL-shape verifications pass.",
-          "status": "pass",
-          "details": "Lint passed, 152 full-suite tests passed, and root plus /llms-from-scratch static exports verified."
-        }
-      ],
-      "attemptedAt": "2026-07-15T13:58:22Z",
-      "completedAt": "2026-07-15T13:58:22Z",
-      "evidence": [
-        "docs/README.md",
-        "tests/documentation.test.mjs",
-        "docs/COURSE_PAGE_GRADES.md",
-        "PLAN_LOG.md",
-        "CHANGES.log"
-      ],
-      "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1:Verification-1",
-        "PLAN_LOG.md#Plan-1:Back-Verification",
-        "PLAN_LOG.md#Plan-1:Objective-Verification",
-        "PLAN_LOG.md#Plan-1:Completion-Re-check"
-      ],
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "",
+      "completedAt": "",
+      "evidence": [],
+      "ledgerRefs": [],
       "blockers": [],
       "commit": {
         "sha": "",

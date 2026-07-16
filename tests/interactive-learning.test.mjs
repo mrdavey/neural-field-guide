@@ -78,24 +78,21 @@ test("every code notebook supplies prediction, observation, and changed-case gui
   assert.deepEqual(gaps, []);
 });
 
-test("guided examples enforce forecast-before-step and conclusion-after-trace", () => {
+test("guided examples use one prediction before a complete worked trace", () => {
   for (const phrase of [
-    "Guided example · predict one step at a time",
-    "Commit before step 1",
-    "Pause before step",
-    "Reveal step",
-    "Your forecast:",
-    "Worked conclusion · now compare",
+    "Worked trace",
+    "Compare with trace",
+    "Conclusion",
     "Restart example",
   ]) assert.ok(sources.guide.includes(phrase), phrase);
   assert.match(sources.guide, /disabled=\{guidedPrediction\.trim\(\)\.length < 18\}/);
-  assert.match(sources.guide, /disabled=\{\(guidedStepNotes\[guidedRevealedSteps\][^}]+\.trim\(\)\.length < 12\}/);
-  assert.match(sources.guide, /steps\.slice\(0, guidedRevealedSteps\)/);
-  assert.match(sources.guide, /!guidedComplete \?[^]*Worked conclusion · now compare/);
+  assert.match(sources.guide, /guide\.guidedExample\.steps\.map/);
+  for (const phrase of ["Pause before step", "Reveal step", "Your forecast:"]) assert.doesNotMatch(sources.guide, new RegExp(phrase));
 });
 
-test("shared activity contracts make the task and completion condition visible", () => {
-  for (const phrase of ["Learning question", "1 · Do", "2 · Observe", "3 · Explain", "4 · Complete when", "Evidence boundary:"]) assert.ok(sources.activity.includes(phrase), phrase);
+test("shared activity framing keeps only concise question and scope copy visible", () => {
+  for (const phrase of ["<strong>Question:</strong>", "<strong>Scope:</strong>", "Private; not graded."]) assert.ok(sources.activity.includes(phrase), phrase);
+  for (const phrase of ["Learning question", "1 · Do", "2 · Observe", "3 · Explain", "4 · Complete when", "Evidence boundary:"]) assert.ok(!sources.activity.includes(phrase), phrase);
   assert.match(sources.activity, /committed && <MotionReveal stateKey="committed" className="activity-after-commit">\{children\}<\/MotionReveal>/);
   assert.match(sources.activity, /disabled=\{draft\.trim\(\)\.length < minLength\}/);
   for (const [name, source] of Object.entries({ labs: sources.labs, worldLabs: sources.worldLabs, validations: sources.validations, worldValidations: sources.worldValidations, workshop: sources.workshop })) {
@@ -103,7 +100,7 @@ test("shared activity contracts make the task and completion condition visible",
     assert.ok(source.includes("<PredictionGate"), `${name} prediction gate`);
   }
   assert.ok(sources.studios.includes("<LearningActivityContract"), "decision studios visible learning contract");
-  for (const phrase of ["Before moving to the next stage", "Predict which labeled state", "Complete when:", "conceptual mechanism diagram, not a measured model trace"]) assert.ok(sources.scrollStory.includes(phrase), `scroll story: ${phrase}`);
+  for (const phrase of ["Before moving to the next stage", "Predict which labeled state", "Complete when:"]) assert.ok(!sources.scrollStory.includes(phrase), `scroll story: ${phrase}`);
   assert.match(sources.activityStyles, /textarea:focus-visible\{outline:3px solid var\(--orange\)/, "new written-response controls need visible keyboard focus");
   assert.match(sources.activityStyles, /min-height:44px/, "new activity buttons need touch-sized targets");
   assert.match(sources.activityStyles, /@media\(max-width:780px\)/, "new activity scaffolds need a narrow-screen layout");

@@ -135,11 +135,6 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
       <span className="eyebrow">{eyebrow}</span>
       <h2 id={`scroll-story-${scene}-${steps.length}`}>{title}</h2>
       <div className="scroll-story-intro">{intro}</div>
-      <div className="scroll-story-learning-cue">
-        <span>Before moving to the next stage</span>
-        <p>Predict which labeled state or relationship should change next and which invariant must remain true. Then scroll or choose one stage, inspect the diagram and explanation, and correct the first causal link that differs from your prediction.</p>
-        <small><strong>Complete when:</strong> you have visited all {steps.length} stages and can explain the transition between each adjacent pair without relying on animation alone. <strong>Boundary:</strong> this is a conceptual mechanism diagram, not a measured model trace.</small>
-      </div>
     </header>
     <div className="scroll-story-layout" ref={layoutRef}>
       <div className="scroll-story-stage">

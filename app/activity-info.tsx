@@ -61,16 +61,10 @@ export function ActivityInfo({ mode, title, detail, requirements, children }: Ac
   </div>;
 }
 
-export function LearningActivityContract({ question, action, observe, explain, complete, boundary }: LearningActivityContractProps) {
+export function LearningActivityContract({ question, boundary }: LearningActivityContractProps) {
   return <section className="learning-activity-contract" aria-label="Activity learning contract">
-    <header><span>Learning question</span><p>{question}</p></header>
-    <ol>
-      <li><span>1 · Do</span><p>{action}</p></li>
-      <li><span>2 · Observe</span><p>{observe}</p></li>
-      <li><span>3 · Explain</span><p>{explain}</p></li>
-      <li><span>4 · Complete when</span><p>{complete}</p></li>
-    </ol>
-    {boundary && <p className="learning-activity-boundary"><strong>Evidence boundary:</strong> {boundary}</p>}
+    <p><strong>Question:</strong> {question}</p>
+    {boundary && <p className="learning-activity-boundary"><strong>Scope:</strong> {boundary}</p>}
   </section>;
 }
 
@@ -88,7 +82,7 @@ export function PredictionGate({ prompt, children, title = "Pause and predict", 
     {!committed ? <div className="activity-prediction-entry">
       <label htmlFor={id}><strong>{title}</strong><p>{prompt}</p><textarea id={id} rows={4} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={placeholder} /></label>
       <button type="button" disabled={draft.trim().length < minLength} onClick={() => setCommitted(true)}>{commitLabel}</button>
-      <small>The activity and its readout stay hidden until you commit a meaningful prediction. This response is private and is not automatically graded.</small>
+      <small>Private; not graded.</small>
     </div> : <div className="activity-prediction-locked">
       <div><span>Your committed prediction</span><p>{draft}</p></div>
       <button type="button" onClick={revise}>{reviseLabel}</button>
