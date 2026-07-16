@@ -2,8 +2,8 @@
   "meta": {
     "objective": "Turn every course home into an attractive marketing-style page that quickly explains why the learner should care and complete the course, with minimal instructional framing.",
     "createdAt": "2026-07-16T09:33:39Z",
-    "updatedAt": "2026-07-16T09:33:51Z",
-    "runStatus": "in_progress"
+    "updatedAt": "2026-07-16T09:57:18Z",
+    "runStatus": "complete"
   },
   "tasks": [
     {
@@ -20,23 +20,96 @@
         "Desktop and narrow-screen browser QA, npm run lint, and npm test pass."
       ],
       "details": "Refactor the shared HomeView and course hero metadata, update the home-page visual system and regression tests, verify all five course routes, and refresh reviewed page-grade evidence as required.",
-      "status": "in_progress",
-      "attempt": 0,
+      "status": "done",
+      "attempt": 1,
       "runMajorChecks": true,
       "priority": 10,
       "blockerReason": "",
-      "nextTaskId": "T001",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "2026-07-16T09:33:51Z",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "nextTaskId": "",
+      "changedFiles": [
+        "PLAN_LOG.md",
+        "agent-tasks.json",
+        "app/course-app.tsx",
+        "app/course-catalog.ts",
+        "app/globals.css",
+        "app/scroll-story.tsx",
+        "app/three-story-canvas.tsx",
+        "docs/COURSE_PAGE_GRADES.md",
+        "docs/COURSE_PAGE_GRADING_RUBRIC.md",
+        "docs/course-page-grades/embodied.json",
+        "docs/course-page-grades/generative.json",
+        "docs/course-page-grades/llm.json",
+        "docs/course-page-grades/rl.json",
+        "docs/course-page-grades/worldmodel.json",
+        "tests/content-ux.test.mjs",
+        "tests/course-page-grades.test.mjs",
+        "tests/curriculum-progression.test.mjs",
+        "tests/rendered-html.test.mjs"
+      ],
+      "validationCommands": [
+        {
+          "command": "node --test tests/course-page-grades.test.mjs tests/content-ux.test.mjs tests/curriculum-progression.test.mjs",
+          "status": "pass",
+          "evidence": "29/29 focused tests passed before report regeneration."
+        },
+        {
+          "command": "browser QA on /llm/, /worldmodel/, /generative/, /rl/, /embodied/ at desktop and 390x844",
+          "status": "pass",
+          "evidence": "All five homes had three payoffs, two CTAs, no forbidden readiness copy, no horizontal overflow, and no browser errors."
+        },
+        {
+          "command": "npm run lint",
+          "status": "pass",
+          "evidence": "ESLint completed without findings."
+        },
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Static export and artifact/grade verification passed; 161/161 tests passed."
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "Every course home leads with a course-specific reason to care and a clear start or continue action.",
+          "status": "pass",
+          "details": "Five distinct campaign promises, reasons, finish lines, and two CTAs render through the shared home shell."
+        },
+        {
+          "criterion": "Readiness checks, prerequisite decisions, step-by-step orientation copy, inspectable traces, and audit-like source instructions are absent from the visible home flow.",
+          "status": "pass",
+          "details": "The obsolete renderer and CSS were removed; regressions forbid the prior home scaffolding and browser QA found none of its visible wording."
+        },
+        {
+          "criterion": "Each home presents concise course-specific payoffs and an attractive preview of what learners will build.",
+          "status": "pass",
+          "details": "Each course has three authored payoff cards, a marketing-led arc, course frontiers, stats, and a finish-line statement."
+        },
+        {
+          "criterion": "Supporting provenance and evidence boundaries remain honest but visually secondary.",
+          "status": "pass",
+          "details": "Generative and RL retain compact claim-linked source cards; every finale preserves the fixture, optional-run, and review-date boundary."
+        },
+        {
+          "criterion": "Desktop and narrow-screen browser QA, npm run lint, and npm test pass.",
+          "status": "pass",
+          "details": "Browser desktop/mobile audits passed, lint passed, and the full static-export regression suite passed."
+        }
+      ],
+      "attemptedAt": "2026-07-16T09:57:18Z",
+      "completedAt": "2026-07-16T09:57:18Z",
+      "evidence": [
+        "Independent home review passed with final scores LLM 98, World Models 98, Generative 99, RL 99, Embodied 98.",
+        "World Models phase-label mismatch was repaired with a six-label regression.",
+        "Commit f0fb090 contains the verified implementation."
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1",
+        "PLAN_LOG.md#Verification"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "f0fb090",
+        "message": "Task T001: market course homes"
       }
     }
   ]
