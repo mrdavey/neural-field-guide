@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-15",
-  "gradedAt": "2026-07-15T13:25:20Z",
-  "sourceFingerprint": "sha256:2c530fce040a155c6f55afaa32afca993f5e7b9bdc1a5f1fb607abe0ac20cde4",
+  "gradedAt": "2026-07-16T09:26:23Z",
+  "sourceFingerprint": "sha256:9b014b75ccfea76c929ecab1aba72682a26aba7005d598502b0fd5df04fcab2a",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independently regraded the three repaired Embodied AI lesson pages against every rubric dimension, exercised the recursive GPU finiteness invariant with non-finite nested values, and regression-scanned the other 28 fully composed Embodied pages in canonical route order for teaching, interaction, assessment, provenance, and rendering impact."
+    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 31 composed Embodied AI pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
   },
   "courseId": "embodied",
   "population": 31,

@@ -87,6 +87,16 @@ test("content pages use readable single-column prose and generous spacing", () =
   assert.match(styles, /@media\(max-width:780px\)[\s\S]*\.llm-discussion\{margin:72px -8px 0\}/);
 });
 
+test("lesson objectives appear once in the dedicated by-the-end section", () => {
+  const orient = app.slice(app.indexOf('className="world-model-orient"'), app.indexOf("{lesson.prerequisites?.length"));
+  const bridge = app.slice(app.indexOf('className="knowledge-bridge"'), app.indexOf("{courseAlignment &&"));
+  assert.doesNotMatch(orient, /Observable outcomes|guide\.objectives\.map/);
+  assert.doesNotMatch(bridge, /By the end, you can|guide\?\.objectives\[0\]/);
+  assert.doesNotMatch(discussion, /objectives|What I am expected to be able to do/);
+  assert.match(guide, /By the end, you can…/);
+  assert.match(guide, /objectiveCoverage\.map/);
+});
+
 test("post-objective teaching connects outcomes to mechanisms and observable checks", () => {
   assert.match(guide, /className="objective-map"/);
   assert.match(guide, /lessonObjectiveCoverage\[lessonId\]/);
@@ -127,6 +137,7 @@ test("shared lesson surfaces use topic-specific headings instead of repeated fil
     /Use \{lesson\.title\}, then transfer/,
   ]) assert.doesNotMatch(`${app}\n${guide}\n${evidence}`, pattern);
   assert.match(motion, /"embedding-layer": motion\([\s\S]*"ROW LOOKUP"/);
+  assert.doesNotMatch(studios, /className="studio-cycle"|1 · Predict|2 · Commit|3 · Observe|4 · Explain/);
 });
 
 test("scroll storytelling is wired across home, every lesson, and capstones", () => {
@@ -167,7 +178,7 @@ test("course navigation uses progressive same-document view transitions", () => 
 
 test("every lesson ends with a copyable context-rich optional AI discussion prompt", () => {
   const lessonView = app.slice(app.indexOf("function LessonView"), app.indexOf("function SynthesisMap"));
-  assert.match(lessonView, /<CourseDiscussionPrompt lesson=\{lesson\} objectives=\{guide\?\.objectives\}/);
+  assert.match(lessonView, /<CourseDiscussionPrompt lesson=\{lesson\} lessonById=\{lessonById\}/);
   assert.ok(lessonView.indexOf("<CourseDiscussionPrompt") > lessonView.indexOf("<LessonFurtherReading"));
   for (const phrase of ["Working definition", "Important mechanisms and distinctions", "Misconception to avoid", "[ADD YOUR QUESTION HERE]", "navigator.clipboard.writeText", "Copy prompt"]) assert.ok(discussion.includes(phrase), phrase);
   assert.match(discussion, /aria-live="polite"/);

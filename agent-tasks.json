@@ -2,7 +2,7 @@
   "meta": {
     "objective": "Remove repetitive lesson instructions and duplicate content, and ensure every intended interactive lab is visibly present before its prediction/reflection section.",
     "createdAt": "2026-07-16T08:56:22Z",
-    "updatedAt": "2026-07-16T08:56:22Z",
+    "updatedAt": "2026-07-16T09:00:51Z",
     "runStatus": "in_progress"
   },
   "tasks": [
@@ -19,23 +19,69 @@
         "Focused content and interaction tests pass."
       ],
       "details": "Edit shared lesson/activity/scroll renderers and their regression tests; retain evidence boundaries and objective checks.",
-      "status": "in_progress",
-      "attempt": 0,
+      "status": "done",
+      "attempt": 1,
       "runMajorChecks": false,
       "priority": 10,
       "blockerReason": "",
-      "nextTaskId": "T001",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "2026-07-16T08:56:22Z",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "nextTaskId": "T002",
+      "changedFiles": [
+        "app/activity-info.tsx",
+        "app/course-app.tsx",
+        "app/learning-activities.css",
+        "app/lesson-guide-view.tsx",
+        "app/scroll-story.tsx",
+        "tests/content-ux.test.mjs",
+        "tests/interactive-learning.test.mjs"
+      ],
+      "validationCommands": [
+        {
+          "command": "node --test tests/content-ux.test.mjs tests/interactive-learning.test.mjs tests/objective-coverage.test.mjs",
+          "status": "pass",
+          "evidence": "23 passed, 0 failed"
+        },
+        {
+          "command": "npm run lint",
+          "status": "pass",
+          "evidence": "ESLint completed with exit code 0"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "The By the end section keeps exact objective coverage but no longer includes explanatory meta-copy.",
+          "status": "pass",
+          "details": "Exact objective cards and committed checks remain; header meta-copy removed."
+        },
+        {
+          "criterion": "The duplicate chapter narrative is not rendered after objective coverage.",
+          "status": "pass",
+          "details": "chapter-narrative renderer removed and regression asserts its absence."
+        },
+        {
+          "criterion": "Shared activity and scroll-story framing no longer displays Do, Observe, Explain, Complete when, or before-moving instructions.",
+          "status": "pass",
+          "details": "Shared activity frame now shows only Question and Scope; scroll cue removed."
+        },
+        {
+          "criterion": "Focused content and interaction tests pass.",
+          "status": "pass",
+          "details": "23 tests passed and lint is green."
+        }
+      ],
+      "attemptedAt": "2026-07-16T09:00:51Z",
+      "completedAt": "2026-07-16T09:00:51Z",
+      "evidence": [
+        "commit cc3772a",
+        "tests/content-ux.test.mjs",
+        "tests/interactive-learning.test.mjs"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": ""
+        "sha": "cc3772a",
+        "message": "Task T001: remove redundant lesson scaffolding"
       }
     },
     {
@@ -54,19 +100,93 @@
         "npm run lint and npm test pass."
       ],
       "details": "Refactor the three shared lab surfaces, update interaction tests and docs, then run focused and full required checks.",
-      "status": "todo",
-      "attempt": 0,
+      "status": "in_progress",
+      "attempt": 1,
       "runMajorChecks": true,
       "priority": 20,
       "blockerReason": "",
       "nextTaskId": "",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
-      "attemptedAt": "",
+      "changedFiles": [
+        "app/activity-info.tsx",
+        "app/contrast.css",
+        "app/course-app.tsx",
+        "app/course-data.ts",
+        "app/learning-activities.css",
+        "app/lesson-labs.tsx",
+        "app/llm-discussion-prompt.tsx",
+        "app/mastery-studios.tsx",
+        "app/research-courses/lab.tsx",
+        "app/world-models/labs.tsx",
+        "docs/COURSE_PAGE_GRADES.md",
+        "docs/INTERACTION_AUDIT.md",
+        "docs/course-page-grades/embodied.json",
+        "docs/course-page-grades/generative.json",
+        "docs/course-page-grades/llm.json",
+        "docs/course-page-grades/rl.json",
+        "docs/course-page-grades/worldmodel.json",
+        "scripts/generate-course-page-grade-report.mjs",
+        "tests/anime-motion.test.mjs",
+        "tests/content-ux.test.mjs",
+        "tests/course-page-grades.test.mjs",
+        "tests/curriculum-progression.test.mjs",
+        "tests/interactive-learning.test.mjs",
+        "tests/world-model-curriculum.test.mjs"
+      ],
+      "validationCommands": [
+        {
+          "command": "node --test tests/content-ux.test.mjs tests/interactive-learning.test.mjs tests/objective-coverage.test.mjs tests/world-model-curriculum.test.mjs tests/course-data.test.mjs tests/generative-course.test.mjs tests/rl-course.test.mjs tests/embodied-course.test.mjs",
+          "status": "pass",
+          "evidence": "60 passed, 0 failed"
+        },
+        {
+          "command": "npm run lint",
+          "status": "pass",
+          "evidence": "ESLint completed with exit code 0"
+        },
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Static export and artifacts verified; 160 passed, 0 failed"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "The LLM Introduction prediction lab renders its interactive instrument immediately.",
+          "status": "pass",
+          "details": "Introduction remains wired to PredictionLab and the instrument renders in PredictionGate preview before reflection."
+        },
+        {
+          "criterion": "LLM, World Model, Generative, RL, and Embodied lab renderers place controls/readouts before concise reflection prompts.",
+          "status": "pass",
+          "details": "All three shared lab renderers expose controls/readouts first; explanation revision preserves instrument state."
+        },
+        {
+          "criterion": "An executable regression verifies every one of the 182 released lessons has a supported lab.",
+          "status": "pass",
+          "details": "interactive-learning.test.mjs joins every released lesson to supported lab metadata, renderer, or authored research spec."
+        },
+        {
+          "criterion": "The interaction audit documents the new visual order and evidence boundary.",
+          "status": "pass",
+          "details": "Interaction audit reviewed 16 July 2026 and independently regraded across all 187 canonical pages."
+        },
+        {
+          "criterion": "npm run lint and npm test pass.",
+          "status": "pass",
+          "details": "Lint passed; production static export, artifacts, grade records, and 160 regressions passed."
+        }
+      ],
+      "attemptedAt": "2026-07-16T09:30:26Z",
       "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "evidence": [
+        "independent semantic re-review: PASS",
+        "60/60 focused tests",
+        "npm run lint",
+        "npm test: 160/160 tests"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-5"
+      ],
       "blockers": [],
       "commit": {
         "sha": "",

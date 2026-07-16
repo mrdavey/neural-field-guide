@@ -272,7 +272,7 @@
       "R": 5,
       "total": 100,
       "pass": true,
-      "rationale": "Forward corruption, schedule/SNR roles, fixed versus learned processes, scalar coefficient arithmetic, uncertainty, prediction-led lab, deterministic transfer, runnable code, and DDPM/score sources thoroughly teach the concept.",
+      "rationale": "Forward corruption, schedule/SNR roles, fixed versus learned processes, scalar coefficient arithmetic, uncertainty, a causal schedule/SNR lab with explanation before mechanism reveal, deterministic transfer, runnable code, and DDPM/score sources thoroughly teach the concept.",
       "blockingDefects": []
     },
     {
@@ -502,8 +502,8 @@
   ],
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent freshness regrade of the Generative home and semantic impact scan of all 30 lesson pages, checking that each new reading card supports a specific visible promise, that source quality and inspect guidance close the provenance criterion, and that the optional shared renderer introduces no unsupported or missing content on other courses."
+    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 31 composed Generative Models pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
   },
-  "gradedAt": "2026-07-15T13:10:23Z",
-  "sourceFingerprint": "sha256:fe0a71b685390a4491761fb50c10ca042529c0ae9f9e6a419dbd5dd5bffb9212"
+  "gradedAt": "2026-07-16T09:26:23Z",
+  "sourceFingerprint": "sha256:2dcc93b592b669a4e306bcfaa7476ea8c74cb45470864882d0d8a4e83fbaf3d7"
 }

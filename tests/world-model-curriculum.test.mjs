@@ -93,9 +93,10 @@ test("World Models supplies deterministic transfer checks, semantic motion, labs
     assert.match(labSource, new RegExp(`"${lab}": \\{ title:`));
     assert.ok(world.worldModelLessons.some((lesson) => lesson.lab === lab), `${lab} must be used`);
   }
-  for (const phrase of ["Learning question:", "EXPLAIN", "COMPLETE WHEN", "Evidence boundary:"]) assert.ok(labSource.includes(phrase));
-  assert.match(labSource, /<LearningActivityContract[\s\S]*question=[\s\S]*action=[\s\S]*observe=[\s\S]*explain=[\s\S]*complete=[\s\S]*boundary=/, "World Model labs need a visible learning question, action, observation, explanation, completion, and evidence boundary");
-  assert.match(labSource, /<PredictionGate[\s\S]*Before the readout appears/, "World Model readouts must remain hidden until a learner prediction is committed");
+  for (const phrase of ["Learning question:", "EXPLAIN", "COMPLETE WHEN", "Evidence boundary:", "Before the readout appears"]) assert.ok(!labSource.includes(phrase));
+  assert.match(labSource, /<LearningActivityContract[\s\S]*question=[\s\S]*boundary=/, "World Model labs keep concise question and scope framing");
+  assert.match(labSource, /<PredictionGate[\s\S]*preview=\{<MotionSurface[\s\S]*wm-lab-instrument/, "World Model controls must be supplied as the visible preview");
+  assert.match(labSource, /commitLabel="Compare with the mechanism"/, "World Model reflection stays concise");
   assert.match(labSource, /type="range"[^>]*onInput=/, "range labs should update continuously for pointer, touch, and keyboard input");
   assert.match(styles, /\.lesson-breadcrumb button\{[^}]*min-height:44px/);
   assert.match(styles, /\.course-selector select\{[^}]*min-height:44px/);

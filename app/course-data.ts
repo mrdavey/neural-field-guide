@@ -224,7 +224,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["Filtering and mixing define the learning distribution", "Deduplication improves efficiency and reduces leakage", "Provenance and rights are first-class constraints"],
     example: "If code is 5% of raw tokens but intentionally sampled at 20%, the model receives four times its natural mixture weight—potentially improving code skill while shifting other trade-offs.",
     misconception: "“Publicly accessible” does not automatically mean high quality, private-data-free, licensed, representative, or appropriate to train on.",
-    quiz: { question: "Why deduplicate data before training?", options: ["To increase vocabulary size", "To avoid repeatedly spending compute on copies and reduce memorization/leakage", "To create attention masks", "To choose optimizer betas"], answer: 1, explanation: "Duplicates distort the intended mixture and can promote memorization or contaminate evaluation." }, prerequisites: ["scaling-laws"]
+    quiz: { question: "Why deduplicate data before training?", options: ["To increase vocabulary size", "To avoid repeatedly spending compute on copies and reduce memorization/leakage", "To create attention masks", "To choose optimizer betas"], answer: 1, explanation: "Duplicates distort the intended mixture and can promote memorization or contaminate evaluation." }, lab: "pipeline", prerequisites: ["scaling-laws"]
   },
   {
     id: "infrastructure", track: "pretraining", title: "Training Infrastructure and Systems", number: 17, duration: 24,
@@ -276,7 +276,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["Post-training shapes policy and interface behavior", "High-quality examples have high leverage", "Capability, helpfulness, and safety can trade off"],
     example: "A base model can know Python yet fail to return only valid JSON. Focused demonstrations and preference pairs can make formatting far more reliable.",
     misconception: "Post-training cannot reliably manufacture deep missing knowledge from a tiny alignment dataset; it mostly elicits and redirects existing capability.",
-    quiz: { question: "Why can a smaller post-training dataset matter so much?", options: ["It changes the tokenizer", "It is concentrated on high-leverage behaviors and response policy", "It retrains every fact", "It removes pre-training"], answer: 1, explanation: "Curated examples directly target how existing capabilities should be expressed." }, prerequisites: ["instruction-tuning-rlhf"]
+    quiz: { question: "Why can a smaller post-training dataset matter so much?", options: ["It changes the tokenizer", "It is concentrated on high-leverage behaviors and response policy", "It retrains every fact", "It removes pre-training"], answer: 1, explanation: "Curated examples directly target how existing capabilities should be expressed." }, lab: "preference", prerequisites: ["instruction-tuning-rlhf"]
   },
   {
     id: "sft", track: "posttraining", title: "Supervised Fine-Tuning", number: 23, duration: 75,
@@ -286,7 +286,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["Demonstrations define desired behavior", "Loss masking chooses what to imitate", "Data quality and diversity dominate"],
     example: "A conversation template marks system, user, and assistant turns. Training loss can be zeroed on prompt tokens and computed only across the chosen assistant answer.",
     misconception: "SFT is not just a dataset format conversion or a falling loss curve; data rights, response quality, task coverage, evaluation design, and regression limits decide whether the adaptation is useful.",
-    quiz: { question: "Why mask user tokens in many SFT recipes?", options: ["To hide prompts from the model", "To focus optimization on producing the assistant response", "To reduce vocabulary", "To add positional encoding"], answer: 1, explanation: "The prompt remains input context, while loss is concentrated on the output behavior being demonstrated." }, prerequisites: ["posttraining-overview"]
+    quiz: { question: "Why mask user tokens in many SFT recipes?", options: ["To hide prompts from the model", "To focus optimization on producing the assistant response", "To reduce vocabulary", "To add positional encoding"], answer: 1, explanation: "The prompt remains input context, while loss is concentrated on the output behavior being demonstrated." }, lab: "preference", prerequisites: ["posttraining-overview"]
   },
   {
     id: "preference-optimization", track: "posttraining", title: "Preference Optimization", number: 24, duration: 22,
@@ -307,7 +307,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["Tool use is a structured action policy", "Safety needs layered defenses", "Helpful refusal should preserve safe assistance"],
     example: "A weather question may require a typed location argument, a tool result, and a grounded summary. A destructive action should require narrower authorization than a read-only lookup.",
     misconception: "A model that usually refuses harmful prompts is not a secure system; adversarial inputs and tool permissions demand external controls.",
-    quiz: { question: "Why are runtime permissions still needed after safety tuning?", options: ["Tuning removes tool schemas", "Model behavior is probabilistic and can be manipulated or mistaken", "Permissions improve tokenization", "They increase parameter count"], answer: 1, explanation: "Defense in depth limits consequences when learned behavior fails or is attacked." }, prerequisites: ["preference-optimization", "rlhf"]
+    quiz: { question: "Why are runtime permissions still needed after safety tuning?", options: ["Tuning removes tool schemas", "Model behavior is probabilistic and can be manipulated or mistaken", "Permissions improve tokenization", "They increase parameter count"], answer: 1, explanation: "Defense in depth limits consequences when learned behavior fails or is attacked." }, lab: "security", prerequisites: ["preference-optimization", "rlhf"]
   },
   {
     id: "tulu3-case-study", track: "posttraining", title: "Case Study — Tülu 3 → DR Tulu", number: 28, duration: 30,

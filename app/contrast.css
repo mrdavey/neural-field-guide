@@ -3,7 +3,7 @@
 .prediction-commit,.vector-map button,.wm-lab-choices button,.wm-lab-detail{color:var(--ink)}
 .prediction-diagnosis button,.practice-diagnosis button{color:var(--ink)}
 .prediction-diagnosis button.active,.practice-diagnosis button.active{color:white}
-.primary-button,.prompt-console-actions button,.technical-validation>header,.studio-cycle{color:var(--ink)}
+.primary-button,.prompt-console-actions button,.technical-validation>header{color:var(--ink)}
 .technical-validation>header .eyebrow{color:var(--ink)}
 .sidebar .eyebrow,
 .code-walkthrough .eyebrow,

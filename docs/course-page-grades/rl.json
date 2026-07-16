@@ -4,10 +4,10 @@
   "population": 33,
   "grader": {
     "role": "independent semantic grader",
-    "method": "Fresh independent semantic regrade of every previously deducted complete RL page after remediation, including recalculated examples, objective scope, capstone contracts and executable starters, external smoke/full code and runbooks, followed by a regression-impact scan of the other twenty composed pages without carrying forward prior deductions."
+    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 33 composed Reinforcement Learning pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
   },
-  "gradedAt": "2026-07-15T13:12:12Z",
-  "sourceFingerprint": "sha256:b246c96fe2f50444f707f3b52296ea8333fd2151eabcd04d491056854ec86ea9",
+  "gradedAt": "2026-07-16T09:26:23Z",
+  "sourceFingerprint": "sha256:4a3190ea34b85caeb6dd1751fa0ef1cf717547ccefb0e400b43ac1e729250626",
   "pages": [
     {
       "pageType": "home",

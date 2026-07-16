@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-15",
-  "gradedAt": "2026-07-15T13:10:23Z",
-  "sourceFingerprint": "sha256:ad741932b6d475b220e1757743f19515f0dff95b4cac6e90cdf86a7efa434728",
+  "gradedAt": "2026-07-16T09:26:23Z",
+  "sourceFingerprint": "sha256:3d1fac03aacae95f6999df2fec6b1215cc16b25ea737d24d201e863ced645769",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independently reviewed every current fully composed LLM home and lesson page from scratch across learner-visible objectives, prerequisite flow, mechanisms, arithmetic, worked traces, code and lab behavior, diagnostic transfer, evidence boundaries, sources, validations, and capstones; no prior page score was treated as evidence."
+    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 45 composed LLM pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
   },
   "courseId": "llm",
   "population": 45,

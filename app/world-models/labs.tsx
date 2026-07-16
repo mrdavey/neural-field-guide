@@ -32,7 +32,7 @@ export function WorldModelLab({ type, lesson }: { type: WorldModelLabType; lesso
 
   return <section className="lab-shell world-model-lab" data-lab={type} data-lesson-lab={lesson.id}>
     <div className="lab-intro">
-      <div><span className="eyebrow">Interactive lab · deterministic simulation</span><h2><MathText>{copy.title}</MathText></h2><p><strong>Learning question:</strong> <MathText>{copy.question}</MathText></p><ActivityInfo mode="simulated" /></div>
+      <div><span className="eyebrow">Interactive lab · deterministic simulation</span><h2><MathText>{copy.title}</MathText></h2><ActivityInfo mode="simulated" /></div>
     </div>
     <LearningActivityContract
       question={<MathText>{copy.question}</MathText>}
@@ -42,9 +42,14 @@ export function WorldModelLab({ type, lesson }: { type: WorldModelLabType; lesso
       complete={<MathText>{copy.complete}</MathText>}
       boundary={<MathText>{copy.boundary}</MathText>}
     />
-    <PredictionGate prompt={<><MathText>{copy.change}</MathText> Before the readout appears, predict its direction or decision and explain the mechanism that should produce it.</>} onRevise={() => setValue(control.initial)}>
-      <div className="lab-observation-guide"><span>Observation to test</span><p><MathText>{copy.observe}</MathText></p></div>
-      <MotionSurface kind={type} stateKey={`${value}:${result.meter}`}>
+    <PredictionGate
+      title="Explain the result"
+      prompt="What changed when you moved the control, and which mechanism connects that input to the readout?"
+      placeholder="Explain the change you observed and the mechanism that caused it…"
+      commitLabel="Compare with the mechanism"
+      reviseLabel="Revise explanation"
+      responseLabel="Your explanation"
+      preview={<MotionSurface kind={type} stateKey={`${value}:${result.meter}`}>
       <div className="lab-instrument wm-lab-instrument" data-visual-control={value} data-visual-meter={result.meter}>
         {control.choices ? <fieldset className="wm-lab-choices"><legend><MathText>{control.label}</MathText></legend><div>{control.choices.map((choice, index) => <button type="button" className={Math.round(value) === index ? "active" : ""} aria-pressed={Math.round(value) === index} key={choice} onClick={() => setValue(index)}><MathText>{choice}</MathText></button>)}</div></fieldset> : <>
           <label htmlFor={`${lesson.id}-control`}><span><MathText>{control.label}</MathText></span><strong>{result.controlValue}</strong></label>
@@ -52,10 +57,10 @@ export function WorldModelLab({ type, lesson }: { type: WorldModelLabType; lesso
         </>}
         <div className="wm-lab-readout" aria-live="polite"><span><MathText>{result.resultLabel}</MathText></span><strong><MathText>{result.resultValue}</MathText></strong><meter min={0} max={100} value={result.meter} /></div>
         {"detail" in result && <p className="wm-lab-detail" aria-live="polite"><MathText>{result.detail}</MathText></p>}
-        <div className="wm-lab-explanation"><article><span>EXPLAIN</span><p><MathText>{copy.explain}</MathText></p></article><article><span>COMPLETE WHEN</span><p><MathText>{copy.complete}</MathText></p></article></div>
-        <p className="lab-caption"><strong>Evidence boundary:</strong> <MathText>{copy.boundary}</MathText></p>
       </div>
-      </MotionSurface>
+      </MotionSurface>}
+    >
+      <div className="lab-observation-guide"><span>Mechanism</span><p><MathText>{`${copy.observe} ${copy.explain}`}</MathText></p></div>
     </PredictionGate>
   </section>;
 }

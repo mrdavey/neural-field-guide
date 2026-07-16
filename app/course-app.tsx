@@ -336,12 +336,11 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
 
     {course.id !== "llm" && guide && <section className="world-model-orient" aria-labelledby={`world-model-orient-${lesson.id}`}>
       <header>
-        <span className="eyebrow">Orient · outcome, language, and next use</span>
-        <h2 id={`world-model-orient-${lesson.id}`}>Know what you are building before opening the mechanism.</h2>
+        <span className="eyebrow">Orient · context and next use</span>
+        <h2 id={`world-model-orient-${lesson.id}`}>{track.title}</h2>
         <p>{track.description}</p>
       </header>
       <div className="world-model-orient-grid">
-        <article><span>Observable outcomes</span><ol>{guide.objectives.map((objective) => <li key={objective}><MathText>{objective}</MathText></li>)}</ol></article>
         <article><span>Prerequisite activation</span>{!lesson.prerequisites?.length && !lesson.programPrerequisites?.length ? <p>No earlier lesson is required. Bring basic arithmetic and a willingness to trace one state change.</p> : null}{lesson.prerequisites?.length ? <p><MathText>{`Reuse ${lesson.prerequisites.map((id) => lessonById[id].title).join(" and ")}: ${lessonById[lesson.prerequisites.at(-1)!].keyIdeas[0]}`}</MathText></p> : null}{lesson.programPrerequisites?.length ? <ul className="program-prerequisite-list">{lesson.programPrerequisites.map((reference) => {
           const prerequisiteCourse = courses[reference.courseId as CourseId];
           const prerequisite = prerequisiteCourse?.lessonById[reference.lessonId];
@@ -368,8 +367,6 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
         <div className="bridge-new">
           <span>New layer</span>
           <strong>{lesson.title}</strong>
-          <small>By the end, you can</small>
-          <p><MathText>{guide?.objectives[0] ?? lesson.keyIdeas[0]}</MathText></p>
         </div>
       </div>
     </section> : null}
@@ -458,7 +455,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
     {guide && <LessonFurtherReading guide={guide} lessonId={lesson.id} reviewedDate={course.reviewedDate} />}
 
     {lesson.sources && <aside className="source-notes lesson-extension"><div><span className="eyebrow">Optional source list</span><ActivityInfo mode="optional" /></div><div>{lesson.sources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label}<span>↗</span></a>)}</div><p>The labeled reading cards above preserve whether each item is a paper, documentation, course, or explanatory article. This compact list repeats the links for convenience; use a source only to verify assumptions, scope, publication date, or a changing implementation detail before generalizing it.</p></aside>}
-    <CourseDiscussionPrompt lesson={lesson} objectives={guide?.objectives} lessonById={lessonById} subject={course.subject} />
+    <CourseDiscussionPrompt lesson={lesson} lessonById={lessonById} subject={course.subject} />
     {lesson.track === course.specializationTrackId ? <section className="specialization-chooser" aria-labelledby={`specialization-chooser-${lesson.id}`}>
       <header><span className="eyebrow">Advanced is a branch, not a ladder</span><h2 id={`specialization-chooser-${lesson.id}`}>Choose the specialization that serves your goal.</h2><p>These topics share the core curriculum, but none is a prerequisite for the others. Continue where the trade-off or research question is useful to you.</p></header>
       <div>{specializationChoices.map((choice) => <button key={choice.id} onClick={() => openLesson(choice.id)}>

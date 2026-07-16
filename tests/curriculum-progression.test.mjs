@@ -41,7 +41,6 @@ test("lesson pages make prior knowledge and the next reuse explicit", () => {
     "knowledge-bridge",
     "next-connection",
     "You already know",
-    "By the end, you can",
     "You will reuse",
     "To learn",
   ]) {
@@ -49,6 +48,8 @@ test("lesson pages make prior knowledge and the next reuse explicit", () => {
   }
   assert.match(source.courseView, /prerequisite\.keyIdeas\[0\]/);
   assert.match(source.courseView, /nextGuide\?\.objectives\[0\]/);
+  assert.match(source.guideView, /By the end, you can…/);
+  assert.doesNotMatch(source.courseView, /By the end, you can/);
 });
 
 test("advanced lessons branch by goal instead of inventing a linear dependency", () => {

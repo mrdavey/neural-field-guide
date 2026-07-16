@@ -25,10 +25,12 @@ type LearningActivityContractProps = {
 type PredictionGateProps = {
   prompt: ReactNode;
   children: ReactNode;
+  preview?: ReactNode;
   title?: string;
   placeholder?: string;
   commitLabel?: string;
   reviseLabel?: string;
+  responseLabel?: string;
   minLength?: number;
   onRevise?: () => void;
 };
@@ -68,7 +70,7 @@ export function LearningActivityContract({ question, boundary }: LearningActivit
   </section>;
 }
 
-export function PredictionGate({ prompt, children, title = "Pause and predict", placeholder = "State what you expect to happen and why…", commitLabel = "Commit prediction and begin", reviseLabel = "Revise prediction and reset activity", minLength = 18, onRevise }: PredictionGateProps) {
+export function PredictionGate({ prompt, children, preview, title = "Pause and predict", placeholder = "State what you expect to happen and why…", commitLabel = "Commit prediction and begin", reviseLabel = "Revise prediction and reset activity", responseLabel = "Your committed prediction", minLength = 18, onRevise }: PredictionGateProps) {
   const [draft, setDraft] = useState("");
   const [committed, setCommitted] = useState(false);
   const id = useId();
@@ -79,12 +81,13 @@ export function PredictionGate({ prompt, children, title = "Pause and predict", 
   };
 
   return <div className="activity-prediction-gate">
+    {preview && <div className="activity-prediction-preview">{preview}</div>}
     {!committed ? <div className="activity-prediction-entry">
       <label htmlFor={id}><strong>{title}</strong><p>{prompt}</p><textarea id={id} rows={4} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={placeholder} /></label>
       <button type="button" disabled={draft.trim().length < minLength} onClick={() => setCommitted(true)}>{commitLabel}</button>
       <small>Private; not graded.</small>
     </div> : <div className="activity-prediction-locked">
-      <div><span>Your committed prediction</span><p>{draft}</p></div>
+      <div><span>{responseLabel}</span><p>{draft}</p></div>
       <button type="button" onClick={revise}>{reviseLabel}</button>
     </div>}
     {committed && <MotionReveal stateKey="committed" className="activity-after-commit">{children}</MotionReveal>}

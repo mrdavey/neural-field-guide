@@ -29,7 +29,7 @@ for (const record of records) {
   assert.equal(record.pages.length, record.population, `${record.courseId} population mismatch`);
   assert.equal(record.grader?.role, "independent semantic grader", `${record.courseId} grader role`);
   assert.ok(record.grader?.method?.length >= 60, `${record.courseId} grader method`);
-  assert.match(record.gradedAt, /^2026-07-15T\d{2}:\d{2}:\d{2}Z$/, `${record.courseId} graded timestamp`);
+  assert.match(record.gradedAt, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/, `${record.courseId} graded timestamp`);
   assert.equal(record.sourceFingerprint, await courseGradeFingerprint(record.courseId), `${record.courseId} grade is stale relative to its learner-facing source bundle`);
   for (const page of record.pages) {
     const key = `${record.courseId}:${page.id}`;
@@ -53,7 +53,7 @@ assert.equal(finalPassing, finalPopulation, "report generation is blocked until 
 const lines = [
   "# Course page grades",
   "",
-  "Reviewed: 15 July 2026",
+  "Reviewed: 16 July 2026",
   "",
   "This report applies the independent rubric in `docs/COURSE_PAGE_GRADING_RUBRIC.md` to the complete composed home and lesson pages. Semantic scores come from independent grader passes; repository tests validate population, arithmetic, thresholds, and evidence-file integrity but do not award points.",
   "",

@@ -3,6 +3,8 @@
 .learning-activity-boundary{color:var(--muted)}
 
 .activity-prediction-gate{background:var(--paper);border:1px solid var(--line);color:var(--ink);margin-top:20px;min-width:0}
+.activity-prediction-preview{background:var(--white);border-bottom:1px solid var(--line);min-width:0;padding:24px}
+.lab-shell .activity-prediction-preview{background:transparent;padding:0}
 .activity-prediction-entry{display:grid;gap:14px;padding:22px}
 .activity-prediction-entry label{display:grid;gap:8px}
 .activity-prediction-entry label>strong{font-family:Georgia,serif;font-size:1.55rem;font-weight:400}

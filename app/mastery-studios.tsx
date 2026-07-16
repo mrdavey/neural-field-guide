@@ -9,7 +9,6 @@ type Choice = { label: string; correct: boolean; feedback: string };
 function StudioFrame({ label, title, intro, children }: { label: string; title: string; intro: string; children: ReactNode }) {
   return <section className="mastery-studio" aria-label={`${title} mastery studio`}>
     <header className="studio-header"><div><span className="eyebrow">Decision studio · {label}</span><h2>{title}</h2><ActivityInfo mode="simulated" title="Local decision simulation" detail="All controls, calculations, choices, and feedback run in this page using fixed teaching data. No model, API, or external grader is called." /></div><p>{intro}</p></header>
-    <div className="studio-cycle" aria-label="Learning cycle"><span>1 · Predict</span><b>→</b><span>2 · Commit</span><b>→</b><span>3 · Observe</span><b>→</b><span>4 · Explain</span></div>
     <LearningActivityContract
       question={title}
       action="Read each scenario and commit one decision before using its feedback. For adjustable controls, predict the direction of change before moving them."

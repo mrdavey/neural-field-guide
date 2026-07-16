@@ -77,7 +77,7 @@ test("both courses and shared learning surfaces use scoped, state-driven motion"
   assert.match(files.surface, /scope\.revert\(\)/);
   assert.match(files.surface, /prefers-reduced-motion: reduce/);
   assert.match(files.activity, /<MotionReveal stateKey="committed" className="activity-after-commit">/);
-  assert.match(files.guide, /<MotionReveal as="ol" stateKey=\{guidedRevealedSteps\}/);
+  assert.match(files.guide, /<MotionReveal as="ol" stateKey="worked-trace" className="guided-example-steps">/);
   assert.match(files.workshop, /<MotionReveal as="article" stateKey=\{activeStage\} className="runbook-stage">/);
   assert.match(files.capstone, /<MotionReveal stateKey=\{activeStage\} className="capstone-stage-panel">/);
   assert.match(files.orchestrator, /MutationObserver/);

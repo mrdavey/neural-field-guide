@@ -28,8 +28,14 @@ function loadTypeScriptModule(file) {
   return moduleRecord.exports;
 }
 
+const { lessons: llmLessons } = loadTypeScriptModule(join(root, "app/course-data.ts"));
 const { lessonGuides } = loadTypeScriptModule(join(root, "app/lesson-guides/index.ts"));
-const { worldModelLessonGuides } = loadTypeScriptModule(join(root, "app/world-models/index.ts"));
+const worldModelCourse = loadTypeScriptModule(join(root, "app/world-models/index.ts"));
+const { worldModelLessonGuides, worldModelLessons } = worldModelCourse;
+const { worldModelLessonLabSpecs } = loadTypeScriptModule(join(root, "app/world-models/lesson-lab-specs.ts"));
+const generativeCourse = loadTypeScriptModule(join(root, "app/generative/index.ts"));
+const rlCourse = loadTypeScriptModule(join(root, "app/rl/index.ts"));
+const embodiedCourse = loadTypeScriptModule(join(root, "app/embodied/index.ts"));
 const { lessonCodeExamples } = loadTypeScriptModule(join(root, "app/code-examples.ts"));
 const { worldModelCodeExamples } = loadTypeScriptModule(join(root, "app/world-models/code-examples.ts"));
 
@@ -38,6 +44,7 @@ const sources = Object.fromEntries(await Promise.all(Object.entries({
   guide: "app/lesson-guide-view.tsx",
   labs: "app/lesson-labs.tsx",
   worldLabs: "app/world-models/labs.tsx",
+  researchLabs: "app/research-courses/lab.tsx",
   evidence: "app/lesson-evidence-view.tsx",
   validations: "app/technical-validations.tsx",
   worldValidations: "app/world-models/technical-validations.tsx",
@@ -78,6 +85,46 @@ test("every code notebook supplies prediction, observation, and changed-case gui
   assert.deepEqual(gaps, []);
 });
 
+test("all 182 released lessons expose a supported lab before reflection", () => {
+  const researchCourses = [
+    [generativeCourse.generativeLessons, generativeCourse.generativeResearchLabs],
+    [rlCourse.rlLessons, rlCourse.rlResearchLabs],
+    [embodiedCourse.embodiedLessons, embodiedCourse.embodiedResearchLabs],
+  ];
+  const releasedLessons = [...llmLessons, ...worldModelLessons, ...researchCourses.flatMap(([lessons]) => lessons)];
+  assert.equal(releasedLessons.length, 182);
+
+  for (const lesson of llmLessons) {
+    assert.ok(lesson.lab, `${lesson.id} lab wiring`);
+    assert.ok(sources.labs.includes(`${lesson.lab}: { title:`), `${lesson.id} lab metadata`);
+    assert.ok(sources.labs.includes(`case "${lesson.lab}":`), `${lesson.id} lab renderer`);
+  }
+  assert.equal(llmLessons.find((lesson) => lesson.id === "introduction")?.lab, "prediction");
+  assert.match(sources.labs, /case "prediction": return <PredictionLab \/>/);
+
+  for (const lesson of worldModelLessons) {
+    assert.match(lesson.lab ?? "", /^wm-/);
+    assert.ok(worldModelLessonLabSpecs[lesson.id], `${lesson.id} lesson-specific lab`);
+  }
+  for (const [lessons, registry] of researchCourses) for (const lesson of lessons) {
+    assert.equal(lesson.lab, "research", `${lesson.id} shared research lab`);
+    assert.ok(registry[lesson.id], `${lesson.id} authored lab spec`);
+  }
+
+  assert.ok(sources.activity.indexOf("activity-prediction-preview") < sources.activity.indexOf("!committed ?"), "preview renders before the reflection entry");
+  assert.match(sources.labs, /preview=\{<MotionSurface[^]*renderLab\(type\)/);
+  assert.match(sources.labs, /probabilities\[index\]\*100\)\.toFixed\(3\)/, "server-visible probability styles use stable precision");
+  assert.doesNotMatch(sources.labs, /\.toLocaleString\(\)/, "server-visible lab values must not depend on the host locale");
+  assert.match(sources.worldLabs, /preview=\{<MotionSurface[^]*wm-lab-instrument/);
+  assert.match(sources.researchLabs, /preview=\{<>[^]*research-case-control[^]*research-case-readout/);
+  for (const [name, source] of Object.entries({ labs: sources.labs, worldLabs: sources.worldLabs, researchLabs: sources.researchLabs })) {
+    assert.match(source, /placeholder="[^"]*[Ee]xplain/, `${name} uses explanation-specific response copy`);
+    assert.match(source, /responseLabel="Your explanation"/, `${name} labels the committed response as an explanation`);
+  }
+  assert.doesNotMatch(sources.worldLabs, /onRevise=\{\(\) => setValue/, "revising an explanation keeps the observed World Model state");
+  assert.doesNotMatch(sources.researchLabs, /onRevise=\{\(\) => setChoice/, "revising an explanation keeps the observed research case");
+});
+
 test("guided examples use one prediction before a complete worked trace", () => {
   for (const phrase of [
     "Worked trace",
@@ -95,7 +142,7 @@ test("shared activity framing keeps only concise question and scope copy visible
   for (const phrase of ["Learning question", "1 · Do", "2 · Observe", "3 · Explain", "4 · Complete when", "Evidence boundary:"]) assert.ok(!sources.activity.includes(phrase), phrase);
   assert.match(sources.activity, /committed && <MotionReveal stateKey="committed" className="activity-after-commit">\{children\}<\/MotionReveal>/);
   assert.match(sources.activity, /disabled=\{draft\.trim\(\)\.length < minLength\}/);
-  for (const [name, source] of Object.entries({ labs: sources.labs, worldLabs: sources.worldLabs, validations: sources.validations, worldValidations: sources.worldValidations, workshop: sources.workshop })) {
+  for (const [name, source] of Object.entries({ labs: sources.labs, worldLabs: sources.worldLabs, researchLabs: sources.researchLabs, validations: sources.validations, worldValidations: sources.worldValidations, workshop: sources.workshop })) {
     assert.ok(source.includes("<LearningActivityContract"), `${name} visible learning contract`);
     assert.ok(source.includes("<PredictionGate"), `${name} prediction gate`);
   }

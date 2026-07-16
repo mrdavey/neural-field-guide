@@ -106,7 +106,7 @@ test("the independent final grade records cover and pass all 187 canonical pages
     assert.equal(record.pages.filter((page) => page.pageType === "home").length, 1, `${record.courseId} home row`);
     assert.equal(record.grader.role, "independent semantic grader", `${record.courseId} grader role`);
     assert.ok(record.grader.method.length >= 60, `${record.courseId} grader method`);
-    assert.match(record.gradedAt, /^2026-07-15T\d{2}:\d{2}:\d{2}Z$/, `${record.courseId} grade timestamp`);
+    assert.match(record.gradedAt, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/, `${record.courseId} grade timestamp`);
     assert.equal(record.sourceFingerprint, await courseGradeFingerprint(record.courseId), `${record.courseId} source fingerprint`);
     const canonical = [{ id: "home", pageType: "home", route: `/${record.courseId}/` }, ...registries[record.courseId].map((lesson) => ({ id: lesson.id, pageType: "lesson", route: `/${record.courseId}/${lesson.id}/` }))];
     assert.deepEqual(record.pages.map(({ id, pageType, route }) => ({ id, pageType, route })), canonical, `${record.courseId} rows must exactly follow the live course registry`);

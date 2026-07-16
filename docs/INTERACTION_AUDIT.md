@@ -1,6 +1,6 @@
 # Instructional interaction audit
 
-Reviewed: 15 July 2026
+Reviewed: 16 July 2026
 
 This audit asks one question of every animated or manipulable surface: **what learner-visible mechanism becomes easier to reason about because this moves?** Motion that cannot answer that question is decorative and does not pass.
 
@@ -13,7 +13,7 @@ The motion system has four explicit layers:
 1. `storyMotionContracts` maps all 24 semantic story concepts to a learning question, representation, stage selectors, route selectors, effect grammar, and evidence boundary. The same paused timeline is sought by scroll position on all five course homes and all 182 lesson stories.
 2. `llmLabMotionContracts` maps every one of the 34 LLM lab types to the exact readouts or relationships that should respond when a learner changes a control.
 3. `worldModelLabMotionContracts` maps all nine World Models lab grammars. Each of the 46 lesson-specific specs supplies structured control and meter values; animation never parses learner-facing strings to infer state.
-4. `MotionReveal` and the course orchestrator emphasize committed predictions, newly revealed reasoning, changed feedback, active workshop/capstone stages, route entry, and reading progress. They do not bypass prediction gates or delay deterministic feedback.
+4. `MotionReveal` and the course orchestrator emphasize committed explanations, newly revealed reasoning, changed feedback, active workshop/capstone stages, route entry, and reading progress. Lesson-lab controls and deterministic readouts remain immediately available; only the compact comparison note is gated.
 
 The Three.js adapter animates only material emphasis on the existing progressive scene. Camera, geometry, scroll state, and rendering remain in the established deterministic draw path, so there is no competing render loop. WebGL failure continues to leave `StoryMechanismDiagram` as the semantic carrier.
 
@@ -99,7 +99,7 @@ Narrow-screen browser QA at 390×844 additionally verified that objective record
 
 The World Models course adds 46 lesson-specific four-stage stories. They deliberately reuse the same 24 semantic grammars when the causal representation is the same: distributions for stochastic futures and belief mass, state machines for observe–plan–act loops, optimization surfaces for action search and exploitation, scorecards for evaluation, and routing boundaries for safety authority. The scene is rendered through the shared `pipeline` layout because track color is not the semantic carrier; `motionStory.concept`, lesson-specific stage copy, and `StoryMechanismDiagram` supply the meaning. This preserves the existing WebGL failure and reduced-motion fallbacks without inventing a decorative world-model graph.
 
-Nine deterministic lab modes cover the 46 lessons. Each mode visibly states its learning question, **Change → Observe → Explain** cycle, completion condition, and evidence boundary. Reuse is deliberate when several lessons need the same controllable mechanism.
+Nine deterministic lab modes cover the 46 lessons. Each lab places its controls and deterministic readout before a concise reflection. The learning question and evidence scope remain visible; detailed Change/Observe/Explain/Complete instructions are retained in the authored audit data but are not repeated as a procedural panel. Reuse is deliberate when several lessons need the same controllable mechanism.
 
 | Lab | Learner-controlled variable | Observation and explanation | Completion condition | Evidence boundary | Verdict |
 | --- | --- | --- | --- | --- | --- |
@@ -129,13 +129,13 @@ The five course homes now place a static, inspectable causal trace beside the an
 
 ## Generative Models mechanism cases
 
-All 30 Generative Models lessons use an authored three-case mechanism lab. The learner first commits a causal prediction, then changes one named distribution, target, diagnostic, schedule, condition, budget, or evidence record. The readout exposes a lesson-specific value and explanation; completion requires comparing all three cases and identifying the first causal step. Each lesson separately states what the fixture cannot establish. The shared case-control renderer supplies keyboard/touch buttons, an accessible live readout, and a semantic meter, but lesson data—not animation—owns the result.
+All 30 Generative Models lessons use an authored three-case mechanism lab. The three cases and live readout appear immediately; a short reflection below asks for the strongest diagnostic signal and first causal step before revealing the compact mechanism summary. Each lesson separately states what the fixture cannot establish. The shared case-control renderer supplies keyboard/touch buttons, an accessible live readout, and a semantic meter, but lesson data—not animation—owns the result.
 
 Examples include normalized probability mass, ordered KL, VAE collapse probes, flow round-trip and log-determinant failure, EBM hidden energy pockets, Langevin step-size trade-offs, diffusion signal/noise coefficients, classifier-free guidance extrapolation, inverse-problem data consistency, composition gaps, and GPU evidence classes. Reduced motion changes only reveal emphasis; prediction, values, explanations, retries, and boundaries remain in normal document order.
 
 ## Reinforcement Learning & Control mechanism cases
 
-All 32 Reinforcement Learning & Control lessons use an authored three-case decision lab. The learning question names one agent, estimator, data, planning, safety, or evidence variable before any control appears. The learner commits a prediction, changes among three bounded cases, observes a labeled value plus mechanism-specific trace, and explains the first causal link before the completion condition is met. The renderer provides ordinary keyboard/touch buttons, an accessible live region, and a semantic meter; the lesson specification owns the state and explanation.
+All 32 Reinforcement Learning & Control lessons use an authored three-case decision lab. The learning question names one agent, estimator, data, planning, safety, or evidence variable; the three bounded cases, labeled value, and mechanism-specific trace are available immediately. A concise reflection follows the instrument. The renderer provides ordinary keyboard/touch buttons, an accessible live region, and a semantic meter; the lesson specification owns the state and explanation.
 
 The cases expose concrete decision mechanisms rather than generic agent motion: transition/reward changes in finite MDPs, Bayesian belief updates under partial observation, occupancy shifts, Bellman backups, return and TD targets, on-policy versus greedy control, replay age and target-network lag, exploration coverage, likelihood-ratio clipping, GAE credit, model rollout error, MPC budget, uncertainty exploitation, demonstration covariate shift, offline support, causal trajectory serialization, seed-level uncertainty, constrained decisions, GPU evidence classes, and falsifiable research claims.
 
@@ -143,7 +143,7 @@ Every lab states its evidence boundary. Finite tables and browser meters are det
 
 ## Embodied AI mechanism cases
 
-All 30 Embodied AI lessons use an authored three-case physical-loop lab. The learning question names a task, sensor, frame, state, data, policy, control, authority, timing, or evidence variable before the cases appear. The learner commits a prediction, changes one bounded fixture, observes a typed value and mechanism-specific trace, then explains the first causal link. Completion requires inspecting all three cases and identifying the contract or diagnostic boundary that one case crosses. Ordinary buttons, an accessible live region, and a semantic meter preserve keyboard and touch operation; the lesson data owns every result.
+All 30 Embodied AI lessons use an authored three-case physical-loop lab. The learning question names a task, sensor, frame, state, data, policy, control, authority, timing, or evidence variable. The cases, typed value, and mechanism-specific trace appear immediately; a concise reflection follows the instrument. Ordinary buttons, an accessible live region, and a semantic meter preserve keyboard and touch operation; the lesson data owns every result.
 
 The cases make physical-loop semantics observable without pretending a browser fixture is a robot run: requested versus applied commands, frame direction and sensor age, uncertainty under occlusion, task predicate precedence, calibrated residuals, object identity, leakage and trajectory support, action-chunk feedback delay, language counterfactuals, causal masks, diffusion denoising, feedback saturation, planner exploitation, skill postconditions, system-identification residuals, intervention authority, evaluation cells, robustness onset, latency deadlines, and external-run evidence classes. Each lesson states what the representation cannot establish.
 
@@ -156,7 +156,7 @@ WebGL and motion remain progressive layers. Labels, values, task instructions, c
 - Replaced the track-themed shared overlay with 24 concept-specific diagrams that progress through the four lesson stages.
 - Kept Three.js as progressive enhancement instead of making WebGL the only carrier of meaning.
 - Reflowed live-trace headings and stage explanations into rows and kept the visual sticky at desktop widths.
-- Reflowed interactive-lab instructions into readable **Change** and **Observe** rows.
+- Made all 182 lesson labs visible before their compact reflection, and removed the repeated **Do / Observe / Explain / Complete when** panel from the learner-facing flow.
 - Preserved reduced-motion behavior: the diagrams show the current state without continuous animation, and the instructional copy remains complete.
 - Added World Models stories by reusing semantic grammars rather than track-themed motion, plus nine audited control modes and six preserved deterministic validation dossiers.
 - Added prediction-gated cross-course bridges at canonical and reinforcement joins so learners distinguish reusable mechanisms from invalid claim transfer before seeing later-course artifacts.
