@@ -1,13 +1,13 @@
 {
-  "rubricRevision": "2026-07-15",
+  "rubricRevision": "2026-07-16",
   "courseId": "worldmodel",
   "population": 47,
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 47 composed World Models pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
+    "method": "Independent 16 July 2026 home-page semantic regrade after the marketing-first shared-shell revision; reviewed all five campaign promises, payoffs, arcs, CTAs, evidence boundaries, source cards, and responsive CSS, confirmed unchanged lesson rows remain valid, and verified every rubric floor."
   },
-  "gradedAt": "2026-07-16T09:26:23Z",
-  "sourceFingerprint": "sha256:8200946c56b9c7c6a489d44e9b5cd206a0dac15dfa89228aa4a34a126144c9c4",
+  "gradedAt": "2026-07-16T09:53:00Z",
+  "sourceFingerprint": "sha256:3f3a7972a8ffc67929632eb1d58015e26c8cde0d7a0b571fcbb459431e1ad9b3",
   "pages": [
     {
       "pageType": "home",
@@ -15,15 +15,15 @@
       "route": "/worldmodel/",
       "blockingDefects": [],
       "A": 25,
-      "C": 24,
+      "C": 25,
       "E": 14,
       "I": 15,
       "D": 10,
       "S": 5,
       "R": 4,
-      "total": 97,
+      "total": 98,
       "pass": true,
-      "rationale": "The home accurately exposes readiness, recommended LLM preparation, Generative Models and RL continuations, six working-system milestones, the shared spine and optional branches, an effective start action, deterministic/GPU evidence boundaries, and the 14 Jul 2026 review date. Its illustrative system flow is orientation rather than a complete worked lesson trace, and provenance is summarized without claim-local source cards."
+      "rationale": "The home motivates predictive state, imagined futures, and bounded operation; its six-phase arc now has six active labels through SPECIALIZE, and the finish line, two CTAs, and evidence boundary remain honest. E is 14 because the system flow is orientation rather than a worked numerical trace; R is 4 because no claim-linked home sources are rendered."
     },
     {
       "pageType": "lesson",

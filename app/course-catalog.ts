@@ -116,6 +116,12 @@ export type CourseDefinition = {
   maturity: "released";
   reviewedDate: string;
   homeSources?: { title: string; url: string; claim: string; readFor: string }[];
+  campaign: {
+    promise: string;
+    why: string;
+    payoffs: { label: string; title: string; body: string }[];
+    finish: string;
+  };
   hero: {
     heading: string;
     emphasis: string;
@@ -159,20 +165,76 @@ const worldModelSynthesisMaps: Record<string, SynthesisDefinition> = {
   "world-model-research-capstone": { title: "Publish one falsifiable specialization study", intro: "Choose one branch from the shared core and package its changed-case evidence, failure trace, and reproduction boundary.", links: ["object-centric-dynamics", "hierarchical-multiscale", "geometry-physical-priors", "causal-counterfactual-models", "language-multimodal-world-models"] },
 };
 
+const courseCampaigns: Record<CourseId, CourseDefinition["campaign"]> = {
+  llm: {
+    promise: "Stop treating language models like magic.",
+    why: "Language models now shape how we write software, search knowledge, create media, and automate work. Understanding what happens beneath the chat box turns you from a spectator into someone who can build, evaluate, and challenge these systems with confidence.",
+    payoffs: [
+      { label: "See inside", title: "Trace every transformation", body: "Follow text through tokens, vectors, attention, logits, sampling, and the feedback loops that shape model behavior." },
+      { label: "Build the stack", title: "Connect model to system", body: "Join training, post-training, inference, retrieval, tools, evaluation, and serving into one coherent engineering picture." },
+      { label: "Think clearly", title: "Know what evidence can prove", body: "Separate fluent demos from reliable capability, benchmark movement from real usefulness, and model behavior from system safety." },
+    ],
+    finish: "Leave with a working mental model of the entire LLM stack—and the judgment to use it well.",
+  },
+  worldmodel: {
+    promise: "Learn how machines imagine before they act.",
+    why: "A world model gives an agent something more powerful than reflex: a way to represent hidden state, rehearse possible futures, and compare actions before reality pays the price. It is the bridge between prediction and purposeful behavior.",
+    payoffs: [
+      { label: "Represent", title: "Turn experience into state", body: "Build compact predictive state from partial, noisy observations without confusing a reconstruction with the world itself." },
+      { label: "Imagine", title: "Plan inside learned futures", body: "Compare rollouts, search, control, and uncertainty while keeping model error and exploitation visible." },
+      { label: "Operate", title: "Connect research to reality", body: "Reason about video models, robotics, constraints, telemetry, release gates, and the evidence needed for a defensible claim." },
+    ],
+    finish: "Finish able to design, interrogate, and safely operate systems that learn a world well enough to plan in it.",
+  },
+  generative: {
+    promise: "Turn randomness into controlled creation.",
+    why: "Generative models do more than produce striking samples: they offer different ways to represent probability, compress structure, transform noise, and steer what is possible. Learning the families side by side reveals which tool fits which creative or scientific problem.",
+    payoffs: [
+      { label: "Understand", title: "See the families as one map", body: "Connect likelihood models, latent variables, flows, energy methods, and diffusion through their probability and sampling interfaces." },
+      { label: "Create", title: "Control what gets generated", body: "Work with conditions, guidance, inverse problems, multimodal signals, and the trade-offs between fidelity, diversity, and speed." },
+      { label: "Research", title: "Move beyond attractive samples", body: "Design matched experiments, preserve seeds and budgets, diagnose missing modes or sampler bias, and make claims the evidence earns." },
+    ],
+    finish: "Complete the course with a principled generative toolkit and an original experiment you can defend.",
+  },
+  rl: {
+    promise: "Teach systems to improve through consequences.",
+    why: "Reinforcement learning is where prediction becomes decision-making. It explains how an agent can value delayed outcomes, explore an uncertain world, improve from experience, and still respect constraints that reward alone cannot express.",
+    payoffs: [
+      { label: "Reason", title: "See the decision loop clearly", body: "Separate state, action, reward, return, value, policy, and data so every update has an inspectable meaning." },
+      { label: "Build", title: "Move from tables to deep agents", body: "Implement value methods, DQN, actor-critic, planning, offline learning, and model-based control as connected systems." },
+      { label: "Evaluate", title: "Know when an agent truly improved", body: "Use matched budgets, multiple seeds, support checks, constraints, and failure evidence instead of trusting one impressive run." },
+    ],
+    finish: "Finish with the tools to build learning agents—and the discipline to tell progress from noise.",
+  },
+  embodied: {
+    promise: "Bring intelligence out of the screen.",
+    why: "Embodied AI forces every abstract capability to meet time, geometry, uncertainty, and consequence. A robot must connect language to perception, perception to state, state to action, and action to a physical outcome that can fail in ways a text demo never reveals.",
+    payoffs: [
+      { label: "Ground", title: "Connect language to the world", body: "Define tasks, frames, objects, state estimates, and success predicates precisely enough for a machine to act on them." },
+      { label: "Control", title: "Close the loop under uncertainty", body: "Build policies, feedback, recovery, authority handoffs, and timing contracts that respond to what actually happened." },
+      { label: "Prove", title: "Evaluate the system, not the demo", body: "Track requested versus applied actions, interventions, failures, latency, and matched experiments in a bounded simulation." },
+    ],
+    finish: "Complete the full perception–language–action loop and learn what it takes to make intelligence survive contact with reality.",
+  },
+};
+
 export const courses: Record<CourseId, CourseDefinition> = {
   llm: {
+    campaign: courseCampaigns.llm,
     id: "llm", title: "Large Language Models", selectorLabel: "LLMs", subject: "large language models", description: "From numerical foundations to dependable language-model systems.", documentTitle: "Neural Field Guide — LLMs from First Token to Alignment",
     tracks, phases: learningPhases, lessons, lessonById, curriculumMinutes, guides: lessonGuides, objectiveCoverage: lessonObjectiveCoverage, motionStories: lessonMotionStories, codeExamples: lessonCodeExamples, codeGuidance: codeActivityGuidance,
     capstoneProjects, capstoneEvidencePacks, capstoneArtifactFiles, synthesisMaps: llmSynthesisMaps, sharedCoreLessonId: "observability-governance", specializationTrackId: "advanced", recommendedAfter: [], recommendedNext: ["worldmodel", "generative"], maturity: "released", reviewedDate: "13 Jul 2026",
     hero: { heading: "Understand the machine.", emphasis: "From first principles.", lede: "Start with next-token prediction, then build the mathematical, architectural, training, serving, and safety ideas that make an LLM system work.", machineLabel: "THE LLM PIPELINE", machineInput: "“language”", machineToken: "tok_1842", machineOutputLabel: "next token", machineOutput: "model", storyTitle: "From a next-token rule to a dependable LLM system.", storyIntro: "Five cumulative phases add one layer of machinery at a time. The active diagram shows where each phase changes the system.", storyLabels: ["PREDICT", "REPRESENT", "TRAIN", "ALIGN", "DEPLOY"], manifest: "Lessons 01–40 form the cumulative foundations-to-deployment spine. Lessons 41–44 are parallel advanced specializations: choose them for your goal rather than treating their order as a prerequisite chain.", trace: { question: "How does one prefix become a checked next-token prediction?", input: "Prefix tokens [the, cat] enter as IDs with shape [1, 2].", transformation: "The decoder maps them to two vocabulary-logit rows; only the final row is normalized, for example P(sat)=0.62 and P(slept)=0.21.", output: "The sampler may choose sat, while evaluation compares the whole distribution with the actual next token—not merely the chosen word.", failure: "A missing causal mask can leak the target token during training; a fluent sample alone cannot prove correctness or safety." } },
   },
   worldmodel: {
+    campaign: courseCampaigns.worldmodel,
     id: "worldmodel", title: "World Models", selectorLabel: "World Models", subject: "world models", description: "From controlled prediction and hidden state to imagination, planning, robotics, and bounded deployment.", documentTitle: "Neural Field Guide — World Models from State to Imagination",
     tracks: worldModelTracks, phases: worldModelLearningPhases, lessons: worldModelLessons, lessonById: worldModelLessonById, curriculumMinutes: worldModelCurriculumMinutes, guides: worldModelLessonGuides, objectiveCoverage: worldModelObjectiveCoverage, motionStories: worldModelMotionStories, codeExamples: worldModelCodeExamples, codeGuidance: worldModelCodeGuidance, transfers: worldModelTransferChecks,
     capstoneProjects: worldModelCapstoneProjects, capstoneEvidencePacks: worldModelCapstoneEvidencePacks, capstoneArtifactFiles: worldModelCapstoneArtifactFiles, synthesisMaps: worldModelSynthesisMaps, sharedCoreLessonId: "world-model-operations-case-study", specializationTrackId: "wm-advanced", recommendedAfter: ["llm"], recommendedNext: ["generative", "rl"], maturity: "released", reviewedDate: "14 Jul 2026",
-    hero: { heading: "Predict the world.", emphasis: "Act through imagination.", lede: "Start with controlled state transitions, then build the representations, training objectives, planners, video models, evaluation, robotics, and safety contracts that make a world model useful.", machineLabel: "THE WORLD-MODEL LOOP", machineInput: "observation", machineToken: "state + action", machineOutputLabel: "predicted consequence", machineOutput: "next-state distribution", storyTitle: "From one controlled transition to an operated world-model system.", storyIntro: "Six cumulative phases build predictive state, imagination, decision-making, foundation models, and deployment evidence before advanced branches.", storyLabels: ["STATE", "LEARN", "IMAGINE", "SCALE", "OPERATE"], manifest: "Lessons 01–40 form the shared spine through safe operation. Lessons 41–45 are parallel research specializations; Lesson 46 turns one chosen branch into a falsifiable final study.", trace: { question: "How can a candidate action change a prediction before it is executed?", input: "At position x=2.0 m, compare actions a=+0.5 m and a=-0.5 m.", transformation: "A declared transition x′=x+a predicts 2.5 m versus 1.5 m; a planner scores both imagined consequences against the goal at 2.4 m.", output: "The +0.5 m branch has 0.1 m predicted error and is conditionally preferred before actuator authority is granted.", failure: "Omitting the action makes both futures identical; model error or an out-of-support action can still make the imagined ranking wrong." } },
+    hero: { heading: "Predict the world.", emphasis: "Act through imagination.", lede: "Start with controlled state transitions, then build the representations, training objectives, planners, video models, evaluation, robotics, and safety contracts that make a world model useful.", machineLabel: "THE WORLD-MODEL LOOP", machineInput: "observation", machineToken: "state + action", machineOutputLabel: "predicted consequence", machineOutput: "next-state distribution", storyTitle: "From one controlled transition to an operated world-model system.", storyIntro: "Six cumulative phases build predictive state, imagination, decision-making, foundation models, and deployment evidence before advanced branches.", storyLabels: ["STATE", "LEARN", "IMAGINE", "SCALE", "OPERATE", "SPECIALIZE"], manifest: "Lessons 01–40 form the shared spine through safe operation. Lessons 41–45 are parallel research specializations; Lesson 46 turns one chosen branch into a falsifiable final study.", trace: { question: "How can a candidate action change a prediction before it is executed?", input: "At position x=2.0 m, compare actions a=+0.5 m and a=-0.5 m.", transformation: "A declared transition x′=x+a predicts 2.5 m versus 1.5 m; a planner scores both imagined consequences against the goal at 2.4 m.", output: "The +0.5 m branch has 0.1 m predicted error and is conditionally preferred before actuator authority is granted.", failure: "Omitting the action makes both futures identical; model error or an out-of-support action can still make the imagined ranking wrong." } },
   },
   generative: {
+    campaign: courseCampaigns.generative,
     id: "generative", title: "Generative Models", selectorLabel: "Generative Models", subject: "generative models", description: "From probability tables to latent models, flows, energies, diffusion, controllability, and original experiments.", documentTitle: "Neural Field Guide — Generative Models from Distributions to Research",
     tracks: generativeTracks, phases: generativeLearningPhases, lessons: generativeLessons, lessonById: generativeLessonById, curriculumMinutes: generativeCurriculumMinutes, guides: generativeLessonGuides, objectiveCoverage: generativeObjectiveCoverage, motionStories: generativeMotionStories, codeExamples: generativeCodeExamples, codeGuidance: generativeCodeGuidance, transfers: generativeTransferChecks, researchLabs: generativeResearchLabs,
     capstoneProjects: generativeCapstoneProjects, capstoneEvidencePacks: generativeCapstoneEvidencePacks, capstoneArtifactFiles: generativeCapstoneArtifactFiles, synthesisMaps: generativeSynthesisMaps, sharedCoreLessonId: "generative-research-capstone", specializationTrackId: "__none__", recommendedAfter: ["llm", "worldmodel"], recommendedNext: ["rl", "embodied"], maturity: "released", reviewedDate: "15 Jul 2026",
@@ -184,6 +246,7 @@ export const courses: Record<CourseId, CourseDefinition> = {
     hero: { heading: "Model possibility.", emphasis: "Then sample it.", lede: "Build distributions, autoregressive and latent generators, flows, energy samplers, diffusion models, conditional controls, and a reproducible original experiment from first principles.", machineLabel: "THE GENERATIVE LOOP", machineInput: "data + condition", machineToken: "randomness + model", machineOutputLabel: "generated sample", machineOutput: "bounded evidence", storyTitle: "From a probability table to a controlled generative research system.", storyIntro: "Six build territories expose a different generative interface, then connect implementation, sampling, evaluation, safety, and research evidence.", storyLabels: ["DISTRIBUTION", "LATENT", "ENERGY", "DENOISE", "CONTROL", "RESEARCH"], manifest: "Lessons 01–30 build selected core families—autoregressive, latent-variable, flow, energy-based, and diffusion systems—then culminate in a matched original study. GANs and several specialized families are outside this course's current scope.", trace: { question: "How does randomness become a sample from a learned distribution?", input: "Draw z=0.25 from a declared base distribution and condition on class c=spiral.", transformation: "A generator maps (z,c) through its learned transformation; density-based families also track probability change, while diffusion repeatedly removes scheduled noise.", output: "The result is one conditional sample, so evaluation must aggregate many seeds and compare the resulting distribution with held-out data.", failure: "One attractive output cannot reveal missing modes, memorization, sampler bias, or whether the conditioning caused the change." } },
   },
   rl: {
+    campaign: courseCampaigns.rl,
     id: "rl", title: "Reinforcement Learning & Control", selectorLabel: "RL & Control", subject: "reinforcement learning and control", description: "From typed decision loops and tabular backups to deep, policy-gradient, model-based, offline, safe, and original agent experiments.", documentTitle: "Neural Field Guide — Reinforcement Learning from Returns to Research",
     tracks: rlTracks, phases: rlLearningPhases, lessons: rlLessons, lessonById: rlLessonById, curriculumMinutes: rlCurriculumMinutes, guides: rlLessonGuides, objectiveCoverage: rlObjectiveCoverage, motionStories: rlMotionStories, codeExamples: rlCodeExamples, codeGuidance: rlCodeGuidance, transfers: rlTransferChecks, researchLabs: rlResearchLabs,
     capstoneProjects: rlCapstoneProjects, capstoneEvidencePacks: rlCapstoneEvidencePacks, capstoneArtifactFiles: rlCapstoneArtifactFiles, synthesisMaps: rlSynthesisMaps, sharedCoreLessonId: "rl-research-capstone", specializationTrackId: "__none__", recommendedAfter: ["llm", "worldmodel", "generative"], recommendedNext: ["embodied"], maturity: "released", reviewedDate: "15 Jul 2026",
@@ -195,6 +258,7 @@ export const courses: Record<CourseId, CourseDefinition> = {
     hero: { heading: "Learn to decide.", emphasis: "Measure every consequence.", lede: "Build finite decision systems, value learners, DQN, actor-critic, model-based control, offline policies, safety gates, and a reproducible original experiment from first principles.", machineLabel: "THE CONTROL LOOP", machineInput: "observation", machineToken: "policy + action", machineOutputLabel: "consequence", machineOutput: "reward + next state", storyTitle: "From one transition to an evidence-bounded learning agent.", storyIntro: "Seven territories expose values, policies, models, logged behavior, constraints, and independent-run evidence as one cumulative control system.", storyLabels: ["LOOP", "VALUE", "DEEP Q", "POLICY", "IMAGINE", "OFFLINE", "RESEARCH"], manifest: "Lessons 01–32 build working tabular, deep-value, actor-critic, model-based, and offline agents, then culminate in a seed-level original study.", trace: { question: "How does a consequence change a later decision?", input: "In state s, action right yields reward 1 and next-state value 4; use discount γ=0.9.", transformation: "The one-step target is 1+0.9×4=4.6; a value or policy update assigns credit while keeping the behavior policy and data source explicit.", output: "The updated estimate can increase the probability of right on a later visit, but only within the evidence and support supplied by experience.", failure: "Treating reward as a supervised label hides delayed credit; one seed or off-policy data without support cannot establish a reliable improvement." } },
   },
   embodied: {
+    campaign: courseCampaigns.embodied,
     id: "embodied", title: "Embodied AI", selectorLabel: "Embodied AI", subject: "embodied artificial intelligence", description: "From typed tasks and calibrated state to demonstrations, language-conditioned policies, closed-loop control, and original embodied-system experiments.", documentTitle: "Neural Field Guide — Embodied AI from Sensors to Action",
     tracks: embodiedTracks, phases: embodiedLearningPhases, lessons: embodiedLessons, lessonById: embodiedLessonById, curriculumMinutes: embodiedCurriculumMinutes, guides: embodiedLessonGuides, objectiveCoverage: embodiedObjectiveCoverage, motionStories: embodiedMotionStories, codeExamples: embodiedCodeExamples, codeGuidance: embodiedCodeGuidance, transfers: embodiedTransferChecks, researchLabs: embodiedResearchLabs,
     capstoneProjects: embodiedCapstoneProjects, capstoneEvidencePacks: embodiedCapstoneEvidencePacks, capstoneArtifactFiles: embodiedCapstoneArtifactFiles, synthesisMaps: embodiedSynthesisMaps, sharedCoreLessonId: "embodied-research-capstone", specializationTrackId: "__none__", recommendedAfter: ["llm", "worldmodel", "generative", "rl"], recommendedNext: [], maturity: "released", reviewedDate: "15 Jul 2026",

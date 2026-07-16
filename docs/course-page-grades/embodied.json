@@ -1,10 +1,10 @@
 {
-  "rubricRevision": "2026-07-15",
-  "gradedAt": "2026-07-16T09:26:23Z",
-  "sourceFingerprint": "sha256:9b014b75ccfea76c929ecab1aba72682a26aba7005d598502b0fd5df04fcab2a",
+  "rubricRevision": "2026-07-16",
+  "gradedAt": "2026-07-16T09:53:00Z",
+  "sourceFingerprint": "sha256:048bda04ec7cb298cc688ce0cff19902b16be67e2db97238f102fad4c71786f5",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 31 composed Embodied AI pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
+    "method": "Independent 16 July 2026 home-page semantic regrade after the marketing-first shared-shell revision; reviewed all five campaign promises, payoffs, arcs, CTAs, evidence boundaries, source cards, and responsive CSS, confirmed unchanged lesson rows remain valid, and verified every rubric floor."
   },
   "courseId": "embodied",
   "population": 31,
@@ -15,15 +15,15 @@
       "route": "/embodied/",
       "A": 25,
       "C": 25,
-      "E": 15,
+      "E": 14,
       "I": 15,
       "D": 10,
       "S": 5,
       "R": 4,
-      "total": 99,
+      "total": 98,
       "pass": true,
       "blockingDefects": [],
-      "rationale": "The home accurately positions Embodied AI after the four recommended courses without making them mandatory, supplies a concrete cube-at-.40-m to grasp-at-.42-m sensor-policy-actuator-consequence trace, distinguishes requested action from verified predicate success, maps six working-system territories, and gives a prediction-led first action plus an explicit simulation/evidence boundary. The only deduction is that its reviewed course-level provenance has no claim-local primary-source cards; the newly shared optional home-source renderer is correctly inactive for Embodied and causes no semantic regression."
+      "rationale": "The home makes grounding, closed-loop control, and system-level proof a compelling six-part perception-language-action journey, with two direct CTAs and a simulation-qualified finish line. Requested versus applied action and physical-evidence boundaries remain clear. E is 14 because the earlier coordinate trace is no longer rendered; R is 4 because this home has no claim-linked source cards."
     },
     {
       "pageType": "lesson",

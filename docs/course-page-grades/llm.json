@@ -1,10 +1,10 @@
 {
-  "rubricRevision": "2026-07-15",
-  "gradedAt": "2026-07-16T09:26:23Z",
-  "sourceFingerprint": "sha256:3d1fac03aacae95f6999df2fec6b1215cc16b25ea737d24d201e863ced645769",
+  "rubricRevision": "2026-07-16",
+  "gradedAt": "2026-07-16T09:53:00Z",
+  "sourceFingerprint": "sha256:413734efc5be6f056919a911f1dcb898d706f0091fbba045eec5cad2a56259eb",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 45 composed LLM pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
+    "method": "Independent 16 July 2026 home-page semantic regrade after the marketing-first shared-shell revision; reviewed all five campaign promises, payoffs, arcs, CTAs, evidence boundaries, source cards, and responsive CSS, confirmed unchanged lesson rows remain valid, and verified every rubric floor."
   },
   "courseId": "llm",
   "population": 45,
@@ -15,15 +15,15 @@
       "route": "/llm/",
       "A": 25,
       "C": 25,
-      "E": 15,
+      "E": 14,
       "I": 15,
       "D": 10,
       "S": 5,
       "R": 4,
-      "total": 99,
+      "total": 98,
       "pass": true,
       "blockingDefects": [],
-      "rationale": "The home accurately orients learners through the cumulative foundations-to-advanced spine, states that no course prerequisite is required, exposes readiness and recommended follow-on branches, and previews working-system and research milestones without overstating browser fixtures. Its authored token-to-logits trace and prediction-led five-phase story provide a concrete, inspectable example and an effective first action. The only deduction is that provenance is summarized at course level rather than attached as claim-local source cards."
+      "rationale": "The home leads with a credible full-stack promise, three concise payoffs, a five-phase and seven-frontier arc, two direct CTAs, and an honest self-contained evidence boundary. The token pipeline remains clearly illustrative rather than a measurement. E is 14 because the removed token-to-logits worked trace now belongs to the lessons; R is 4 because this home has no claim-linked source cards."
     },
     {
       "pageType": "lesson",

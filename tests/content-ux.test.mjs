@@ -87,6 +87,31 @@ test("content pages use readable single-column prose and generous spacing", () =
   assert.match(styles, /@media\(max-width:780px\)[\s\S]*\.llm-discussion\{margin:72px -8px 0\}/);
 });
 
+test("course homes use a motivation-led landing-page hierarchy", () => {
+  const home = app.slice(app.indexOf("function HomeView"), app.indexOf("function LessonView"));
+  for (const phrase of [
+    'className="hero"',
+    'className="course-pitch"',
+    'className="course-payoffs"',
+    'className="home-scroll-story"',
+    'className="course-manifest"',
+    'className="home-finale"',
+    "campaign.promise",
+    "campaign.why",
+    "campaign.payoffs.map",
+    "campaign.finish",
+    "Start the course",
+    'chromeLabel="NEURAL FIELD GUIDE / COURSE ARC"',
+    "canvasHint={false}",
+  ]) assert.ok(home.includes(phrase), phrase);
+  for (const phrase of ["readinessChecks", "program-position", "Recommended preparation", "One inspectable system trace", "Verify the map before generalizing it", "hero.trace"]) assert.ok(!home.includes(phrase), phrase);
+  assert.doesNotMatch(styles, /\.program-position|\.home-provenance/);
+  assert.match(styles, /\.course-pitch\{[^}]*padding:110px/);
+  assert.match(styles, /\.course-payoffs\{[^}]*grid-template-columns:repeat\(3/);
+  assert.match(styles, /\.home-finale\{[^}]*grid-template-columns:1\.4fr \.6fr/);
+  assert.match(styles, /@media\(max-width:780px\)[^]*\.course-pitch>header,\.course-payoffs,\.course-pitch blockquote,\.home-proof,\.home-proof nav,\.home-finale\{grid-template-columns:1fr\}/);
+});
+
 test("lesson objectives appear once in the dedicated by-the-end section", () => {
   const orient = app.slice(app.indexOf('className="world-model-orient"'), app.indexOf("{lesson.prerequisites?.length"));
   const bridge = app.slice(app.indexOf('className="knowledge-bridge"'), app.indexOf("{courseAlignment &&"));
@@ -157,6 +182,8 @@ test("scroll storytelling remains progressive, controllable, and motion-safe", (
   for (const phrase of ["requestAnimationFrame", "ResizeObserver", "{ passive: true }", "storyStagePosition(centers, anchor)", "activeStoryStage(stagePosition", "aria-pressed={index === active}", "scrollIntoView", "prefers-reduced-motion: reduce", "aria-hidden=\"true\""]) assert.ok(scrollStory.includes(phrase), phrase);
   assert.doesNotMatch(scrollStory, /IntersectionObserver/);
   assert.match(scrollStory, /<ThreeStoryCanvas concept=\{concept\}/);
+  assert.match(scrollStory, /chromeLabel = "NEURAL FIELD GUIDE \/ LIVE TRACE"/);
+  assert.match(scrollStory, /hint=\{canvasHint\}/);
   assert.match(scrollStory, /<StoryMechanismDiagram concept=\{concept\} active=\{active\}/);
   assert.match(scrollStory, /STORY_PROGRESS_EVENT/);
   assert.match(styles, /\.scroll-story-stage\{[^}]*position:sticky/);

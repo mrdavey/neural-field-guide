@@ -194,27 +194,18 @@ export function CourseApp({ courseId = "llm", initialLessonId }: { courseId?: Co
 }
 
 function HomeView({ course, completed, nextLesson, openLesson }: { course: CourseDefinition; completed: number; nextLesson: Lesson; openLesson: (id: string) => void }) {
-  const { lessons, tracks, phases: learningPhases, curriculumMinutes, hero } = course;
+  const { lessons, tracks, phases: learningPhases, curriculumMinutes, hero, campaign } = course;
   const labCount = lessons.filter((lesson) => lesson.lab).length;
   const codeExampleCount = Object.keys(course.codeExamples).length;
-  const recommendedAfter = course.recommendedAfter.map((id) => courses[id]);
-  const recommendedNext = course.recommendedNext.map((id) => courses[id]);
-  const readinessChecks: Record<CourseId, string> = {
-    llm: "Can you multiply small arrays, interpret a probability, and follow a short Python trace? If not, Lesson 1 starts from those ideas and defines them as they appear.",
-    worldmodel: "Can you distinguish an observation from hidden state and explain why a candidate action must enter a prediction? The LLM course helps with tensors and learned representations, but its completion is recommended—not mandatory.",
-    generative: "Can you normalize a probability table and distinguish training data from a generated sample? Earlier courses help with tensors, learned state, and evaluation, but Lesson 1 reactivates the required pieces.",
-    rl: "Can you trace state → action → consequence and keep reward separate from a supervised target? The recommended earlier courses supply representations, uncertainty, and generative modeling; this course restates the decision-loop prerequisites.",
-    embodied: "Can you keep observation, estimated state, requested action, applied action, and physical outcome as separate records? The four earlier courses are recommended because this course composes all of them into a closed loop.",
-  };
   return <div className="home-view">
     <section className="hero">
       <div className="hero-copy">
-        <span className="kicker"><Icon name="spark" /> Interactive learning expedition</span>
+        <span className="kicker"><Icon name="spark" /> {course.title} · from first principles</span>
         <h1>{hero.heading}<br /><em>{hero.emphasis}</em></h1>
         <p className="hero-lede">{hero.lede}</p>
         <div className="hero-actions">
-          <button className="primary-button" onClick={() => openLesson(nextLesson.id)}>{completed ? "Continue your journey" : "Start with the orientation"}<span>→</span></button>
-          <span className="time-note"><strong>{Math.round(curriculumMinutes / 60)} hours</strong> · learn at your pace</span>
+          <button className="primary-button" onClick={() => openLesson(nextLesson.id)}>{completed ? "Continue course" : "Start the course"}<span>→</span></button>
+          <span className="time-note"><strong>{lessons.length} lessons</strong> · about {Math.round(curriculumMinutes / 60)} hours</span>
         </div>
       </div>
       <div className="hero-machine" aria-label={`A visual map of the ${course.title} learning loop`}>
@@ -225,68 +216,52 @@ function HomeView({ course, completed, nextLesson, openLesson }: { course: Cours
       </div>
     </section>
 
-    <section className="program-position" aria-labelledby={`program-position-${course.id}`}>
+    <section className="course-pitch" aria-labelledby={`course-pitch-${course.id}`}>
       <header>
-        <span className="eyebrow">Orient · your place in the field guide</span>
-        <h2 id={`program-position-${course.id}`}>Start with a readiness decision, not a hidden prerequisite.</h2>
-        <p>{readinessChecks[course.id]}</p>
+        <span className="eyebrow">Why {course.title}</span>
+        <h2 id={`course-pitch-${course.id}`}>{campaign.promise}</h2>
+        <p>{campaign.why}</p>
       </header>
-      <div className="program-position-grid">
-        <article>
-          <span>Recommended preparation</span>
-          <h3>{recommendedAfter.length ? "Useful foundations to reuse" : "No course prerequisite"}</h3>
-          {recommendedAfter.length ? <ul>{recommendedAfter.map((item) => <li key={item.id}><a href={publicPath(`/${item.id}/`)}>{item.title}</a><small>{item.description}</small></li>)}</ul> : <p>Begin here. Every required mathematical and implementation term is introduced before it becomes shorthand.</p>}
-        </article>
-        <article>
-          <span>One inspectable system trace</span>
-          <h3>{hero.trace.question}</h3>
-          <ol><li><b>Input:</b> {hero.trace.input}</li><li><b>Transformation:</b> {hero.trace.transformation}</li><li><b>Output:</b> {hero.trace.output}</li><li><b>Failure boundary:</b> {hero.trace.failure}</li></ol>
-        </article>
-        <article>
-          <span>Continue when it serves your build</span>
-          <h3>{recommendedNext.length ? "Recommended next courses" : "Final integration course"}</h3>
-          {recommendedNext.length ? <ul>{recommendedNext.map((item) => <li key={item.id}><a href={publicPath(`/${item.id}/`)}>{item.title}</a><small>{item.description}</small></li>)}</ul> : <p>Use the earlier courses as references while you design and test an end-to-end embodied system.</p>}
-        </article>
+      <div className="course-payoffs">
+        {campaign.payoffs.map((payoff, index) => <article key={payoff.title}>
+          <span>{String(index + 1).padStart(2, "0")} · {payoff.label}</span>
+          <h3>{payoff.title}</h3>
+          <p>{payoff.body}</p>
+        </article>)}
       </div>
-      <footer>
-        <strong>Evidence boundary</strong>
-        <p>Required browser activities are deterministic teaching fixtures or simulations, not model-quality measurements. Runnable code states its environment. Hosted GPU, simulator, or physical-system work is optional and must preserve its own seeds, hardware, failures, and provenance.</p>
-        <span>Course content reviewed {course.reviewedDate}</span>
-      </footer>
-      {course.homeSources?.length ? <div className="home-provenance" aria-labelledby={`home-provenance-${course.id}`}>
-        <header><span className="eyebrow">Claim-linked primary reading · optional</span><h3 id={`home-provenance-${course.id}`}>Verify the map before generalizing it.</h3><p>These sources support three specific promises on this home page; each card says what to inspect rather than acting as a generic bibliography.</p></header>
-        <div>{course.homeSources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer"><span>{source.claim}</span><strong>{source.title}</strong><small>{source.readFor} ↗</small></a>)}</div>
-      </div> : null}
+      <blockquote><span>The finish line</span><p>{campaign.finish}</p></blockquote>
     </section>
 
     <ScrollStory
       className="home-scroll-story"
-      eyebrow="Course sequence · scroll to assemble the system"
+      eyebrow="What you will build"
       title={hero.storyTitle}
       intro={<p>{hero.storyIntro}</p>}
       scene="pipeline"
       concept="pipeline"
       sceneLabels={hero.storyLabels}
+      chromeLabel="NEURAL FIELD GUIDE / COURSE ARC"
+      canvasHint={false}
       steps={learningPhases.map((phase) => ({
         label: `${phase.index} · ${phase.range}`,
         title: phase.title,
         body: <p>{phase.summary}</p>,
-        note: <><strong>Milestone</strong><span>{phase.milestone}</span></>,
+        note: <><strong>You unlock</strong><span>{phase.milestone}</span></>,
         signal: phase.range,
       }))}
     />
 
     <section className="course-manifest">
-      <div className="section-heading"><span className="eyebrow">Curriculum map</span><h2>{tracks.length} territories. One connected story.</h2><p>{hero.manifest}</p></div>
+      <div className="section-heading"><span className="eyebrow">Inside the course</span><h2>One course. {tracks.length} connected frontiers.</h2><p>{hero.manifest}</p></div>
       <div className="track-grid">
         {tracks.map((track, index) => {
           const trackLessons = lessons.filter((lesson) => lesson.track === track.id);
           return <article className="track-card" key={track.id} style={{ "--track": track.color } as React.CSSProperties}>
             <div className="track-top"><span className="track-index">0{index + 1}</span><span className="track-line" /></div>
             <span className="eyebrow">{track.short}</span><h3>{track.title}</h3><p>{track.description}</p>
-            <div className="track-outcome"><strong>{track.role === "specialization" ? "Choose when relevant" : "You will be able to"}</strong><span>{track.outcome}</span></div>
+            <div className="track-outcome"><strong>{track.role === "specialization" ? "Explore when relevant" : "The payoff"}</strong><span>{track.outcome}</span></div>
             <div className="track-meta"><span>{trackLessons.length} lessons</span><span>{trackLessons.reduce((sum, item) => sum + item.duration, 0)} min</span></div>
-            <button onClick={() => openLesson(trackLessons[0].id)}>Enter territory <span>↗</span></button>
+            <button onClick={() => openLesson(trackLessons[0].id)}>Preview {track.short} <span>↗</span></button>
           </article>;
         })}
       </div>
@@ -296,7 +271,17 @@ function HomeView({ course, completed, nextLesson, openLesson }: { course: Cours
       <div><span className="big-stat">{lessons.length}</span><span>connected lessons</span></div>
       <div><span className="big-stat">{labCount}</span><span>hands-on labs</span></div>
       <div><span className="big-stat">{codeExampleCount}</span><span>code notebooks</span></div>
-      <div className="promise-copy"><Icon name="map" /><p><strong>Beginner-first, technically complete.</strong> Definitions lead into mechanisms, worked traces, trade-offs, and implementation details.</p></div>
+      <div className="promise-copy"><Icon name="map" /><p><strong>No black boxes.</strong> Build intuition, see the mechanism, then make the real engineering trade-offs.</p></div>
+    </section>
+
+    {course.homeSources?.length ? <section className="home-proof" aria-label={`${course.title} source foundation`}>
+      <div><span className="eyebrow">Built from the field, not the hype</span><p>Primary work behind the course</p></div>
+      <nav>{course.homeSources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer"><span>{source.claim}</span><strong>{source.title}</strong><b aria-hidden="true">↗</b></a>)}</nav>
+    </section> : null}
+
+    <section className="home-finale">
+      <div><span className="eyebrow">Ready when you are</span><h2>{campaign.finish}</h2><p>{lessons.length} connected lessons, hands-on labs, and a complete end-to-end build.</p><button className="primary-button" onClick={() => openLesson(nextLesson.id)}>{completed ? "Continue course" : "Start the course"}<span>→</span></button></div>
+      <aside><strong>Self-contained by default</strong><p>Browser labs use transparent teaching fixtures. Optional external runs are clearly labeled, and no required work depends on an account or paid service.</p><span>Reviewed {course.reviewedDate}</span></aside>
     </section>
   </div>;
 }

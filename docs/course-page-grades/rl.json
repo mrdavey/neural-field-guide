@@ -1,13 +1,13 @@
 {
-  "rubricRevision": "2026-07-15",
+  "rubricRevision": "2026-07-16",
   "courseId": "rl",
   "population": 33,
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 33 composed Reinforcement Learning pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
+    "method": "Independent 16 July 2026 home-page semantic regrade after the marketing-first shared-shell revision; reviewed all five campaign promises, payoffs, arcs, CTAs, evidence boundaries, source cards, and responsive CSS, confirmed unchanged lesson rows remain valid, and verified every rubric floor."
   },
-  "gradedAt": "2026-07-16T09:26:23Z",
-  "sourceFingerprint": "sha256:4a3190ea34b85caeb6dd1751fa0ef1cf717547ccefb0e400b43ac1e729250626",
+  "gradedAt": "2026-07-16T09:53:00Z",
+  "sourceFingerprint": "sha256:6730b64beb258ecd4433213a6415f94168922f25d1e774cbb7adece1b4537d92",
   "pages": [
     {
       "pageType": "home",
@@ -15,15 +15,15 @@
       "route": "/rl/",
       "A": 25,
       "C": 25,
-      "E": 15,
+      "E": 14,
       "I": 15,
       "D": 10,
       "S": 5,
       "R": 5,
-      "total": 100,
+      "total": 99,
       "pass": true,
       "blockingDefects": [],
-      "rationale": "The home page accurately orients the complete 32-lesson sequence with readiness guidance, recommended prior courses, the Embodied AI continuation, seven working-system milestones, an inspectable Bellman-target trace, an evidence boundary, revision date, and a direct next action. Its three claim-linked cards now connect the decision/value spine, DQN mechanism, and constraint boundary to scoped foundational or primary reading with explicit verification guidance."
+      "rationale": "The home turns consequences, agent construction, and trustworthy evaluation into a coherent seven-part course promise. Seed, support, and constraint language prevents overclaim; two CTAs, a concise evidence boundary, and three claim-linked decision, DQN, and safety sources complete the pitch. E is 14 because the explicit Bellman-target worked trace is no longer rendered on this marketing page."
     },
     {
       "pageType": "lesson",

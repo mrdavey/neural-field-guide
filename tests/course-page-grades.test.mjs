@@ -68,21 +68,30 @@ test("course fingerprints ignore generated caches and transient files", async ()
   }
 });
 
-test("all five course homes expose distinct authored causal traces", () => {
-  const traces = [...catalog.matchAll(/trace: \{ question: "([^"]+)", input: "([^"]+)", transformation: "([^"]+)", output: "([^"]+)", failure: "([^"]+)" \}/g)];
-  assert.equal(traces.length, 5);
-  assert.equal(new Set(traces.map((match) => match[1])).size, 5, "home learning questions must be course-specific");
-  for (const [, question, input, transformation, output, failure] of traces) {
-    assert.ok(question.length >= 35, question);
-    assert.ok(input.length >= 45, `${question} input`);
-    assert.ok(transformation.length >= 80, `${question} transformation`);
-    assert.ok(output.length >= 70, `${question} output`);
-    assert.ok(failure.length >= 70, `${question} failure boundary`);
+test("all five course homes expose distinct authored campaign promises", () => {
+  const promises = [...catalog.matchAll(/^    promise: "([^"]+)",$/gm)].map((match) => match[1]);
+  const reasons = [...catalog.matchAll(/^    why: "([^"]+)",$/gm)].map((match) => match[1]);
+  const finishes = [...catalog.matchAll(/^    finish: "([^"]+)",$/gm)].map((match) => match[1]);
+  const payoffs = [...catalog.matchAll(/^      \{ label: "([^"]+)", title: "([^"]+)", body: "([^"]+)" \},$/gm)];
+  assert.equal(promises.length, 5);
+  assert.equal(new Set(promises).size, 5, "home promises must be course-specific");
+  assert.equal(reasons.length, 5);
+  assert.ok(reasons.every((reason) => reason.length >= 150));
+  assert.equal(finishes.length, 5);
+  assert.equal(payoffs.length, 15);
+  const storyLabelCounts = [...catalog.matchAll(/storyLabels: \[([^\]]+)\]/g)].map((match) => (match[1].match(/"[^"]+"/g) ?? []).length);
+  assert.deepEqual(storyLabelCounts, [5, 6, 6, 7, 6], "each home story needs one node per course phase");
+  for (const [, label, title, body] of payoffs) {
+    assert.ok(label.length >= 5, label);
+    assert.ok(title.length >= 15, title);
+    assert.ok(body.length >= 80, title);
   }
   const app = readFileSync(join(root, "app/course-app.tsx"), "utf8");
-  for (const field of ["question", "input", "transformation", "output", "failure"]) assert.match(app, new RegExp(`hero\\.trace\\.${field}`));
+  for (const field of ["promise", "why", "payoffs", "finish"]) assert.match(app, new RegExp(`campaign\\.${field}`));
+  assert.doesNotMatch(app.slice(app.indexOf("function HomeView"), app.indexOf("function LessonView")), /hero\.trace/);
   assert.equal((catalog.match(/claim: "(?:Family map|Denoising mechanism|Research evidence|Decision-and-value spine|Deep value learning|Constraint boundary)"/g) ?? []).length, 6, "Generative and RL homes each have three claim-linked sources");
-  for (const field of ["source.claim", "source.title", "source.readFor"]) assert.ok(app.includes(field), `home source renderer includes ${field}`);
+  for (const field of ["source.claim", "source.title"]) assert.ok(app.includes(field), `home source renderer includes ${field}`);
+  assert.doesNotMatch(app.slice(app.indexOf("function HomeView"), app.indexOf("function LessonView")), /source\.readFor/);
 });
 
 test("the independent rubric totals 100 and prevents weak dimensions from being averaged away", () => {
@@ -91,6 +100,9 @@ test("the independent rubric totals 100 and prevents weak dimensions from being 
   assert.equal(dimensions.reduce((sum, [, points]) => sum + points, 0), 100);
   for (const requirement of ["total must be at least 95", "A must be at least 24/25", "C must be at least 23/25", "I must be at least 14/15", "S must be 5/5", "no blocking defect may remain"]) assert.ok(rubric.includes(requirement), requirement);
   assert.match(rubric, /Structural tests may verify joins but cannot assign semantic points/);
+  assert.match(rubric, /destination-led landing pages/);
+  assert.match(rubric, /the home should not become a readiness checklist/);
+  assert.doesNotMatch(rubric, /Course homes[^\n]+expose prerequisites/);
 });
 
 test("the independent final grade records cover and pass all 187 canonical pages", async () => {
@@ -100,7 +112,7 @@ test("the independent final grade records cover and pass all 187 canonical pages
   const allKeys = new Set();
   let totalPages = 0;
   for (const record of records) {
-    assert.equal(record.rubricRevision, "2026-07-15", `${record.courseId} rubric revision`);
+    assert.equal(record.rubricRevision, "2026-07-16", `${record.courseId} rubric revision`);
     assert.equal(record.population, expectedPopulations[record.courseId], `${record.courseId} declared population`);
     assert.equal(record.pages.length, expectedPopulations[record.courseId], `${record.courseId} page rows`);
     assert.equal(record.pages.filter((page) => page.pageType === "home").length, 1, `${record.courseId} home row`);

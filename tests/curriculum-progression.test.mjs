@@ -15,7 +15,7 @@ const source = Object.fromEntries(await Promise.all(Object.entries(files).map(as
   await readFile(new URL(path, import.meta.url), "utf8"),
 ])));
 
-test("the home page teaches a cumulative five-phase curriculum spine", () => {
+test("the home page sells the destination while preserving the cumulative course arc", () => {
   assert.match(source.course, /export const learningPhases/);
   for (const phase of ["numerical", "decoder", "training", "systems", "specialize"]) {
     assert.match(source.course, new RegExp(`id: "${phase}"`), `missing ${phase} phase`);
@@ -27,6 +27,11 @@ test("the home page teaches a cumulative five-phase curriculum spine", () => {
   assert.match(source.courseView, /className="home-scroll-story"/);
   assert.match(source.courseView, /steps=\{learningPhases\.map/);
   assert.match(source.courseView, /phase\.milestone/);
+  assert.match(source.courseView, /className="course-pitch"/);
+  assert.match(source.courseView, /className="course-payoffs"/);
+  assert.match(source.courseView, /className="home-finale"/);
+  assert.match(source.courseView, /campaign\.promise/);
+  assert.doesNotMatch(source.courseView, /readinessChecks|program-position|Recommended preparation|hero\.trace/);
 });
 
 test("post-training bridge is ordered into the dependency chain", () => {

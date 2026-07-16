@@ -14,7 +14,9 @@ test("the static root forwards while all five course homes render the finished e
   assert.match(root, /Opening your course/);
   for (const html of [llm, worldmodel, generative, rl, embodied]) {
     assert.match(html, /Neural Field Guide/);
-    assert.match(html, /territories\. One connected story/);
+    assert.match(html, /connected frontiers/);
+    assert.match(html, /The finish line/);
+    assert.match(html, /Start the course/);
     assert.match(html, /Course lessons/);
     assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/);
   }

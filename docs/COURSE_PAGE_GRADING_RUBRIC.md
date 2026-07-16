@@ -1,6 +1,6 @@
 # Course page grading rubric
 
-Reviewed: 15 July 2026
+Reviewed: 16 July 2026
 
 ## Population and gate
 
@@ -34,7 +34,7 @@ For a passing page:
 - R must be at least 4/5;
 - no blocking defect may remain.
 
-Course homes use the same rubric with page-appropriate evidence: the sequence must accurately orient the learner, expose prerequisites and recommended branches, preview working-system milestones and research boundaries, provide an effective next action, and avoid promising teaching that the linked lessons do not supply.
+Course homes use the same rubric with page-appropriate evidence. They are destination-led landing pages: each must accurately motivate the subject, state a credible course promise, preview the payoff and course arc, provide an effective next action, preserve honest evidence and research boundaries, and avoid promising teaching that the linked lessons do not supply. Dependency details remain available in curriculum data and lesson orientation; the home should not become a readiness checklist.
 
 ## Grading procedure
 

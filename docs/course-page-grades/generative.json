@@ -1,5 +1,5 @@
 {
-  "rubricRevision": "2026-07-15",
+  "rubricRevision": "2026-07-16",
   "courseId": "generative",
   "population": 31,
   "pages": [
@@ -9,14 +9,14 @@
       "route": "/generative/",
       "A": 25,
       "C": 25,
-      "E": 15,
+      "E": 14,
       "I": 15,
       "D": 10,
       "S": 5,
       "R": 5,
-      "total": 100,
+      "total": 99,
       "pass": true,
-      "rationale": "The home accurately exposes readiness, recommended prior and next courses, six system milestones, a course-specific causal trace, an effective start action, explicit fixture/external-run boundaries, and the 15 Jul 2026 review date. Three claim-linked reading cards now directly support the family taxonomy, DDPM mechanism, and original-experiment evidence contract, each naming what the learner should verify rather than acting as a generic bibliography.",
+      "rationale": "The home connects a distinct family map, controllable creation, and defensible research to a six-part arc whose manifest names the course's exclusions. Its original-study finish, two CTAs, claim-linked foundational, DDPM, and reproducibility sources, and evidence boundary are sound. E is 14 because the earlier numeric sampling trace is no longer rendered on this marketing page.",
       "blockingDefects": []
     },
     {
@@ -502,8 +502,8 @@
   ],
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 16 July 2026 semantic regression-impact regrade of all 31 composed Generative Models pages after shared objective, instruction, and interaction changes; verified single-placement objectives, immediately visible labs, explanation-before-mechanism flow, assessment integrity, and every rubric floor."
+    "method": "Independent 16 July 2026 home-page semantic regrade after the marketing-first shared-shell revision; reviewed all five campaign promises, payoffs, arcs, CTAs, evidence boundaries, source cards, and responsive CSS, confirmed unchanged lesson rows remain valid, and verified every rubric floor."
   },
-  "gradedAt": "2026-07-16T09:26:23Z",
-  "sourceFingerprint": "sha256:2dcc93b592b669a4e306bcfaa7476ea8c74cb45470864882d0d8a4e83fbaf3d7"
+  "gradedAt": "2026-07-16T09:53:00Z",
+  "sourceFingerprint": "sha256:e7d1c7e329d43105fb415832d63d4376bce317f2cb7d6fad600406403b556546"
 }

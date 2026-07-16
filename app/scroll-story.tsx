@@ -26,9 +26,11 @@ type ScrollStoryProps = {
   sceneLabels: string[];
   steps: ScrollStoryStep[];
   className?: string;
+  chromeLabel?: string;
+  canvasHint?: string | false;
 };
 
-export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels, steps, className = "" }: ScrollStoryProps) {
+export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels, steps, className = "", chromeLabel = "NEURAL FIELD GUIDE / LIVE TRACE", canvasHint }: ScrollStoryProps) {
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
   const layoutRef = useRef<HTMLDivElement | null>(null);
@@ -139,10 +141,10 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
     <div className="scroll-story-layout" ref={layoutRef}>
       <div className="scroll-story-stage">
         <div className="scroll-story-visual" data-active={active} ref={visualRef}>
-          <div className="story-chrome"><span>NEURAL FIELD GUIDE / LIVE TRACE</span><b>{String(active + 1).padStart(2, "0")} · {String(steps.length).padStart(2, "0")}</b></div>
+          <div className="story-chrome"><span>{chromeLabel}</span><b>{String(active + 1).padStart(2, "0")} · {String(steps.length).padStart(2, "0")}</b></div>
           <div className="story-scene" aria-hidden="true">
             <div className="story-grid" />
-            <ThreeStoryCanvas concept={concept} storyKey={`${eyebrow}:${sceneLabels.join(":")}`} stageCount={steps.length} />
+            <ThreeStoryCanvas concept={concept} storyKey={`${eyebrow}:${sceneLabels.join(":")}`} stageCount={steps.length} hint={canvasHint} />
             <StoryMechanismDiagram concept={concept} active={active} />
             <div className="story-effects"><i /><i /><i /><b /><span /></div>
             <div className="story-particles">{Array.from({ length: 16 }, (_, index) => <i key={index} style={{

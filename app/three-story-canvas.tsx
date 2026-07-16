@@ -25,6 +25,7 @@ type ThreeStoryCanvasProps = {
   concept: ThreeStoryConcept;
   storyKey: string;
   stageCount: number;
+  hint?: string | false;
 };
 
 type Point = [number, number, number];
@@ -256,7 +257,7 @@ function conceptPoint(concept: ThreeStoryConcept, index: number, count: number, 
   }
 }
 
-export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCanvasProps) {
+export function ThreeStoryCanvas({ concept, storyKey, stageCount, hint }: ThreeStoryCanvasProps) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const [eligible, setEligible] = useState(false);
 
@@ -622,6 +623,6 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
   }, [concept, eligible, stageCount, storyKey]);
 
   return <div className="three-story-canvas" data-concept={concept} data-state="idle" ref={hostRef} aria-hidden="true">
-    <span>SCROLL TO CHANGE THE MECHANISM · TAP TO PULSE</span>
+    {hint !== false && <span>{hint ?? "SCROLL TO CHANGE THE MECHANISM · TAP TO PULSE"}</span>}
   </div>;
 }
