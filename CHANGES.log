@@ -1,0 +1,112 @@
+# CHANGES.log
+
+## Objective
+Independently grade and remediate all 187 canonical released course pages (5 course homes plus 182 lessons) until every page scores at least 95/100 for coverage, accuracy, and teaching effectiveness and leaves a learner able to explain and apply its concept
+
+## Cycle 1 | Plan 1 | Step 1 | 2026-07-15 18:50
+- Issue: No unified current grading contract covered every course page
+- Summary: Defined an independent 100-point page rubric with non-compensable accuracy/coverage/effectiveness floors and locked the population at five homes plus 182 lessons
+- Files: docs/COURSE_PAGE_GRADING_RUBRIC.md, tests/course-page-grades.test.mjs
+- Verification: node --test tests/course-page-grades.test.mjs: 2/2 pass
+
+## Cycle 1 | Plan 1 | Step 2 | 2026-07-15 19:07
+- Issue: No current independent semantic score existed for every canonical page
+- Summary: Completed a fresh five-grader audit of all 5 homes and 182 lessons, including composed teaching surfaces, runnable examples, external contracts, and downloadable artifacts; recorded 45 failing pages and exact repair requirements
+- Files: docs/COURSE_PAGE_GRADING_RUBRIC.md, PLAN_LOG.md
+- Verification: Independent graders produced 187 seven-dimension score rows; population totals match 45+47+31+33+31=187
+
+## Cycle 1 | Plan 2 | Step 1 | 2026-07-15 19:09
+- Issue: Homes hid program position and shared research guides implied unrelated evidence was one worked run
+- Summary: Added a responsive five-course readiness/program-position panel, replaced an unlabeled numeric hero claim with an explicit non-measurement label, clarified course branches and scope, and rebuilt the research guide example as an honestly separated mechanism-to-transfer ladder
+- Files: app/course-app.tsx, app/course-catalog.ts, app/research-courses/helpers.ts, app/globals.css
+- Verification: npx tsc --noEmit --pretty false: pass
+
+## Cycle 1 | Plan 2 | Step 2 | 2026-07-15 19:16
+- Issue: Ten LLM/World pages contained causal timing, numerical-grid, initialization, unit, or evidence-label defects
+- Summary: Corrected causal positional reasoning and attention division, symmetric 3-bit quantization and reconstruction errors, request-rate units, learnable LoRA initialization with a gradient assertion, evaluation/editing evidence labels, and a single explicit world-model node/edge timing convention across prose and lab
+- Files: app/course-data.ts, app/lesson-guides/foundations-architecture.ts, app/lesson-guides/systems.ts, app/code-examples.ts, app/lesson-labs.tsx, app/world-models/sections/training.ts, app/world-models/lesson-lab-specs.ts
+- Verification: TypeScript pass; focused learning tests 25/25; World Models/objective tests 10/10
+
+## Cycle 1 | Plan 2 | Step 3 | 2026-07-15 19:26
+- Issue: Generative pages omitted cross-entropy, causal-prefix invariance, stationarity/MALA, DSM targets, reverse updates, full systems ledgers, and declared artifact cells
+- Summary: Added numerical cross-entropy, corrected all-position causal invariance, taught invariant kernels and MALA acceptance, built DSM target/loss traces, added a scalar DDIM reverse step, separated throughput/memory/provenance/resume diagnoses, completed four declared artifact matrices with honest planned null rows, and added generic Cartesian verification
+- Files: app/generative/sections/foundations.ts, app/generative/sections/latents.ts, app/generative/sections/energy.ts, app/generative/sections/diffusion.ts, app/generative/sections/research.ts, app/generative/sources.ts, app/capstone-project-view.tsx, public/capstone-artifacts/generative/distribution-workbench-capstone.json, public/capstone-artifacts/generative/latent-models-capstone.json, public/capstone-artifacts/generative/diffusion-model-capstone.json, public/capstone-artifacts/generative/conditional-safety-capstone.json, scripts/verify-research-course-artifacts.mjs, tests/content-ux.test.mjs
+- Verification: TypeScript pass; 19/19 artifacts; 22/22 focused tests; independent arithmetic spot checks pass
+
+## Cycle 1 | Plan 2 | Step 4 | 2026-07-15 19:34
+- Issue: RL pages omitted discount behavior, disagreed across belief/DP/actor traces, leaked sequence targets, declared incomplete seed matrices, and described a different GPU runner
+- Summary: Taught and checked gamma with changed horizons, synchronized belief and Bellman arithmetic, made PPO probabilities internally consistent, specified target-shifted causal sequence tensors and leakage tests, completed all seven seed-by-arm fixtures, and aligned the GPU lesson plus provenance hashes with the actual bounded runner
+- Files: app/rl/sections/foundations.ts, app/rl/sections/value.ts, app/rl/sections/policy.ts, app/rl/sections/offline.ts, app/rl/sections/research.ts, external-executions/rl_dqn_target_ablation.py, public/capstone-artifacts/rl/*.json, tests/rl-course.test.mjs
+- Verification: RL/external focused tests 9/9; artifact verifier 19/19; npx tsc --noEmit passed
+
+## Cycle 1 | Plan 2 | Step 5 | 2026-07-15 19:44
+- Issue: Embodied pages moved objects without an attachment model, leaked action targets, omitted independent-unit uncertainty, misstated p50 as an average, and supplied shallow capstone fixtures
+- Summary: Made grasp dynamics explicit, shifted transformer action targets to causal observation rows, added Wilson intervals and an explicit p99 SLO, created one dependency-free six-mode capstone starter, expanded all six worked artifacts with build orders and observable acceptance checks, and completed all declared evidence matrices
+- Files: app/embodied/sections/foundations.ts, app/embodied/sections/policies.ts, app/embodied/sections/research.ts, app/embodied/capstones.ts, public/capstone-artifacts/embodied/*.json, public/capstone-artifacts/embodied/embodied_capstone_starter.py, tests/embodied-course.test.mjs, docs/INTERACTION_AUDIT.md
+- Verification: Embodied/content/external tests 24/24; six starter executions passed; artifact verifier 19/19; npx tsc --noEmit passed
+
+## Cycle 3 | Plan 3 | Step 2 | 2026-07-15 20:40
+- Issue: Generative and RL capstones promised larger experiments than their references and lacked runnable working-system starts
+- Summary: Added a separate canonical reference contract, completed all promised Generative cells and five-seed RL matrices, attached per-row primitive budgets, made reference copy evidence-aware, and added executable six-mode Generative and seven-mode RL starters
+- Files: app/capstone-reference-contracts.json, app/generative/capstones.ts, app/rl/capstones.ts, app/embodied/capstones.ts, public/capstone-artifacts/generative, public/capstone-artifacts/rl, scripts/verify-research-course-artifacts.mjs, tests/generative-course.test.mjs, tests/rl-course.test.mjs
+- Verification: 19/19 artifact verification; all 13 starter modes executed with every check true; Generative and RL focused tests pass
+
+## Cycle 3 | Plan 3 | Step 1 | 2026-07-15 20:40
+- Issue: Seven World Models synthesis pages lacked recomputable evidence or had cross-surface contract drift
+- Summary: Rebuilt Bayes, RSSM leakage, ensemble, Dyna, foundation comparison, operations, and research dossiers; added exact arithmetic, transition, telemetry, counterexample, and rollback invariants; aligned capstone language and deterministic evidence labels
+- Files: app/world-models/capstones.ts, app/world-models/technical-validations.tsx, public/capstone-artifacts/worldmodel, tests/world-model-curriculum.test.mjs, docs/INTERACTION_AUDIT.md
+- Verification: World Models curriculum 7/7 and TypeScript pass; independent targeted regrade reached 47/47 before final full-course refresh
+
+## Cycle 3 | Plan 3 | Step 4 | 2026-07-15 20:40
+- Issue: Course homes called a generic checklist an inspectable trace
+- Summary: Added five distinct course-specific causal traces with concrete values, transformations, decisions, and failure boundaries, rendered them beside the progressive animation, and added an authored-distinctness test
+- Files: app/course-catalog.ts, app/course-app.tsx, tests/course-page-grades.test.mjs, docs/INTERACTION_AUDIT.md
+- Verification: Five authored traces found, all fields meet depth checks, and renderer references every trace field
+
+## Cycle 3 | Plan 3 | Step 3 | 2026-07-15 20:40
+- Issue: GPU lesson, runner, budget, public runbook, and schema claims drifted
+- Summary: Removed the unsupported diffusion-checkpoint claim, separated reverse timesteps/sample count/denoiser calls, renamed the runner field, published Generative and RL runbooks, and required schema_version in all public protocols
+- Files: app/external-experiments.ts, app/generative/sections/research.ts, external-executions/generative_diffusion_ablation.py, external-executions/GENERATIVE_DIFFUSION.md, external-executions/EMBODIED_POLICY.md, public/experiment-runbooks, tests/external-experiment-contracts.test.mjs
+- Verification: External contract verifier 4/4; focused external, Generative, and RL tests pass
+
+## Cycle 3 | Plan 3 | Step 5 | 2026-07-15 21:36
+- Issue: The repository lacked an executable, source-fresh 187-page grading ledger and consolidated report.
+- Summary: Added exact live-registry joins, non-compensable rubric floors, independent-grader metadata, blocker fields, SHA-256 learner-source fingerprints, all 45 initial diagnoses/remedies, deterministic report generation, and a no-write freshness check.
+- Files: docs/COURSE_PAGE_GRADING_RUBRIC.md, docs/course-page-grades, docs/COURSE_PAGE_GRADES.md, scripts/course-grade-fingerprint.mjs, scripts/generate-course-page-grade-report.mjs, tests/course-page-grades.test.mjs, package.json
+- Verification: npm run verify:grades passed for all 187 rows; course-page-grades tests passed 6/6; artifact verification includes the grade freshness gate.
+
+## Cycle 3 | Plan 3 | Step 6 | 2026-07-15 21:36
+- Issue: Initial and intermediate semantic passes exposed 45 failing pages plus later high-risk mechanism, artifact, provenance, and execution-contract gaps.
+- Summary: Repaired every grader finding, independently regraded affected pages and regression neighborhoods, repeated the exact plan-verification and discovery questions, and retained honest nonblocking deductions instead of inflating scores.
+- Files: docs/course-page-grades/llm.json, docs/course-page-grades/worldmodel.json, docs/course-page-grades/generative.json, docs/course-page-grades/rl.json, docs/course-page-grades/embodied.json, docs/course-page-grades/initial-failures.json
+- Verification: Fresh discovery pass: 182/182 lessons pass with minimum 99; five homes pass with minimum 97; 187/187 combined, zero blockers, and all five live fingerprints match.
+
+## Cycle 3 | Plan 3 | Step 7 | 2026-07-15 21:36
+- Issue: The completed curriculum and grading contract required full build, artifact, static-hosting, accessibility, and representative interaction closure.
+- Summary: Ran lint, the complete regression suite, root and project-prefix Pages exports, artifact and report freshness checks, and representative desktop and 390px browser QA for navigation, overflow, prediction gates, retry feedback, capstones, and downloads. Reduced-motion semantics are covered by executable fallback tests; the available browser could not emulate the OS preference live.
+- Files: PLAN_LOG.md, CHANGES.log, docs/COURSE_PAGE_GRADES.md
+- Verification: npm run lint passed; npm test passed 148/148; both Pages URL shapes verified 182 routes plus 44 forwards; desktop and 390px browser checks passed with no overflow; reduced-motion fallback tests passed.
+
+## Cycle 1 | Plan 1 | Step 2 | 2026-07-15 21:56
+- Issue: Canonical documentation described an earlier two-course state and incomplete experiment set
+- Summary: Updated the maintained documentation set and added an ownership/regeneration index
+- Files: docs/README.md
+- Verification: node --test focused documentation and contract tests: 24 passed, 0 failed
+
+## Cycle 1 | Plan 1 | Step 3 | 2026-07-15 21:56
+- Issue: Historical reports and task residue competed with current sources of truth
+- Summary: Deleted superseded documentation and operational residue after consolidating still-current conclusions
+- Files: tests/documentation.test.mjs
+- Verification: retirement and reference scans pass
+
+## Cycle 1 | Plan 1 | Step 4 | 2026-07-15 21:56
+- Issue: Documentation drift and dead links had no dedicated regression gate
+- Summary: Added documentation integrity tests and updated affected contract tests
+- Files: tests/documentation.test.mjs
+- Verification: 24 focused tests passed
+
+## Cycle 1 | Plan 1 | Step 5 | 2026-07-15 21:57
+- Issue: Final documentation and publication compatibility needed repository-wide proof
+- Summary: Verified lint, full build/artifact/regression suite, both Pages URL shapes, stale-reference scan, and diff hygiene
+- Files: PLAN_LOG.md
+- Verification: 152 full tests and both static export shapes passed

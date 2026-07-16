@@ -1,312 +1,138 @@
 {
   "meta": {
-    "objective": "Remove redundant lesson-title repetition, format lesson live-trace sections as readable rows, and audit every interactive visual so it directly teaches its lesson mechanism.",
-    "createdAt": "2026-07-14T10:37:30Z",
-    "updatedAt": "2026-07-14T11:04:19Z",
+    "objective": "Update documentation throughout the project to reflect the latest changes and remove documentation or files that are no longer needed.",
+    "createdAt": "2026-07-15T13:44:36Z",
+    "updatedAt": "2026-07-15T13:58:22Z",
     "runStatus": "complete"
   },
   "tasks": [
     {
-      "taskId": "T001",
+      "taskId": "DOCS-001",
       "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Remove redundant lesson-title repetition",
-      "objective": "Replace repeated page-title interpolations with concise, section-specific headings that state the learning action or decision.",
+      "title": "Refresh and consolidate project documentation",
+      "objective": "Make every maintained document accurately describe the current five-course application, its grading/evidence contracts, external experiment workflow, and verification commands while removing superseded or unreferenced documentation residue.",
       "dependsOn": [],
       "acceptanceCriteria": [
-        "The lesson title remains prominent once at page level and is not mechanically repeated across instructional section headings.",
-        "Every replacement heading remains descriptive, accessible, and specific to the section's educational purpose.",
-        "Tests prevent the removed repetitive title patterns from returning."
+        "Every retained Markdown document agrees with the live course counts, routes, source-of-truth files, grading report, artifact contracts, and GitHub Pages workflow.",
+        "Superseded audits, stale task backups, and obsolete seed files are deleted only after reference and test scans establish that they have no required consumer.",
+        "README and documentation indexes give a new contributor one clear path to curriculum, grading, experiments, hosting, and validation guidance.",
+        "Documentation links and path references resolve, generated inventories/reports remain byte-current, and no active source or test references a deleted file.",
+        "npm run lint, npm test, and both GitHub Pages URL-shape verifications pass."
       ],
-      "details": "Audit course-app, guide, evidence, further-reading, discussion, mastery, specialization, next-use, and capstone headings. Preserve ARIA context where the lesson title remains useful.",
-      "status": "done",
-      "attempt": 1,
-      "runMajorChecks": false,
-      "priority": 10,
-      "blockerReason": "",
-      "nextTaskId": "T002",
-      "changedFiles": [
-        "app/lesson-guide-view.tsx",
-        "app/lesson-evidence-view.tsx",
-        "app/course-app.tsx",
-        "app/llm-discussion-prompt.tsx",
-        "app/capstone-project-view.tsx",
-        "tests/content-ux.test.mjs",
-        "tests/curriculum-progression.test.mjs"
-      ],
-      "validationCommands": [
-        {
-          "command": "node --test --experimental-strip-types tests/content-ux.test.mjs tests/curriculum-progression.test.mjs",
-          "status": "pass",
-          "evidence": "Focused heading and curriculum tests passed."
-        },
-        {
-          "command": "rg repetitive title interpolation patterns in app",
-          "status": "pass",
-          "evidence": "No visible mechanical lesson-title interpolation remains in the audited shared headings."
-        }
-      ],
-      "acceptanceCheckResults": [
-        {
-          "criterion": "The lesson title remains prominent once at page level and is not mechanically repeated across instructional section headings.",
-          "status": "pass",
-          "details": "Visible shared headings now name the section action; title remains in the page heading and accessibility context."
-        },
-        {
-          "criterion": "Every replacement heading remains descriptive, accessible, and specific to the section's educational purpose.",
-          "status": "pass",
-          "details": "Headings now name prediction, mechanism tracing, transfer, verification, evidence, and reflection tasks."
-        },
-        {
-          "criterion": "Tests prevent the removed repetitive title patterns from returning.",
-          "status": "pass",
-          "details": "content-ux regression assertions reject the prior interpolation patterns."
-        }
-      ],
-      "attemptedAt": "2026-07-14T11:01:55Z",
-      "completedAt": "2026-07-14T11:01:55Z",
-      "evidence": [
-        "Focused tests passed 14 Jul 2026",
-        "Browser DOM snapshot confirmed shortened headings on Probability, Softmax & Cross-Entropy."
-      ],
-      "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1:Verification-1"
-      ],
-      "blockers": [],
-      "commit": {
-        "sha": "",
-        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
-      }
-    },
-    {
-      "taskId": "T002",
-      "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Reformat live-trace sections as readable rows",
-      "objective": "Replace the three-column live-trace heading and dense stage presentation with a single-column editorial row flow while preserving the anchored visual narrative.",
-      "dependsOn": [
-        "T001"
-      ],
-      "acceptanceCriteria": [
-        "Lesson live-trace headers read as rows rather than three parallel columns.",
-        "Stage explanations use one readable text column at desktop, tablet, and mobile widths.",
-        "Sticky scroll behavior, keyboard stage controls, reduced motion, and narrow-screen overflow remain correct."
-      ],
-      "details": "Update scroll-story markup/CSS only where layout improves comprehension; keep the homepage story behavior coherent.",
-      "status": "done",
-      "attempt": 1,
-      "runMajorChecks": false,
-      "priority": 20,
-      "blockerReason": "",
-      "nextTaskId": "T003",
-      "changedFiles": [
-        "app/scroll-story.tsx",
-        "app/globals.css",
-        "tests/content-ux.test.mjs"
-      ],
-      "validationCommands": [
-        {
-          "command": "node --test --experimental-strip-types tests/content-ux.test.mjs",
-          "status": "pass",
-          "evidence": "Row-flow and sticky-story assertions passed."
-        },
-        {
-          "command": "in-app browser QA at 1440x1000 and 390x844",
-          "status": "pass",
-          "evidence": "Desktop header resolved to one 982px column; narrow header/copy resolved to one 354px column with no horizontal overflow."
-        }
-      ],
-      "acceptanceCheckResults": [
-        {
-          "criterion": "Lesson live-trace headers read as rows rather than three parallel columns.",
-          "status": "pass",
-          "details": "Eyebrow, title, and introduction now occupy one editorial column."
-        },
-        {
-          "criterion": "Stage explanations use one readable text column at desktop, tablet, and mobile widths.",
-          "status": "pass",
-          "details": "Copy remains one column and mobile controls scroll horizontally without page overflow."
-        },
-        {
-          "criterion": "Sticky scroll behavior, keyboard stage controls, reduced motion, and narrow-screen overflow remain correct.",
-          "status": "pass",
-          "details": "Browser QA measured sticky top 88px at desktop, relative positioning at 390px, unique accessible controls, and zero horizontal overflow."
-        }
-      ],
-      "attemptedAt": "2026-07-14T11:01:55Z",
-      "completedAt": "2026-07-14T11:01:55Z",
-      "evidence": [
-        "Homepage stage button moved the active article while the visual remained anchored at top 88px.",
-        "Probability trace measured one-column header and copy at desktop and narrow widths."
-      ],
-      "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1:Verification-2"
-      ],
-      "blockers": [],
-      "commit": {
-        "sha": "",
-        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
-      }
-    },
-    {
-      "taskId": "T003",
-      "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Audit and differentiate every interaction",
-      "objective": "Ensure every lesson's live trace and lab exposes its actual mechanism through an appropriate visual grammar or interaction rather than generic themed motion.",
-      "dependsOn": [
-        "T002"
-      ],
-      "acceptanceCriteria": [
-        "All 44 lesson motion stories have an explicit concept-to-visual rationale and no lesson falls back to decorative motion.",
-        "Concept families use meaningfully different visual grammars where the mechanism calls for matrices, paths, filters, queues, boundaries, comparisons, routing, or interventions.",
-        "Existing topic-specific labs are audited and any weak interaction is repaired or documented with its evidence boundary."
-      ],
-      "details": "Audit lesson-motion, Three.js renderer, CSS overlays, and all lesson-labs dispatches. Preserve deterministic seeds, progressive enhancement, and reduced-motion fallback.",
-      "status": "done",
-      "attempt": 1,
-      "runMajorChecks": false,
-      "priority": 30,
-      "blockerReason": "",
-      "nextTaskId": "T004",
-      "changedFiles": [
-        "app/three-story-math.ts",
-        "app/story-mechanism-diagram.tsx",
-        "app/scroll-story.tsx",
-        "app/globals.css",
-        "docs/INTERACTION_AUDIT.md",
-        "tests/three-story.test.mjs"
-      ],
-      "validationCommands": [
-        {
-          "command": "node --test --experimental-strip-types tests/three-story.test.mjs",
-          "status": "pass",
-          "evidence": "All 24 semantic grammars and all 44 lesson motion stories passed coverage checks."
-        },
-        {
-          "command": "npx tsc --noEmit",
-          "status": "pass",
-          "evidence": "New SVG diagrams and semantic registry type-check."
-        },
-        {
-          "command": "in-app browser representative grammar QA",
-          "status": "pass",
-          "evidence": "Embedding lookup, attention matrix, security boundary, expert routing, and causal intervention grammars rendered with no page overflow after the popover repair."
-        }
-      ],
-      "acceptanceCheckResults": [
-        {
-          "criterion": "All 44 lesson motion stories have an explicit concept-to-visual rationale and no lesson falls back to decorative motion.",
-          "status": "pass",
-          "details": "Every lesson maps through one of 24 exhaustive semantic contracts with a learning question, representation, and evidence boundary."
-        },
-        {
-          "criterion": "Concept families use meaningfully different visual grammars where the mechanism calls for matrices, paths, filters, queues, boundaries, comparisons, routing, or interventions.",
-          "status": "pass",
-          "details": "24 distinct SVG grammars now carry the meaning above the progressive Three.js field."
-        },
-        {
-          "criterion": "Existing topic-specific labs are audited and any weak interaction is repaired or documented with its evidence boundary.",
-          "status": "pass",
-          "details": "All 34 lab types were reviewed and documented; the shared generic overlay was the weak surface and was replaced, while strong lab controls were retained."
-        }
-      ],
-      "attemptedAt": "2026-07-14T11:01:55Z",
-      "completedAt": "2026-07-14T11:01:55Z",
-      "evidence": [
-        "docs/INTERACTION_AUDIT.md covers 24 live-trace concepts and 34 lab types.",
-        "Browser stage transition on embedding changed active state to ROW LOOKUP while retaining sticky anchoring."
-      ],
-      "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1:Verification-3"
-      ],
-      "blockers": [],
-      "commit": {
-        "sha": "",
-        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
-      }
-    },
-    {
-      "taskId": "T004",
-      "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Verify and codify readable instructional interactions",
-      "objective": "Add durable interaction-quality checks, perform desktop/narrow/reduced-motion QA, and pass the complete repository verification suite.",
-      "dependsOn": [
-        "T003"
-      ],
-      "acceptanceCriteria": [
-        "Focused tests enforce concise headings, row layout, and explicit visual semantics for all lessons.",
-        "Desktop and narrow browser QA confirm readability, focus/touch behavior, sticky flow, and no overflow.",
-        "AGENTS.md records the visual-mechanism and readability review contract; npm run lint and npm test pass."
-      ],
-      "details": "Update tests and documentation after implementation, then run TypeScript, focused tests, lint, and full tests.",
+      "details": "Audit README.md, root audit reports, docs/, external-executions/, public runbook mirrors, AGENTS.md repository map/counts, package scripts, tests, and all filename references. Consolidate historical results into canonical current docs, remove redundant reports/backups/seeds, and add mechanical documentation integrity coverage where useful.",
       "status": "done",
       "attempt": 1,
       "runMajorChecks": true,
-      "priority": 40,
+      "priority": 1,
       "blockerReason": "",
       "nextTaskId": "",
       "changedFiles": [
         "AGENTS.md",
+        "README.md",
+        "docs/README.md",
+        "docs/CURRICULUM_ARCHITECTURE.md",
+        "docs/OBJECTIVE_COVERAGE_REVIEW.md",
         "docs/INTERACTION_AUDIT.md",
-        "tests/agents-guidance.test.mjs",
-        "tests/content-ux.test.mjs",
-        "tests/curriculum-progression.test.mjs",
-        "tests/perfect-learning.test.mjs",
-        "tests/three-story.test.mjs",
-        "app/globals.css"
+        "docs/GITHUB_PAGES.md",
+        "external-executions/README.md",
+        "tests/documentation.test.mjs",
+        "tests/mastery-studios.test.mjs",
+        "tests/curriculum-architecture.test.mjs",
+        "tests/external-executions.test.mjs",
+        "COMPONENT_GRADES.md (deleted)",
+        "CONTENT_UX_AUDIT.md (deleted)",
+        "CURRICULUM_AUDIT.md (deleted)",
+        "CURRICULUM_PROGRESSION_REVIEW.md (deleted)",
+        "GRADING_REPORT.md (deleted)",
+        "PLAN_LOG.md.backup.20260714T082630Z (deleted)",
+        "curriculum-improvement-seed.json (deleted)",
+        "curriculum-progression-seed.json (deleted)",
+        "learning-expansion-seed.json (deleted)",
+        "math-rendering-seed.json (deleted)",
+        "task-seed.json (deleted)",
+        "docs/OBJECTIVE_COVERAGE_GRADE.md (deleted)",
+        "docs/WORLD_MODEL_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
+        "docs/GENERATIVE_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
+        "docs/RL_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
+        "docs/EMBODIED_OBJECTIVE_COVERAGE_GRADE.md (deleted)",
+        "docs/WORLD_MODEL_CONTENT_GRADES.md (deleted)",
+        "PLAN_LOG.md",
+        "CHANGES.log",
+        "agent-tasks.json"
       ],
       "validationCommands": [
         {
-          "command": "npx tsc --noEmit",
+          "command": "node --test tests/documentation.test.mjs tests/mastery-studios.test.mjs tests/curriculum-architecture.test.mjs tests/external-executions.test.mjs",
           "status": "pass",
-          "evidence": "TypeScript passed after semantic diagram integration."
+          "evidence": "24 tests passed, 0 failed"
         },
         {
           "command": "npm run lint",
           "status": "pass",
-          "evidence": "ESLint passed after final edits."
+          "evidence": "ESLint completed without findings"
         },
         {
           "command": "npm test",
           "status": "pass",
-          "evidence": "Static export, 44 route verification, 13 preserved artifact checks, and all 90 regression tests passed."
+          "evidence": "Static build, artifact and grade verification, and 152 tests passed"
         },
         {
-          "command": "in-app browser QA at 1440x1000 and 390x844",
+          "command": "NEXT_PUBLIC_BASE_PATH=/llms-from-scratch npm run build:pages && EXPECTED_PAGES_BASE_PATH=/llms-from-scratch npm run verify:pages",
           "status": "pass",
-          "evidence": "Sticky desktop flow, row headings, responsive controls, distinct representative grammars, and overflow checks passed."
+          "evidence": "182 canonical lessons plus 44 legacy forwards verified at project base path"
+        },
+        {
+          "command": "git diff --check && node --test tests/documentation.test.mjs",
+          "status": "pass",
+          "evidence": "Diff hygiene clean and 6 final documentation tests passed"
         }
       ],
       "acceptanceCheckResults": [
         {
-          "criterion": "Focused tests enforce concise headings, row layout, and explicit visual semantics for all lessons.",
+          "criterion": "Every retained Markdown document agrees with the live course counts, routes, source-of-truth files, grading report, artifact contracts, and GitHub Pages workflow.",
           "status": "pass",
-          "details": "Regression tests reject repeated title interpolation, require one-column instructional rows, and exhaustively cover 24 semantic grammars and 44 lesson stories."
+          "details": "Canonical docs now describe five courses, 182 lessons, 187 pages, 408 objectives, current routes, four portable accelerator contracts, and seven external execution families."
         },
         {
-          "criterion": "Desktop and narrow browser QA confirm readability, focus/touch behavior, sticky flow, and no overflow.",
+          "criterion": "Superseded audits, stale task backups, and obsolete seed files are deleted only after reference and test scans establish that they have no required consumer.",
           "status": "pass",
-          "details": "Stage buttons were unique and keyboard-accessible, desktop stage stayed sticky at 88px, 390px changed to relative flow with horizontal stage-control scrolling, and all observed page overflow was eliminated."
+          "details": "Reference audit found one historical test consumer, which was repaired; retirement regression checks pass and the newest task safety backup remains."
         },
         {
-          "criterion": "AGENTS.md records the visual-mechanism and readability review contract; npm run lint and npm test pass.",
+          "criterion": "README and documentation indexes give a new contributor one clear path to curriculum, grading, experiments, hosting, and validation guidance.",
           "status": "pass",
-          "details": "The new interaction review contract and audit are documented; final lint and all 90 tests pass."
+          "details": "README.md and docs/README.md provide the current overview, ownership table, regeneration commands, and retirement policy."
+        },
+        {
+          "criterion": "Documentation links and path references resolve, generated inventories/reports remain byte-current, and no active source or test references a deleted file.",
+          "status": "pass",
+          "details": "Relative-link and retired-file tests pass; verify:grades confirms all 187 generated page rows are current."
+        },
+        {
+          "criterion": "npm run lint, npm test, and both GitHub Pages URL-shape verifications pass.",
+          "status": "pass",
+          "details": "Lint passed, 152 full-suite tests passed, and root plus /llms-from-scratch static exports verified."
         }
       ],
-      "attemptedAt": "2026-07-14T11:04:19Z",
-      "completedAt": "2026-07-14T11:04:19Z",
+      "attemptedAt": "2026-07-15T13:58:22Z",
+      "completedAt": "2026-07-15T13:58:22Z",
       "evidence": [
-        "GitHub Pages static export verified 44 lesson routes, 411 files, 5.94 MB.",
-        "All 13 preserved learning artifacts verified.",
-        "Browser QA confirmed lookup, attention-matrix, trust-boundary, expert-router, and causal-intervention grammars.",
-        "Security source popover was repaired after browser QA exposed right-edge overflow."
+        "docs/README.md",
+        "tests/documentation.test.mjs",
+        "docs/COURSE_PAGE_GRADES.md",
+        "PLAN_LOG.md",
+        "CHANGES.log"
       ],
       "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1:Verification-4"
+        "PLAN_LOG.md#Plan-1:Verification-1",
+        "PLAN_LOG.md#Plan-1:Back-Verification",
+        "PLAN_LOG.md#Plan-1:Objective-Verification",
+        "PLAN_LOG.md#Plan-1:Completion-Re-check"
       ],
       "blockers": [],
       "commit": {
         "sha": "",
-        "message": "Not committed because the shared dirty worktree contains extensive overlapping user and prior-agent changes."
+        "message": ""
       }
     }
   ]
