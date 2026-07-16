@@ -1,5 +1,8 @@
 /* Light teaching surfaces must not inherit pale text from the dark panels that contain them. */
 .lesson-view{--muted:#555d6d;--track-text:color-mix(in srgb,var(--track) 32%,var(--ink))}
+input::placeholder,textarea::placeholder{color:#555d6d;opacity:1}
+.search-box input::placeholder,.token-lab input::placeholder,.transfer-draft textarea::placeholder,.prompt-console textarea::placeholder,.objective-evidence textarea::placeholder{color:#aeb5c6;opacity:1}
+.lesson-view button:disabled{opacity:1}
 .prediction-commit,.vector-map button,.wm-lab-choices button,.wm-lab-detail{color:var(--ink)}
 .prediction-diagnosis button,.practice-diagnosis button{color:var(--ink)}
 .prediction-diagnosis button.active,.practice-diagnosis button.active{color:white}

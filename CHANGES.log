@@ -152,3 +152,50 @@ Independently grade and remediate all 187 canonical released course pages (5 cou
 - Summary: Added acceptance and rejection tests with actionable JSON-path diagnostics
 - Files: tests/artifact-comparison.test.mjs
 - Verification: npm test: 157 passed
+
+---
+
+## Objective
+Find and fix every interactive foreground/background colour conflict across the app
+
+## Cycle 1 | Plan 1 | Step 1 | 2026-07-16 19:51
+- Issue: Opacity-dimmed disabled controls collapse toward their parent layer; native and search placeholders lack a complete readable colour contract; the palette test excludes research-course accents
+- Summary: Audited shared control CSS plus computed default and active states on representative homes and lessons for LLMs, World Models, Generative Models, RL & Control, and Embodied AI
+- Files: app/globals.css, app/learning-activities.css, app/contrast.css, tests/color-contrast.test.mjs
+- Verification: Browser computed-colour audit found no default/active failures below 4.5 on representative pages; compositing inspection isolated disabled-opacity failures and placeholder inspection isolated inherited low-contrast colours
+
+## Cycle 1 | Plan 1 | Step 2 | 2026-07-16 19:53
+- Issue: Disabled action opacity composited foregrounds and backgrounds toward the same parent colour, while placeholder opacity produced weak text on both light and dark editors
+- Summary: Loaded contrast safeguards after component styles, kept disabled labels fully opaque, and assigned explicit AA placeholder colours for light and dark inputs
+- Files: app/layout.tsx, app/contrast.css
+- Verification: Browser computed styles show every visible disabled lesson button at opacity 1, dark placeholders at #aeb5c6, light placeholders at #555d6d, and no representative interactive ratio below 4.5
+
+## Cycle 1 | Plan 1 | Step 3 | 2026-07-16 19:53
+- Issue: Contrast regression coverage omitted the 14 released accent colours as a single set and did not protect stylesheet ordering, disabled labels, or placeholders
+- Summary: Expanded the colour regression test to actual CSS load order, all released palettes, disabled safeguards, and explicit light/dark placeholder pairs
+- Files: tests/color-contrast.test.mjs, app/layout.tsx, app/contrast.css
+- Verification: node --test tests/color-contrast.test.mjs: 5/5 passed; git diff --check passed
+
+## Cycle 1 | Plan 1 | Step 4 | 2026-07-16 20:02
+- Issue: End-to-end verification needed to confirm the shared CSS change did not introduce course-specific or responsive regressions
+- Summary: Verified representative homes and lessons across all five courses, exercised wrong and correct answer states, checked 390px overflow and disabled opacity, and ran the required repository suite
+- Files: app/layout.tsx, app/contrast.css, tests/color-contrast.test.mjs
+- Verification: Browser: zero interactive contrast findings across all five courses; 390x844 viewport had zero horizontal overflow and every disabled label remained opacity 1. npm run lint passed. npm test passed: static export verified and 163/163 tests passed
+
+## Cycle 2 | Plan 2 | Step 1 | 2026-07-16 20:05
+- Issue: Nine component rules still reduced whole-control opacity, leaving readability dependent on a later high-priority reset
+- Summary: Removed opacity dimming from disabled action rules, assigned an explicit AA muted-quiz palette, and gave disabled workshop navigation its own readable border/text treatment
+- Files: app/globals.css, app/learning-activities.css, app/contrast.css
+- Verification: Source scan reports zero disabled or muted text-control opacity reductions; focused contrast tests pass
+
+## Cycle 2 | Plan 2 | Step 2 | 2026-07-16 20:05
+- Issue: The regression suite did not reject future reintroduction of opacity-dimmed disabled or muted text controls
+- Summary: Added a source-level invariant rejecting dimmed text controls and an AA assertion for the explicit muted quiz palette
+- Files: tests/color-contrast.test.mjs
+- Verification: node --test tests/color-contrast.test.mjs: 5/5 passed; git diff --check passed
+
+## Cycle 2 | Plan 2 | Step 3 | 2026-07-16 20:09
+- Issue: Final verification needed after removing the source opacity declarations and refreshing generated course fingerprints
+- Summary: Re-audited desktop and 390px states, refreshed the five reviewed source fingerprints, reran lint and the full static-export/regression suite, and completed a zero-finding discovery pass
+- Files: app/globals.css, app/learning-activities.css, app/contrast.css, tests/color-contrast.test.mjs, docs/course-page-grades/llm.json, docs/course-page-grades/worldmodel.json, docs/course-page-grades/generative.json, docs/course-page-grades/rl.json, docs/course-page-grades/embodied.json
+- Verification: Browser computed audit: zero findings at 1280x720 and 390x844, zero narrow overflow, zero dimmed disabled controls. npm run lint passed. npm test passed: static export verified, grade report verified, 163/163 tests passed. Final source scan found no opacity-dimmed disabled/muted text controls or same-colour dark pairs

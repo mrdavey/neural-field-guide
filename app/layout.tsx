@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./contrast.css";
 import "./learning-activities.css";
+import "./contrast.css";
 import { publicPath } from "./public-path";
 
 export const metadata: Metadata = {

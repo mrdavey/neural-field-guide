@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-16",
-  "gradedAt": "2026-07-16T09:53:00Z",
-  "sourceFingerprint": "sha256:048bda04ec7cb298cc688ce0cff19902b16be67e2db97238f102fad4c71786f5",
+  "gradedAt": "2026-07-16T12:08:26Z",
+  "sourceFingerprint": "sha256:be8e7b881214a5fb72533abe3a5089c50a1df7b99959a23284bb0b4eac64d3f1",
   "grader": {
     "role": "independent semantic grader",
     "method": "Independent 16 July 2026 home-page semantic regrade after the marketing-first shared-shell revision; reviewed all five campaign promises, payoffs, arcs, CTAs, evidence boundaries, source cards, and responsive CSS, confirmed unchanged lesson rows remain valid, and verified every rubric floor."

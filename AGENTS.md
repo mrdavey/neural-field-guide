@@ -25,6 +25,7 @@ The product is a self-contained, self-paced course that teaches LLMs from first 
 5. For accuracy-sensitive or time-sensitive claims, verify current primary or official sources. Record a revision/date where implementation behavior or model details may change.
 6. Make the smallest coherent change that fully solves the task. Preserve the established architecture, visual language, IDs, and learning contracts unless the task explicitly calls for changing them.
 7. Run focused checks during implementation, then the required repository checks before handoff.
+8. After successful verification, commit every complete in-scope implementation with scoped staging. Never include unrelated or unfinished work; if a safe commit is blocked, state the reason explicitly at handoff.
 
 ## Repository map and source of truth
 
