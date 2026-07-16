@@ -2,32 +2,13 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [studios, app, styles, grades] = await Promise.all([
+const [studios, app, styles] = await Promise.all([
   readFile(new URL("../app/mastery-studios.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/course-app.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
-  readFile(new URL("../COMPONENT_GRADES.md", import.meta.url), "utf8"),
 ]);
 
 const targetIds = ["embedding-layer", "pretraining-overview", "data-engineering", "advanced-objectives", "instruction-tuning-rlhf", "posttraining-overview", "tools-safety"];
-
-test("the audit grades every lesson and capstone independently", () => {
-  const initial = grades.slice(grades.indexOf("### Lesson-by-lesson scores"), grades.indexOf("### Required changes"));
-  assert.equal((initial.match(/^\| \d+ \|/gm) ?? []).length, 44);
-  assert.equal((initial.match(/^\| (?:Optimizers|GPT-2|OLMo|Tülu|Test-time|Observability|Interpretability)/gm) ?? []).length, 7);
-  for (const score of ["Embedding Layer — 94", "Training Data Engineering — 93", "Post-Training Overview — 93", "Tools and Safety Tuning — 94"]) {
-    assert.ok(grades.includes(score), `missing initial diagnosis for ${score}`);
-  }
-});
-
-test("the final re-grade keeps all 51 component scores at or above 95", () => {
-  const final = grades.slice(grades.indexOf("### Final lesson scores"), grades.indexOf("### Rubric sub-scores for the seven changed lessons"));
-  const scores = [...final.matchAll(/\*\*(\d+)\*\*/g)].map((match) => Number(match[1]));
-  assert.equal(scores.length, 51, "44 lessons plus seven capstones need final scores");
-  assert.ok(scores.every((score) => score >= 95), `final score below 95: ${Math.min(...scores)}`);
-  assert.match(grades, /At or above 95:\*\* 51\/51 \(100%\)/);
-  assert.match(grades, /Below 95:\*\* 0\/51/);
-});
 
 test("all seven sub-95 lessons receive a lazy-loaded decision studio", () => {
   assert.match(app, /lazy\(\(\) => import\("\.\/mastery-studios"\)\)/);

@@ -1,11 +1,21 @@
 # Lesson objective coverage review
 
-Reviewed: 14 July 2026  
-Scope: LLM course — 44 lessons and 132 visible outcomes; World Models course — 46 lessons and 92 visible outcomes
+Reviewed: 15 July 2026
+
+Scope: all five released courses — 182 lessons and 408 exact visible outcomes
+
+| Course | Lessons | Exact objectives | Final independent semantic gate |
+| --- | ---: | ---: | --- |
+| Large Language Models | 44 | 132 | 132 pass, 0 partial, 0 fail |
+| World Models | 46 | 92 | 92 pass, 0 partial, 0 fail |
+| Generative Models | 30 | 60 | 60 pass, 0 partial, 0 fail |
+| Reinforcement Learning & Control | 32 | 64 | 64 pass, 0 partial, 0 fail |
+| Embodied AI | 30 | 60 | 60 pass, 0 partial, 0 fail |
+| **Program** | **182** | **408** | **408 pass, 0 partial, 0 fail** |
 
 ## What changed
 
-Every lesson outcome now has an explicit record in `app/lesson-objective-coverage.ts`. The record is joined to the exact objective text and contains five required teaching dimensions:
+Every lesson outcome has an explicit record in its course registry. The LLM records live in `app/lesson-objective-coverage.ts`; World Models and the three research courses own equivalent course-specific records. Each record is joined to the exact objective text and contains five required teaching dimensions:
 
 1. a plain-language explanation;
 2. the causal mechanism or decision process;
@@ -15,7 +25,7 @@ Every lesson outcome now has an explicit record in `app/lesson-objective-coverag
 
 The lesson renderer places this sequence immediately after each visible outcome. A learner must write and commit an explanation before expected reasoning appears. Existing long-form sections, guided examples, changed-case practice, and deterministic transfer labs remain later in the lesson, so the objective sequence is a map into deeper teaching rather than a replacement for it.
 
-`tests/objective-coverage.test.mjs` loads the real TypeScript registries and fails when a lesson is missing, objective text/order diverges, a coverage field is empty, a check is reused, or the total changes from 44 lessons and 132 outcomes. The registry resolver also fails at application startup on unknown lessons, missing objectives, duplicate indices, empty source lists, or out-of-range content pointers.
+The course-specific curriculum tests load the real TypeScript registries and fail when a lesson is missing, objective text/order diverges, a coverage field is empty, a check is reused, or an exact count changes. The LLM resolver also fails at application startup on unknown lessons, missing objectives, duplicate indices, empty source lists, or out-of-range content pointers. These checks protect structure; they do not award the semantic grades summarized above.
 
 ## Review standard
 
@@ -27,7 +37,7 @@ A mention does not count as coverage. An outcome is ready for grading only when 
 - Where does the explanation fail, become unsafe, or stop supporting the claim?
 - What must I produce without seeing the answer, and where do I return after an incorrect or incomplete attempt?
 
-The `3/3` entries below mean three explicit records exist and exactly join the three source objectives. They are an inventory, not a claim that automated structure checks can replace an independent content grader.
+The `3/3` entries in the LLM inventory below mean three explicit records exist and exactly join the three source objectives. They are an inventory, not a claim that automated structure checks can replace an independent content grader. The other courses use two exact records per lesson and keep their executable inventories in their course registries and tests.
 
 ## Remediation pass 1
 
@@ -60,7 +70,7 @@ Focused assertions lock these three repairs, including query/key definition orde
 
 The independent grader completed three full semantic passes over all 44 lessons and all 132 exact objectives. Pass 1 found 73 complete and 59 partial objectives. After the first remediation, pass 2 found 129 complete and three partial objectives. After the targeted second remediation, pass 3 found **132 pass, 0 partial, and 0 fail**. Each of the five dimensions passed for every objective: 132 explanations, 132 mechanisms, 132 worked examples, 132 boundaries, and 132 committed checks with expected reasoning and retry routes.
 
-The complete row-by-row history remains in `docs/OBJECTIVE_COVERAGE_GRADE.md`. This result closes the current review; it is not a permanent score. Any future objective, guide, example, assessment, prerequisite, or coverage-record change reopens the affected rows and requires the author → independent grader → remediation loop in `AGENTS.md` before handoff. Structural checks remain required for joins and regressions, but only semantic review can decide whether the learner-facing content fulfills the promise.
+The remediation history below records the findings needed to understand the final decision; superseded row-by-row snapshots were removed so this file remains the canonical objective-review record. This result closes the current review; it is not a permanent score. Any future objective, guide, example, assessment, prerequisite, or coverage-record change reopens the affected rows and requires the author → independent grader → remediation loop in `AGENTS.md` before handoff. Structural checks remain required for joins and regressions, but only semantic review can decide whether learner-facing content fulfills the promise. The separate generated [`COURSE_PAGE_GRADES.md`](COURSE_PAGE_GRADES.md) records current whole-page grading evidence.
 
 ## World Models extension and independent gate
 
@@ -68,11 +78,35 @@ The World Models course adds 46 lessons with two exact outcomes per lesson. Its 
 
 The first independent semantic pass found **65 pass, 27 partial, and 0 fail**. The partial rows were concentrated in incomplete numerical traces, checks that covered only one half of a compound outcome, and four local definition leaks. After remediation, a second full pass found **88 pass, 4 partial, and 0 fail**. Two residual rows were repaired during the final audit, producing **90 pass and 2 partial**; defining the slot query/key/value assignment mechanism and expanding expected calibration error closed the last two.
 
-The independent grader’s final pass reports **92 pass, 0 partial, and 0 fail**. All five dimensions pass 92/92: explanations, mechanisms, worked traces, boundaries, and committed checks with expected reasoning and specific retry routes. Identifiability, $PA_i/U$, positivity, and rotation equivariance are now defined before the affected objective relies on them. The full World Models row inventory and pass history are recorded in `docs/WORLD_MODEL_OBJECTIVE_COVERAGE_GRADE.md`.
+The independent grader’s final pass reports **92 pass, 0 partial, and 0 fail**. All five dimensions pass 92/92: explanations, mechanisms, worked traces, boundaries, and committed checks with expected reasoning and specific retry routes. Identifiability, $PA_i/U$, positivity, and rotation equivariance are now defined before the affected objective relies on them.
 
 `tests/world-model-curriculum.test.mjs` verifies the 46-lesson/92-objective joins and other course contracts. As with the LLM structural test, it did not award the semantic pass; the independent review did.
 
-## Complete inventory
+## Generative Models extension and independent gate
+
+The Generative Models course adds 30 lessons with two exact outcomes per lesson. Its 60 course-specific records are defined in `app/generative/` and rendered through the same commit-before-reveal contract.
+
+The first independent semantic pass found **50 pass, 10 partial, and 0 fail**. Remediation made the promised operations observable: API interface distinctions, both KL directions, divergence selection, serialization trade-offs, reparameterized gradient paths, flow expressivity, diffusion and condition tensor paths, exact composition-gap arithmetic, and three-class GPU evidence interpretation. The second pass found a UI-level prerequisite problem: seven lessons with both local and cross-course dependencies rendered only the local branch. It also required the GPU evidence explanation and mechanism—not only its worked check—to define the three evidence classes.
+
+After rendering local and program prerequisites independently and repairing that interpretation procedure, the final independent pass reports **60 pass, 0 partial, and 0 fail**. Vocabulary now appears in the early Orient block before the definition and mechanism.
+
+## Reinforcement Learning & Control extension and independent gate
+
+The Reinforcement Learning & Control course adds 32 lessons with two exact outcomes per lesson. Its 64 course-specific records are defined in `app/rl/` and rendered through the same commit-before-reveal contract.
+
+The first independent semantic pass found **43 pass, 21 partial, and 0 fail**. Remediation expanded compound estimator, policy, support, planning, constraint, and evidence promises into observable traces; added missing prerequisite edges; and defined importance ratio, effective sample size, PPO, Polyak averaging, and OOM before reliance. A second pass found **52 pass, 12 partial, and 0 fail** because twelve learner-facing mathematical commands were being damaged by single-backslash JavaScript escaping rather than rendered as notation.
+
+After correcting every affected math string and repeating the complete review, the independent gate reports **64 pass, 0 partial, and 0 fail**. Structural tests verify joins and ordering but did not award the semantic pass.
+
+## Embodied AI extension and independent gate
+
+The Embodied AI course adds 30 lessons with two exact outcomes per lesson. Its 60 course-specific records cover typed physical interfaces, perception and state, robot data, language-conditioned policies, feedback and planning, transfer, operations, and original experiments.
+
+The first independent semantic pass found **51 pass, 9 partial, and 0 fail**. Remediation added explicit action/reference-frame terms, transform inversion and round-trip checks, calibration fit/release evidence, predict-associate-update tracking, reverse diffusion arithmetic, consistent spatial thresholds, complete external GPU commands and artifact gates, prerequisite activation, and definitions for abbreviations used in mechanisms. The second pass found **59 pass, 1 partial, and 0 fail** because the diffusion condition width symbol remained undefined.
+
+After defining that symbol and replacing the shared research helper's positional objective join with named `primary` and `decision` promises across all 92 added-course seeds, the final independent gate reports **60 pass, 0 partial, and 0 fail**. Structural tests verify joins, ordering, and named objective ownership but did not award the semantic pass.
+
+## Complete LLM inventory
 
 | Lesson ID | Exact visible objectives | Coverage records |
 |---|---|---:|

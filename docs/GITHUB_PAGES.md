@@ -1,6 +1,6 @@
 # Publishing the course with GitHub Pages
 
-This is the repository-specific publication runbook for **Neural Field Guide: LLMs from Scratch**. It was reviewed against the official GitHub Pages and Next.js 16.2.10 static-export documentation on 14 July 2026.
+This is the repository-specific publication runbook for the five-course **Neural Field Guide**. It was reviewed against the official GitHub Pages publishing-source guidance and Next.js 16.2.10 static-export and `basePath` documentation on 15 July 2026.
 
 Publication is **not enabled**. The ready-to-copy workflow lives under `docs/`, where GitHub will not execute it. Follow the activation steps only when the repository is ready to become public.
 
@@ -68,7 +68,7 @@ EXPECTED_PAGES_BASE_PATH= npm run verify:pages
 python3 -m http.server 4173 --directory out
 ```
 
-Open `http://localhost:4173/`. The root should forward to the last course (or `/llm/` by default). Check `/llm/`, `/worldmodel/`, several canonical lessons in both courses, one old flat LLM lesson forward, the course selector, course-isolated progress after refresh, interactive exercises, all capstone downloads, all validation dossiers, the favicon, mobile layout, keyboard navigation, and external source links.
+Open `http://localhost:4173/`. The root should forward to the last course (or `/llm/` by default). Check `/llm/`, `/worldmodel/`, `/generative/`, `/rl/`, and `/embodied/`; several canonical lessons in every course; one old flat LLM lesson forward; the course selector; course-isolated progress after refresh; interactive exercises; all capstone downloads and validation dossiers; the favicon; mobile layout; keyboard navigation; and external source links.
 
 Stop the preview with `Ctrl+C`.
 
@@ -133,12 +133,12 @@ The deploy job needs `pages: write` and `id-token: write`; these permissions are
 Do not treat a green deployment alone as proof that the course works. In a private/incognito window, verify:
 
 - the exact Pages URL and trailing slash load without a 404;
-- `/llm/` and `/worldmodel/` load directly, the selector changes between them, and canonical lesson URLs include their course segment;
+- `/llm/`, `/worldmodel/`, `/generative/`, `/rl/`, and `/embodied/` load directly, the selector changes among all five, and canonical lesson URLs include their course segment;
 - a legacy flat LLM lesson URL visibly forwards to the matching `/llm/<lesson-id>/` URL;
 - styles and JavaScript load rather than producing an unstyled page;
-- several lessons in each course open and close correctly;
+- several lessons in every course open and close correctly;
 - quizzes, simulations, workspaces, progress, and reset controls work without a server;
-- a refresh preserves browser-local progress separately for LLMs and World Models;
+- a refresh preserves browser-local progress separately for all five courses;
 - every capstone and validation JSON link includes the repository prefix when using a project site;
 - direct navigation and browser back/forward behavior work;
 - no console or network request points at `localhost`, a secret endpoint, or a missing root-level artifact;

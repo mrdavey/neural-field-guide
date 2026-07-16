@@ -30,6 +30,10 @@ The product is a self-contained, self-paced course that teaches LLMs from first 
 
 - `app/course-data.ts`: curriculum tracks, lesson order, definitions, analogies, examples, misconceptions, quizzes, prerequisites, and source links.
 - `app/course-app.tsx`: course shell, navigation, progress, lesson composition, and the home learning path.
+- `app/course-catalog.ts`: the five released course definitions, routes, storage keys, and selector metadata.
+- `app/world-models/`, `app/generative/`, `app/rl/`, and `app/embodied/`: course-specific lessons, teaching records, labs, assessments, evidence, and projects.
+- `app/research-courses/`: shared teaching, assessment, artifact, and interaction contracts for the Generative, RL, and Embodied courses.
+- `app/curriculum-graph.ts` and `app/research-curriculum-manifests.ts`: cross-course concept ownership and the released research-course manifests.
 - `app/lesson-guides/`: long-form instructional content. `index.ts` is the registry and `types.ts` defines the guide contract.
 - `app/lesson-objective-coverage.ts`: exact objective-to-teaching joins. Every visible outcome must map to its plain explanation, mechanism, worked trace, boundary, and committed check/retry.
 - `app/lesson-guide-view.tsx`: renders long-form explanations, prediction-led code, guided practice, vocabulary, and resources.
@@ -44,6 +48,7 @@ The product is a self-contained, self-paced course that teaches LLMs from first 
 - `external-executions/`: optional model-backed reproduction runners and their evidence boundary.
 - `scripts/`: deterministic artifact generators and repository verifiers.
 - `tests/`: executable curriculum, accuracy, UX, accessibility, artifact, deployment, and rendering contracts.
+- `docs/README.md`: canonical documentation index, ownership map, regeneration commands, and retirement policy.
 - `docs/GITHUB_PAGES.md`: publication runbook. Publication is optional and is not activated by default.
 
 Do not manually edit generated output in `.next/`, `dist/`, `out/`, or `tsconfig.tsbuildinfo`. Fix the source and rebuild.
@@ -104,7 +109,7 @@ Every lesson should follow the visible sequence **Orient → Learn → Try → T
 
 - Keep lesson IDs stable. They are persistence keys and join keys across guides, labs, evidence, transfer checks, validation, tests, and capstones.
 - Do not move a lesson earlier than its prerequisites or make a later optional branch appear mandatory.
-- When adding or removing a lesson, update every relevant registry and deliberately update test counts. Current tests encode 44 lessons, 40 code notebooks, 6 technical validations, and 7 capstones; count changes must reflect an intentional curriculum decision.
+- When adding or removing a lesson, update every relevant registry and deliberately update test counts. Current tests encode 182 released lessons and 187 canonical pages: 44 LLM, 46 World Models, 30 Generative Models, 32 Reinforcement Learning & Control, and 30 Embodied AI lessons, plus five course homes. Count changes must reflect an intentional curriculum decision; course-specific notebook, validation, and capstone counts remain exact in their executable contracts.
 - Preserve the cumulative spine: foundations → architecture → pre-training → post-training → inference/reasoning → applications/safety → advanced specialization.
 - Advanced topics may branch by learner goal. Do not invent a single dependency chain when the concepts are genuinely parallel.
 - Case studies should synthesize the immediately preceding section with a current, inspectable, openly documented system. Explain why the example was chosen and which details should not be generalized.
