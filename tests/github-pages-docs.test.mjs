@@ -40,6 +40,12 @@ test("Pages workflow tests, prefixes, verifies, and uploads only static output",
   ]) assert.ok(workflow.includes(required), `Workflow is missing ${required}`);
 });
 
+test("the minimum supported Node runtime can execute TypeScript-importing tests", async () => {
+  const packageJson = JSON.parse(await read("package.json"));
+  assert.equal(packageJson.engines.node, ">=22.13.0");
+  assert.match(packageJson.scripts.test, /node --experimental-strip-types --test tests\/\*\.test\.mjs/);
+});
+
 test("Pages build is static-export and public assets are base-path aware", async () => {
   const [config, helper, capstones, validations] = await Promise.all([
     read("next.config.ts"),

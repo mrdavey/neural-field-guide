@@ -10,7 +10,7 @@
     "build": "next build --webpack",
     "build:pages": "GITHUB_PAGES=true next build --webpack",
     "start": "next start",
-    "test": "NEXT_PUBLIC_BASE_PATH= npm run build:pages && EXPECTED_PAGES_BASE_PATH= npm run verify:pages && npm run verify:artifacts && node --test tests/*.test.mjs",
+    "test": "NEXT_PUBLIC_BASE_PATH= npm run build:pages && EXPECTED_PAGES_BASE_PATH= npm run verify:pages && npm run verify:artifacts && node --experimental-strip-types --test tests/*.test.mjs",
     "verify:pages": "node scripts/verify-pages-export.mjs",
     "verify:artifacts": "node scripts/verify-learning-artifacts.mjs && node scripts/verify-experiment-contracts.mjs && node scripts/verify-research-course-artifacts.mjs && node scripts/tiny-gpt-reference.mjs --verify && node scripts/inference-benchmark-fixture.mjs --verify && node scripts/interpretability-intervention-fixture.mjs --verify && npm run verify:grades",
     "generate:grades": "node scripts/generate-course-page-grade-report.mjs",
