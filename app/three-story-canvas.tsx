@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { JSAnimation } from "animejs";
 import {
   cappedThreePixelRatio,
   seededUnit,
@@ -307,7 +308,6 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
     if (!host || !visual) return;
 
     let disposed = false;
-    let effectFrame = 0;
     let resizeObserver: ResizeObserver | undefined;
     let visibilityObserver: IntersectionObserver | undefined;
     let removeRuntimeListeners: (() => void) | undefined;
@@ -315,7 +315,11 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
 
     const start = async () => {
       try {
-        const THREE = await import("three");
+        const [THREE, { animate, createTimeline }] = await Promise.all([
+          import("three"),
+          import("animejs"),
+          import("animejs/adapters/three"),
+        ]);
         if (disposed) return;
 
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
@@ -440,9 +444,25 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
         keyLight.position.set(2.6, 2.4, 4.8);
         sceneRoot.add(keyLight);
 
+        // The adapter owns only material emphasis. Geometry and camera state stay
+        // on the deterministic story frame below, so there is still one render path.
+        const materialTimeline = createTimeline({ autoplay: false, defaults: { ease: "linear" } })
+          .add(core, {
+            emissiveIntensity: [.32, 1.08, .46],
+            opacity: [.82, 1, .9],
+            duration: Math.max(1000, (stageCount - 1) * 1000),
+          }, 0)
+          .add([ringA, ringB], {
+            opacity: [.12, .58, .24],
+            duration: Math.max(1000, (stageCount - 1) * 1000),
+          }, 0);
+        host.dataset.animator = "animejs-three-adapter";
+
         const pointer = { x: 0, y: 0 };
         let current: StoryProgressDetail = { progress: 0, stagePosition: 0, active: 0, stageCount, direction: "forward" };
         let pulse = 0;
+        const pulseState = { value: 0 };
+        let pulseAnimation: JSAnimation | undefined;
         let visible = true;
         let pageVisible = document.visibilityState !== "hidden";
         const matrix = new THREE.Matrix4();
@@ -495,6 +515,7 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
         };
         const onProgress = (event: Event) => {
           current = (event as CustomEvent<StoryProgressDetail>).detail;
+          materialTimeline.seek(current.progress * materialTimeline.duration, true);
           draw();
         };
         const onPointerMove = (event: PointerEvent) => {
@@ -510,16 +531,21 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
           draw();
         };
         const onPointerDown = () => {
-          if (effectFrame) cancelAnimationFrame(effectFrame);
-          const started = performance.now();
-          const animatePulse = (time: number) => {
-            const elapsed = (time - started) / 620;
-            pulse = Math.max(0, 1 - elapsed) ** 2;
-            draw();
-            if (elapsed < 1 && !disposed) effectFrame = requestAnimationFrame(animatePulse);
-            else effectFrame = 0;
-          };
-          effectFrame = requestAnimationFrame(animatePulse);
+          pulseAnimation?.cancel();
+          pulseState.value = 0;
+          pulseAnimation = animate(pulseState, {
+            value: [0, 1, 0],
+            duration: 760,
+            ease: "out(3)",
+            onUpdate: () => {
+              pulse = pulseState.value;
+              draw();
+            },
+            onComplete: () => {
+              pulse = 0;
+              draw();
+            },
+          });
         };
         const onVisibilityChange = () => {
           pageVisible = document.visibilityState !== "hidden";
@@ -551,6 +577,7 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
 
         const initialProgress = Number.parseFloat(getComputedStyle(visual).getPropertyValue("--story-progress"));
         if (Number.isFinite(initialProgress)) current.progress = initialProgress;
+        materialTimeline.seek(current.progress * materialTimeline.duration, true);
         host.dataset.state = "ready";
         resize();
 
@@ -564,6 +591,8 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
           document.removeEventListener("visibilitychange", onVisibilityChange);
           resizeObserver?.disconnect();
           visibilityObserver?.disconnect();
+          pulseAnimation?.cancel();
+          materialTimeline.revert();
           pointsGeometry.dispose();
           pointsMaterial.dispose();
           lineGeometry.dispose();
@@ -587,7 +616,6 @@ export function ThreeStoryCanvas({ concept, storyKey, stageCount }: ThreeStoryCa
     void start();
     return () => {
       disposed = true;
-      if (effectFrame) cancelAnimationFrame(effectFrame);
       removeRuntimeListeners?.();
       host.dataset.state = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "reduced-motion" : "idle";
     };

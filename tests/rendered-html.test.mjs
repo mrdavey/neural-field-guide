@@ -2,21 +2,27 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("the static root forwards while both course homes render the finished experience", async () => {
-  const [root, llm, worldmodel] = await Promise.all([
+test("the static root forwards while all five course homes render the finished experience", async () => {
+  const [root, llm, worldmodel, generative, rl, embodied] = await Promise.all([
     readFile(new URL("../out/index.html", import.meta.url), "utf8"),
     readFile(new URL("../out/llm/index.html", import.meta.url), "utf8"),
     readFile(new URL("../out/worldmodel/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../out/generative/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../out/rl/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../out/embodied/index.html", import.meta.url), "utf8"),
   ]);
   assert.match(root, /Opening your course/);
-  for (const html of [llm, worldmodel]) {
+  for (const html of [llm, worldmodel, generative, rl, embodied]) {
     assert.match(html, /Neural Field Guide/);
-    assert.match(html, /Seven territories/);
+    assert.match(html, /territories\. One connected story/);
     assert.match(html, /Course lessons/);
     assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/);
   }
   assert.match(llm, /Understand the machine/);
   assert.match(worldmodel, /Predict the world/);
+  assert.match(generative, /Model possibility/);
+  assert.match(rl, /Learn to decide/);
+  assert.match(embodied, /Ground intelligence/);
 });
 
 test("every lesson has a directly rendered canonical static URL and LLM legacy forward", async () => {

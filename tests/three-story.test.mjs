@@ -81,7 +81,8 @@ test("pixel ratio is capped for mobile and desktop performance", () => {
 
 test("Three.js is progressively wired to every shared story with safe fallbacks", () => {
   assert.equal(JSON.parse(pkg).dependencies.three, "0.185.1");
-  assert.match(canvas, /await import\("three"\)/);
+  assert.match(canvas, /import\("three"\)/);
+  assert.match(canvas, /import\("animejs\/adapters\/three"\)/);
   assert.match(canvas, /IntersectionObserver/);
   assert.match(canvas, /prefers-reduced-motion: reduce/);
   assert.match(canvas, /motionPreference\.addEventListener\("change"/);

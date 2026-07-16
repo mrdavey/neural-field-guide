@@ -1,0 +1,397 @@
+{
+  "rubricRevision": "2026-07-15",
+  "courseId": "worldmodel",
+  "population": 47,
+  "grader": {
+    "role": "independent semantic grader",
+    "method": "Independent freshness review of the frozen composed World Models home and all lesson surfaces, rechecking exact curriculum joins and every capstone's starter/material UX, attempt gate, artifact, provenance, changed-case evidence, arithmetic, transfer, and rubric floors without relying on prior scores."
+  },
+  "gradedAt": "2026-07-15T13:10:23Z",
+  "sourceFingerprint": "sha256:162a378f38eea6d5516b5661b15c094bfa278ce0dbbd8a15dd8bc7808d8971d5",
+  "pages": [
+    {
+      "pageType": "home",
+      "id": "home",
+      "route": "/worldmodel/",
+      "blockingDefects": [],
+      "A": 25,
+      "C": 24,
+      "E": 14,
+      "I": 15,
+      "D": 10,
+      "S": 5,
+      "R": 4,
+      "total": 97,
+      "pass": true,
+      "rationale": "The home accurately exposes readiness, recommended LLM preparation, Generative Models and RL continuations, six working-system milestones, the shared spine and optional branches, an effective start action, deterministic/GPU evidence boundaries, and the 14 Jul 2026 review date. Its illustrative system flow is orientation rather than a complete worked lesson trace, and provenance is summarized without claim-local source cards."
+    },
+    {
+      "pageType": "lesson",
+      "id": "world-models",
+      "route": "/worldmodel/world-models/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The page defines the state/action/consequence distribution, separates environment evidence from model imagination and uncontrolled video, traces a 2x2 stochastic transition, and checks the distinction through prediction-led local practice and direct sources."
+    },
+    {
+      "pageType": "lesson",
+      "id": "dynamics-tensors",
+      "route": "/worldmodel/dynamics-tensors/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Batch, time, latent, and action axes are explicitly defined; the [2,4,8] plus [2,4,3] to [2,4,11] trace and runnable six-edge notebook are correct, while reset and padding cases diagnose semantic alignment beyond shape checks."
+    },
+    {
+      "pageType": "lesson",
+      "id": "stochastic-futures",
+      "route": "/worldmodel/stochastic-futures/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The impossible-mean example makes multimodality observable, the fixture preserves support and probability, and expected-value versus non-compensable tail-risk decisions are tested with explicit threshold, equality, calibration, and transfer boundaries."
+    },
+    {
+      "pageType": "lesson",
+      "id": "learning-dynamics",
+      "route": "/worldmodel/learning-dynamics/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The scalar forward/backward/update trace is correct: prediction 3, gradient -4, updated weight 1.4, and loss .04. Shared-weight unrolling, one-step versus control error, runnable code, and changed-case diagnosis complete both objectives."
+    },
+    {
+      "pageType": "lesson",
+      "id": "sequential-state",
+      "route": "/worldmodel/sequential-state/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Observation, hidden state, action timing, and trajectory are progressively separated through the aliased 20-degree thermostat trace; the lab holds the current frame fixed and varies history or sensing to test predictive-state sufficiency."
+    },
+    {
+      "pageType": "lesson",
+      "id": "rewards-returns-policies",
+      "route": "/worldmodel/rewards-returns-policies/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Reward, return, value, and policy are distinguished with the correct 2.75 discounted trace; the interaction varies gamma, and changed cases require feasibility gates before return so prohibited outcomes cannot be purchased by reward."
+    },
+    {
+      "pageType": "lesson",
+      "id": "mdps-bellman",
+      "route": "/worldmodel/mdps-bellman/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "All MDP components and Bellman timing are defined, the 4.6 backup is correct in both worked cases, and probability controls expose how transition error and overlapping uncertainty intervals can reverse an action decision."
+    },
+    {
+      "pageType": "lesson",
+      "id": "belief-states-filtering",
+      "route": "/worldmodel/belief-states-filtering/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The complete page consistently teaches transition-before-observation filtering: all four predicted, unnormalized, evidence, and posterior rows recompute and normalize; step 2 is .38235, step 4 is .13577, hard-choice accuracy honestly ties the baseline, and the zero-evidence policy is explicit. The repaired project question, changed case, metric, validation, and artifact now describe the same evidence."
+    },
+    {
+      "pageType": "lesson",
+      "id": "sensor-representations",
+      "route": "/worldmodel/sensor-representations/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The encoder contract preserves batch/time while replacing image axes, and controlled nuisance-versus-hazard pairs connect representation movement to prediction and action. Compression limits, one-pixel hazards, committed checks, and source notes make the claim appropriately bounded."
+    },
+    {
+      "pageType": "lesson",
+      "id": "autoencoders-latents",
+      "route": "/worldmodel/autoencoders-latents/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The [4] to [2] to [4] bottleneck and .0525 MSE calculation are correct, while per-region errors and key-recall gates demonstrate why reconstruction quality does not establish predictive or control sufficiency."
+    },
+    {
+      "pageType": "lesson",
+      "id": "stochastic-latents-vaes",
+      "route": "/worldmodel/stochastic-latents-vaes/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Posterior, prior, reparameterization, reconstruction, and KL roles are explicitly separated; z=.5, reconstruction .05, KL .818, and total .868 are correct, and collapse versus prior-mismatch interventions produce diagnostic transfer."
+    },
+    {
+      "pageType": "lesson",
+      "id": "action-conditioned-transitions",
+      "route": "/worldmodel/action-conditioned-transitions/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The page holds latent state fixed while varying action, distinguishes input inclusion from actual use, exposes state-action coverage and confounding, and backs the intervention trace with a runnable local fixture and specific retry."
+    },
+    {
+      "pageType": "lesson",
+      "id": "recurrent-state-space",
+      "route": "/worldmodel/recurrent-state-space/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Deterministic memory, stochastic prior, observation posterior, imagination, and reset boundaries are traced separately. The pseudocode signatures and lab make target leakage, prior-only drift, and cross-episode memory directly inspectable."
+    },
+    {
+      "pageType": "lesson",
+      "id": "rssm-planet-case-study",
+      "route": "/worldmodel/rssm-planet-case-study/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The architecture comparison, prior/posterior explanation, scalar error trace, information-boundary lab, committed checks, and primary PlaNet source agree. The dossier now includes legal prior and posterior interventions, an explicit leaked-prior rejection, an imagination-prior row, recomputable absolute errors, and a clear hand-authored-fixture boundary."
+    },
+    {
+      "pageType": "lesson",
+      "id": "prediction-targets",
+      "route": "/worldmodel/prediction-targets/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The repaired convention is consistent across prose, lab, and code: z_t reconstructs node o_t, (z_t,a_t) predicts edge r_t/c_t and z_{t+1}, the real terminal node remains supervised, and only a manufactured padded edge is masked."
+    },
+    {
+      "pageType": "lesson",
+      "id": "reconstruction-feature-prediction",
+      "route": "/worldmodel/reconstruction-feature-prediction/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Pixel reconstruction and feature prediction are compared by target, invariance, collapse path, and downstream decision rather than slogan. The page supplies collapse interventions, task-relevance slices, changed cases, and direct V-JEPA/PlaNet evidence."
+    },
+    {
+      "pageType": "lesson",
+      "id": "multistep-overshooting",
+      "route": "/worldmodel/multistep-overshooting/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The signed-bias trace correctly grows from .1 at one step to 1.0 at ten and .5 at five, while open-loop versus teacher-forced evidence, horizon slicing, stochastic limits, executable drift checks, and changed-sign transfer are explicit."
+    },
+    {
+      "pageType": "lesson",
+      "id": "latent-prior-posterior",
+      "route": "/worldmodel/latent-prior-posterior/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Stop-gradient ownership for both KL routes is correct, the free-bit charged excess [0,.08,.60]=.68 is explicit, and telemetry plus latent/prior interventions distinguish posterior collapse from prior lag without relying on KL magnitude alone."
+    },
+    {
+      "pageType": "lesson",
+      "id": "trajectory-data-replay",
+      "route": "/worldmodel/trajectory-data-replay/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Trajectory schemas, time/reset/provenance boundaries, replay sampling, and decision coverage are taught through the 1M-transition versus 12 relevant-case contrast; unsupported planner queries lead to abstention or data collection rather than fabricated confidence."
+    },
+    {
+      "pageType": "lesson",
+      "id": "uncertainty-ensembles",
+      "route": "/worldmodel/uncertainty-ensembles/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Aleatoric spread, epistemic disagreement, calibration, support, and shared bias are now taught and evidenced end to end. All five ensemble rows and five equal-rate random decisions are present; spread, mean error, one-third high-error coverage, precision 1.0, and retained MAEs 2.0125 versus 2.1375 recompute exactly, while both confident shared-bias misses bound the claim."
+    },
+    {
+      "pageType": "lesson",
+      "id": "imagined-rollouts",
+      "route": "/worldmodel/imagined-rollouts/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "State source, action, predicted reward, continuation, discount, termination, and optional terminal value are separately traced; the 6.14 return is correct and executable, and horizon/uncertainty evidence bounds what imagination can establish."
+    },
+    {
+      "pageType": "lesson",
+      "id": "shooting-cem",
+      "route": "/worldmodel/shooting-cem/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Random shooting and CEM are traced through sample, score, elite, and refit, with the runnable elite [1,0] and mean .5 result. Minimum variance, stopping, stochastic samples, horizons, and exact model-transition budgets prevent unfair planner conclusions."
+    },
+    {
+      "pageType": "lesson",
+      "id": "model-predictive-control",
+      "route": "/worldmodel/model-predictive-control/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The page executes only the first action, reobserves after a slip, and replans from updated state. Its latency distribution, missed-deadline, warm-start, fallback, and changed-case checks teach feedback control rather than merely naming MPC."
+    },
+    {
+      "pageType": "lesson",
+      "id": "differentiable-planning",
+      "route": "/worldmodel/differentiable-planning/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Action optimization is separated from model-parameter training, and both gradient traces are correct: dJ/da=4 and the .25 ascent step moves 0 to 1. Finite differences, bounds, support, disagreement, and replay validation diagnose shortcut plans."
+    },
+    {
+      "pageType": "lesson",
+      "id": "actor-critic-lambda",
+      "route": "/worldmodel/actor-critic-lambda/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Actor, critic, stopped value target, continuation, and lambda return are assigned distinct roles; 4.51 and the runnable backward-return lists are correct, and oracle substitutions isolate critic, actor, or world-model failure."
+    },
+    {
+      "pageType": "lesson",
+      "id": "dreamer-imagination",
+      "route": "/worldmodel/dreamer-imagination/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Dreamer's real collection, replay model learning, posterior starts, prior-only imagination, lambda targets, critic/actor updates, and return to real action are accurately sequenced; environment-step efficiency is explicitly separated from model transitions and compute."
+    },
+    {
+      "pageType": "lesson",
+      "id": "muzero-tree-search",
+      "route": "/worldmodel/muzero-tree-search/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Representation, recurrent dynamics/reward, policy/value prediction, selection, expansion, 3.5 backup, visits, and search-policy use are all traced. Task sufficiency is carefully bounded from observation-complete simulation and changed-task transfer."
+    },
+    {
+      "pageType": "lesson",
+      "id": "dyna-tdmpc-case-study",
+      "route": "/worldmodel/dyna-tdmpc-case-study/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The page accurately compares where Dyna, Dreamer, MuZero, and TD-MPC spend model compute, then verifies 32x3=16x6=96 model transitions, .9^5x10=.9^3(.9^2x10)=5.9049, contiguous six-transition base and branch-swapped paths over the exact declared state set, and the preserved biased terminal-value reversal to 6.561 versus zero realized return. The deterministic-fixture boundary and four direct family sources keep the conclusion properly scoped."
+    },
+    {
+      "pageType": "lesson",
+      "id": "video-tokenization",
+      "route": "/worldmodel/video-tokenization/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Frame, height, width, patch, and temporal stride axes are defined; 16 frames at stride 2 and 8x8 patches correctly yield 512 tokens, and boundary-motion, aliasing, hazard retention, and quadrupled spatial count are actively tested."
+    },
+    {
+      "pageType": "lesson",
+      "id": "autoregressive-diffusion-dynamics",
+      "route": "/worldmodel/autoregressive-diffusion-dynamics/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The page correctly contrasts 512 token decisions with 30 full-block denoising updates without equating those compute units, then requires matched quality, diversity, controllability, horizon, latency, and failure evidence under direct video-diffusion sources."
+    },
+    {
+      "pageType": "lesson",
+      "id": "latent-actions-passive-video",
+      "route": "/worldmodel/latent-actions-passive-video/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Latent action inference, bottleneck, conditioned prediction, intervention, labeled alignment, camera confounds, and controllability boundaries are fully traced; matched-state code swaps provide meaningful transfer rather than visual clustering evidence."
+    },
+    {
+      "pageType": "lesson",
+      "id": "jepa-vjepa",
+      "route": "/worldmodel/jepa-vjepa/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Context and protected target branches, predictor, feature target, collapse prevention, and gradient boundary are explicit. The page correctly separates V-JEPA 2 action-free pretraining from the additional V-JEPA 2-AC robot-video post-training and planning evidence verified in the primary report."
+    },
+    {
+      "pageType": "lesson",
+      "id": "genie-interactive-worlds",
+      "route": "/worldmodel/genie-interactive-worlds/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Tokenizer, latent action, autoregressive dynamics, decoded frame, and continued context are traced end to end. The 24 fps/720p statement is correctly attributed to the dated 5 Aug 2025 official report rather than claimed as a course measurement, with release and reliability limits explicit."
+    },
+    {
+      "pageType": "lesson",
+      "id": "foundation-world-models-case-study",
+      "route": "/worldmodel/foundation-world-models-case-study/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "All nine interface/evidence columns are now populated for DreamerV3, MuZero, V-JEPA 2, and Genie with direct sources and explicit limits. The aesthetic/scale baseline is rejected, interactive generation conditionally selects Genie, image-goal robot planning conditionally selects V-JEPA 2's planning component, and unresolved gates prevent a universal ranking."
+    },
+    {
+      "pageType": "lesson",
+      "id": "world-model-evaluation",
+      "route": "/worldmodel/world-model-evaluation/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The evaluation matrix separates replay prediction, calibration direction, matched closed-loop control, safety, seeds, provenance, and artifact paths. Its worked conflict correctly gates Model B's higher return behind six collisions and tests changed pedestrian failures."
+    },
+    {
+      "pageType": "lesson",
+      "id": "compounding-error-exploitation",
+      "route": "/worldmodel/compounding-error-exploitation/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The 20-step +1m signed drift and +8 unsupported elite error correctly distinguish composition from optimizer selection. Matched horizon/population interventions, reference replay, support checks, and ensemble shared-bias boundaries diagnose both causes."
+    },
+    {
+      "pageType": "lesson",
+      "id": "goal-conditioned-robotics",
+      "route": "/worldmodel/goal-conditioned-robotics/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Sensing, belief, grounded goal relation, candidate consequences, constraint gate, one executed action, reobservation, and replanning form a complete loop. Instrumented position/contact/time thresholds replace model self-grading and visual judgment."
+    },
+    {
+      "pageType": "lesson",
+      "id": "system-identification-sim-to-real",
+      "route": "/worldmodel/system-identification-sim-to-real/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The gain estimate .4, sign-sensitive changed case, and zero-action non-identifiability are correct. Excitation, held-out residuals, missing structure, calibration, randomization, adaptation, robust control, and transfer boundaries are decision-linked."
+    },
+    {
+      "pageType": "lesson",
+      "id": "safe-constrained-planning",
+      "route": "/worldmodel/safe-constrained-planning/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Calibrated chance feasibility precedes reward, then an independent 20ms monitor with final authority converts the .25m violation into a concrete stop fallback. OOD abstention, latency, operating range, actuator acknowledgement, and nonzero-risk limits are explicit."
+    },
+    {
+      "pageType": "lesson",
+      "id": "world-model-operations-case-study",
+      "route": "/worldmodel/world-model-operations-case-study/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The complete release page now includes immutable bundle identities, a same-width semantic-normalization rejection, invalid weights-only baseline, proposal-only shadow telemetry, recomputable .06 false-alarm rate versus .02, separate 83 ms deadline failure, joined proposal-to-outcome field values, and atomic wm-16 rollback with mixed-revision rejection. Authority, evidence, and production-safety boundaries remain explicit."
+    },
+    {
+      "pageType": "lesson",
+      "id": "object-centric-dynamics",
+      "route": "/worldmodel/object-centric-dynamics/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Query-key assignment, feature competition, slot updates, action-conditioned interaction, decoding, and permutation matching are concretely traced with red/blue positions. Occlusion identity switches and localized interventions separate segmentation from object claims."
+    },
+    {
+      "pageType": "lesson",
+      "id": "hierarchical-multiscale",
+      "route": "/worldmodel/hierarchical-multiscale/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Slow state, persistent subgoal, fast transitions, upward surprise, boundary authority, and replan are traced in both directions. The 10-call hierarchy/flat fixture keeps latency and horizon coverage separate and explicitly denies a general speed claim."
+    },
+    {
+      "pageType": "lesson",
+      "id": "geometry-physical-priors",
+      "route": "/worldmodel/geometry-physical-priors/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Equivariance, coordinate frames, Euler solver error, and contact assumptions receive distinct counterexamples. The .25 and .349 approximations versus e^-1=.368 are correct, and changed rotations, frame conversion, convergence, and floor contact yield diagnostic repairs."
+    },
+    {
+      "pageType": "lesson",
+      "id": "causal-counterfactual-models",
+      "route": "/worldmodel/causal-counterfactual-models/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Conditioning .20, standardized interventions .125 and .225, positivity failure, and same-unit counterfactual background are all correctly calculated and distinguished. Hidden confounding and identification assumptions remain attached to every claim."
+    },
+    {
+      "pageType": "lesson",
+      "id": "language-multimodal-world-models",
+      "route": "/worldmodel/language-multimodal-world-models/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "Language, 10Hz vision, 50Hz telemetry, belief, action-conditioned consequence, grounding, and safety are synchronized in one trace. Instruction swaps, a +120ms future leak, and missing-language fallback test grounding rather than correlation, consistent with Dynalang's primary evidence."
+    },
+    {
+      "pageType": "lesson",
+      "id": "world-model-research-capstone",
+      "route": "/worldmodel/world-model-research-capstone/",
+      "blockingDefects": [],
+      "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
+      "rationale": "The falsifiable geometry study is complete: all 3x4 seed/angle cells pin 200 updates, inputs, and evaluator; per-seed and overall means recompute to .12 versus .13; the .01 gain correctly fails the .05 gate despite a passing .018 residual; and three contact failures plus a matched diagnostic retry remain machine-readable and explicitly bounded."
+    }
+  ]
+}

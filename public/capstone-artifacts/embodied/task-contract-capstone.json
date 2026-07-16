@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "course": "embodied",
+  "lessonId": "task-contract-capstone",
+  "evidenceKind": "reviewed deterministic teaching fixture",
+  "starter": {
+    "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
+    "command": "python3 embodied_capstone_starter.py --project task-contract-capstone --output task-contract-starter.json",
+    "expected": "The reset replay hash, requested/applied distinction, and stale-packet containment checks all print true.",
+    "boundary": "The starter executes interface fixtures; the learner must replace TaskFixture with a working reset/step simulator before baseline acceptance."
+  },
+  "implementation": {
+    "requiredComponents": ["versioned task manifest", "reset(seed) and step(applied_action) API", "typed observation/action validators", "success/failure/constraint predicates", "local RNG and replay snapshot", "event and requested/applied action writer"],
+    "buildOrder": ["Implement reset and schema assertions", "Implement action saturation and requested/applied logs", "Implement predicate precedence and endings", "Snapshot simulator plus RNG state", "Run the oracle on nominal and one fault branch"],
+    "localCommands": ["python3 embodied_capstone_starter.py --project task-contract-capstone --output task-contract-starter.json", "python3 -m unittest test_task_fixture.py"],
+    "artifacts": ["task-manifest.json", "nominal-transitions.jsonl", "stale-transitions.jsonl", "replay-hashes.json", "failure.log"]
+  },
+  "acceptanceChecks": [
+    {"id": "schema", "action": "Reset and validate every field, unit, frame, timestamp, bound, validity flag, and ending.", "expected": "The nominal packet passes and a unit/frame mismatch is rejected before step."},
+    {"id": "replay", "action": "Restore simulator and RNG state immediately before one step and replay the same applied action.", "expected": "Next observation, events, ending flags, and SHA-256 agree exactly."},
+    {"id": "stale-containment", "action": "Change only camera age from 10 ms to 80 ms with a 40 ms gate.", "expected": "Requested move remains logged, applied command is hold, event is stale_sensor, and no task motion occurs."}
+  ],
+  "manifest": {
+    "simulator": "typed pick-place fixture",
+    "seed": 17,
+    "intervention": "camera age 80 ms versus 40 ms gate",
+    "independentUnit": "replayed branch from the same checkpoint",
+    "matrixAxes": {"arm": ["nominal", "stale"]}
+  },
+  "invariants": {"oneFactorChanged": true, "requestedAndAppliedLogged": true, "replayRequired": true, "allDeclaredCellsPresent": true},
+  "rawRows": [
+    {"arm": "nominal", "packetAgeMs": 10, "requestedDxM": 0.07, "appliedDxM": 0.03, "event": "act", "stateChanged": true},
+    {"arm": "stale", "packetAgeMs": 80, "requestedDxM": 0.07, "appliedDxM": 0.0, "event": "stale_sensor", "stateChanged": false}
+  ],
+  "decision": "The stale-packet branch demonstrates the declared age gate and hold response in this deterministic fixture only; a learner conclusion requires the same checks from the implemented simulator and complete replay artifacts.",
+  "failure": "An implementation that applies move after the 80 ms packet fails the containment assertion and remains in the reviewed failure log with its requested/applied commands and pre-step snapshot.",
+  "boundary": "This is hand-authored simulator-interface evidence, not an external policy run, physical dynamics measurement, hardware safety result, or proof that the enumerated predicates cover every hazard."
+}

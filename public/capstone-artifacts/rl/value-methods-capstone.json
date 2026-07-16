@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "course": "rl",
+  "lessonId": "value-methods-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "factor": "method",
+    "arms": [
+      "td",
+      "q_learning"
+    ],
+    "seeds": [
+      11,
+      23,
+      41,
+      53,
+      67
+    ],
+    "runtime": "Python 3 teaching fixture",
+    "matrixAxes": {
+      "seed": [
+        11,
+        23,
+        41,
+        53,
+        67
+      ],
+      "arm": [
+        "td",
+        "q_learning"
+      ]
+    },
+    "primitiveBudget": {
+      "environmentTransitions": 5000
+    },
+    "metric": {
+      "field": "meanDiscountedReturn",
+      "name": "mean discounted evaluation return",
+      "unit": "reward units per evaluation episode",
+      "aggregation": "mean across 100 held-out-slip evaluation episodes per seed and method"
+    },
+    "intervention": {
+      "factor": "evaluationSlipProbability",
+      "baseline": 0.1,
+      "heldOut": 0.3
+    }
+  },
+  "invariants": {
+    "allCanonicalCellsPresent": true,
+    "primitiveBudgetsMatchWithinSeed": true,
+    "finiteFixtureMetricValues": true
+  },
+  "rawRows": [
+    {
+      "seed": 11,
+      "arm": "td",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.62
+    },
+    {
+      "seed": 11,
+      "arm": "q_learning",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.64
+    },
+    {
+      "seed": 23,
+      "arm": "td",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.65
+    },
+    {
+      "seed": 23,
+      "arm": "q_learning",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": false,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.61
+    },
+    {
+      "seed": 41,
+      "arm": "td",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.6
+    },
+    {
+      "seed": 41,
+      "arm": "q_learning",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.66
+    },
+    {
+      "seed": 53,
+      "arm": "td",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.63
+    },
+    {
+      "seed": 53,
+      "arm": "q_learning",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.64
+    },
+    {
+      "seed": 67,
+      "arm": "td",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.6
+    },
+    {
+      "seed": 67,
+      "arm": "q_learning",
+      "budget": {
+        "environmentTransitions": 5000
+      },
+      "constraintPass": true,
+      "baselineSlipProbability": 0.1,
+      "evaluationSlipProbability": 0.3,
+      "environmentCondition": "held_out_slip_0.3",
+      "meanDiscountedReturn": 0.62
+    }
+  ],
+  "decision": "The deterministic fixture preserves matched rows and shows that the treatment cannot receive an unqualified win when a declared constraint or reliability gate fails.",
+  "failure": "The seed-23 treatment row fails the declared gate and must remain in analysis rather than being deleted after outcomes are inspected.",
+  "boundary": "These values are reviewed teaching fixtures for artifact structure and decision logic, not measured agent performance or an external benchmark result."
+}

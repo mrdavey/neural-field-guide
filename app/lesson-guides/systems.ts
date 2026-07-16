@@ -96,11 +96,11 @@ export const systemsGuides: Record<string, LessonGuide> = {
       { title: "Calibrate and convert", body: "Choose representative sequences, group size, clipping/scales, and a hardware-supported kernel path.", checkpoint: "A narrow calibration set can preserve one domain while damaging another." },
       { title: "Evaluate end to end", body: "Compare quality slices, prompt/output regimes, concurrency, startup time, and memory under identical service settings.", checkpoint: "A smaller file is not proof of faster or better serving." },
     ],
-    guidedExample: { title: "Quantize four values", setup: "Map $[-1.0,-0.2,0.3,0.9]$ to signed 3-bit integers $[-4,\\ldots,3]$ using symmetric scale $1/3$.", steps: [
-      "Divide by scale and round: approximately $[-3,-1,1,3]$.",
-      "Dequantize by multiplying by $1/3$: $[-1.0,-0.33,0.33,1.0]$.",
-      "The middle values incur error; a single extreme outlier would require a larger scale and make that error worse.",
-    ], result: "Quantization error depends on range, granularity, and distribution—not just the advertised bit count." },
+    guidedExample: { title: "Quantize four values", setup: "Map $[-1.0,-0.2,0.3,0.9]$ to a zero-centered signed 3-bit grid $[-3,\\ldots,3]$ with scale $s=\\max|x|/3=1/3$. One of the eight bit patterns is unused so positive and negative endpoints remain symmetric.", steps: [
+      "Divide by $s$ and round, then clip to $[-3,3]$: $q=[-3,-1,1,3]$.",
+      "Dequantize with $\\hat{x}=sq$: $[-1.0,-0.333,0.333,1.0]$.",
+      "Absolute reconstruction errors are $[0,0.133,0.033,0.100]$; even an in-range endpoint such as 0.9 need not be preserved exactly when the shared scale is set by −1.0.",
+    ], result: "Quantization error depends on the exact integer grid, range, granularity, and distribution—not just the advertised bit count." },
     practice: { prompt: "A 4-bit model is smaller but slower than bf16 on your GPU. Give two plausible reasons.", hint: "Storage format and compute kernel are different layers.", answer: "The GPU may lack an optimized kernel for that 4-bit format, causing costly unpacking/dequantization, or the workload may be compute/cache/launch limited rather than weight-bandwidth limited. Small batches and conversion overhead can also erase the bandwidth gain." },
     resources: [
       { title: "LLM.int8()", url: "https://arxiv.org/abs/2208.07339", kind: "Paper", note: "Explains activation outliers and mixed-precision decomposition for large models." },
@@ -444,7 +444,7 @@ export const systemsGuides: Record<string, LessonGuide> = {
     sections: [
       { title: "Learn a structured update instead of every weight", paragraphs: [
         "For a frozen linear weight $W$ with shape $d_{out} \\times d_{in}$, LoRA learns $\\Delta W=BA$ where $B$ is $d_{out} \\times r$ and $A$ is $r \\times d_{in}$. The forward pass becomes $$Wx+(\\alpha/r)BAx.$$ When $r$ is much smaller than both widths, trainable parameters fall from $d_{out}d_{in}$ to $r(d_{out}+d_{in})$, and optimizer-state memory falls with them.",
-        "The low-rank assumption says useful task adaptation often lives in a smaller subspace than the full matrix. It does not make the base model free: forward/backward still move activations through it, and long contexts still consume memory. Rank, scale, dropout, target modules, data, and learning rate determine whether the adapter has enough capacity without overfitting.",
+        "The low-rank assumption says useful task adaptation often lives in a smaller subspace than the full matrix. A common zero-delta initialization samples $A$ at small nonzero values and sets $B=0$: the first forward delta is zero, but $B$ receives a gradient. Setting both $A$ and $B$ to zero makes each factor multiply the other's zero value, so neither receives a first gradient and the adapter cannot start learning. The method does not make the base model free: forward/backward still move activations through it, and long contexts still consume memory.",
       ] },
       { title: "Adapters change operations as well as training", paragraphs: [
         "Attention query/value projections are common targets, but adapting key, output, MLP, or all linear modules can improve demanding tasks at added size. Per-layer rank allocation can focus capacity. Adapters can be merged into weights for simple deployment or kept separate so many tenants share one base; dynamic adapter serving adds scheduling and memory complexity.",

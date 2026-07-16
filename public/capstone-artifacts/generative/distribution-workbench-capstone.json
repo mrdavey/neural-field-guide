@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "course": "generative",
+  "lessonId": "distribution-workbench-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "probabilities": [
+      0.02,
+      0.48,
+      0.5
+    ],
+    "sampleCounts": [
+      100,
+      10000
+    ],
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "matrixAxes": {
+      "sampleCount": [
+        100,
+        10000
+      ],
+      "seed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "runtime": "Python 3 standard library"
+  },
+  "invariants": {
+    "normalized": true,
+    "supportOnly": true,
+    "sameSeedReplay": true
+  },
+  "rawRows": [
+    {
+      "sampleCount": 100,
+      "seed": 1,
+      "rareCount": 1,
+      "rareMiss": false
+    },
+    {
+      "sampleCount": 100,
+      "seed": 2,
+      "rareCount": 0,
+      "rareMiss": true
+    },
+    {
+      "sampleCount": 100,
+      "seed": 3,
+      "rareCount": 4,
+      "rareMiss": false
+    },
+    {
+      "sampleCount": 100,
+      "seed": 4,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 5,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 6,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 7,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 8,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 9,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 10,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 11,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 12,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 13,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 14,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 15,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 16,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 17,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 18,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 19,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 100,
+      "seed": 20,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 1,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 2,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 3,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 4,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 5,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 6,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 7,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 8,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 9,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 10,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 11,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 12,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 13,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 14,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 15,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 16,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 17,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 18,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 19,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    },
+    {
+      "sampleCount": 10000,
+      "seed": 20,
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
+    }
+  ],
+  "decision": "The exact invariants pass. The seed-2 miss is compatible with finite sampling and does not establish zero model mass.",
+  "failure": "An exact-frequency assertion fails valid random samples; replace it with a predeclared statistical tolerance.",
+  "boundary": "These rows are a reviewed deterministic reference fixture for sampler arithmetic, not measured neural-generator quality."
+}

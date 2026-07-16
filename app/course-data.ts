@@ -11,7 +11,7 @@ export type Quiz = {
 
 export type Lesson = {
   id: string;
-  track: TrackId;
+  track: string;
   title: string;
   number: number;
   duration: number;
@@ -22,8 +22,9 @@ export type Lesson = {
   example: string;
   misconception: string;
   quiz: Quiz;
-  lab?: "tokens" | "vectors" | "positions" | "attention" | "prediction" | "scaling" | "optimizer" | "preference" | "lora" | "moe" | "distillation" | "rl" | "block" | "gpt" | "pipeline" | "objectives" | "systems" | "evaluation" | "tensors" | "softmax" | "gradient" | "decoding" | "kvcache" | "quantization" | "serving" | "testtime" | "context" | "rag" | "agents" | "evaldesign" | "security" | "observability" | "multimodal" | "interpretability" | "wm-state" | "wm-belief" | "wm-latent" | "wm-rollout" | "wm-planner" | "wm-video" | "wm-uncertainty" | "wm-safety" | "wm-evaluation";
+  lab?: "tokens" | "vectors" | "positions" | "attention" | "prediction" | "scaling" | "optimizer" | "preference" | "lora" | "moe" | "distillation" | "rl" | "block" | "gpt" | "pipeline" | "objectives" | "systems" | "evaluation" | "tensors" | "softmax" | "gradient" | "decoding" | "kvcache" | "quantization" | "serving" | "testtime" | "context" | "rag" | "agents" | "evaldesign" | "security" | "observability" | "multimodal" | "interpretability" | "wm-state" | "wm-belief" | "wm-latent" | "wm-rollout" | "wm-planner" | "wm-video" | "wm-uncertainty" | "wm-safety" | "wm-evaluation" | "research";
   prerequisites?: string[];
+  programPrerequisites?: { courseId: string; lessonId: string }[];
   sources?: { label: string; url: string }[];
   capstone?: {
     question: string;
@@ -136,7 +137,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["Q asks, K matches, V carries", "Softmax makes a normalized weighted mixture", "Causal masks prevent looking ahead"],
     example: "In “The trophy did not fit in the suitcase because it was too big,” the representation of “it” can attend strongly to “trophy” to carry the relevant referent forward.",
     misconception: "Attention weights are useful diagnostics but are not a complete, causal explanation of a model’s reasoning.",
-    quiz: { question: "Why divide $QK^T$ by $\\sqrt{d_k}$?", options: ["To add positions", "To keep dot-product magnitudes from making softmax overly saturated", "To remove the causal mask", "To create token IDs"], answer: 1, explanation: "Dot products tend to grow with dimension; scaling by $\\sqrt{d_k}$ stabilizes softmax and its gradients." },
+    quiz: { question: "Why divide $QK^T$ by $\\sqrt{d_k}$?", options: ["To add positions", "To keep dot-product magnitudes from making softmax overly saturated", "To remove the causal mask", "To create token IDs"], answer: 1, explanation: "Dot products tend to grow with dimension; dividing by $\\sqrt{d_k}$ stabilizes softmax and its gradients." },
     lab: "attention", prerequisites: ["positional-encoding"]
   },
   {

@@ -186,6 +186,103 @@ test("seven World Models capstones have complete local projects and machine-read
   }
 });
 
+test("World Models evidence rows recompute the exact teaching claims", async () => {
+  const artifact = async (id) => JSON.parse(await readFile(join(root, "public/capstone-artifacts/worldmodel", `${id}.json`), "utf8"));
+  const close = (actual, expected, label, tolerance = 1e-9) => assert.ok(Math.abs(actual - expected) <= tolerance, `${label}: expected ${expected}, received ${actual}`);
+
+  const belief = await artifact("belief-states-filtering");
+  assert.equal(belief.rawRows.length, 4);
+  let priorA = 0.5;
+  for (const row of belief.rawRows) {
+    close(row.priorA, priorA, `belief step ${row.step} prior`);
+    const predictedA = 0.8 * priorA + 0.2 * (1 - priorA);
+    close(row.predictedA, predictedA, `belief step ${row.step} transition`);
+    close(row.rawA, predictedA * row.likelihoodA, `belief step ${row.step} raw A`);
+    close(row.rawB, (1 - predictedA) * row.likelihoodB, `belief step ${row.step} raw B`);
+    close(row.evidence, row.rawA + row.rawB, `belief step ${row.step} evidence`);
+    close(row.posteriorA, row.rawA / row.evidence, `belief step ${row.step} posterior A`);
+    close(row.posteriorA + row.posteriorB, 1, `belief step ${row.step} normalized mass`);
+    priorA = row.posteriorA;
+  }
+  close(belief.rawRows[1].posteriorA, 0.3823529411764706, "misleading-observation posterior");
+  close(belief.rawRows[3].posteriorA, 0.13577084303679552, "final posterior");
+  assert.equal(belief.summary.filterStepAccuracy, belief.summary.baselineStepAccuracy, "fixture must disclose the hard-choice tie");
+
+  const rssm = await artifact("rssm-planet-case-study");
+  assert.equal(rssm.inputDependencyAudit.find((row) => row.path === "valid-prior").observationAffectsOutput, false);
+  assert.equal(rssm.inputDependencyAudit.find((row) => row.path === "valid-posterior").observationAffectsOutput, true);
+  const leakedPrior = rssm.inputDependencyAudit.find((row) => row.path === "leaked-prior");
+  assert.equal(leakedPrior.observationAffectsOutput, true);
+  assert.equal(leakedPrior.accepted, false);
+  assert.match(leakedPrior.rejection, /current observation changed/);
+
+  const uncertainty = await artifact("uncertainty-ensembles");
+  assert.equal(uncertainty.rawRows.length, 5);
+  assert.equal(uncertainty.randomBaselineRows.length, 5);
+  assert.equal(uncertainty.rawRows.filter((row) => row.case.startsWith("shared-bias") && row.highError && !row.rejected).length, 2);
+  for (const row of uncertainty.rawRows) {
+    close(row.spread, Math.max(...row.predictions) - Math.min(...row.predictions), `${row.case} spread`);
+    const mean = row.predictions.reduce((sum, value) => sum + value, 0) / row.predictions.length;
+    close(row.ensembleMean, mean, `${row.case} ensemble mean`);
+    close(row.absoluteError, Math.abs(mean - row.target), `${row.case} absolute error`);
+  }
+  const highErrorCount = uncertainty.rawRows.filter((row) => row.highError).length;
+  const rejected = uncertainty.rawRows.filter((row) => row.rejected);
+  close(uncertainty.metrics.ensembleGate.highErrorCoverage, rejected.filter((row) => row.highError).length / highErrorCount, "ensemble-gate high-error coverage");
+  close(uncertainty.metrics.ensembleGate.rejectionPrecision, rejected.filter((row) => row.highError).length / rejected.length, "ensemble-gate precision");
+  close(uncertainty.metrics.ensembleGate.retainedMeanAbsoluteError, uncertainty.rawRows.filter((row) => !row.rejected).reduce((sum, row) => sum + row.absoluteError, 0) / uncertainty.rawRows.filter((row) => !row.rejected).length, "ensemble-gate retained MAE");
+  assert.equal(uncertainty.metrics.equalRateRandomGate.rejectionCount, uncertainty.metrics.ensembleGate.rejectionCount, "random comparison must reject the same number of cases");
+
+  const dyna = await artifact("dyna-tdmpc-case-study");
+  assert.equal(dyna.rawRows.length, 6);
+  for (const row of dyna.rawRows) assert.equal(row.candidates * row.horizon, 96, `${row.scenario}/${row.method} budget`);
+  close(dyna.rawRows.find((row) => row.scenario === "base" && row.method === "h6-no-value").predictedReturn, 0.9 ** 5 * 10, "long-horizon return");
+  close(dyna.rawRows.find((row) => row.scenario === "base" && row.method === "h3-plus-value").predictedReturn, 0.9 ** 3 * (0.9 ** 2 * 10), "short-horizon bootstrap");
+  const biasedShort = dyna.rawRows.find((row) => row.scenario === "biased-terminal" && row.method === "h3-plus-value");
+  assert.equal(biasedShort.correctFirstAction, false);
+  assert.ok(biasedShort.predictedReturn > biasedShort.realReturn);
+  assert.equal(dyna.transitionRows.length, 24);
+  const declaredStates = new Set(dyna.fixture.states);
+  for (const row of dyna.transitionRows) {
+    assert.ok(declaredStates.has(row.from), `${row.scenario}/${row.branch}/${row.step} declared from-state`);
+    assert.ok(declaredStates.has(row.to), `${row.scenario}/${row.branch}/${row.step} declared to-state`);
+  }
+  for (const scenario of ["base", "branch-swapped"]) {
+    const rows = dyna.transitionRows.filter((row) => row.scenario === scenario);
+    assert.equal(rows.length, 6, `${scenario} transition trace`);
+    assert.deepEqual(rows.map((row) => row.reward), [0, 0, 0, 0, 0, 10], `${scenario} reward timing`);
+  }
+  assert.deepEqual(dyna.transitionRows.filter((row) => row.scenario === "biased-terminal" && row.branch === "left").map((row) => row.reward), [0, 0, 0, 0, 0, 0]);
+  assert.deepEqual(dyna.transitionRows.filter((row) => row.scenario === "biased-terminal" && row.branch === "right").map((row) => row.reward), [0, 0, 0, 0, 0, 10]);
+
+  const foundation = await artifact("foundation-world-models-case-study");
+  const requiredFields = ["observations", "actions", "target", "decisionUse", "data", "evaluation", "evidenceTier", "sourceUrl", "limits"];
+  for (const row of foundation.rawRows) for (const field of requiredFields) assert.ok(row[field], `${row.system} ${field}`);
+  assert.equal(foundation.baselineDecision.result, "INVALID");
+  assert.deepEqual(foundation.changedTaskDecisions.map((row) => row.conditionalSelection), ["Genie", "V-JEPA 2 planning component"]);
+
+  const operations = await artifact("world-model-operations-case-study");
+  const semanticMismatch = operations.rawRows.find((row) => row.bundle === "wm-17-bad-normalization");
+  assert.equal(semanticMismatch.encoderWidth, semanticMismatch.dynamicsWidth, "failure must survive shape compatibility");
+  assert.equal(semanticMismatch.gate, "reject-compatible-shape-semantic-mismatch");
+  assert.equal(operations.rawRows.find((row) => row.stage === "shadow").gate, "reject-alert-rate-tripled");
+  assert.equal(operations.rawRows.find((row) => row.stage === "canary").gate, "rollback-deadline");
+  assert.equal(operations.rollbackAudit.find((row) => row.attempt === "atomic-wm-16").resumeAllowed, true);
+  assert.equal(operations.rollbackAudit.find((row) => row.attempt === "mixed-revisions").resumeAllowed, false);
+  const telemetryFields = operations.fixture.telemetryJoinFields;
+  assert.equal(operations.telemetryRows.length, 4);
+  for (const row of operations.telemetryRows) assert.deepEqual(Object.keys(row), telemetryFields, `${row.stage} telemetry values exactly implement the declared join schema`);
+
+  const research = await artifact("world-model-research-capstone");
+  assert.equal(research.rawRows.length, 12);
+  assert.deepEqual([...new Set(research.rawRows.map((row) => row.seed))], [1, 2, 3]);
+  assert.deepEqual([...new Set(research.rawRows.map((row) => row.angle))], [45, 135, 225, 315]);
+  assert.ok(research.rawRows.every((row) => row.updates === 200));
+  assert.equal(research.counterexampleRows.length, 3);
+  assert.ok(research.counterexampleRows.every((row) => row.gatePass === false));
+  assert.equal(research.diagnosticRetry.resultBySeed.length, 3);
+});
+
 test("multi-course URLs, selector, and progress migration are explicit", async () => {
   const [app, landing, lessonRoute, redirects] = await Promise.all([
     readFile(join(root, "app/course-app.tsx"), "utf8"),

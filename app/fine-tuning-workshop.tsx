@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ActivityInfo, LearningActivityContract, PredictionGate } from "./activity-info";
+import { MotionReveal } from "./motion/motion-reveal";
 
 const MODEL_ID = "Qwen/Qwen3-4B-Instruct-2507";
 
@@ -371,14 +372,14 @@ export function FineTuningWorkshop() {
 
     <section className="workshop-runbook">
       <div className="runbook-nav" role="tablist" aria-label="Fine-tuning stages">{stages.map((item, index) => <button key={item.id} role="tab" aria-selected={index === activeStage} className={index === activeStage ? "active" : ""} onClick={() => setActiveStage(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{item.label}</strong></button>)}</div>
-      <article className="runbook-stage" role="tabpanel">
+      <MotionReveal as="article" stateKey={activeStage} className="runbook-stage">
         <span className="eyebrow">Stage {String(activeStage + 1).padStart(2, "0")} of {stages.length}</span><h3>{stage.title}</h3><p className="stage-purpose">{stage.purpose}</p>
         <ol>{stage.actions.map((action) => <li key={action}>{action}</li>)}</ol>
         <div className="workshop-checkpoint"><span>Do not continue until</span><p>{stage.checkpoint}</p></div>
         <ActivityInfo mode="external" title={`Run stage ${activeStage + 1} in sequence`} detail="Copy this stage only after completing every earlier stage and replacing the planner placeholders. Preserve outputs before continuing." requirements="Requires a compatible Python environment, pinned packages, model/data access, and suitable hardware. Nothing executes in this browser." />
         <details className="workshop-code-disclosure"><summary>Open stage code</summary><pre tabIndex={0} aria-label={`${stage.label} fine-tuning code`}><code>{stageCode}</code></pre></details>
         <div className="stage-switcher"><button disabled={activeStage === 0} onClick={() => setActiveStage((current) => current - 1)}>← Previous stage</button><button disabled={activeStage === stages.length - 1} onClick={() => setActiveStage((current) => current + 1)}>Next stage →</button></div>
-      </article>
+      </MotionReveal>
     </section>
 
     <section className="evaluation-contract">

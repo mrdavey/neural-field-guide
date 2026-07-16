@@ -3,39 +3,62 @@
   "course": "worldmodel",
   "lessonId": "dyna-tdmpc-case-study",
   "evidenceTier": "deterministic teaching fixture",
-  "question": "At 96 transitions, does horizon-3 planning plus terminal value select delayed reward better than horizon-6 shooting?",
-  "fixture": { "states": 6, "actions": ["left", "right"], "discount": 0.9, "modelTransitionBudget": 96, "terminalReward": 10 },
+  "question": "At the same 96 model transitions, can horizon-3 planning plus a terminal value match horizon-6 shooting on delayed reward, and when does terminal-value bias reverse that result?",
+  "fixture": {
+    "states": ["root", "l1", "l2", "l3", "l4", "l5", "r1", "r2", "r3", "r4", "r5", "terminal"],
+    "actions": ["left", "right"],
+    "discount": 0.9,
+    "modelTransitionBudget": 96,
+    "delayedReward": 10,
+    "rewardTiming": "The reward 10 follows the sixth branch transition, so its root return is gamma^5*10=5.9049.",
+    "shortPlanner": {"candidates": 32, "horizon": 3, "terminalValueAtRewardBranchDepth3": 8.1, "bootstrap": "gamma^3*8.1=5.9049"},
+    "longPlanner": {"candidates": 16, "horizon": 6, "terminalValue": 0, "explicitRewards": [0, 0, 0, 0, 0, 10]}
+  },
   "baseline": "horizon-6 shooting without terminal value",
-  "changedCase": "delayed reward branch is swapped while immediate rewards stay zero",
+  "changedCase": "the delayed-reward branch is swapped while reward timing and all budgets stay fixed",
   "rawRows": [
-    { "method": "h3-plus-value", "candidates": 32, "horizon": 3, "transitions": 96, "chosen": "right", "return": 7.29 },
-    { "method": "h6-no-value", "candidates": 16, "horizon": 6, "transitions": 96, "chosen": "left", "return": 0 }
+    {"scenario": "base", "method": "h3-plus-value", "candidates": 32, "horizon": 3, "transitions": 96, "explicitRewards": [0, 0, 0], "terminalValue": 8.1, "bootstrapDiscountPower": 3, "predictedReturn": 5.9049, "chosen": "right", "correctFirstAction": true},
+    {"scenario": "base", "method": "h6-no-value", "candidates": 16, "horizon": 6, "transitions": 96, "explicitRewards": [0, 0, 0, 0, 0, 10], "terminalValue": 0, "predictedReturn": 5.9049, "chosen": "right", "correctFirstAction": true},
+    {"scenario": "branch-swapped", "method": "h3-plus-value", "candidates": 32, "horizon": 3, "transitions": 96, "explicitRewards": [0, 0, 0], "terminalValue": 8.1, "bootstrapDiscountPower": 3, "predictedReturn": 5.9049, "chosen": "left", "correctFirstAction": true},
+    {"scenario": "branch-swapped", "method": "h6-no-value", "candidates": 16, "horizon": 6, "transitions": 96, "explicitRewards": [0, 0, 0, 0, 0, 10], "terminalValue": 0, "predictedReturn": 5.9049, "chosen": "left", "correctFirstAction": true},
+    {"scenario": "biased-terminal", "method": "h3-plus-value", "candidates": 32, "horizon": 3, "transitions": 96, "explicitRewards": [0, 0, 0], "terminalValueChosenBranch": 9.0, "bootstrapDiscountPower": 3, "predictedReturn": 6.561, "realReturn": 0, "chosen": "left", "correctFirstAction": false},
+    {"scenario": "biased-terminal", "method": "h6-no-value", "candidates": 16, "horizon": 6, "transitions": 96, "explicitRewards": [0, 0, 0, 0, 0, 10], "terminalValue": 0, "predictedReturn": 5.9049, "realReturn": 5.9049, "chosen": "right", "correctFirstAction": true}
   ],
-  "checks": ["budgets equal 96 transitions", "terminal value applied once", "branch swap changes the correct first action"],
-  "failure": "A biased terminal value selects the wrong branch; the artifact retains the failing row and recommends value calibration or longer rollout.",
-  "decision": "The terminal value helps in this delayed-reward fixture under the stated bias-free contract.",
-  "boundary": "No learned latent model or external benchmark was run.",
+  "transitionRows": [
+    {"scenario": "base", "branch": "right", "step": 1, "from": "root", "to": "r1", "reward": 0, "ending": false},
+    {"scenario": "base", "branch": "right", "step": 2, "from": "r1", "to": "r2", "reward": 0, "ending": false},
+    {"scenario": "base", "branch": "right", "step": 3, "from": "r2", "to": "r3", "reward": 0, "ending": false},
+    {"scenario": "base", "branch": "right", "step": 4, "from": "r3", "to": "r4", "reward": 0, "ending": false},
+    {"scenario": "base", "branch": "right", "step": 5, "from": "r4", "to": "r5", "reward": 0, "ending": false},
+    {"scenario": "base", "branch": "right", "step": 6, "from": "r5", "to": "terminal", "reward": 10, "ending": true},
+    {"scenario": "branch-swapped", "branch": "left", "step": 1, "from": "root", "to": "l1", "reward": 0, "ending": false},
+    {"scenario": "branch-swapped", "branch": "left", "step": 2, "from": "l1", "to": "l2", "reward": 0, "ending": false},
+    {"scenario": "branch-swapped", "branch": "left", "step": 3, "from": "l2", "to": "l3", "reward": 0, "ending": false},
+    {"scenario": "branch-swapped", "branch": "left", "step": 4, "from": "l3", "to": "l4", "reward": 0, "ending": false},
+    {"scenario": "branch-swapped", "branch": "left", "step": 5, "from": "l4", "to": "l5", "reward": 0, "ending": false},
+    {"scenario": "branch-swapped", "branch": "left", "step": 6, "from": "l5", "to": "terminal", "reward": 10, "ending": true},
+    {"scenario": "biased-terminal", "branch": "left", "step": 1, "from": "root", "to": "l1", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "left", "step": 2, "from": "l1", "to": "l2", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "left", "step": 3, "from": "l2", "to": "l3", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "left", "step": 4, "from": "l3", "to": "l4", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "left", "step": 5, "from": "l4", "to": "l5", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "left", "step": 6, "from": "l5", "to": "terminal", "reward": 0, "ending": true},
+    {"scenario": "biased-terminal", "branch": "right", "step": 1, "from": "root", "to": "r1", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "right", "step": 2, "from": "r1", "to": "r2", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "right", "step": 3, "from": "r2", "to": "r3", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "right", "step": 4, "from": "r3", "to": "r4", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "right", "step": 5, "from": "r4", "to": "r5", "reward": 0, "ending": false},
+    {"scenario": "biased-terminal", "branch": "right", "step": 6, "from": "r5", "to": "terminal", "reward": 10, "ending": true}
+  ],
+  "checks": ["candidates times horizon equals 96 for every row", "the explicit delayed return is .9^5*10=5.9049", "the calibrated short bootstrap is .9^3*(.9^2*10)=5.9049", "branch swap changes the correct first action without changing timing or budget", "biased terminal value reverses only the short planner's choice and remains a failure row"],
+  "failure": "In the supplied biased-terminal rows, the short planner predicts 6.561 for the wrong branch and realizes zero; the matched long rollout retains the correct right branch and 5.9049 return.",
+  "decision": "A calibrated terminal value lets the 3-step planner match the 6-step planner under the same 96-transition budget, but the preserved bias case reverses the short planner's decision. No method receives a universal win.",
+  "boundary": "The branch table tests budgeting, discount timing, bootstrapping, and one value-bias failure; it does not measure TD-MPC, Dyna, Dreamer, MuZero, or a learned latent model.",
   "sourceManifest": [
-    {
-      "family": "Dyna",
-      "evidenceTier": "primary foundational paper",
-      "sourceUrl": "https://doi.org/10.1016/0004-3702(91)90020-D"
-    },
-    {
-      "family": "Dreamer",
-      "evidenceTier": "primary paper",
-      "sourceUrl": "https://arxiv.org/abs/2301.04104"
-    },
-    {
-      "family": "MuZero",
-      "evidenceTier": "primary paper",
-      "sourceUrl": "https://www.nature.com/articles/s41586-020-03051-4"
-    },
-    {
-      "family": "TD-MPC",
-      "evidenceTier": "primary paper",
-      "sourceUrl": "https://proceedings.mlr.press/v162/hansen22a.html"
-    }
+    {"family": "Dyna", "evidenceTier": "primary foundational paper", "sourceUrl": "https://doi.org/10.1016/0004-3702(91)90020-D"},
+    {"family": "Dreamer", "evidenceTier": "primary paper", "sourceUrl": "https://arxiv.org/abs/2301.04104"},
+    {"family": "MuZero", "evidenceTier": "primary paper", "sourceUrl": "https://www.nature.com/articles/s41586-020-03051-4"},
+    {"family": "TD-MPC", "evidenceTier": "primary paper", "sourceUrl": "https://proceedings.mlr.press/v162/hansen22a.html"}
   ],
-  "reviewed": "2026-07-14"
+  "reviewed": "2026-07-15"
 }

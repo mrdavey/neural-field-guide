@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type ReactNode } from "react";
+import { MotionReveal } from "./motion/motion-reveal";
 
 export type ActivityMode = "run" | "adapt" | "pseudocode" | "simulated" | "checked" | "reflect" | "external" | "inspect" | "project" | "optional";
 
@@ -92,7 +93,7 @@ export function PredictionGate({ prompt, children, title = "Pause and predict", 
       <div><span>Your committed prediction</span><p>{draft}</p></div>
       <button type="button" onClick={revise}>{reviseLabel}</button>
     </div>}
-    {committed && <div className="activity-after-commit">{children}</div>}
+    {committed && <MotionReveal stateKey="committed" className="activity-after-commit">{children}</MotionReveal>}
   </div>;
 }
 

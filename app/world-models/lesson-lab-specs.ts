@@ -148,12 +148,12 @@ export const worldModelLessonLabSpecs: Record<string, WorldModelLessonLabSpec> =
     ],
   ),
   "prediction-targets": discrete(
-    { title: "Multi-head target alignment", question: "Which targets remain valid at a terminal edge?", change: "Inspect observation, reward, continuation, and padded-next-step heads at the same timestamp.", observe: "Reward and continuation remain supervised on the terminal transition; padding after it is masked.", explain: "Each head has its own time convention and valid-element denominator before loss weights combine them.", complete: "Assign every target and mask without shifting reward or training on padding.", boundary: "Correct alignment does not prove that a shared latent contains the information each head needs." },
+    { title: "Node-and-edge target alignment", question: "Which node and edge targets remain valid at a terminal transition?", change: "Inspect same-index observation nodes, controlled reward/continuation edges, the real terminal node, and a manufactured padded edge.", observe: "The terminal edge and terminal observation node remain supervised; only the post-terminal padded edge is masked.", explain: "$z_t$ reconstructs node $o_t$; $(z_t,a_t)$ predicts edge labels $r_t,c_t$ and next state $z_{t+1}$, whose observation head predicts $o_{t+1}$.", complete: "Assign every node and edge target without shifting reward, dropping the terminal observation, or training on padding.", boundary: "Correct alignment does not prove that a shared latent contains the information each head needs." },
     "Target head",
     [
-      { label: "Observation at t", resultLabel: "Target", resultValue: "o_t · VALID", meter: 100, detail: "The filtered latent at t reconstructs or predicts the declared observation target." },
-      { label: "Reward + continue on edge", resultLabel: "Target", resultValue: "r_t=1, c_t=0 · VALID", meter: 100, detail: "The terminal action still produced its reward and continuation label." },
-      { label: "Padded state after terminal", resultLabel: "Target", resultValue: "MASK 0 · INVALID", meter: 0, detail: "No environment transition produced this padded row." },
+      { label: "Node t", resultLabel: "Same-index head", resultValue: "z_t → o_t · VALID", meter: 100, detail: "The filtered node state reconstructs its same-index observation." },
+      { label: "Terminal edge t", resultLabel: "Controlled heads", resultValue: "(z_t,a_t) → r_t=1, c_t=0, z_{t+1}", meter: 100, detail: "The terminal action produced valid reward, continuation, and real next-state/observation targets." },
+      { label: "Post-terminal padded edge", resultLabel: "Loss mask", resultValue: "MASK 0 · INVALID", meter: 0, detail: "No environment action produced an edge from the terminal node into padding or reset." },
     ],
   ),
   "reconstruction-feature-prediction": discrete(

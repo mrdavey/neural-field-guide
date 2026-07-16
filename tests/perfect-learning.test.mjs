@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [course, evidence, transferChecks, transferDistractors, evidenceView, guideView, validations, validationArtifacts, capstoneEvidence, capstoneView, app, styles] = await Promise.all([
+const [course, evidence, transferChecks, transferDistractors, evidenceView, guideView, validations, validationArtifacts, capstoneEvidence, capstoneView, app, courseCatalog, styles] = await Promise.all([
   readFile(new URL("../app/course-data.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/lesson-evidence.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/lesson-transfer-checks.ts", import.meta.url), "utf8"),
@@ -14,6 +14,7 @@ const [course, evidence, transferChecks, transferDistractors, evidenceView, guid
   readFile(new URL("../app/capstone-evidence.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/capstone-project-view.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/course-app.tsx", import.meta.url), "utf8"),
+  readFile(new URL("../app/course-catalog.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
 ]);
 
@@ -75,7 +76,8 @@ test("all lesson resources are claim-linked and maintenance dated", () => {
   for (const phrase of ["Primary / foundational source", "Current practice documentation", "Read for", 'reviewedDate = "13 Jul 2026"', "Source checked ${reviewedDate}", "Reviewed ${reviewedDate}"]) {
     assert.ok(guideView.includes(phrase), `missing source-contract feature: ${phrase}`);
   }
-  assert.match(app, /course\.id === "worldmodel" \? "14 Jul 2026" : "13 Jul 2026"/);
+  assert.match(app, /reviewedDate=\{course\.reviewedDate\}/);
+  assert.equal((courseCatalog.match(/reviewedDate: "\d{2} Jul 2026"/g) ?? []).length, 5, "every released course owns a review date");
   assert.match(guideView, /supports this lesson use/);
   assert.match(guideView, /one limit on applying it elsewhere/);
 });
@@ -113,12 +115,14 @@ test("all capstones contain starter scaffolds, complete references, checks, and 
   assert.equal((capstoneEvidence.match(/^    sources:/gm) ?? []).length, 7);
   assert.equal((evidenceMap.match(/\{ heading:/g) ?? []).length, 28, "four reference sections per capstone");
   assert.ok((evidenceMap.match(/url: "https:\/\//g) ?? []).length >= 16, "project-local primary sources");
-  for (const feature of ["Starter evidence frame", "Live artifact validation", "Complete worked artifact", "Project-local sources", "Each card labels its evidence kind", "comparison unlocked", "Reveal complete reference package"]) {
+  for (const feature of ["Starter evidence frame", "Live artifact validation", "Worked reference evidence", "Project-local sources", "Each card labels its evidence kind", "comparison unlocked", "Reveal worked reference package"]) {
     assert.ok(capstoneView.includes(feature), `missing capstone learning feature: ${feature}`);
   }
   assert.match(capstoneView, /check\.terms\.every/);
   assert.match(capstoneView, /disabled=\{!attempted\}/);
-  assert.match(capstoneView, /INSPECT THE FILLED MACHINE-READABLE ARTIFACT/);
+  assert.match(capstoneView, /Dependency-free starter/);
+  assert.match(capstoneView, /download>/);
+  assert.match(capstoneView, /INSPECT THE MACHINE-READABLE REFERENCE ARTIFACT/);
   assert.equal(capstoneAssets.length, 7);
   for (const asset of capstoneAssets) {
     assert.equal(asset.schema_version, "1.0");

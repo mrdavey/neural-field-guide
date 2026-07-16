@@ -2,7 +2,7 @@
 
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { flushSync } from "react-dom";
-import { type Lesson, type TrackId } from "./course-data";
+import { type Lesson, type LlmTrackId } from "./course-data";
 import { LessonLab } from "./lesson-labs";
 import { LessonFurtherReading, LessonGuideView } from "./lesson-guide-view";
 import { LessonEvidenceView } from "./lesson-evidence-view";
@@ -17,6 +17,13 @@ import { courses, type CourseDefinition, type CourseId } from "./course-catalog"
 import { WorldModelLab, type WorldModelLabType } from "./world-models/labs";
 import { WorldModelTransferView } from "./world-models/transfer-view";
 import { WorldModelTechnicalValidation } from "./world-models/technical-validations";
+import { CourseMotionOrchestrator } from "./motion/course-motion-orchestrator";
+import { MotionReveal } from "./motion/motion-reveal";
+import { CourseAlignmentBridge } from "./course-alignment-bridge";
+import { courseAlignmentByLesson } from "./course-alignments";
+import { ResearchCourseLab } from "./research-courses/lab";
+import { ExternalExperimentView } from "./external-experiment-view";
+import { externalExperiments } from "./external-experiments";
 
 const FineTuningWorkshop = lazy(() => import("./fine-tuning-workshop"));
 const MasteryStudio = lazy(() => import("./mastery-studios"));
@@ -40,7 +47,7 @@ function updateCourseView(update: () => void) {
   transitionDocument.startViewTransition(() => flushSync(update));
 }
 
-function trackFor(course: CourseDefinition, id: TrackId) {
+function trackFor(course: CourseDefinition, id: string) {
   return course.tracks.find((track) => track.id === id)!;
 }
 
@@ -133,13 +140,16 @@ export function CourseApp({ courseId = "llm", initialLessonId }: { courseId?: Co
 
   return (
     <div className="app-shell">
+      <CourseMotionOrchestrator routeKey={current ? `${course.id}:${current.id}` : `${course.id}:home`} completed={completed} />
       <header className="topbar">
-        <button className="brand" onClick={openHome} aria-label="Go to course home">
-          <span className="brand-mark">N</span>
-          <span><strong>Neural</strong> Field Guide</span>
-        </button>
+        <div className="topbar-primary">
+          <button className="brand" onClick={openHome} aria-label="Go to course home">
+            <span className="brand-mark">N</span>
+            <span><strong>Neural</strong> Field Guide</span>
+          </button>
+          <label className="course-selector"><span>Course</span><select value={course.id} onChange={(event) => { const target = event.target.value as CourseId; localStorage.setItem(LAST_COURSE_KEY, target); window.location.assign(publicPath(`/${target}/`)); }}>{Object.values(courses).map((option) => <option key={option.id} value={option.id}>{option.selectorLabel}</option>)}</select></label>
+        </div>
         <div className="topbar-actions">
-          <label className="course-selector"><span>Course</span><select value={course.id} onChange={(event) => { const target = event.target.value as CourseId; localStorage.setItem(LAST_COURSE_KEY, target); window.location.assign(publicPath(`/${target}/`)); }}><option value="llm">LLMs</option><option value="worldmodel">World Models</option></select></label>
           <span className="top-progress"><strong>{completed}</strong> / {lessons.length} mastered</span>
           <button className="nav-toggle" onClick={() => setMobileNav(!mobileNav)} aria-expanded={mobileNav} aria-controls="course-navigation">Course map</button>
         </div>
@@ -187,6 +197,15 @@ function HomeView({ course, completed, nextLesson, openLesson }: { course: Cours
   const { lessons, tracks, phases: learningPhases, curriculumMinutes, hero } = course;
   const labCount = lessons.filter((lesson) => lesson.lab).length;
   const codeExampleCount = Object.keys(course.codeExamples).length;
+  const recommendedAfter = course.recommendedAfter.map((id) => courses[id]);
+  const recommendedNext = course.recommendedNext.map((id) => courses[id]);
+  const readinessChecks: Record<CourseId, string> = {
+    llm: "Can you multiply small arrays, interpret a probability, and follow a short Python trace? If not, Lesson 1 starts from those ideas and defines them as they appear.",
+    worldmodel: "Can you distinguish an observation from hidden state and explain why a candidate action must enter a prediction? The LLM course helps with tensors and learned representations, but its completion is recommended—not mandatory.",
+    generative: "Can you normalize a probability table and distinguish training data from a generated sample? Earlier courses help with tensors, learned state, and evaluation, but Lesson 1 reactivates the required pieces.",
+    rl: "Can you trace state → action → consequence and keep reward separate from a supervised target? The recommended earlier courses supply representations, uncertainty, and generative modeling; this course restates the decision-loop prerequisites.",
+    embodied: "Can you keep observation, estimated state, requested action, applied action, and physical outcome as separate records? The four earlier courses are recommended because this course composes all of them into a closed loop.",
+  };
   return <div className="home-view">
     <section className="hero">
       <div className="hero-copy">
@@ -202,8 +221,42 @@ function HomeView({ course, completed, nextLesson, openLesson }: { course: Cours
         <div className="machine-label">{hero.machineLabel}</div>
         <div className="machine-row"><span className="data-chip">{hero.machineInput}</span><b>→</b><span className="data-chip orange">{hero.machineToken}</span></div>
         <div className="neural-grid">{Array.from({ length: 24 }).map((_, index) => <i key={index} style={{ "--delay": `${index * 45}ms` } as React.CSSProperties} />)}</div>
-        <div className="machine-output"><span>{hero.machineOutputLabel}</span><strong>{hero.machineOutput}</strong><b>{course.id === "llm" ? "37%" : "± uncertainty"}</b></div>
+        <div className="machine-output"><span>{hero.machineOutputLabel}</span><strong>{hero.machineOutput}</strong><b>illustrative flow · not a measurement</b></div>
       </div>
+    </section>
+
+    <section className="program-position" aria-labelledby={`program-position-${course.id}`}>
+      <header>
+        <span className="eyebrow">Orient · your place in the field guide</span>
+        <h2 id={`program-position-${course.id}`}>Start with a readiness decision, not a hidden prerequisite.</h2>
+        <p>{readinessChecks[course.id]}</p>
+      </header>
+      <div className="program-position-grid">
+        <article>
+          <span>Recommended preparation</span>
+          <h3>{recommendedAfter.length ? "Useful foundations to reuse" : "No course prerequisite"}</h3>
+          {recommendedAfter.length ? <ul>{recommendedAfter.map((item) => <li key={item.id}><a href={publicPath(`/${item.id}/`)}>{item.title}</a><small>{item.description}</small></li>)}</ul> : <p>Begin here. Every required mathematical and implementation term is introduced before it becomes shorthand.</p>}
+        </article>
+        <article>
+          <span>One inspectable system trace</span>
+          <h3>{hero.trace.question}</h3>
+          <ol><li><b>Input:</b> {hero.trace.input}</li><li><b>Transformation:</b> {hero.trace.transformation}</li><li><b>Output:</b> {hero.trace.output}</li><li><b>Failure boundary:</b> {hero.trace.failure}</li></ol>
+        </article>
+        <article>
+          <span>Continue when it serves your build</span>
+          <h3>{recommendedNext.length ? "Recommended next courses" : "Final integration course"}</h3>
+          {recommendedNext.length ? <ul>{recommendedNext.map((item) => <li key={item.id}><a href={publicPath(`/${item.id}/`)}>{item.title}</a><small>{item.description}</small></li>)}</ul> : <p>Use the earlier courses as references while you design and test an end-to-end embodied system.</p>}
+        </article>
+      </div>
+      <footer>
+        <strong>Evidence boundary</strong>
+        <p>Required browser activities are deterministic teaching fixtures or simulations, not model-quality measurements. Runnable code states its environment. Hosted GPU, simulator, or physical-system work is optional and must preserve its own seeds, hardware, failures, and provenance.</p>
+        <span>Course content reviewed {course.reviewedDate}</span>
+      </footer>
+      {course.homeSources?.length ? <div className="home-provenance" aria-labelledby={`home-provenance-${course.id}`}>
+        <header><span className="eyebrow">Claim-linked primary reading · optional</span><h3 id={`home-provenance-${course.id}`}>Verify the map before generalizing it.</h3><p>These sources support three specific promises on this home page; each card says what to inspect rather than acting as a generic bibliography.</p></header>
+        <div>{course.homeSources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer"><span>{source.claim}</span><strong>{source.title}</strong><small>{source.readFor} ↗</small></a>)}</div>
+      </div> : null}
     </section>
 
     <ScrollStory
@@ -224,7 +277,7 @@ function HomeView({ course, completed, nextLesson, openLesson }: { course: Cours
     />
 
     <section className="course-manifest">
-      <div className="section-heading"><span className="eyebrow">Curriculum map</span><h2>Seven territories. One connected story.</h2><p>{hero.manifest}</p></div>
+      <div className="section-heading"><span className="eyebrow">Curriculum map</span><h2>{tracks.length} territories. One connected story.</h2><p>{hero.manifest}</p></div>
       <div className="track-grid">
         {tracks.map((track, index) => {
           const trackLessons = lessons.filter((lesson) => lesson.track === track.id);
@@ -267,6 +320,8 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
   const specializationChoices = lesson.track === course.specializationTrackId
     ? lessons.filter((candidate) => candidate.track === course.specializationTrackId && candidate.id !== lesson.id)
     : [];
+  const courseAlignment = courseAlignmentByLesson[`${course.id}:${lesson.id}`];
+  const externalExperiment = Object.values(externalExperiments).find((contract) => contract.courseId === course.id && contract.lessonId === lesson.id);
 
   const answerQuiz = (answer: number) => setProgress((current) => ({ ...current, quizAnswers: { ...current.quizAnswers, [lesson.id]: answer } }));
   const toggleComplete = () => setProgress((current) => ({ ...current, completed: current.completed.includes(lesson.id) ? current.completed.filter((id) => id !== lesson.id) : [...current.completed, lesson.id] }));
@@ -279,7 +334,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       <div><span className="eyebrow">{track.short}</span><h1>{lesson.title}</h1></div>
     </header>
 
-    {course.id === "worldmodel" && guide && <section className="world-model-orient" aria-labelledby={`world-model-orient-${lesson.id}`}>
+    {course.id !== "llm" && guide && <section className="world-model-orient" aria-labelledby={`world-model-orient-${lesson.id}`}>
       <header>
         <span className="eyebrow">Orient · outcome, language, and next use</span>
         <h2 id={`world-model-orient-${lesson.id}`}>Know what you are building before opening the mechanism.</h2>
@@ -287,8 +342,12 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       </header>
       <div className="world-model-orient-grid">
         <article><span>Observable outcomes</span><ol>{guide.objectives.map((objective) => <li key={objective}><MathText>{objective}</MathText></li>)}</ol></article>
-        <article><span>Prerequisite activation</span><p><MathText>{lesson.prerequisites?.length ? `Reuse ${lesson.prerequisites.map((id) => lessonById[id].title).join(" and ")}: ${lessonById[lesson.prerequisites.at(-1)!].keyIdeas[0]}` : "No prior world-model lesson is required. Bring only basic arithmetic and a willingness to trace one state change."}</MathText></p></article>
-        <article><span>Where this is used next</span><p><MathText>{lesson.id === "world-model-research-capstone" ? "Use this protocol to package the final changed-case study, null result, and reproduction boundary." : lesson.track === course.specializationTrackId ? "Reuse this branch as the chosen mechanism in the falsifiable research capstone; the other advanced branches remain optional." : next ? `Next, ${next.title} reuses this lesson to ${nextGuide?.objectives[0]?.toLowerCase() ?? next.keyIdeas[0].toLowerCase()}.` : "Reuse this evidence contract when evaluating a new world-model design."}</MathText></p></article>
+        <article><span>Prerequisite activation</span>{!lesson.prerequisites?.length && !lesson.programPrerequisites?.length ? <p>No earlier lesson is required. Bring basic arithmetic and a willingness to trace one state change.</p> : null}{lesson.prerequisites?.length ? <p><MathText>{`Reuse ${lesson.prerequisites.map((id) => lessonById[id].title).join(" and ")}: ${lessonById[lesson.prerequisites.at(-1)!].keyIdeas[0]}`}</MathText></p> : null}{lesson.programPrerequisites?.length ? <ul className="program-prerequisite-list">{lesson.programPrerequisites.map((reference) => {
+          const prerequisiteCourse = courses[reference.courseId as CourseId];
+          const prerequisite = prerequisiteCourse?.lessonById[reference.lessonId];
+          return prerequisiteCourse && prerequisite ? <li key={`${reference.courseId}:${reference.lessonId}`}><a href={publicPath(`/${reference.courseId}/${reference.lessonId}/`)}>{prerequisiteCourse.selectorLabel}: {prerequisite.title}</a><p><MathText>{prerequisite.keyIdeas[0]}</MathText></p></li> : null;
+        })}</ul> : null}</article>
+        <article><span>Where this is used next</span><p><MathText>{lesson.id === "world-model-research-capstone" ? "Use this protocol to package the final changed-case study, null result, and reproduction boundary." : lesson.track === course.specializationTrackId ? "Reuse this branch as the chosen mechanism in the falsifiable research capstone; the other advanced branches remain optional." : next ? `Next, ${next.title} reuses this lesson to ${nextGuide?.objectives[0]?.toLowerCase() ?? next.keyIdeas[0].toLowerCase()}.` : `Reuse this evidence contract when evaluating a new ${course.subject} design.`}</MathText></p></article>
       </div>
       <div className="world-model-orient-vocabulary"><span>Define before use</span><dl>{guide.vocabulary.map((item) => <div key={item.term}><dt><MathText>{item.term}</MathText></dt><dd><MathText>{item.meaning}</MathText></dd></div>)}</dl></div>
     </section>}
@@ -315,15 +374,17 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       </div>
     </section> : null}
 
+    {courseAlignment && <CourseAlignmentBridge alignment={courseAlignment} />}
+
     <section className="definition-card">
       <div className="depth-toggle" role="group" aria-label="Explanation depth">
         <button className={depth === "simple" ? "active" : ""} onClick={() => setDepth("simple")}><span>01</span> Plain English</button>
         <button className={depth === "deep" ? "active" : ""} onClick={() => setDepth("deep")}><span>02</span> Under the hood</button>
       </div>
-      <div className="definition-content" key={`${lesson.id}-${depth}`}>
+      <MotionReveal className="definition-content" stateKey={`${lesson.id}-${depth}`} effect="feedback" key={`${lesson.id}-${depth}`}>
         <span className="eyebrow">{depth === "simple" ? "Core idea" : "Mechanism and scope"}</span>
         <p className={depth === "simple" ? "simple-definition" : "deep-definition"}><MathText>{depth === "simple" ? lesson.simple : lesson.deep}</MathText></p>
-      </div>
+      </MotionReveal>
     </section>
 
     <ScrollStory
@@ -331,7 +392,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       eyebrow={`${motionStory.stages[0].label} → ${motionStory.stages[3].label}`}
       title={<MathText>{motionStory.headline}</MathText>}
       intro={<p><MathText>{motionStory.intro}</MathText></p>}
-      scene={course.id === "worldmodel" ? "pipeline" : lesson.track as Exclude<TrackId, `wm-${string}`>}
+      scene={course.id === "llm" ? lesson.track as LlmTrackId : "pipeline"}
       concept={motionStory.concept}
       sceneLabels={motionStory.stages.map((stage) => stage.label)}
       steps={[
@@ -362,13 +423,15 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       ]}
     />
 
-    {guide && <LessonGuideView guide={guide} lessonId={lesson.id} lessonTitle={lesson.title} coverage={course.objectiveCoverage[lesson.id]} example={course.codeExamples[lesson.id]} guidance={course.codeGuidance[lesson.id]} showVocabulary={course.id !== "worldmodel"} />}
+    {guide && <LessonGuideView guide={guide} lessonId={lesson.id} lessonTitle={lesson.title} coverage={course.objectiveCoverage[lesson.id]} example={course.codeExamples[lesson.id]} guidance={course.codeGuidance[lesson.id]} showVocabulary={course.id === "llm"} />}
 
-    {lesson.lab && (lesson.lab.startsWith("wm-") ? <WorldModelLab type={lesson.lab as WorldModelLabType} lesson={lesson} /> : <LessonLab type={lesson.lab as Exclude<NonNullable<Lesson["lab"]>, `wm-${string}`>} lesson={lesson} />)}
+    {lesson.lab && (lesson.lab === "research" && course.researchLabs?.[lesson.id] ? <ResearchCourseLab lessonTitle={lesson.title} spec={course.researchLabs[lesson.id]} /> : lesson.lab.startsWith("wm-") ? <WorldModelLab type={lesson.lab as WorldModelLabType} lesson={lesson} /> : <LessonLab type={lesson.lab as Exclude<NonNullable<Lesson["lab"]>, `wm-${string}` | "research">} lesson={lesson} />)}
 
-    {guide && (course.id === "worldmodel" && course.transfers?.[lesson.id] ? <WorldModelTransferView lessonId={lesson.id} transfer={course.transfers[lesson.id]} /> : <LessonEvidenceView lesson={lesson} guide={guide} />)}
+    {externalExperiment && <ExternalExperimentView contract={externalExperiment} />}
 
-    {course.id === "llm" ? <TechnicalValidation lessonId={lesson.id} /> : <WorldModelTechnicalValidation lessonId={lesson.id} />}
+    {guide && (course.transfers?.[lesson.id] ? <WorldModelTransferView lessonId={lesson.id} transfer={course.transfers[lesson.id]} /> : <LessonEvidenceView lesson={lesson} guide={guide} />)}
+
+    {course.id === "llm" ? <TechnicalValidation lessonId={lesson.id} /> : course.id === "worldmodel" ? <WorldModelTechnicalValidation lessonId={lesson.id} /> : null}
 
     {masteryStudioLessons.has(lesson.id) && <Suspense fallback={<section className="workshop-loading" role="status">Preparing the decision studio…</section>}><MasteryStudio lessonId={lesson.id} /></Suspense>}
 
@@ -384,7 +447,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
           const state = answered ? optionIndex === lesson.quiz.answer ? "correct" : optionIndex === selectedAnswer ? "incorrect" : "muted" : "";
           return <button disabled={answered} className={state} key={option} onClick={() => answerQuiz(optionIndex)}><span>{String.fromCharCode(65 + optionIndex)}</span><MathText>{option}</MathText></button>;
         })}
-      </div>{selectedAnswer !== undefined && <div className={`quiz-feedback ${selectedAnswer === lesson.quiz.answer ? "success" : "retry"}`} role="status"><strong>{selectedAnswer === lesson.quiz.answer ? "Exactly right." : "Not quite—here’s the key."}</strong><p><MathText>{lesson.quiz.explanation}</MathText></p><button onClick={() => setProgress((current) => { const answers = { ...current.quizAnswers }; delete answers[lesson.id]; return { ...current, quizAnswers: answers }; })}>Try again</button></div>}</div>
+      </div>{selectedAnswer !== undefined && <MotionReveal stateKey={selectedAnswer} effect="feedback" className={`quiz-feedback ${selectedAnswer === lesson.quiz.answer ? "success" : "retry"}`} ariaLive="polite" role="status"><strong>{selectedAnswer === lesson.quiz.answer ? "Exactly right." : "Not quite—here’s the key."}</strong><p><MathText>{lesson.quiz.explanation}</MathText></p><button onClick={() => setProgress((current) => { const answers = { ...current.quizAnswers }; delete answers[lesson.id]; return { ...current, quizAnswers: answers }; })}>Try again</button></MotionReveal>}</div>
     </section>
 
     <section className="lesson-complete">
@@ -392,7 +455,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       <button disabled={!isComplete && !quizPassed} className={isComplete ? "completed-button" : "primary-button"} onClick={toggleComplete}>{isComplete ? <><Icon name="check" /> Mastered</> : quizPassed ? <>Record mastery <span>✓</span></> : <>Mastery locked <span>○</span></>}</button>
     </section>
 
-    {guide && <LessonFurtherReading guide={guide} lessonId={lesson.id} reviewedDate={course.id === "worldmodel" ? "14 Jul 2026" : "13 Jul 2026"} />}
+    {guide && <LessonFurtherReading guide={guide} lessonId={lesson.id} reviewedDate={course.reviewedDate} />}
 
     {lesson.sources && <aside className="source-notes lesson-extension"><div><span className="eyebrow">Optional source list</span><ActivityInfo mode="optional" /></div><div>{lesson.sources.map((source) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label}<span>↗</span></a>)}</div><p>The labeled reading cards above preserve whether each item is a paper, documentation, course, or explanatory article. This compact list repeats the links for convenience; use a source only to verify assumptions, scope, publication date, or a changing implementation detail before generalizing it.</p></aside>}
     <CourseDiscussionPrompt lesson={lesson} objectives={guide?.objectives} lessonById={lessonById} subject={course.subject} />

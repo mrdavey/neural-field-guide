@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { ActivityInfo, LearningActivityContract, PredictionGate } from "../activity-info";
 import type { Lesson } from "../course-data";
 import { MathText } from "../math-text";
+import { MotionSurface } from "../motion/motion-surface";
 import { worldModelLessonLabSpecs } from "./lesson-lab-specs";
 
 export type WorldModelLabType = Extract<NonNullable<Lesson["lab"]>, `wm-${string}`>;
@@ -43,7 +44,8 @@ export function WorldModelLab({ type, lesson }: { type: WorldModelLabType; lesso
     />
     <PredictionGate prompt={<><MathText>{copy.change}</MathText> Before the readout appears, predict its direction or decision and explain the mechanism that should produce it.</>} onRevise={() => setValue(control.initial)}>
       <div className="lab-observation-guide"><span>Observation to test</span><p><MathText>{copy.observe}</MathText></p></div>
-      <div className="lab-instrument wm-lab-instrument">
+      <MotionSurface kind={type} stateKey={`${value}:${result.meter}`}>
+      <div className="lab-instrument wm-lab-instrument" data-visual-control={value} data-visual-meter={result.meter}>
         {control.choices ? <fieldset className="wm-lab-choices"><legend><MathText>{control.label}</MathText></legend><div>{control.choices.map((choice, index) => <button type="button" className={Math.round(value) === index ? "active" : ""} aria-pressed={Math.round(value) === index} key={choice} onClick={() => setValue(index)}><MathText>{choice}</MathText></button>)}</div></fieldset> : <>
           <label htmlFor={`${lesson.id}-control`}><span><MathText>{control.label}</MathText></span><strong>{result.controlValue}</strong></label>
           <input id={`${lesson.id}-control`} type="range" min={control.min} max={control.max} step={control.step} value={value} onInput={(event) => setValue(Number(event.currentTarget.value))} />
@@ -53,6 +55,7 @@ export function WorldModelLab({ type, lesson }: { type: WorldModelLabType; lesso
         <div className="wm-lab-explanation"><article><span>EXPLAIN</span><p><MathText>{copy.explain}</MathText></p></article><article><span>COMPLETE WHEN</span><p><MathText>{copy.complete}</MathText></p></article></div>
         <p className="lab-caption"><strong>Evidence boundary:</strong> <MathText>{copy.boundary}</MathText></p>
       </div>
+      </MotionSurface>
     </PredictionGate>
   </section>;
 }

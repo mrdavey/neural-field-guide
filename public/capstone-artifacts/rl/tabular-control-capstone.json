@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "course": "rl",
+  "lessonId": "tabular-control-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "factor": "slipProbability",
+    "arms": [
+      "slip_0.1",
+      "slip_0.3"
+    ],
+    "seeds": [
+      11,
+      23,
+      41,
+      53,
+      67
+    ],
+    "runtime": "Python 3 teaching fixture",
+    "matrixAxes": {
+      "seed": [
+        11,
+        23,
+        41,
+        53,
+        67
+      ],
+      "arm": [
+        "slip_0.1",
+        "slip_0.3"
+      ]
+    },
+    "primitiveBudget": {
+      "environmentTransitions": 1000
+    },
+    "metric": {
+      "field": "evaluationSuccessRate",
+      "name": "frozen-policy evaluation success rate",
+      "unit": "successful episodes / 100 seeded evaluation episodes",
+      "aggregation": "one 100-episode frozen-policy evaluation per seed and slip condition"
+    },
+    "intervention": {
+      "factor": "slipProbability",
+      "baseline": 0.1,
+      "changed": 0.3
+    }
+  },
+  "invariants": {
+    "allCanonicalCellsPresent": true,
+    "primitiveBudgetsMatchWithinSeed": true,
+    "finiteFixtureMetricValues": true
+  },
+  "rawRows": [
+    {
+      "seed": 11,
+      "arm": "slip_0.1",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.1,
+      "evaluationSuccessRate": 0.62
+    },
+    {
+      "seed": 11,
+      "arm": "slip_0.3",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.3,
+      "evaluationSuccessRate": 0.64
+    },
+    {
+      "seed": 23,
+      "arm": "slip_0.1",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.1,
+      "evaluationSuccessRate": 0.65
+    },
+    {
+      "seed": 23,
+      "arm": "slip_0.3",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": false,
+      "slipProbability": 0.3,
+      "evaluationSuccessRate": 0.61
+    },
+    {
+      "seed": 41,
+      "arm": "slip_0.1",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.1,
+      "evaluationSuccessRate": 0.6
+    },
+    {
+      "seed": 41,
+      "arm": "slip_0.3",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.3,
+      "evaluationSuccessRate": 0.66
+    },
+    {
+      "seed": 53,
+      "arm": "slip_0.1",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.1,
+      "evaluationSuccessRate": 0.63
+    },
+    {
+      "seed": 53,
+      "arm": "slip_0.3",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.3,
+      "evaluationSuccessRate": 0.64
+    },
+    {
+      "seed": 67,
+      "arm": "slip_0.1",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.1,
+      "evaluationSuccessRate": 0.6
+    },
+    {
+      "seed": 67,
+      "arm": "slip_0.3",
+      "budget": {
+        "environmentTransitions": 1000
+      },
+      "constraintPass": true,
+      "slipProbability": 0.3,
+      "evaluationSuccessRate": 0.62
+    }
+  ],
+  "decision": "The deterministic fixture preserves matched rows and shows that the treatment cannot receive an unqualified win when a declared constraint or reliability gate fails.",
+  "failure": "The seed-23 treatment row fails the declared gate and must remain in analysis rather than being deleted after outcomes are inspected.",
+  "boundary": "These values are reviewed teaching fixtures for artifact structure and decision logic, not measured agent performance or an external benchmark result."
+}

@@ -3,18 +3,42 @@
   "course": "worldmodel",
   "lessonId": "world-model-operations-case-study",
   "evidenceTier": "deterministic operations fixture",
-  "question": "Does staged release detect compatibility and deadline regressions before full authority?",
-  "fixture": { "deadlineMs": 50, "chanceLimit": 0.05, "stages": ["replay", "shadow", "canary", "bounded expansion"] },
+  "question": "Does staged release detect compatible-shape semantic, false-alarm, and deadline regressions before full authority?",
+  "fixture": {
+    "deadlineSlo": "p99 camera-to-actuator acknowledgement latency <= 50 ms",
+    "chanceLimit": 0.05,
+    "stages": ["replay", "shadow", "canary", "bounded expansion"],
+    "telemetryJoinFields": ["bundle", "stage", "seed", "observationTime", "filteredState", "uncertainty", "candidateScores", "selectedAction", "monitorDecision", "actuatorAcknowledgement", "outcome"]
+  },
   "baseline": "weights-only release with task-success monitoring",
-  "changedCase": "normalization changes within compatible shape, then actuator acknowledgement latency rises",
-  "rawRows": [
-    { "bundle": "wm-16", "encoderWidth": 32, "dynamicsWidth": 32, "p99Ms": 38, "gate": "pass" },
-    { "bundle": "wm-17-bad-schema", "encoderWidth": 32, "dynamicsWidth": 64, "p99Ms": 35, "gate": "reject-compatibility" },
-    { "bundle": "wm-17-delay", "encoderWidth": 32, "dynamicsWidth": 32, "p99Ms": 83, "gate": "rollback-deadline" }
+  "changedCase": "normalization changes within compatible shape, then a separately compatible candidate develops false alarms and actuator latency",
+  "bundles": [
+    {"bundle": "wm-16", "encoder": "enc-16", "dynamics": "dyn-16", "normalization": "norm-16", "planner": "plan-16", "calibration": "cal-16", "schemas": "schema-3", "constraints": "guard-4", "fallback": "hold-2", "compatible": true},
+    {"bundle": "wm-17-bad-normalization", "encoder": "enc-17", "dynamics": "dyn-17-expects-norm-17", "normalization": "norm-16", "planner": "plan-17", "calibration": "cal-17", "schemas": "schema-3", "constraints": "guard-4", "fallback": "hold-2", "compatible": false},
+    {"bundle": "wm-17", "encoder": "enc-17", "dynamics": "dyn-17", "normalization": "norm-17", "planner": "plan-17", "calibration": "cal-17", "schemas": "schema-3", "constraints": "guard-4", "fallback": "hold-2", "compatible": true}
   ],
-  "checks": ["release bundle is immutable", "shadow has no actuator authority", "rollback restores matching schemas and planner config"],
-  "failure": "Mixing encoder and dynamics revisions is rejected before proposals are evaluated.",
-  "decision": "Restore wm-16 after the deadline gate and investigate actuator timing separately from model prediction.",
-  "boundary": "This fixture validates release logic, not a production safety case.",
-  "reviewed": "2026-07-14"
+  "rawRows": [
+    {"bundle": "weights-only-baseline", "stage": "direct-release", "seed": 11, "authority": "full", "taskSuccess": true, "normalizationChecked": false, "falseAlarmRate": null, "p99Ms": null, "telemetryJoinComplete": false, "gate": "invalid-observability"},
+    {"bundle": "wm-16", "stage": "replay", "seed": 11, "authority": "none", "encoderWidth": 32, "dynamicsWidth": 32, "normalization": "norm-16", "falseAlarmRate": 0.02, "p99Ms": 38, "telemetryJoinComplete": true, "gate": "pass-known-good"},
+    {"bundle": "wm-17-bad-normalization", "stage": "replay", "seed": 11, "authority": "none", "encoderWidth": 32, "dynamicsWidth": 32, "normalization": "norm-16", "expectedNormalization": "norm-17", "falseAlarmRate": null, "p99Ms": null, "telemetryJoinComplete": true, "gate": "reject-compatible-shape-semantic-mismatch"},
+    {"bundle": "wm-17", "stage": "replay", "seed": 11, "authority": "none", "encoderWidth": 32, "dynamicsWidth": 32, "normalization": "norm-17", "falseAlarmRate": 0.02, "p99Ms": 35, "telemetryJoinComplete": true, "gate": "pass"},
+    {"bundle": "wm-17", "stage": "shadow", "seed": 11, "authority": "proposal-only", "safeCases": 100, "safeCaseAlerts": 6, "falseAlarmRate": 0.06, "baselineFalseAlarmRate": 0.02, "p99Ms": 41, "telemetryJoinComplete": true, "gate": "reject-alert-rate-tripled"},
+    {"bundle": "wm-17", "stage": "canary", "seed": 23, "authority": "bounded", "safeCases": 100, "safeCaseAlerts": 2, "falseAlarmRate": 0.02, "p99Ms": 83, "telemetryJoinComplete": true, "gate": "rollback-deadline"},
+    {"bundle": "wm-16", "stage": "rollback-replay", "seed": 23, "authority": "none", "falseAlarmRate": 0.02, "p99Ms": 38, "telemetryJoinComplete": true, "stateSchemaCompatible": true, "nextStepHashMatches": true, "gate": "rollback-pass"}
+  ],
+  "telemetryRows": [
+    {"bundle": "wm-16", "stage": "replay", "seed": 11, "observationTime": "t=100ms", "filteredState": [0.41, -0.02], "uncertainty": 0.03, "candidateScores": {"hold": 0.2, "move": 0.8}, "selectedAction": "move", "monitorDecision": "pass-known-good", "actuatorAcknowledgement": "not-authorized-in-replay", "outcome": "reference row accepted"},
+    {"bundle": "wm-17", "stage": "shadow", "seed": 11, "observationTime": "t=200ms", "filteredState": [0.42, -0.01], "uncertainty": 0.04, "candidateScores": {"hold": 0.3, "move": 0.7}, "selectedAction": "move-proposal-only", "monitorDecision": "reject-alert-rate-tripled", "actuatorAcknowledgement": "wm-16 retained authority", "outcome": "six alerts in 100 safe cases"},
+    {"bundle": "wm-17", "stage": "canary", "seed": 23, "observationTime": "t=300ms", "filteredState": [0.39, 0.01], "uncertainty": 0.04, "candidateScores": {"hold": 0.4, "move": 0.6}, "selectedAction": "bounded-move", "monitorDecision": "rollback-deadline", "actuatorAcknowledgement": "83ms", "outcome": "atomic wm-16 rollback requested"},
+    {"bundle": "wm-16", "stage": "rollback-replay", "seed": 23, "observationTime": "t=400ms", "filteredState": [0.39, 0.01], "uncertainty": 0.03, "candidateScores": {"hold": 0.4, "move": 0.6}, "selectedAction": "move-proposal-only", "monitorDecision": "rollback-pass", "actuatorAcknowledgement": "not-authorized-in-replay", "outcome": "next-step hash matches reviewed wm-16 row"}
+  ],
+  "rollbackAudit": [
+    {"attempt": "atomic-wm-16", "components": ["enc-16", "dyn-16", "norm-16", "plan-16", "cal-16", "schema-3", "guard-4", "hold-2"], "compatible": true, "nextStepHashMatches": true, "resumeAllowed": true},
+    {"attempt": "mixed-revisions", "components": ["enc-16", "dyn-17", "norm-16", "plan-17", "cal-17", "schema-3", "guard-4", "hold-2"], "compatible": false, "nextStepHashMatches": false, "resumeAllowed": false}
+  ],
+  "checks": ["same-width normalization signature is checked before proposal evaluation", "weights-only baseline is rejected for incomplete observability", "shadow has no actuator authority", "false alarms are computed from safe-case numerator and denominator", "p99 is compared with the predeclared 50 ms SLO", "rollback restores every matching component and passes next-step equivalence", "mixed revisions remain a raw rejected attempt"],
+  "failure": "The same-width normalization mismatch evades shape checking but fails the semantic bundle contract; the mixed-revision rollback also remains rejected instead of being hidden by a valid weight shape.",
+  "decision": "Reject the bad-normalization bundle in replay, keep the high-false-alarm candidate out of authority in shadow, and atomically restore wm-16 after the separate p99 deadline regression.",
+  "boundary": "This fixture validates release-state, telemetry-join, authority, false-alarm, deadline, and rollback logic; it is not a production runtime measurement, availability claim, or safety case.",
+  "reviewed": "2026-07-15"
 }

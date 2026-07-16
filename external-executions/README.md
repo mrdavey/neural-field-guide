@@ -1,6 +1,6 @@
 # External execution runbook
 
-This directory turns the course's four heavyweight validation contracts into reproducible runs. Each runner writes a new JSON dossier under `external-executions/runs/`; it never silently overwrites the preserved course artifacts.
+This directory is the entry point for seven optional external execution families: four pinned LLM validations plus one accelerator-ready experiment for each of Generative Models, Reinforcement Learning & Control, and Embodied AI. Each runner writes a new JSON dossier under `external-executions/runs/`; it never silently overwrites preserved course artifacts.
 
 These runs are optional. The course, its quizzes, and its capstones remain complete without them.
 
@@ -22,6 +22,20 @@ From the course repository root, create the output directory once:
 ```bash
 mkdir -p external-executions/runs
 ```
+
+## Execution families
+
+| Course | Experiment | Compute path | Expected result boundary | Detailed runbook |
+| --- | --- | --- | --- | --- |
+| LLM | Pinned GPT-2 and Qwen tokenizer contract | CPU; tokenizer downloads only | Ten schema-valid measured rows; token count is not a quality claim | Section 1 below |
+| LLM | Pinned GPT-2 hidden-state identity probe | CPU by default; CUDA optional | Lookup identity and finite contextual cosines; no monotonic trend is promised | Section 2 below |
+| LLM | Pinned OLMo token accounting | Upstream loader environment | Nominal, visible, and loss-bearing counts satisfy declared inequalities for recorded batches only | Section 3 below |
+| LLM | Paired causal/FIM ablation | CUDA recommended; CPU supported | Matched token budgets and paired-seed gate; a null or negative result remains valid evidence | Section 4 below |
+| Generative Models | Tiny diffusion schedule ablation | Colab, compatible GPU service, or local CPU/GPU | Hash, budget, finite-value, and schema invariants; loss, mode coverage, radius error, and runtime are variable | [`GENERATIVE_DIFFUSION.md`](GENERATIVE_DIFFUSION.md) |
+| Reinforcement Learning & Control | DQN target-copy ablation | Colab, compatible GPU service, or local CPU/GPU | Paired initialization, exact step/update/copy counts, finite values, and schema; no winner or performance band is promised | [`RL_DQN.md`](RL_DQN.md) |
+| Embodied AI | Action-chunk feedback ablation | Colab, compatible GPU service, or local CPU/GPU | Shared checkpoint and episode specifications, finite traces, exact budgets, and schema; success direction is variable | [`EMBODIED_POLICY.md`](EMBODIED_POLICY.md) |
+
+The three dedicated accelerator runbooks provide install commands, bounded smoke and full profiles, minimum resource guidance, exact invariants, variable observations, stop criteria, troubleshooting, artifact inspection, and claim boundaries. Smoke profiles verify wiring and serialization only. They are not model-quality or policy-quality evidence. Use [`EXPERIMENT_TEMPLATE.md`](EXPERIMENT_TEMPLATE.md) when proposing another intervention so controls, treatment, budget, seeds, falsification criteria, and preservation requirements are explicit before execution.
 
 ## 1. Pinned GPT-2 and Qwen tokenizer contract
 

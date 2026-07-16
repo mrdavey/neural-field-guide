@@ -52,6 +52,14 @@ test("instruction disclosure supports hover, keyboard, and click or tap", () => 
   assert.match(styles, /\.activity-info-trigger:focus-visible/);
 });
 
+test("course selection sits in the left brand cluster", () => {
+  const topbar = app.slice(app.indexOf('<header className="topbar">'), app.indexOf("</header>", app.indexOf('<header className="topbar">')));
+  assert.match(topbar, /className="topbar-primary"[^]*className="brand"[^]*className="course-selector"/);
+  assert.ok(topbar.indexOf('className="course-selector"') < topbar.indexOf('className="topbar-actions"'));
+  assert.match(styles, /\.topbar-primary \{[^}]*display:flex[^}]*gap:20px/);
+  assert.match(styles, /@media\(max-width:520px\)\{\.brand>span:last-child\{display:none\}/);
+});
+
 test("lesson order follows orient, learn, try, test, extend", () => {
   const lessonView = app.slice(app.indexOf("function LessonView"), app.indexOf("function SynthesisMap"));
   const positions = [
@@ -126,7 +134,7 @@ test("scroll storytelling is wired across home, every lesson, and capstones", ()
   assert.match(app, /className="home-scroll-story"/);
   assert.match(app, /steps=\{learningPhases\.map/);
   assert.match(lessonView, /className="lesson-motion-story"/);
-  assert.match(lessonView, /scene=\{course\.id === "worldmodel" \? "pipeline" : lesson\.track/);
+  assert.match(lessonView, /scene=\{course\.id === "llm" \? lesson\.track as LlmTrackId : "pipeline"\}/);
   assert.match(lessonView, /concept=\{motionStory\.concept\}/);
   assert.match(lessonView, /motionStory\.stages\.map\(\(stage\) => stage\.label\)/);
   assert.doesNotMatch(lessonView, /className="lesson-grid"/);
@@ -170,7 +178,8 @@ test("all grading and project feedback is self-contained", () => {
   assert.doesNotMatch(capstone, /What you will submit/);
   assert.match(capstone, /What you will produce/);
   assert.match(capstone, /Live artifact validation/);
-  assert.match(capstone, /Complete worked artifact/);
+  assert.match(capstone, /Worked reference evidence/);
+  assert.match(capstone, /executed observations, deterministic fixtures, or planned null-measurement cells/);
   assert.match(guide, /Guided reflection, not a grade|mode="reflect"/);
   assert.match(app, /Try again/);
 });

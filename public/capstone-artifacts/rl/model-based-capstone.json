@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "course": "rl",
+  "lessonId": "model-based-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "factor": "horizon",
+    "arms": [
+      "10",
+      "20"
+    ],
+    "seeds": [
+      11,
+      23,
+      41,
+      53,
+      67
+    ],
+    "runtime": "Python 3 teaching fixture",
+    "matrixAxes": {
+      "seed": [
+        11,
+        23,
+        41,
+        53,
+        67
+      ],
+      "arm": [
+        "10",
+        "20"
+      ]
+    },
+    "primitiveBudget": {
+      "realEnvironmentInteractions": 2000,
+      "modelCalls": 20000
+    },
+    "metric": {
+      "field": "constraintSatisfyingSuccessRate",
+      "name": "constraint-satisfying realized success rate",
+      "unit": "successful constraint-safe episodes / 100 paired episodes",
+      "aggregation": "one 100-episode realized-outcome evaluation per seed and horizon"
+    }
+  },
+  "invariants": {
+    "allCanonicalCellsPresent": true,
+    "primitiveBudgetsMatchWithinSeed": true,
+    "finiteFixtureMetricValues": true
+  },
+  "rawRows": [
+    {
+      "seed": 11,
+      "arm": "10",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.62
+    },
+    {
+      "seed": 11,
+      "arm": "20",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.64
+    },
+    {
+      "seed": 23,
+      "arm": "10",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.65
+    },
+    {
+      "seed": 23,
+      "arm": "20",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": false,
+      "constraintSatisfyingSuccessRate": 0.61
+    },
+    {
+      "seed": 41,
+      "arm": "10",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.6
+    },
+    {
+      "seed": 41,
+      "arm": "20",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.66
+    },
+    {
+      "seed": 53,
+      "arm": "10",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.63
+    },
+    {
+      "seed": 53,
+      "arm": "20",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.64
+    },
+    {
+      "seed": 67,
+      "arm": "10",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.6
+    },
+    {
+      "seed": 67,
+      "arm": "20",
+      "budget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "constraintPass": true,
+      "constraintSatisfyingSuccessRate": 0.62
+    }
+  ],
+  "decision": "The deterministic fixture preserves matched rows and shows that the treatment cannot receive an unqualified win when a declared constraint or reliability gate fails.",
+  "failure": "The seed-23 treatment row fails the declared gate and must remain in analysis rather than being deleted after outcomes are inspected.",
+  "boundary": "These values are reviewed teaching fixtures for artifact structure and decision logic, not measured agent performance or an external benchmark result."
+}

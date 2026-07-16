@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "course": "embodied",
+  "lessonId": "state-estimator-capstone",
+  "evidenceKind": "reviewed deterministic teaching fixture",
+  "starter": {
+    "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
+    "command": "python3 embodied_capstone_starter.py --project state-estimator-capstone --output state-estimator-starter.json",
+    "expected": "Synchronized update, stale-packet abstention, and evaluator-truth separation checks all print true.",
+    "boundary": "The scalar fusion fixture is wiring evidence, not a camera-proprioception tracker or a calibration measurement."
+  },
+  "implementation": {
+    "requiredComponents": ["timestamped camera and proprioception packets", "frame/calibration registry", "predict then update filter", "covariance and validity output", "persistent object identity", "evaluator-only truth join", "abstain and fresh-packet recovery"],
+    "buildOrder": ["Synchronize packets and reject stale frames", "Predict through applied motion", "Update with accepted residuals", "Propagate covariance and identity", "Join truth only in evaluator", "Inject delay and verify recovery"],
+    "localCommands": ["python3 embodied_capstone_starter.py --project state-estimator-capstone --output state-estimator-starter.json", "python3 -m unittest test_estimator.py"],
+    "artifacts": ["calibration.json", "packet-ledger.jsonl", "estimates.jsonl", "truth-evaluation.json", "recovery-trace.json"]
+  },
+  "acceptanceChecks": [
+    {"id": "causal-fusion", "action": "Predict with the previous applied action, then update only with synchronized observations.", "expected": "Changing evaluator truth never changes the estimator output and a future packet cannot affect an earlier estimate."},
+    {"id": "calibration", "action": "Bin declared covariance against held-out trajectory errors.", "expected": "Error, coverage, and calibration are reported by trajectory; confidence alone is not a pass."},
+    {"id": "delay-recovery", "action": "Change only camera age to 80 ms, then supply fresh packets.", "expected": "The delayed packet is invalid/abstained, variance grows, and recovery requires three declared fresh packets in this fixture."}
+  ],
+  "manifest": {
+    "estimator": "scalar fusion and identity fixture",
+    "seed": 23,
+    "intervention": "80 ms camera delay",
+    "independentUnit": "held-out trajectory",
+    "matrixAxes": {"arm": ["nominal", "delay"]}
+  },
+  "invariants": {"truthIsEvaluatorOnly": true, "sameCalibrationRevision": true, "oneFactorChanged": true, "allDeclaredCellsPresent": true},
+  "rawRows": [
+    {"arm": "nominal", "packetAgeMs": 10, "errorM": 0.01, "varianceM2": 0.001, "valid": true, "abstain": false, "identitySwitches": 0},
+    {"arm": "delay", "packetAgeMs": 80, "errorM": 0.07, "varianceM2": 0.006, "valid": false, "abstain": true, "recoveryFreshPackets": 3, "identitySwitches": 0}
+  ],
+  "decision": "The changed sensor crosses the age and error gates, abstains, and then recovers after three fresh packets in the declared fixture; the implemented estimator must reproduce this causal sequence before a measured comparison.",
+  "failure": "Treating the delayed camera as fresh produces a confident wrong state and is preserved as the strongest counterexample trace with packet age, residual, covariance, identity, and downstream decision.",
+  "boundary": "The rows validate course-scale timing, calibration, identity, and recovery reasoning; they are not learned perception results, real-sensor measurements, or evidence that the estimator transfers beyond the tested trajectories and faults."
+}

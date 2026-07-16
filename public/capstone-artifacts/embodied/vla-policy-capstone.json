@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "course": "embodied",
+  "lessonId": "vla-policy-capstone",
+  "evidenceKind": "reviewed deterministic teaching fixture",
+  "starter": {
+    "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
+    "command": "python3 embodied_capstone_starter.py --project vla-policy-capstone --output vla-policy-starter.json",
+    "expected": "Target-shift, future-prefix invariance, and hard-gate ordering checks all print true.",
+    "boundary": "The starter contains no trained transformer, diffusion decoder, image encoder, or timing measurement."
+  },
+  "implementation": {
+    "requiredComponents": ["typed instruction/vision/state serializer", "shared grounded condition encoder", "target-shifted causal transformer decoder", "conditional action-diffusion decoder", "action-unit and bound adapter", "matched training/evaluation budgets", "grounding counterfactual evaluator", "latency and closed-loop logger"],
+    "buildOrder": ["Freeze token, frame, time, action, and target contracts", "Pass future-token and corruption arithmetic tests", "Overfit each decoder on one tiny batch", "Restore checkpoints and verify next-step equivalence", "Accept each baseline separately", "Run matched decoder or sampler comparison"],
+    "localCommands": ["python3 embodied_capstone_starter.py --project vla-policy-capstone --output vla-policy-starter.json", "python3 -m unittest test_serializer.py test_causal_targets.py test_diffusion_actions.py"],
+    "artifacts": ["shared-manifest.json", "serializer-cases.json", "checkpoint-hashes.json", "grounding-counterfactuals.jsonl", "latency-ledger.jsonl", "paired-rollouts.jsonl", "failure.log"]
+  },
+  "acceptanceChecks": [
+    {"id": "transformer-causality", "action": "Predict a0 at o0 and a1 at o1, then replace future action/instruction tokens.", "expected": "Earlier logits remain invariant; padded keys are blocked and padded prediction rows contribute zero action loss."},
+    {"id": "diffusion-arithmetic", "action": "Reproduce one corruption and denoising update with declared shapes, scales, condition timestamp, and sampler calls.", "expected": "Hand-computed values and tensor output agree before any rollout."},
+    {"id": "release-gates", "action": "Apply grounding, deadline, constraint, recovery, and assistance gates before success ranking.", "expected": "A decoder failing any non-compensable gate is infeasible even if its aggregate task success is higher."}
+  ],
+  "manifest": {
+    "comparison": "transformer and diffusion decision gate",
+    "seed": 41,
+    "deadlineMs": 50,
+    "independentUnit": "paired evaluation cell",
+    "matrixAxes": {"arm": ["diffusion", "transformer"]}
+  },
+  "invariants": {"sharedConditionAndActionContracts": true, "targetShiftTestRequired": true, "hardGatesPrecedeRanking": true, "allDeclaredCellsPresent": true},
+  "rawRows": [
+    {"arm": "diffusion", "success": 0.8, "latencyMs": 60, "deadlinePass": false, "grounding": true, "constraintPass": true, "feasible": false},
+    {"arm": "transformer", "success": 0.7, "latencyMs": 20, "deadlinePass": true, "grounding": false, "constraintPass": true, "feasible": false}
+  ],
+  "decision": "Neither decoder fixture passes both the deadline and grounding gates, so aggregate success cannot select a winner; the implemented comparison must retain matched contracts, primitive budgets, and complete counterexample rows.",
+  "failure": "The diffusion deadline miss and transformer word-swap grounding failure remain visible as non-compensable counterexamples with decoder revision, input condition, requested/applied action, and evaluator trace.",
+  "boundary": "These values are teaching fixtures, not trained model quality, accelerator timing, simulator rollout measurements, physical-system results, or universal architecture rankings."
+}

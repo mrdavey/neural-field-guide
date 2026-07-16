@@ -1,0 +1,11 @@
+export const rlSources = {
+  book: { title: "Reinforcement Learning: An Introduction, second edition", url: "http://incompleteideas.net/book/RLbook2020.pdf", kind: "Course" as const, note: "Use the primary textbook for tabular returns, Bellman equations, TD learning, control, policy gradients, and planning." },
+  dqn: { title: "Playing Atari with Deep Reinforcement Learning", url: "https://arxiv.org/abs/1312.5602", kind: "Paper" as const, note: "Read for replay, target networks, and the original DQN experimental contract." },
+  gae: { title: "High-Dimensional Continuous Control Using Generalized Advantage Estimation", url: "https://arxiv.org/abs/1506.02438", kind: "Paper" as const, note: "Read for GAE's bias-variance construction and actor-critic use." },
+  ppo: { title: "Proximal Policy Optimization Algorithms", url: "https://arxiv.org/abs/1707.06347", kind: "Paper" as const, note: "Read for the clipped surrogate and repeated on-policy minibatch updates." },
+  dagger: { title: "A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning", url: "https://arxiv.org/abs/1011.0686", kind: "Paper" as const, note: "Read for covariate shift and dataset aggregation with expert labels." },
+  cql: { title: "Conservative Q-Learning for Offline Reinforcement Learning", url: "https://arxiv.org/abs/2006.04779", kind: "Paper" as const, note: "Read for conservative value learning under offline action-distribution shift." },
+  d4rl: { title: "D4RL: Datasets for Deep Data-Driven Reinforcement Learning", url: "https://arxiv.org/abs/2004.07219", kind: "Paper" as const, note: "Read for offline-RL dataset diversity, benchmarks, and normalized scores." },
+  safety: { title: "A Comprehensive Survey of Safe Reinforcement Learning", url: "https://jmlr.org/papers/v16/garcia15a.html", kind: "Paper" as const, note: "Read for risk, constraints, exploration, and safe-policy taxonomy." },
+  gymnasium: { title: "Gymnasium environment creation", url: "https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/", kind: "Documentation" as const, note: "Use the official interface documentation for reset, step, termination, truncation, spaces, and seeds." },
+};

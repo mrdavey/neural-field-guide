@@ -1,0 +1,133 @@
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { existsSync, readFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { dirname, extname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import test from "node:test";
+import { courseGradeFingerprint } from "../scripts/course-grade-fingerprint.mjs";
+
+const require = createRequire(import.meta.url);
+const ts = require("typescript");
+const cache = new Map();
+function resolveTypeScriptModule(specifier, parentFile) { const candidate = resolve(dirname(parentFile), specifier); for (const path of [candidate, `${candidate}.ts`, join(candidate, "index.ts")]) if (existsSync(path) && extname(path) === ".ts") return path; throw new Error(`Cannot resolve ${specifier} from ${parentFile}`); }
+function loadTypeScriptModule(file) { const absolute = resolve(file); if (cache.has(absolute)) return cache.get(absolute).exports; const moduleRecord = { exports: {} }; cache.set(absolute, moduleRecord); const javascript = ts.transpileModule(readFileSync(absolute, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 }, fileName: absolute }).outputText; const localRequire = (specifier) => specifier.startsWith(".") ? loadTypeScriptModule(resolveTypeScriptModule(specifier, absolute)) : require(specifier); Function("exports", "require", "module", "__filename", "__dirname", javascript)(moduleRecord.exports, localRequire, moduleRecord, absolute, dirname(absolute)); return moduleRecord.exports; }
+
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
+const registries = {
+  llm: loadTypeScriptModule(join(root, "app/course-data.ts")).lessons,
+  worldmodel: loadTypeScriptModule(join(root, "app/world-models/index.ts")).worldModelLessons,
+  generative: loadTypeScriptModule(join(root, "app/generative/index.ts")).generativeLessons,
+  rl: loadTypeScriptModule(join(root, "app/rl/index.ts")).rlLessons,
+  embodied: loadTypeScriptModule(join(root, "app/embodied/index.ts")).embodiedLessons,
+};
+
+const [rubric, inventory, catalog] = await Promise.all([
+  readFile(new URL("../docs/COURSE_PAGE_GRADING_RUBRIC.md", import.meta.url), "utf8"),
+  readFile(new URL("../docs/CURRICULUM_INVENTORY.md", import.meta.url), "utf8"),
+  readFile(new URL("../app/course-catalog.ts", import.meta.url), "utf8"),
+]);
+
+const expectedPopulations = { llm: 45, worldmodel: 47, generative: 31, rl: 33, embodied: 31 };
+const maxima = { A: 25, C: 25, E: 15, I: 15, D: 10, S: 5, R: 5 };
+const floors = { A: 24, C: 23, E: 14, I: 14, D: 9, S: 5, R: 4 };
+
+test("the page-grade population covers five homes and all 182 released lessons", () => {
+  const released = [...inventory.matchAll(/^## .+ — (\d+) released lessons$/gm)].map((match) => Number(match[1]));
+  assert.deepEqual(released, [44, 46, 30, 32, 30]);
+  assert.equal(released.reduce((sum, count) => sum + count, 0) + 5, 187);
+  assert.match(catalog, /courseIds = \["llm", "worldmodel", "generative", "rl", "embodied"\]/);
+});
+
+test("all five course homes expose distinct authored causal traces", () => {
+  const traces = [...catalog.matchAll(/trace: \{ question: "([^"]+)", input: "([^"]+)", transformation: "([^"]+)", output: "([^"]+)", failure: "([^"]+)" \}/g)];
+  assert.equal(traces.length, 5);
+  assert.equal(new Set(traces.map((match) => match[1])).size, 5, "home learning questions must be course-specific");
+  for (const [, question, input, transformation, output, failure] of traces) {
+    assert.ok(question.length >= 35, question);
+    assert.ok(input.length >= 45, `${question} input`);
+    assert.ok(transformation.length >= 80, `${question} transformation`);
+    assert.ok(output.length >= 70, `${question} output`);
+    assert.ok(failure.length >= 70, `${question} failure boundary`);
+  }
+  const app = readFileSync(join(root, "app/course-app.tsx"), "utf8");
+  for (const field of ["question", "input", "transformation", "output", "failure"]) assert.match(app, new RegExp(`hero\\.trace\\.${field}`));
+  assert.equal((catalog.match(/claim: "(?:Family map|Denoising mechanism|Research evidence|Decision-and-value spine|Deep value learning|Constraint boundary)"/g) ?? []).length, 6, "Generative and RL homes each have three claim-linked sources");
+  for (const field of ["source.claim", "source.title", "source.readFor"]) assert.ok(app.includes(field), `home source renderer includes ${field}`);
+});
+
+test("the independent rubric totals 100 and prevents weak dimensions from being averaged away", () => {
+  const dimensions = [...rubric.matchAll(/^\| ([ACEIDSR]) \| .+ \| (\d+) \|/gm)].map((match) => [match[1], Number(match[2])]);
+  assert.deepEqual(Object.fromEntries(dimensions), { A: 25, C: 25, E: 15, I: 15, D: 10, S: 5, R: 5 });
+  assert.equal(dimensions.reduce((sum, [, points]) => sum + points, 0), 100);
+  for (const requirement of ["total must be at least 95", "A must be at least 24/25", "C must be at least 23/25", "I must be at least 14/15", "S must be 5/5", "no blocking defect may remain"]) assert.ok(rubric.includes(requirement), requirement);
+  assert.match(rubric, /Structural tests may verify joins but cannot assign semantic points/);
+});
+
+test("the independent final grade records cover and pass all 187 canonical pages", async () => {
+  const records = await Promise.all(Object.keys(expectedPopulations).map(async (courseId) =>
+    JSON.parse(await readFile(new URL(`../docs/course-page-grades/${courseId}.json`, import.meta.url), "utf8"))
+  ));
+  const allKeys = new Set();
+  let totalPages = 0;
+  for (const record of records) {
+    assert.equal(record.rubricRevision, "2026-07-15", `${record.courseId} rubric revision`);
+    assert.equal(record.population, expectedPopulations[record.courseId], `${record.courseId} declared population`);
+    assert.equal(record.pages.length, expectedPopulations[record.courseId], `${record.courseId} page rows`);
+    assert.equal(record.pages.filter((page) => page.pageType === "home").length, 1, `${record.courseId} home row`);
+    assert.equal(record.grader.role, "independent semantic grader", `${record.courseId} grader role`);
+    assert.ok(record.grader.method.length >= 60, `${record.courseId} grader method`);
+    assert.match(record.gradedAt, /^2026-07-15T\d{2}:\d{2}:\d{2}Z$/, `${record.courseId} grade timestamp`);
+    assert.equal(record.sourceFingerprint, await courseGradeFingerprint(record.courseId), `${record.courseId} source fingerprint`);
+    const canonical = [{ id: "home", pageType: "home", route: `/${record.courseId}/` }, ...registries[record.courseId].map((lesson) => ({ id: lesson.id, pageType: "lesson", route: `/${record.courseId}/${lesson.id}/` }))];
+    assert.deepEqual(record.pages.map(({ id, pageType, route }) => ({ id, pageType, route })), canonical, `${record.courseId} rows must exactly follow the live course registry`);
+    for (const page of record.pages) {
+      const key = `${record.courseId}:${page.id}`;
+      assert.ok(!allKeys.has(key), `duplicate grade row ${key}`);
+      allKeys.add(key);
+      assert.ok(["home", "lesson"].includes(page.pageType), `${key} page type`);
+      assert.match(page.route, /^\//, `${key} route`);
+      const calculated = Object.keys(maxima).reduce((sum, dimension) => {
+        assert.ok(Number.isInteger(page[dimension]), `${key} ${dimension} integer`);
+        assert.ok(page[dimension] >= 0 && page[dimension] <= maxima[dimension], `${key} ${dimension} range`);
+        return sum + page[dimension];
+      }, 0);
+      assert.equal(page.total, calculated, `${key} total equals subscores`);
+      const meetsGate = page.total >= 95 && Object.entries(floors).every(([dimension, minimum]) => page[dimension] >= minimum);
+      assert.equal(page.pass, meetsGate, `${key} pass reflects total and floors`);
+      assert.equal(page.pass, true, `${key} independently passes the 95+ page gate`);
+      assert.deepEqual(page.blockingDefects, [], `${key} has no unresolved blocker`);
+      assert.ok(page.rationale.length >= 30, `${key} evidence rationale`);
+      totalPages += 1;
+    }
+  }
+  assert.equal(totalPages, 187);
+  assert.equal(allKeys.size, 187);
+});
+
+test("the initial audit preserves all 45 page-level diagnoses and remedies", async () => {
+  const initial = JSON.parse(await readFile(new URL("../docs/course-page-grades/initial-failures.json", import.meta.url), "utf8"));
+  assert.equal(initial.population, 187);
+  assert.equal(initial.failures.length, 45);
+  assert.deepEqual(Object.fromEntries(Object.keys(expectedPopulations).map((courseId) => [courseId, initial.failures.filter((item) => item.courseId === courseId).length])), { llm: 8, worldmodel: 2, generative: 11, rl: 13, embodied: 11 });
+  const keys = new Set();
+  for (const failure of initial.failures) {
+    const key = `${failure.courseId}:${failure.id}`;
+    assert.ok(!keys.has(key), `${key} duplicate initial failure`);
+    keys.add(key);
+    assert.ok(failure.issue.length >= 40, `${key} issue`);
+    assert.ok(failure.remedy.length >= 40, `${key} remedy`);
+    assert.ok(failure.id === "home" || registries[failure.courseId].some((lesson) => lesson.id === failure.id), `${key} must join the live registry`);
+  }
+});
+
+test("the published report preserves initial failures and summarizes every final row", async () => {
+  const report = await readFile(new URL("../docs/COURSE_PAGE_GRADES.md", import.meta.url), "utf8");
+  assert.match(report, /Initial independent audit/);
+  assert.match(report, /45 pages failed/);
+  assert.match(report, /Final independent regrade/);
+  assert.match(report, /187\/187/);
+  assert.match(report, /Initial page-level diagnoses and remedies/);
+  assert.match(report, /SHA-256 fingerprint/);
+  assert.equal([...report.matchAll(/^\| (llm|worldmodel|generative|rl|embodied) \| [^|]+ \| \/[^|]+ \|/gm)].length, 187);
+});

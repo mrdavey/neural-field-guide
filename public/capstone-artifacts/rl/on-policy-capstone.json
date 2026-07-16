@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "course": "rl",
+  "lessonId": "on-policy-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "factor": "gae_lambda",
+    "arms": [
+      ".95",
+      ".5"
+    ],
+    "seeds": [
+      11,
+      23,
+      41,
+      53,
+      67
+    ],
+    "runtime": "Python 3 teaching fixture",
+    "matrixAxes": {
+      "seed": [
+        11,
+        23,
+        41,
+        53,
+        67
+      ],
+      "arm": [
+        ".95",
+        ".5"
+      ]
+    },
+    "primitiveBudget": {
+      "environmentInteractions": 20000,
+      "policyEpochs": 40
+    },
+    "metric": {
+      "field": "meanEpisodicReturn",
+      "name": "mean frozen-policy episodic return",
+      "unit": "reward units per evaluation episode",
+      "aggregation": "mean across 100 evaluation episodes per seed and GAE setting"
+    }
+  },
+  "invariants": {
+    "allCanonicalCellsPresent": true,
+    "primitiveBudgetsMatchWithinSeed": true,
+    "finiteFixtureMetricValues": true
+  },
+  "rawRows": [
+    {
+      "seed": 11,
+      "arm": ".95",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.62
+    },
+    {
+      "seed": 11,
+      "arm": ".5",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.64
+    },
+    {
+      "seed": 23,
+      "arm": ".95",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.65
+    },
+    {
+      "seed": 23,
+      "arm": ".5",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": false,
+      "meanEpisodicReturn": 0.61
+    },
+    {
+      "seed": 41,
+      "arm": ".95",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.6
+    },
+    {
+      "seed": 41,
+      "arm": ".5",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.66
+    },
+    {
+      "seed": 53,
+      "arm": ".95",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.63
+    },
+    {
+      "seed": 53,
+      "arm": ".5",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.64
+    },
+    {
+      "seed": 67,
+      "arm": ".95",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.6
+    },
+    {
+      "seed": 67,
+      "arm": ".5",
+      "budget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "constraintPass": true,
+      "meanEpisodicReturn": 0.62
+    }
+  ],
+  "decision": "The deterministic fixture preserves matched rows and shows that the treatment cannot receive an unqualified win when a declared constraint or reliability gate fails.",
+  "failure": "The seed-23 treatment row fails the declared gate and must remain in analysis rather than being deleted after outcomes are inspected.",
+  "boundary": "These values are reviewed teaching fixtures for artifact structure and decision logic, not measured agent performance or an external benchmark result."
+}

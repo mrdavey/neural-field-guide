@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "course": "rl",
+  "lessonId": "deep-value-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "factor": "target_interval",
+    "arms": [
+      "20",
+      "100"
+    ],
+    "seeds": [
+      11,
+      23,
+      41,
+      53,
+      67
+    ],
+    "runtime": "Python 3 teaching fixture",
+    "matrixAxes": {
+      "seed": [
+        11,
+        23,
+        41,
+        53,
+        67
+      ],
+      "arm": [
+        "20",
+        "100"
+      ]
+    },
+    "primitiveBudget": {
+      "environmentInteractions": 20000,
+      "optimizerUpdates": 5000
+    },
+    "metric": {
+      "field": "evaluationSuccessRate",
+      "name": "frozen-policy evaluation success rate",
+      "unit": "successful episodes / 100 evaluation episodes",
+      "aggregation": "one 100-episode frozen-policy evaluation per seed and target interval"
+    }
+  },
+  "invariants": {
+    "allCanonicalCellsPresent": true,
+    "primitiveBudgetsMatchWithinSeed": true,
+    "finiteFixtureMetricValues": true
+  },
+  "rawRows": [
+    {
+      "seed": 11,
+      "arm": "20",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.62
+    },
+    {
+      "seed": 11,
+      "arm": "100",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.64
+    },
+    {
+      "seed": 23,
+      "arm": "20",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.65
+    },
+    {
+      "seed": 23,
+      "arm": "100",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": false,
+      "evaluationSuccessRate": 0.61
+    },
+    {
+      "seed": 41,
+      "arm": "20",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.6
+    },
+    {
+      "seed": 41,
+      "arm": "100",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.66
+    },
+    {
+      "seed": 53,
+      "arm": "20",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.63
+    },
+    {
+      "seed": 53,
+      "arm": "100",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.64
+    },
+    {
+      "seed": 67,
+      "arm": "20",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.6
+    },
+    {
+      "seed": 67,
+      "arm": "100",
+      "budget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "constraintPass": true,
+      "evaluationSuccessRate": 0.62
+    }
+  ],
+  "decision": "The deterministic fixture preserves matched rows and shows that the treatment cannot receive an unqualified win when a declared constraint or reliability gate fails.",
+  "failure": "The seed-23 treatment row fails the declared gate and must remain in analysis rather than being deleted after outcomes are inspected.",
+  "boundary": "These values are reviewed teaching fixtures for artifact structure and decision logic, not measured agent performance or an external benchmark result."
+}

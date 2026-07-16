@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "course": "embodied",
+  "lessonId": "embodied-research-capstone",
+  "evidenceKind": "reviewed deterministic teaching fixture",
+  "starter": {
+    "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
+    "command": "python3 embodied_capstone_starter.py --project embodied-research-capstone --output embodied-research-starter.json",
+    "expected": "Complete seed-by-arm matrix, paired-row, and deadline-gate checks all print true.",
+    "boundary": "The starter calculates a decision fixture; it does not reproduce or train the learner-selected embodied system."
+  },
+  "implementation": {
+    "requiredComponents": ["accepted embodied baseline", "portable smoke/full profile", "complete checkpoint and resume state", "one isolated intervention", "matched primitive-budget ledger", "seed-by-cell trajectory writer", "assistance/constraint/deadline gates", "run-level uncertainty analysis", "failure and alternative-explanation dossier"],
+    "buildOrder": ["Preregister construct, falsifier, matrix, gates, and stop rule", "Pass smoke invariants", "Reproduce baseline acceptance on every seed/cell", "Restore one paired checkpoint and change one mechanism", "Run every baseline/treatment cell", "Reconcile rows before analysis", "Apply hard gates then uncertainty", "Package a bounded claim and next falsifier"],
+    "localCommands": ["python3 embodied_capstone_starter.py --project embodied-research-capstone --output embodied-research-starter.json", "python3 scripts/verify_my_embodied_study.py runs/manifest.json"],
+    "artifacts": ["preregistration.json", "runtime-manifest.json", "checkpoints/", "raw-trajectories/", "seed-cell-rows.jsonl", "paired-analysis.json", "videos/", "failures/", "decision.md"]
+  },
+  "acceptanceChecks": [
+    {"id": "baseline", "action": "Run correctness, behavior, grounding, timing, constraint, and recovery acceptance for every declared baseline seed/cell.", "expected": "No intervention is interpreted until baseline discrepancies are resolved or retained as failed reproduction rows."},
+    {"id": "matrix", "action": "Take the Cartesian product of declared seeds, cells, and arms and join it to raw artifacts.", "expected": "Every expected key has exactly one measured, failed, or predeclared-excluded record; duplicate and missing keys block analysis."},
+    {"id": "paired-decision", "action": "Compute paired run-level effects and uncertainty, then apply grounding, assistance, constraint, and deadline gates.", "expected": "A favorable average cannot rescue a treatment with a non-compensable gate failure."}
+  ],
+  "manifest": {
+    "study": "action-prefix decision fixture",
+    "seeds": [11, 23],
+    "arms": ["baseline", "treatment"],
+    "hardGate": "zero deadline misses",
+    "independentUnit": "seeded run",
+    "matrixAxes": {"seed": [11, 23], "arm": ["baseline", "treatment"]}
+  },
+  "invariants": {"matchedPrimitiveBudgets": true, "pairedSeeds": true, "failureRowsRetained": true, "allDeclaredCellsPresent": true},
+  "rawRows": [
+    {"seed": 11, "arm": "baseline", "success": 0.70, "deadlineMiss": 0, "feasible": true},
+    {"seed": 11, "arm": "treatment", "success": 0.80, "deadlineMiss": 0, "feasible": true},
+    {"seed": 23, "arm": "baseline", "success": 0.75, "deadlineMiss": 0, "feasible": true},
+    {"seed": 23, "arm": "treatment", "success": 0.90, "deadlineMiss": 1, "feasible": false}
+  ],
+  "decision": "The treatment has favorable success rows but is infeasible under the predeclared zero-deadline-miss gate; all four paired rows are required, so treatment-only averaging cannot support acceptance.",
+  "failure": "The seed-23 treatment deadline failure is retained with its paired baseline, trajectory, checkpoint, timing stages, assistance, and budget ledger and prevents a favorable mean from becoming an accepted conclusion.",
+  "boundary": "This is a deterministic decision fixture, not an authentic training run, simulator benchmark, physical experiment, safety result, or universal intervention finding; a learner study must generate and preserve its own execution evidence."
+}

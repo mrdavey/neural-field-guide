@@ -3,18 +3,31 @@
   "course": "worldmodel",
   "lessonId": "uncertainty-ensembles",
   "evidenceTier": "deterministic teaching fixture",
-  "question": "Does an ensemble-disagreement gate concentrate rejection on high-error transitions?",
-  "fixture": { "threshold": 0.25, "members": 3, "cases": 5 },
-  "baseline": "randomly reject the same number of cases",
+  "question": "Does an ensemble-disagreement gate concentrate rejection on high-error transitions better than an equal-rate random gate?",
+  "fixture": {"threshold": 0.25, "spreadMetric": "maximum prediction minus minimum prediction", "errorMetric": "absolute ensemble-mean error", "highErrorThreshold": 0.4, "members": 3, "cases": 5, "randomGateSeed": 19},
+  "baseline": "randomly reject exactly one of the same five cases",
   "changedCase": "two ensemble sets share a confident bias",
   "rawRows": [
-    { "case": "in-support", "predictions": [1.0, 1.1, 0.9], "target": 1.0, "rejected": false },
-    { "case": "disagree", "predictions": [0.0, 1.0, 2.0], "target": 0.5, "rejected": true },
-    { "case": "shared-bias", "predictions": [3.0, 3.1, 2.9], "target": -1.0, "rejected": false }
+    {"case": "in-support", "predictions": [1.0, 1.1, 0.9], "spread": 0.2, "ensembleMean": 1.0, "target": 1.0, "absoluteError": 0.0, "highError": false, "rejected": false},
+    {"case": "small-spread", "predictions": [0.5, 0.6, 0.7], "spread": 0.2, "ensembleMean": 0.6, "target": 0.55, "absoluteError": 0.05, "highError": false, "rejected": false},
+    {"case": "disagree", "predictions": [0.0, 1.0, 2.0], "spread": 2.0, "ensembleMean": 1.0, "target": 0.5, "absoluteError": 0.5, "highError": true, "rejected": true},
+    {"case": "shared-bias-high", "predictions": [3.0, 3.1, 2.9], "spread": 0.2, "ensembleMean": 3.0, "target": -1.0, "absoluteError": 4.0, "highError": true, "rejected": false},
+    {"case": "shared-bias-low", "predictions": [-2.0, -1.9, -2.1], "spread": 0.2, "ensembleMean": -2.0, "target": 2.0, "absoluteError": 4.0, "highError": true, "rejected": false}
   ],
-  "checks": ["disagreement computed before target is read", "random baseline has equal rejection count", "shared-bias miss remains visible"],
-  "failure": "All members agree on the wrong value outside support, so disagreement alone fails to gate the case.",
-  "decision": "Use disagreement as one diagnostic alongside support and independent constraints.",
-  "boundary": "The gate is not calibrated as a probability of failure.",
-  "reviewed": "2026-07-14"
+  "randomBaselineRows": [
+    {"case": "in-support", "rejected": true},
+    {"case": "small-spread", "rejected": false},
+    {"case": "disagree", "rejected": false},
+    {"case": "shared-bias-high", "rejected": false},
+    {"case": "shared-bias-low", "rejected": false}
+  ],
+  "metrics": {
+    "ensembleGate": {"rejectionCount": 1, "highErrorCoverage": 0.3333333333333333, "rejectionPrecision": 1.0, "retainedMeanAbsoluteError": 2.0125},
+    "equalRateRandomGate": {"rejectionCount": 1, "highErrorCoverage": 0.0, "rejectionPrecision": 0.0, "retainedMeanAbsoluteError": 2.1375}
+  },
+  "checks": ["spread and rejection are computed before the target is read", "random baseline has the same rejection count", "all five ensemble cases and five random decisions are present", "both shared-bias misses remain visible", "coverage, precision, and retained error recompute from raw rows"],
+  "failure": "All members agree on two wrong values outside support, so disagreement misses both shared-bias cases and cannot serve as a safety certificate.",
+  "decision": "The disagreement gate beats this one equal-rate random fixture but covers only one of three high-error cases. Use it alongside support, calibration, and independent constraints.",
+  "boundary": "The gate is not calibrated as a probability of failure; the five cases and random seed are deterministic teaching fixtures rather than measured model behavior.",
+  "reviewed": "2026-07-15"
 }

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "course": "generative",
+  "lessonId": "latent-models-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": { "model": "specified tiny 8x8 VAE", "treatments": ["beta=1", "KL annealing"], "seeds": [11, 12, 13], "matrixAxes": { "seed": [11, 12, 13], "treatment": ["beta=1", "KL annealing"] }, "execution": "not performed by this artifact" },
+  "acceptanceChecks": ["shape trace", "finite loss", "one-batch overfit", "checkpoint resume", "latent swap"],
+  "rawRows": [
+    { "seed": 11, "treatment": "beta=1", "status": "planned", "measurement": null },
+    { "seed": 11, "treatment": "KL annealing", "status": "planned", "measurement": null },
+    { "seed": 12, "treatment": "beta=1", "status": "planned", "measurement": null },
+    { "seed": 12, "treatment": "KL annealing", "status": "planned", "measurement": null },
+    { "seed": 13, "treatment": "beta=1", "status": "planned", "measurement": null },
+    { "seed": 13, "treatment": "KL annealing", "status": "planned", "measurement": null }
+  ],
+  "decision": "No training result is claimed. Populate measurements only from a pinned authentic run after acceptance checks pass.",
+  "failure": "A mitigation can raise KL while leaving the decoder invariant to latent swaps; both channels are required.",
+  "boundary": "This artifact is a complete experiment specification and reference evidence shape, not a fabricated VAE execution."
+}

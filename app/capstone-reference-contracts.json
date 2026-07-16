@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "generative": {
+    "distribution-workbench-capstone": {
+      "matrixAxes": {
+        "sampleCount": [
+          100,
+          10000
+        ],
+        "seed": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ]
+      }
+    },
+    "latent-models-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          12,
+          13
+        ],
+        "treatment": [
+          "beta=1",
+          "KL annealing"
+        ]
+      }
+    },
+    "flow-energy-capstone": {
+      "requiredCells": [
+        {
+          "family": "flow",
+          "budgetUnit": "direct samples",
+          "budgetAmount": 100
+        },
+        {
+          "family": "energy",
+          "budgetUnit": "gradient evaluations per retained state",
+          "budgetAmount": 20
+        },
+        {
+          "family": "energy",
+          "budgetUnit": "gradient evaluations per retained state",
+          "budgetAmount": 100
+        },
+        {
+          "family": "energy",
+          "budgetUnit": "gradient evaluations per retained state",
+          "budgetAmount": 500
+        }
+      ]
+    },
+    "diffusion-model-capstone": {
+      "matrixAxes": {
+        "startSeed": [
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62
+        ],
+        "sampler": [
+          "baseline",
+          "treatment"
+        ]
+      }
+    },
+    "conditional-safety-capstone": {
+      "matrixAxes": {
+        "condition": [
+          "red",
+          "square",
+          "red+square"
+        ],
+        "guidanceScale": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "seed": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    },
+    "generative-research-capstone": {
+      "matrixAxes": {
+        "seed": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    }
+  },
+  "rl": {
+    "tabular-control-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          23,
+          41,
+          53,
+          67
+        ],
+        "arm": [
+          "slip_0.1",
+          "slip_0.3"
+        ]
+      },
+      "primitiveBudget": {
+        "environmentTransitions": 1000
+      },
+      "metric": {
+        "field": "evaluationSuccessRate",
+        "name": "frozen-policy evaluation success rate",
+        "unit": "successful episodes / 100 seeded evaluation episodes",
+        "aggregation": "one 100-episode frozen-policy evaluation per seed and slip condition"
+      },
+      "intervention": {
+        "factor": "slipProbability",
+        "baseline": 0.1,
+        "changed": 0.3
+      }
+    },
+    "value-methods-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          23,
+          41,
+          53,
+          67
+        ],
+        "arm": [
+          "td",
+          "q_learning"
+        ]
+      },
+      "primitiveBudget": {
+        "environmentTransitions": 5000
+      },
+      "metric": {
+        "field": "meanDiscountedReturn",
+        "name": "mean discounted evaluation return",
+        "unit": "reward units per evaluation episode",
+        "aggregation": "mean across 100 held-out-slip evaluation episodes per seed and method"
+      },
+      "intervention": {
+        "factor": "evaluationSlipProbability",
+        "baseline": 0.1,
+        "heldOut": 0.3
+      }
+    },
+    "deep-value-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          23,
+          41,
+          53,
+          67
+        ],
+        "arm": [
+          "20",
+          "100"
+        ]
+      },
+      "primitiveBudget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "metric": {
+        "field": "evaluationSuccessRate",
+        "name": "frozen-policy evaluation success rate",
+        "unit": "successful episodes / 100 evaluation episodes",
+        "aggregation": "one 100-episode frozen-policy evaluation per seed and target interval"
+      }
+    },
+    "on-policy-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          23,
+          41,
+          53,
+          67
+        ],
+        "arm": [
+          ".95",
+          ".5"
+        ]
+      },
+      "primitiveBudget": {
+        "environmentInteractions": 20000,
+        "policyEpochs": 40
+      },
+      "metric": {
+        "field": "meanEpisodicReturn",
+        "name": "mean frozen-policy episodic return",
+        "unit": "reward units per evaluation episode",
+        "aggregation": "mean across 100 evaluation episodes per seed and GAE setting"
+      }
+    },
+    "model-based-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          23,
+          41,
+          53,
+          67
+        ],
+        "arm": [
+          "10",
+          "20"
+        ]
+      },
+      "primitiveBudget": {
+        "realEnvironmentInteractions": 2000,
+        "modelCalls": 20000
+      },
+      "metric": {
+        "field": "constraintSatisfyingSuccessRate",
+        "name": "constraint-satisfying realized success rate",
+        "unit": "successful constraint-safe episodes / 100 paired episodes",
+        "aggregation": "one 100-episode realized-outcome evaluation per seed and horizon"
+      }
+    },
+    "sequence-policy-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          23,
+          41,
+          53,
+          67
+        ],
+        "arm": [
+          "cloning",
+          "sequence"
+        ]
+      },
+      "primitiveBudget": {
+        "loggedTransitions": 10000,
+        "optimizerUpdates": 2000
+      },
+      "metric": {
+        "field": "supportedActionSuccessRate",
+        "name": "support-gated trusted-rollout success rate",
+        "unit": "successful support-valid episodes / 100 held-out episodes",
+        "aggregation": "one 100-episode held-out evaluation per seed and policy"
+      }
+    },
+    "rl-research-capstone": {
+      "matrixAxes": {
+        "seed": [
+          11,
+          23,
+          41,
+          53,
+          67
+        ],
+        "arm": [
+          "baseline",
+          "intervention"
+        ]
+      },
+      "primitiveBudget": {
+        "environmentInteractions": 20000,
+        "optimizerUpdates": 5000
+      },
+      "metric": {
+        "field": "evaluationSuccessRate",
+        "name": "DQN frozen-policy evaluation success rate",
+        "unit": "successful episodes / 100 evaluation episodes",
+        "aggregation": "reference DQN target-interval example; one 100-episode evaluation per seed and arm"
+      }
+    }
+  }
+}

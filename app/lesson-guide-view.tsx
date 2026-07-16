@@ -6,6 +6,7 @@ import { lessonCodeExamples, type LessonCodeExample } from "./code-examples";
 import { lessonObjectiveCoverage } from "./lesson-objective-coverage";
 import { MathText } from "./math-text";
 import { ActivityInfo, codeActivityGuidance, LearningActivityContract, type CodeGuidance } from "./activity-info";
+import { MotionReveal } from "./motion/motion-reveal";
 
 function ObjectiveCoverageCard({ item, index }: { item: import("./lesson-guides").ObjectiveCoverage; index: number }) {
   const [draft, setDraft] = useState("");
@@ -24,11 +25,11 @@ function ObjectiveCoverageCard({ item, index }: { item: import("./lesson-guides"
       <strong>Check this outcome</strong>
       <p><MathText>{item.check.prompt}</MathText></p>
       <label><span>Your explanation</span><textarea rows={4} value={draft} disabled={committed} onChange={(event) => setDraft(event.target.value)} placeholder="State the decision or result and trace the causal mechanism…" /></label>
-      {!committed ? <button disabled={draft.trim().length < 18} onClick={() => setCommitted(true)}>Commit before comparison</button> : <>
+      {!committed ? <button disabled={draft.trim().length < 18} onClick={() => setCommitted(true)}>Commit before comparison</button> : <MotionReveal stateKey="objective-committed" effect="feedback">
         <div className="objective-check-answer"><strong>Expected reasoning</strong><p><MathText>{item.check.expected}</MathText></p></div>
         <div className="objective-check-retry"><strong>Retry route</strong><p><MathText>{item.check.retry}</MathText></p></div>
         <button onClick={() => setCommitted(false)}>Revise and retry</button>
-      </>}
+      </MotionReveal>}
     </div>
   </li>;
 }
@@ -86,7 +87,7 @@ export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, exampl
       <div className="guided-example-setup"><span>Case setup</span><p><MathText>{guide.guidedExample.setup}</MathText></p></div>
       {!guidedCommitted ? <div className="guided-prediction-entry"><label><span>Your overall prediction</span><small>State the result you expect and the mechanism or calculation that should produce it.</small><textarea rows={4} value={guidedPrediction} onChange={(event) => setGuidedPrediction(event.target.value)} placeholder="I expect… because the first transformation will…" /></label><button disabled={guidedPrediction.trim().length < 18} onClick={() => setGuidedCommitted(true)}>Commit before step 1</button></div> : <>
         <div className="guided-prediction-locked"><div><span>Your committed prediction</span><p>{guidedPrediction}</p></div><button onClick={resetGuidedExample}>Restart example</button></div>
-        {guidedRevealedSteps > 0 && <ol className="guided-example-steps">{guide.guidedExample.steps.slice(0, guidedRevealedSteps).map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, "0")}</span><div><small><strong>Your forecast:</strong> {guidedStepNotes[index]}</small><p><MathText>{step}</MathText></p></div></li>)}</ol>}
+        {guidedRevealedSteps > 0 && <MotionReveal as="ol" stateKey={guidedRevealedSteps} className="guided-example-steps">{guide.guidedExample.steps.slice(0, guidedRevealedSteps).map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, "0")}</span><div><small><strong>Your forecast:</strong> {guidedStepNotes[index]}</small><p><MathText>{step}</MathText></p></div></li>)}</MotionReveal>}
         {!guidedComplete ? <div className="guided-next-step"><label><span>Pause before step {guidedRevealedSteps + 1}</span><small>{guidedRevealedSteps === 0 ? "From the setup, what should the first operation or decision be, and why?" : "Using only the setup and revealed steps, what should happen next, and why?"}</small><textarea rows={3} value={guidedStepNotes[guidedRevealedSteps] ?? ""} onChange={(event) => setGuidedStepNotes((current) => {
           const next = [...current];
           next[guidedRevealedSteps] = event.target.value;

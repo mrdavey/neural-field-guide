@@ -5,6 +5,7 @@ import { activeStoryStage, clampStoryValue, storyStagePosition } from "./scroll-
 import { STORY_PROGRESS_EVENT, ThreeStoryCanvas } from "./three-story-canvas";
 import type { ThreeStoryConcept, ThreeStoryScene } from "./three-story-math";
 import { StoryMechanismDiagram } from "./story-mechanism-diagram";
+import { createStoryTimeline } from "./motion/story-timeline";
 
 export type ScrollStoryScene = ThreeStoryScene;
 
@@ -42,6 +43,7 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
 
     let frame = 0;
     let previousStage = 0;
+    const storyTimeline = createStoryTimeline(visual, concept, nodes.length);
     const nodeVisuals = Array.from(visual.querySelectorAll<HTMLElement>(".story-node"));
     const lineVisuals = Array.from(visual.querySelectorAll<HTMLElement>(".story-lines i"));
     const renderProgress = () => {
@@ -71,6 +73,7 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
       visual.style.setProperty("--story-wave-c", (.5 + Math.sin(progress * Math.PI * 3 + 3.8) * .22).toFixed(3));
       visual.style.setProperty("--story-pulse", (.84 + Math.sin(progress * Math.PI * 4) * .12).toFixed(3));
       visual.style.setProperty("--story-reveal", `${(12 + progress * 76).toFixed(2)}%`);
+      storyTimeline?.seek(progress);
       visual.dispatchEvent(new CustomEvent(STORY_PROGRESS_EVENT, { detail: {
         progress,
         stagePosition,
@@ -114,10 +117,11 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
       resizeObserver?.disconnect();
+      storyTimeline?.revert();
       window.removeEventListener("scroll", scheduleProgress);
       window.removeEventListener("resize", scheduleProgress);
     };
-  }, [steps.length]);
+  }, [concept, steps.length]);
 
   const moveToStep = (index: number) => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

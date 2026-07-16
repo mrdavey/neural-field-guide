@@ -1,10 +1,25 @@
 # Instructional interaction audit
 
-Reviewed: 14 July 2026
+Reviewed: 15 July 2026
 
 This audit asks one question of every animated or manipulable surface: **what learner-visible mechanism becomes easier to reason about because this moves?** Motion that cannot answer that question is decorative and does not pass.
 
-## Shared live traces
+## Anime.js semantic orchestration
+
+Anime.js 4.5.0 is pinned as the shared orchestration layer. It does not own lesson truth, grading, persistence, or required content. React state and deterministic fixtures continue to own values; Anime.js only emphasizes a change that has already occurred in that state.
+
+The motion system has four explicit layers:
+
+1. `storyMotionContracts` maps all 24 semantic story concepts to a learning question, representation, stage selectors, route selectors, effect grammar, and evidence boundary. The same paused timeline is sought by scroll position on all five course homes and all 182 lesson stories.
+2. `llmLabMotionContracts` maps every one of the 34 LLM lab types to the exact readouts or relationships that should respond when a learner changes a control.
+3. `worldModelLabMotionContracts` maps all nine World Models lab grammars. Each of the 46 lesson-specific specs supplies structured control and meter values; animation never parses learner-facing strings to infer state.
+4. `MotionReveal` and the course orchestrator emphasize committed predictions, newly revealed reasoning, changed feedback, active workshop/capstone stages, route entry, and reading progress. They do not bypass prediction gates or delay deterministic feedback.
+
+The Three.js adapter animates only material emphasis on the existing progressive scene. Camera, geometry, scroll state, and rendering remain in the established deterministic draw path, so there is no competing render loop. WebGL failure continues to leave `StoryMechanismDiagram` as the semantic carrier.
+
+For `prefers-reduced-motion: reduce`, shared timelines are not created, lab sweeps are hidden, the app-wide orchestrator identifies itself as static, and Three.js remains disabled. Current labels, states, relationships, instructions, answer/retry paths, and assessment controls remain available. No required meaning depends on opacity, direction, speed, color, or motion.
+
+## LLM live traces
 
 Every one of the 44 lessons uses a lesson-specific four-stage narrative from `app/lesson-motion.ts`. The shared renderer now selects one of 24 semantic visual grammars from `threeConceptSemantics` rather than restyling the same node diagram by track. The Three.js point field remains a progressive depth layer; `StoryMechanismDiagram` carries the explanatory meaning and remains visible when WebGL is unavailable.
 
@@ -100,6 +115,42 @@ Nine deterministic lab modes cover the 46 lessons. Each mode visibly states its 
 
 The World Models course also adds six preserved technical-validation dossiers at its section syntheses. These are labeled inspected deterministic fixtures, link to machine-readable JSON, and state the exact claim boundary; they are never presented as browser model executions or external benchmark reproductions.
 
+The 15 July 2026 evidence re-audit also tightened the six dossiers and the research capstone. Belief filtering now exposes every transition, likelihood, unnormalized mass, evidence term, and posterior; the RSSM case rejects a prior whose output changes with the current observation; ensemble uncertainty preserves two confident shared-bias misses; and the Dyna comparison matches 96 model transitions while making terminal reward timing and value bootstrapping explicit. Foundation-model selection changes with the required interface, operations distinguishes same-shape semantic incompatibility from shadow false alarms and canary latency, and the research case retains a complete $3\times4$ seed-by-angle matrix plus three contact counterexamples. These additions are deterministic audit evidence, not learned-model runs or external reproductions.
+
+## Cross-course transfer bridges
+
+Selected high-leverage LLM and World Models lessons include a program bridge before the new mechanism begins. The learning question is whether a mechanism transfers unchanged into a later system. The learner-controlled variable is the committed written prediction; committing reveals the reusable mechanism, ownership boundary, destination build, and evidence artifact. Completion means comparing the prediction with expected reasoning and a specific retry route. This is labeled guided reflection, not automated grading.
+
+The reveal uses shared motion emphasis only after commitment. Reduced motion removes that emphasis without changing content, order, or access. Unreleased destinations remain labeled as future handoffs and are not linked; the same data activates a static route only after the complete course enters the registry. The interaction establishes conceptual transfer and claim boundaries, not mastery of the later course or evidence that an external experiment ran.
+
+## Course-home causal traces
+
+The five course homes now place a static, inspectable causal trace beside the animated pipeline. Each trace asks a course-specific learning question and provides concrete input values, the transformation, an inspectable output or decision, and a failure boundary: token probabilities for LLMs, action-conditioned position branches for World Models, randomness-to-distribution evidence for Generative Models, a discounted RL target, and requested-versus-applied physical action for Embodied AI. The animation remains an illustrative orientation layer; the authored trace—not motion—carries the mechanism and survives reduced motion or canvas failure in normal reading order.
+
+## Generative Models mechanism cases
+
+All 30 Generative Models lessons use an authored three-case mechanism lab. The learner first commits a causal prediction, then changes one named distribution, target, diagnostic, schedule, condition, budget, or evidence record. The readout exposes a lesson-specific value and explanation; completion requires comparing all three cases and identifying the first causal step. Each lesson separately states what the fixture cannot establish. The shared case-control renderer supplies keyboard/touch buttons, an accessible live readout, and a semantic meter, but lesson data—not animation—owns the result.
+
+Examples include normalized probability mass, ordered KL, VAE collapse probes, flow round-trip and log-determinant failure, EBM hidden energy pockets, Langevin step-size trade-offs, diffusion signal/noise coefficients, classifier-free guidance extrapolation, inverse-problem data consistency, composition gaps, and GPU evidence classes. Reduced motion changes only reveal emphasis; prediction, values, explanations, retries, and boundaries remain in normal document order.
+
+## Reinforcement Learning & Control mechanism cases
+
+All 32 Reinforcement Learning & Control lessons use an authored three-case decision lab. The learning question names one agent, estimator, data, planning, safety, or evidence variable before any control appears. The learner commits a prediction, changes among three bounded cases, observes a labeled value plus mechanism-specific trace, and explains the first causal link before the completion condition is met. The renderer provides ordinary keyboard/touch buttons, an accessible live region, and a semantic meter; the lesson specification owns the state and explanation.
+
+The cases expose concrete decision mechanisms rather than generic agent motion: transition/reward changes in finite MDPs, Bayesian belief updates under partial observation, occupancy shifts, Bellman backups, return and TD targets, on-policy versus greedy control, replay age and target-network lag, exploration coverage, likelihood-ratio clipping, GAE credit, model rollout error, MPC budget, uncertainty exploitation, demonstration covariate shift, offline support, causal trajectory serialization, seed-level uncertainty, constrained decisions, GPU evidence classes, and falsifiable research claims.
+
+Every lab states its evidence boundary. Finite tables and browser meters are deterministic teaching fixtures, not learned-policy measurements; illustrative Q values, returns, support scores, and uncertainty do not establish benchmark performance. The optional DQN runner is separately labeled external execution and reports exact invariants apart from variable observations. Reduced motion removes reveal emphasis only: current state, value, causal explanation, completion rule, retry, and assessment remain in document order.
+
+## Embodied AI mechanism cases
+
+All 30 Embodied AI lessons use an authored three-case physical-loop lab. The learning question names a task, sensor, frame, state, data, policy, control, authority, timing, or evidence variable before the cases appear. The learner commits a prediction, changes one bounded fixture, observes a typed value and mechanism-specific trace, then explains the first causal link. Completion requires inspecting all three cases and identifying the contract or diagnostic boundary that one case crosses. Ordinary buttons, an accessible live region, and a semantic meter preserve keyboard and touch operation; the lesson data owns every result.
+
+The cases make physical-loop semantics observable without pretending a browser fixture is a robot run: requested versus applied commands, frame direction and sensor age, uncertainty under occlusion, task predicate precedence, calibrated residuals, object identity, leakage and trajectory support, action-chunk feedback delay, language counterfactuals, causal masks, diffusion denoising, feedback saturation, planner exploitation, skill postconditions, system-identification residuals, intervention authority, evaluation cells, robustness onset, latency deadlines, and external-run evidence classes. Each lesson states what the representation cannot establish.
+
+The 15 July 2026 semantic re-audit tightened four cases whose original labels could support an incorrect inference. The partial-observation lab now moves cube state only under an explicit rigid-grasp attachment model and contrasts the ungrasped case; the transformer-policy lab places action logits on pre-action observation rows so a diagonal causal mask cannot expose the target token; the evaluation lab pairs cell rates with Wilson intervals at the independent-episode level; and the operations lab tests an explicit p99-at-most-50-ms SLO while labeling p50 as a median, never an average. These remain deterministic mechanism fixtures, and their changed cases, expected observations, completion rules, and limitations are present without motion.
+
+WebGL and motion remain progressive layers. Labels, values, task instructions, causal explanations, completion rules, retries, and answer feedback survive reduced motion or canvas failure in normal document order. Simulation evidence is explicitly bounded to the declared fixture or simulator; the optional action-chunk runner is separately labeled external execution and promises only checkpoint, episode, budget, finite-value, and schema invariants before a reviewed run exists.
+
 ## Changes made from the audit
 
 - Replaced the track-themed shared overlay with 24 concept-specific diagrams that progress through the four lesson stages.
@@ -108,6 +159,10 @@ The World Models course also adds six preserved technical-validation dossiers at
 - Reflowed interactive-lab instructions into readable **Change** and **Observe** rows.
 - Preserved reduced-motion behavior: the diagrams show the current state without continuous animation, and the instructional copy remains complete.
 - Added World Models stories by reusing semantic grammars rather than track-themed motion, plus nine audited control modes and six preserved deterministic validation dossiers.
+- Added prediction-gated cross-course bridges at canonical and reinforcement joins so learners distinguish reusable mechanisms from invalid claim transfer before seeing later-course artifacts.
+- Added 32 RL decision labs whose case changes make backups, credit, support, planning budgets, constraints, and seed-level evidence observable without presenting fixtures as trained-agent results.
+- Added 30 Embodied AI physical-loop labs whose case changes expose timing, frames, state estimation, data lineage, grounded policies, feedback, authority, and evidence boundaries without presenting browser fixtures as robot measurements.
+- Re-audited the Embodied AI grasp/occlusion, causal action-target, evaluation-uncertainty, and p99 latency cases so their visible state and arithmetic agree with their causal and statistical contracts.
 
 ## Review rule
 

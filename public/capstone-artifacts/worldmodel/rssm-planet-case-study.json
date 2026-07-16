@@ -3,18 +3,33 @@
   "course": "worldmodel",
   "lessonId": "rssm-planet-case-study",
   "evidenceTier": "deterministic teaching fixture",
-  "question": "Does posterior filtering correct a perturbed start faster than prior-only rollout?",
-  "fixture": { "deterministicWidth": 1, "stochasticValues": [-1, 1], "actions": [1, 0, -1], "observations": [1.2, -0.8, -1.1], "seed": 7 },
+  "question": "Does posterior filtering correct a perturbed start faster than prior-only rollout while preserving the prior's causal input boundary?",
+  "fixture": {
+    "deterministicWidth": 1,
+    "stochasticValues": [-1, 1],
+    "actions": [1, 0, -1],
+    "observations": [1.2, -0.8, -1.1],
+    "seed": 7,
+    "priorInputs": ["previous deterministic state", "previous stochastic state", "previous applied action"],
+    "posteriorAdditionalInput": "current observation",
+    "imaginationPath": "prior only after an observation-filtered start"
+  },
   "baseline": "prior-only rollout",
   "changedCase": "the second observation contradicts the prior mode",
   "rawRows": [
-    { "step": 1, "priorMean": 0.6, "posteriorMean": 1.0, "target": 1.0 },
-    { "step": 2, "priorMean": 0.8, "posteriorMean": -0.7, "target": -1.0 },
-    { "step": 3, "priorMean": -0.4, "posteriorMean": -0.9, "target": -1.0 }
+    {"step": 1, "action": 1, "observation": 1.2, "priorMean": 0.6, "posteriorMean": 1.0, "target": 1.0, "priorAbsoluteError": 0.4, "posteriorAbsoluteError": 0.0},
+    {"step": 2, "action": 0, "observation": -0.8, "priorMean": 0.8, "posteriorMean": -0.7, "target": -1.0, "priorAbsoluteError": 1.8, "posteriorAbsoluteError": 0.3},
+    {"step": 3, "action": -1, "observation": -1.1, "priorMean": -0.4, "posteriorMean": -0.9, "target": -1.0, "priorAbsoluteError": 0.6, "posteriorAbsoluteError": 0.1}
   ],
-  "checks": ["prior has no current-observation input", "posterior consumes current observation", "imagination uses prior path only"],
-  "failure": "A deliberately leaked target observation improves prior error and is rejected by the input-dependency invariant.",
-  "decision": "Posterior filtering corrects this changed trace faster; the result validates information flow, not PlaNet performance.",
-  "boundary": "The values are hand-authored and do not reproduce a neural RSSM training run.",
-  "reviewed": "2026-07-14"
+  "inputDependencyAudit": [
+    {"path": "valid-prior", "step": 2, "currentObservationBefore": -0.8, "currentObservationAfter": 0.8, "outputBefore": 0.8, "outputAfter": 0.8, "observationAffectsOutput": false, "accepted": true},
+    {"path": "valid-posterior", "step": 2, "currentObservationBefore": -0.8, "currentObservationAfter": 0.8, "outputBefore": -0.7, "outputAfter": 0.7, "observationAffectsOutput": true, "accepted": true},
+    {"path": "leaked-prior", "step": 2, "currentObservationBefore": -0.8, "currentObservationAfter": 0.8, "outputBefore": -0.7, "outputAfter": 0.7, "observationAffectsOutput": true, "accepted": false, "rejection": "prior output changed when only current observation changed"},
+    {"path": "imagination-prior", "step": 2, "currentObservation": null, "output": 0.8, "observationAffectsOutput": false, "accepted": true}
+  ],
+  "checks": ["valid prior has no current-observation input", "posterior consumes current observation", "leaked-prior counterexample is rejected even though its numeric error is lower", "imagination uses the prior path only"],
+  "failure": "The supplied leaked-prior row improves numeric error by reading the current target observation, but the dependency audit rejects it because changing only that observation changes a value that must be action-and-memory conditioned.",
+  "decision": "Posterior filtering corrects this changed trace faster, while the explicit leaked-prior row proves that lower error cannot compensate for invalid information flow. This validates the fixture contract, not PlaNet quality.",
+  "boundary": "The values are hand-authored and do not reproduce a neural RSSM training run, learned latent state, or external benchmark.",
+  "reviewed": "2026-07-15"
 }

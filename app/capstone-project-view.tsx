@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { CapstoneProject } from "./capstone-projects";
 import { capstoneArtifactFiles, capstoneEvidencePacks } from "./capstone-evidence";
 import { MathText } from "./math-text";
+import { MotionReveal } from "./motion/motion-reveal";
 import { ActivityInfo } from "./activity-info";
 import type { CapstoneEvidencePack } from "./capstone-evidence";
 import type { CourseId } from "./course-catalog";
@@ -16,6 +17,12 @@ type CapstoneDraft = {
 };
 
 const emptyDraft: CapstoneDraft = { answers: {}, completedStages: [], deliverables: [], reflections: {} };
+
+function MaterialItem({ item }: { item: string }) {
+  const match = item.match(/^(Downloadable )?Dependency-free starter: (.+)$/i);
+  if (!match) return <MathText>{item}</MathText>;
+  return <a className="capstone-starter-download" href={match[2]} download><span>Dependency-free starter</span><small>Download the executable Python scaffold <span aria-hidden="true">↓</span></small></a>;
+}
 
 export function CapstoneProjectView({ project, courseId = "llm", evidencePack: suppliedEvidencePack, artifactFile: suppliedArtifactFile }: { project: CapstoneProject; courseId?: CourseId; evidencePack?: CapstoneEvidencePack; artifactFile?: { label: string; url: string; contents: string[] } }) {
   const [draft, setDraft] = useState<CapstoneDraft>(emptyDraft);
@@ -79,7 +86,7 @@ export function CapstoneProjectView({ project, courseId = "llm", evidencePack: s
 
     <div className="capstone-start-kit">
       <section><span className="eyebrow">Required knowledge</span><h3>What you need before you begin</h3><ul>{project.prerequisites.map((item) => <li key={item}>✓ <MathText>{item}</MathText></li>)}</ul></section>
-      <section><span className="eyebrow">Gather</span><h3>Materials and working tools</h3><ul>{project.materials.map((item) => <li key={item}><MathText>{item}</MathText></li>)}</ul></section>
+      <section><span className="eyebrow">Gather</span><h3>Materials and working tools</h3><ul>{project.materials.map((item) => <li key={item}><MaterialItem item={item} /></li>)}</ul></section>
       <section className="capstone-deliverables"><span className="eyebrow">What you will produce</span><h3>Your evidence package</h3>{project.deliverables.map((item, index) => <label key={item.title}><input type="checkbox" checked={draft.deliverables.includes(index)} onChange={() => toggleDeliverable(index)} /><span><strong><MathText>{item.title}</MathText></strong><small><MathText>{item.description}</MathText></small></span></label>)}</section>
     </div>
 
@@ -90,14 +97,14 @@ export function CapstoneProjectView({ project, courseId = "llm", evidencePack: s
 
     <div className="capstone-studio">
       <nav className="capstone-stage-nav" aria-label="Project stages">{project.stages.map((item, index) => <button key={item.id} className={activeStage === index ? "active" : ""} onClick={() => setActiveStage(index)} aria-current={activeStage === index ? "step" : undefined}><span>{draft.completedStages.includes(item.id) ? "✓" : String(index + 1).padStart(2, "0")}</span><strong><MathText>{item.title}</MathText></strong></button>)}</nav>
-      <div className="capstone-stage-panel">
+      <MotionReveal stateKey={activeStage} className="capstone-stage-panel">
         <div className="stage-heading"><div><span className="eyebrow">Stage {activeStage + 1} of {project.stages.length}</span><h3><MathText>{stage.title}</MathText></h3><p><MathText>{stage.goal}</MathText></p></div><span className="autosave-note">{ready ? "Saved in this browser" : "Loading draft…"}</span></div>
         <ol className="stage-instructions">{stage.instructions.map((instruction, index) => <li key={instruction}><span>{index + 1}</span><p><MathText>{instruction}</MathText></p></li>)}</ol>
         <div className="stage-checkpoint"><span>CHECKPOINT</span><p><MathText>{stage.checkpoint}</MathText></p></div>
         <details className="capstone-hint"><summary>Need a nudge?</summary><p><MathText>{stage.hint}</MathText></p></details>
         <label className="capstone-workspace"><span>Your working notes</span><small><MathText>{stage.workspacePrompt}</MathText></small><textarea value={draft.answers[stage.id] ?? ""} onChange={(event) => setDraft((current) => ({ ...current, answers: { ...current.answers, [stage.id]: event.target.value } }))} placeholder="Draft your answer here. It stays in this browser…" rows={10} /><i>{wordCount} words</i></label>
         <div className="stage-actions"><label><input type="checkbox" checked={draft.completedStages.includes(stage.id)} onChange={() => toggleStage(stage.id)} /> I completed the checkpoint and recorded evidence.</label>{activeStage < project.stages.length - 1 && <button onClick={() => setActiveStage(activeStage + 1)}>Continue to stage {activeStage + 2} →</button>}</div>
-      </div>
+      </MotionReveal>
     </div>
 
     {evidencePack && <section className="capstone-artifact-checks" aria-labelledby={`artifact-checks-${project.lessonId}`}>
@@ -110,8 +117,8 @@ export function CapstoneProjectView({ project, courseId = "llm", evidencePack: s
     <section className="capstone-exemplar"><div><span className="eyebrow">Compare after attempting</span><h2><MathText>{project.exemplar.title}</MathText></h2><p>The exemplar is one defensible route, not a template to copy. Write at least 40 words or complete one stage before comparison unlocks.</p></div>{showExemplar ? <div className="exemplar-reveal"><p><MathText>{project.exemplar.summary}</MathText></p><ul>{project.exemplar.decisions.map((decision) => <li key={decision}><MathText>{decision}</MathText></li>)}</ul><button onClick={() => setShowExemplar(false)}>Hide exemplar</button></div> : <div className="capstone-exemplar-gate"><span>{attempted ? "Attempt recorded · comparison unlocked" : "Make an attempt before revealing the example"}</span><button className="reveal-button" disabled={!attempted} onClick={() => setShowExemplar(true)}>Reveal exemplar approach</button></div>}</section>
 
     {evidencePack && <section className="capstone-reference-package" aria-labelledby={`reference-${project.lessonId}`}>
-      <header><div><span className="eyebrow">Complete worked artifact</span><h2 id={`reference-${project.lessonId}`}><MathText>{evidencePack.reference.title}</MathText></h2><p>Compare this complete evidence shape with your own after you have made an attempt.</p></div><span>{attempted ? `${totalWords} draft words · comparison unlocked` : "Write 40 words or complete one stage to unlock"}</span></header>
-      {showReference ? <><div className="reference-sections">{evidencePack.reference.sections.map((section) => <article key={section.heading}><h3><MathText>{section.heading}</MathText></h3><p><MathText>{section.content}</MathText></p></article>)}<button onClick={() => setShowReference(false)}>Hide complete reference</button></div>{artifactFile && <a className="reference-artifact-file" href={artifactFile.url} target="_blank" rel="noreferrer"><span>INSPECT THE FILLED MACHINE-READABLE ARTIFACT</span><strong>{artifactFile.label}</strong><small>{artifactFile.contents.join(" · ")} ↗</small></a>}</> : <button className="reveal-button" disabled={!attempted} onClick={() => setShowReference(true)}>Reveal complete reference package</button>}
+      <header><div><span className="eyebrow">Worked reference evidence</span><h2 id={`reference-${project.lessonId}`}><MathText>{evidencePack.reference.title}</MathText></h2><p>Compare this complete evidence shape with your own after you have made an attempt. Its JSON evidence kind and boundary say whether rows are executed observations, deterministic fixtures, or planned null-measurement cells.</p></div><span>{attempted ? `${totalWords} draft words · comparison unlocked` : "Write 40 words or complete one stage to unlock"}</span></header>
+      {showReference ? <><div className="reference-sections">{evidencePack.reference.sections.map((section) => <article key={section.heading}><h3><MathText>{section.heading}</MathText></h3><p><MathText>{section.content}</MathText></p></article>)}<button onClick={() => setShowReference(false)}>Hide worked reference</button></div>{artifactFile && <a className="reference-artifact-file" href={artifactFile.url} target="_blank" rel="noreferrer"><span>INSPECT THE MACHINE-READABLE REFERENCE ARTIFACT</span><strong>{artifactFile.label}</strong><small>{artifactFile.contents.join(" · ")} ↗</small></a>}</> : <button className="reveal-button" disabled={!attempted} onClick={() => setShowReference(true)}>Reveal worked reference package</button>}
     </section>}
 
     {evidencePack && <section className="capstone-source-pack" aria-labelledby={`sources-${project.lessonId}`}>

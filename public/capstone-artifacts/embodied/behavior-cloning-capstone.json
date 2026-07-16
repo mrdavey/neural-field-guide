@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "course": "embodied",
+  "lessonId": "behavior-cloning-capstone",
+  "evidenceKind": "reviewed deterministic teaching fixture",
+  "starter": {
+    "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
+    "command": "python3 embodied_capstone_starter.py --project behavior-cloning-capstone --output behavior-cloning-starter.json",
+    "expected": "Episode-split declaration, nominal support, changed-start first-departure, and assistance-label checks all print true.",
+    "boundary": "The lookup policy demonstrates evidence wiring; it is not the trained cloning model required by the capstone."
+  },
+  "implementation": {
+    "requiredComponents": ["whole-episode data split", "typed observation encoder", "scaled action or chunk decoder", "masked supervised loss", "optimizer and complete checkpoint", "requested/applied logger", "closed-loop simulator evaluator", "support and first-divergence audit"],
+    "buildOrder": ["Validate lineage, units, targets, and masks", "Overfit one tiny batch", "Train the nominal baseline", "Restore and prove next-step equivalence", "Run clean closed-loop acceptance", "Branch the same policy into a changed-start rollout"],
+    "localCommands": ["python3 embodied_capstone_starter.py --project behavior-cloning-capstone --output behavior-cloning-starter.json", "python3 -m unittest test_dataset.py test_policy.py test_resume.py"],
+    "artifacts": ["dataset-manifest.json", "split-hashes.json", "checkpoint.pt", "training-curves.json", "nominal-rollouts.jsonl", "changed-start-rollouts.jsonl", "failure.log"]
+  },
+  "acceptanceChecks": [
+    {"id": "targets", "action": "Check action units, target shifts, episode-end padding, and requested/applied ownership on hand examples.", "expected": "All unpadded targets match the demonstrated applied actions and padded targets contribute zero loss."},
+    {"id": "resume", "action": "Restore model, optimizer, sampler, counters, and RNG immediately before an update.", "expected": "The next batch IDs, loss, parameter hash, and counter match the uninterrupted branch."},
+    {"id": "compounding-error", "action": "Run the unchanged accepted policy from nominal and +2 cm starts under paired simulator seeds.", "expected": "Record support at every step, first state/action divergence, requested/applied commands, intervention, and final task/constraint outcome."}
+  ],
+  "manifest": {
+    "policy": "lookup cloning fixture",
+    "seed": 31,
+    "intervention": "2 cm start shift",
+    "independentUnit": "closed-loop episode",
+    "matrixAxes": {"arm": ["nominal", "shift"]}
+  },
+  "invariants": {"policyRevisionMatched": true, "onlyStartChanged": true, "requestedAndAppliedLogged": true, "allDeclaredCellsPresent": true},
+  "rawRows": [
+    {"arm": "nominal", "supportDeparture": null, "workspaceExit": null, "success": true, "intervention": false, "autonomous": true},
+    {"arm": "shift", "supportDeparture": 2, "workspaceExit": 5, "success": false, "intervention": true, "autonomous": false}
+  ],
+  "decision": "The changed start exposes compounding error before task failure; nominal supervised evidence cannot establish recovery, and any later recovery-data addition must be analyzed as a separate training intervention.",
+  "failure": "The first unsupported observation at step two and workspace exit at step five remain attached to requested/applied action provenance, policy revision, simulator seed, and external intervention ownership.",
+  "boundary": "This deterministic trace is not a trained behavior-cloning measurement, general recovery result, physical-robot result, or evidence that the demonstrated support metric is complete for unseen states."
+}

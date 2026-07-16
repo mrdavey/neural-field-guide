@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 1,
+  "course": "generative",
+  "lessonId": "diffusion-model-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "resolution": [
+      16,
+      16
+    ],
+    "parameterization": "epsilon",
+    "baselineEvaluations": 50,
+    "treatmentEvaluations": 20,
+    "pairedStartSeeds": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "matrixAxes": {
+      "startSeed": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "sampler": [
+        "baseline",
+        "treatment"
+      ]
+    }
+  },
+  "invariants": [
+    "forward coefficients square-sum to one",
+    "target shape equals noise shape",
+    "paired starts are identical across samplers"
+  ],
+  "rawRows": [
+    {
+      "startSeed": 31,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 31,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 32,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 32,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 33,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 33,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 34,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 34,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 35,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 35,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 36,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 36,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 37,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 37,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 38,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 38,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 39,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 39,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 40,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 40,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 41,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 41,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 42,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 42,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 43,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 43,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 44,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 44,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 45,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 45,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 46,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 46,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 47,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 47,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 48,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 48,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 49,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 49,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 50,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 50,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 51,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 51,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 52,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 52,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 53,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 53,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 54,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 54,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 55,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 55,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 56,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 56,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 57,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 57,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 58,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 58,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 59,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 59,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 60,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 60,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 61,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 61,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 62,
+      "sampler": "baseline",
+      "status": "planned",
+      "measurement": null
+    },
+    {
+      "startSeed": 62,
+      "sampler": "treatment",
+      "status": "planned",
+      "measurement": null
+    }
+  ],
+  "decision": "Only algebra, shape, and pairing invariants are represented. Sampling quality remains unmeasured until a reviewed execution exists.",
+  "failure": "Unpaired starting noise would confound sampler choice with initial condition variation.",
+  "boundary": "This artifact does not claim a trained checkpoint, runtime, FID, convergence, or recognizable samples."
+}

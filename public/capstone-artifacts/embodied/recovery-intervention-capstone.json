@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "course": "embodied",
+  "lessonId": "recovery-intervention-capstone",
+  "evidenceKind": "reviewed deterministic teaching fixture",
+  "starter": {
+    "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
+    "command": "python3 embodied_capstone_starter.py --project recovery-intervention-capstone --output recovery-starter.json",
+    "expected": "Requested/applied divergence, fallback ownership, and human-assistance labeling checks all print true.",
+    "boundary": "The starter validates authority bookkeeping; it does not measure a physical stop, controller reliability, or human response."
+  },
+  "implementation": {
+    "requiredComponents": ["nominal closed-loop controller", "independent watchdog", "bounded fallback controller", "authority precedence table", "fault injector", "requested/applied action ledger", "rollback snapshot and compatibility check", "human resume receipt"],
+    "buildOrder": ["Prove nominal and fallback paths independently", "Test precedence and non-overridable stop", "Snapshot controller/environment/RNG state", "Inject one fault from a paired snapshot", "Measure detect-to-applied-safe-action latency", "Require explicit authority before resume"],
+    "localCommands": ["python3 embodied_capstone_starter.py --project recovery-intervention-capstone --output recovery-starter.json", "python3 -m unittest test_watchdog.py test_authority.py test_rollback.py"],
+    "artifacts": ["authority-table.json", "fault-manifest.json", "nominal-trace.jsonl", "fault-trace.jsonl", "rollback-hashes.json", "incident-bundle.json", "failure.log"]
+  },
+  "acceptanceChecks": [
+    {"id": "precedence", "action": "Issue a policy move while watchdog stop is active.", "expected": "Applied action is hold/fallback; policy cannot override the watchdog and both commands remain logged."},
+    {"id": "paired-fault", "action": "Replay nominal and stale-camera scenarios from the same snapshot for detect, recover, and resume phases.", "expected": "All six scenario-by-phase rows exist and only the declared fault differs before containment."},
+    {"id": "rollback-resume", "action": "Restore the accepted controller and require schema/state next-step equivalence plus a human resume receipt.", "expected": "Incompatible rollback remains blocked; a human-authorized resumed task is labeled assisted rather than autonomous."}
+  ],
+  "manifest": {
+    "controller": "authority and fallback fixture",
+    "seed": 53,
+    "fault": "stale camera",
+    "independentUnit": "paired fault-injection episode",
+    "matrixAxes": {"scenario": ["nominal", "stale_camera"], "phase": ["detect", "recover", "resume"]}
+  },
+  "invariants": {"samePreFaultSnapshot": true, "watchdogIndependent": true, "requestedAndAppliedLogged": true, "allDeclaredCellsPresent": true},
+  "rawRows": [
+    {"scenario": "nominal", "phase": "detect", "latencyMs": 0, "requestedAction": "move", "appliedAction": "move", "owner": "policy", "autonomous": true},
+    {"scenario": "nominal", "phase": "recover", "freshPackets": 0, "appliedAction": "move", "owner": "policy", "autonomous": true},
+    {"scenario": "nominal", "phase": "resume", "taskSuccess": true, "owner": "policy", "autonomous": true},
+    {"scenario": "stale_camera", "phase": "detect", "latencyMs": 20, "requestedAction": "move", "appliedAction": "hold", "owner": "watchdog", "autonomous": false},
+    {"scenario": "stale_camera", "phase": "recover", "freshPackets": 3, "appliedAction": "hold", "owner": "fallback", "autonomous": false},
+    {"scenario": "stale_camera", "phase": "resume", "taskSuccess": true, "owner": "human", "autonomous": false}
+  ],
+  "decision": "The stale-camera task completes only after watchdog containment, fallback recovery, and human resume, so it must be reported as assisted recovery rather than uninterrupted autonomous success.",
+  "failure": "A shared corrupted sensor can invalidate both nominal and fallback paths; the common-mode scenario, delayed containment, requested/applied divergence, and failed rollback attempts remain explicit incident evidence.",
+  "boundary": "The artifact validates deterministic labeling, precedence, and authority logic only; it is not a physical stop-distance measurement, operational safety certification, human-factors result, or proof against unknown common-mode failures."
+}

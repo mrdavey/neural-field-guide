@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "course": "generative",
+  "lessonId": "generative-research-capstone",
+  "evidenceKind": "deterministic_reference_fixture",
+  "manifest": {
+    "study": "paired five-seed intervention example",
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "metric": "illustrative bounded score",
+    "matrixAxes": {
+      "seed": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  "rawRows": [
+    {
+      "seed": 1,
+      "baseline": 0.61,
+      "treatment": 0.64,
+      "effect": 0.03
+    },
+    {
+      "seed": 2,
+      "baseline": 0.65,
+      "treatment": 0.62,
+      "effect": -0.03
+    },
+    {
+      "seed": 3,
+      "baseline": 0.6,
+      "treatment": 0.62,
+      "effect": 0.02
+    },
+    {
+      "seed": 4,
+      "baseline": 0.63,
+      "treatment": 0.61,
+      "effect": -0.02
+    },
+    {
+      "seed": 5,
+      "baseline": 0.62,
+      "treatment": 0.63,
+      "effect": 0.01
+    }
+  ],
+  "decision": "The mean effect is 0.002 with mixed signs; this fixture supports an unresolved result, not a reliable improvement.",
+  "failure": "Selecting only seeds 1, 3, and 5 would create a positive-looking but invalid post hoc result.",
+  "boundary": "The score rows are deterministic teaching values for analysis logic and are not measurements from a trained model."
+}

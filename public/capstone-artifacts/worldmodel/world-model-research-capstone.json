@@ -5,23 +5,52 @@
   "evidenceTier": "deterministic research-template fixture",
   "branch": "geometry",
   "question": "Under matched cases, does an equivariant transition satisfy a held-out rotation criterion better than a coordinate lookup?",
-  "fixture": { "trainAngles": [0, 90, 180, 270], "testAngles": [45, 135, 225, 315], "seeds": [1, 2, 3], "matchedUpdates": 200, "minimumErrorImprovement": 0.05, "maximumEquivarianceResidual": 0.02 },
+  "fixture": {
+    "trainAngles": [0, 90, 180, 270],
+    "testAngles": [45, 135, 225, 315],
+    "seeds": [1, 2, 3],
+    "matchedUpdates": 200,
+    "inputSet": "rot-v1",
+    "evaluator": "angle-mae-v1",
+    "minimumErrorImprovement": 0.05,
+    "maximumEquivarianceResidual": 0.02,
+    "matrixAxes": {"seed": [1, 2, 3], "angle": [45, 135, 225, 315]}
+  },
   "baseline": "coordinate lookup with nearest training angle",
   "changedCase": "held-out 45-degree rotations",
   "rawRows": [
-    { "angle": 45, "equivariantError": 0.11, "baselineError": 0.12, "equivarianceResidual": 0.015 },
-    { "angle": 135, "equivariantError": 0.12, "baselineError": 0.14, "equivarianceResidual": 0.018 },
-    { "angle": 225, "equivariantError": 0.12, "baselineError": 0.13, "equivarianceResidual": 0.017 },
-    { "angle": 315, "equivariantError": 0.13, "baselineError": 0.13, "equivarianceResidual": 0.016 }
+    {"seed": 1, "angle": 45, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.10, "baselineError": 0.11, "equivarianceResidual": 0.014},
+    {"seed": 1, "angle": 135, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.11, "baselineError": 0.13, "equivarianceResidual": 0.016},
+    {"seed": 1, "angle": 225, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.11, "baselineError": 0.12, "equivarianceResidual": 0.015},
+    {"seed": 1, "angle": 315, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.12, "baselineError": 0.12, "equivarianceResidual": 0.014},
+    {"seed": 2, "angle": 45, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.11, "baselineError": 0.12, "equivarianceResidual": 0.015},
+    {"seed": 2, "angle": 135, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.12, "baselineError": 0.14, "equivarianceResidual": 0.017},
+    {"seed": 2, "angle": 225, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.12, "baselineError": 0.13, "equivarianceResidual": 0.016},
+    {"seed": 2, "angle": 315, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.13, "baselineError": 0.13, "equivarianceResidual": 0.015},
+    {"seed": 3, "angle": 45, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.12, "baselineError": 0.13, "equivarianceResidual": 0.016},
+    {"seed": 3, "angle": 135, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.13, "baselineError": 0.15, "equivarianceResidual": 0.018},
+    {"seed": 3, "angle": 225, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.13, "baselineError": 0.14, "equivarianceResidual": 0.017},
+    {"seed": 3, "angle": 315, "updates": 200, "inputSet": "rot-v1", "evaluator": "angle-mae-v1", "equivariantError": 0.14, "baselineError": 0.14, "equivarianceResidual": 0.016}
   ],
-  "summary": { "meanEquivariantError": 0.12, "meanBaselineError": 0.13, "errorImprovement": 0.01, "maximumEquivarianceResidual": 0.018 },
-  "checks": ["both thresholds fixed before final rows", "same input vectors, seeds, update budget, and evaluator", "all changed-case rows retained"],
-  "failure": "When a contact discontinuity is added, the smooth rotation rule fails; this counterexample remains in the report.",
-  "decision": "Not supported: the 0.01 mean error improvement is below the preregistered 0.05 minimum even though the 0.018 residual passes its 0.02 gate.",
-  "boundary": "This course-scale deterministic result is not evidence of general physical reasoning or robot performance.",
+  "seedEffects": [
+    {"seed": 1, "meanEquivariantError": 0.11, "meanBaselineError": 0.12, "improvement": 0.01},
+    {"seed": 2, "meanEquivariantError": 0.12, "meanBaselineError": 0.13, "improvement": 0.01},
+    {"seed": 3, "meanEquivariantError": 0.13, "meanBaselineError": 0.14, "improvement": 0.01}
+  ],
+  "counterexampleRows": [
+    {"seed": 1, "case": "contact-discontinuity", "equivariantError": 0.40, "baselineError": 0.30, "equivarianceResidual": 0.08, "gatePass": false},
+    {"seed": 2, "case": "contact-discontinuity", "equivariantError": 0.45, "baselineError": 0.32, "equivarianceResidual": 0.09, "gatePass": false},
+    {"seed": 3, "case": "contact-discontinuity", "equivariantError": 0.42, "baselineError": 0.31, "equivarianceResidual": 0.08, "gatePass": false}
+  ],
+  "diagnosticRetry": {"intervention": "replace the smooth transition at contact with a declared piecewise contact mode while holding inputs, updates, seeds, and evaluator fixed", "resultBySeed": [0.28, 0.30, 0.29], "interpretation": "The targeted improvement supports missing contact structure as one cause, but remains a deterministic diagnostic rather than a general solution."},
+  "summary": {"meanEquivariantError": 0.12, "meanBaselineError": 0.13, "errorImprovement": 0.01, "seedEffectRange": [0.01, 0.01], "maximumEquivarianceResidual": 0.018},
+  "checks": ["both thresholds fixed before final rows", "all 3 seeds by 4 angles are present exactly once", "same inputs, 200 updates, seeds, and evaluator are recorded on every main row", "seed-level effects recompute from raw rows", "all contact failures and the diagnostic retry remain outside the confirmatory matrix"],
+  "failure": "All three contact-discontinuity rows fail the residual gate and reverse the error ordering; none is reduced to prose or excluded from the dossier.",
+  "decision": "Not supported: the 0.01 seed-level mean error improvement is below the preregistered 0.05 minimum even though the maximum 0.018 residual passes the rotation-fixture gate. Contact counterexamples fail separately.",
+  "boundary": "This course-scale deterministic result is not evidence of general physical reasoning, learned-model quality, robot performance, or transfer beyond the declared rotations and contact diagnostic.",
   "sourceManifest": [
-    { "kind": "official preregistration guidance", "url": "https://help.osf.io/article/330-welcome-to-registrations", "use": "Freeze the confirmatory protocol and retain amendments." },
-    { "kind": "primary equivariant world-model paper", "url": "https://proceedings.mlr.press/v162/park22a.html", "use": "Verify the symmetry/equivariance claim and published evidence boundary." }
+    {"kind": "official preregistration guidance", "url": "https://help.osf.io/article/330-welcome-to-registrations", "use": "Freeze the confirmatory protocol and retain amendments."},
+    {"kind": "primary equivariant world-model paper", "url": "https://proceedings.mlr.press/v162/park22a.html", "use": "Verify the symmetry/equivariance claim and published evidence boundary."}
   ],
-  "reviewed": "2026-07-14"
+  "reviewed": "2026-07-15"
 }

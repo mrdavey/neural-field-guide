@@ -96,7 +96,7 @@ test("guided examples enforce forecast-before-step and conclusion-after-trace", 
 
 test("shared activity contracts make the task and completion condition visible", () => {
   for (const phrase of ["Learning question", "1 · Do", "2 · Observe", "3 · Explain", "4 · Complete when", "Evidence boundary:"]) assert.ok(sources.activity.includes(phrase), phrase);
-  assert.match(sources.activity, /committed && <div className="activity-after-commit">\{children\}<\/div>/);
+  assert.match(sources.activity, /committed && <MotionReveal stateKey="committed" className="activity-after-commit">\{children\}<\/MotionReveal>/);
   assert.match(sources.activity, /disabled=\{draft\.trim\(\)\.length < minLength\}/);
   for (const [name, source] of Object.entries({ labs: sources.labs, worldLabs: sources.worldLabs, validations: sources.validations, worldValidations: sources.worldValidations, workshop: sources.workshop })) {
     assert.ok(source.includes("<LearningActivityContract"), `${name} visible learning contract`);

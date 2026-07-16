@@ -3,9 +3,12 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
-const [rootReadme, runbook, tokenizer, embedding, olmoProbe, olmoLoader, fim, tokenizerRequirements] = await Promise.all([
+const [rootReadme, runbook, generativeRunbook, rlRunbook, embodiedRunbook, tokenizer, embedding, olmoProbe, olmoLoader, fim, tokenizerRequirements] = await Promise.all([
   read("README.md"),
   read("external-executions/README.md"),
+  read("external-executions/GENERATIVE_DIFFUSION.md"),
+  read("external-executions/RL_DQN.md"),
+  read("external-executions/EMBODIED_POLICY.md"),
   read("external-executions/tokenizer_contract.py"),
   read("external-executions/embedding_identity.py"),
   read("external-executions/olmo_token_accounting.py"),
@@ -14,7 +17,7 @@ const [rootReadme, runbook, tokenizer, embedding, olmoProbe, olmoLoader, fim, to
   read("external-executions/requirements-tokenizers.txt"),
 ]);
 
-test("the repository points learners to one complete external-execution runbook", () => {
+test("the repository points learners to the complete external-execution runbook set", () => {
   assert.match(rootReadme, /external-executions\/README\.md/);
   for (const heading of [
     "Pinned GPT-2 and Qwen tokenizer contract",
@@ -22,6 +25,14 @@ test("the repository points learners to one complete external-execution runbook"
     "Token accounting through the pinned OLMo loader",
     "Paired causal/FIM model ablation",
   ]) assert.ok(runbook.includes(heading), heading);
+  for (const link of ["GENERATIVE_DIFFUSION.md", "RL_DQN.md", "EMBODIED_POLICY.md"]) assert.ok(runbook.includes(link), link);
+  for (const dedicated of [generativeRunbook, rlRunbook, embodiedRunbook]) {
+    assert.match(dedicated, /smoke/i);
+    assert.match(dedicated, /full/i);
+    assert.match(dedicated, /Expected invariants|Expected exact results/i);
+    assert.match(dedicated, /variable observations/i);
+    assert.match(dedicated, /Stop/i);
+  }
   assert.match(runbook, /optional/i);
   assert.match(runbook, /never silently overwrites/i);
 });

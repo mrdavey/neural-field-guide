@@ -3,19 +3,29 @@
   "course": "worldmodel",
   "lessonId": "belief-states-filtering",
   "evidenceTier": "deterministic teaching fixture",
-  "question": "Does action-aware filtering recover from one misleading observation better than using the latest observation alone?",
-  "fixture": { "states": ["A", "B"], "priorA": 0.5, "transitionStay": 0.8, "observationAccuracy": 0.75, "trajectory": ["A", "A", "B", "B"], "observations": ["A", "B", "B", "B"] },
+  "question": "Does action-aware filtering preserve and update uncertainty more faithfully than using the latest observation alone after one misleading sensor reading?",
+  "fixture": {
+    "states": ["A", "B"],
+    "priorA": 0.5,
+    "transition": {"A_to_A": 0.8, "A_to_B": 0.2, "B_to_A": 0.2, "B_to_B": 0.8},
+    "observationLikelihood": {"observe_A_given_A": 0.75, "observe_A_given_B": 0.25, "observe_B_given_A": 0.25, "observe_B_given_B": 0.75},
+    "timing": "At every step, predict the previous posterior through the transition table, then multiply by current-observation likelihoods and normalize.",
+    "trajectory": ["A", "A", "B", "B"],
+    "observations": ["A", "B", "B", "B"]
+  },
   "baseline": "latest observation classifier",
   "changedCase": "observation at step 2 contradicts the hidden state",
   "rawRows": [
-    { "step": 1, "hidden": "A", "observed": "A", "posteriorA": 0.75, "baseline": "A" },
-    { "step": 2, "hidden": "A", "observed": "B", "posteriorA": 0.5, "baseline": "B" },
-    { "step": 3, "hidden": "B", "observed": "B", "posteriorA": 0.25, "baseline": "B" },
-    { "step": 4, "hidden": "B", "observed": "B", "posteriorA": 0.1, "baseline": "B" }
+    {"step": 1, "hidden": "A", "observed": "A", "priorA": 0.5, "predictedA": 0.5, "likelihoodA": 0.75, "likelihoodB": 0.25, "rawA": 0.375, "rawB": 0.125, "evidence": 0.5, "posteriorA": 0.75, "posteriorB": 0.25, "filterChoice": "A", "baselineChoice": "A"},
+    {"step": 2, "hidden": "A", "observed": "B", "priorA": 0.75, "predictedA": 0.65, "likelihoodA": 0.25, "likelihoodB": 0.75, "rawA": 0.1625, "rawB": 0.2625, "evidence": 0.425, "posteriorA": 0.3823529411764706, "posteriorB": 0.6176470588235294, "filterChoice": "B", "baselineChoice": "B"},
+    {"step": 3, "hidden": "B", "observed": "B", "priorA": 0.3823529411764706, "predictedA": 0.4294117647058824, "likelihoodA": 0.25, "likelihoodB": 0.75, "rawA": 0.1073529411764706, "rawB": 0.4279411764705882, "evidence": 0.5352941176470588, "posteriorA": 0.20054945054945056, "posteriorB": 0.7994505494505495, "filterChoice": "B", "baselineChoice": "B"},
+    {"step": 4, "hidden": "B", "observed": "B", "priorA": 0.20054945054945056, "predictedA": 0.3203296703296703, "likelihoodA": 0.25, "likelihoodB": 0.75, "rawA": 0.08008241758241758, "rawB": 0.5097527472527473, "evidence": 0.5898351648351649, "posteriorA": 0.13577084303679552, "posteriorB": 0.8642291569632045, "filterChoice": "B", "baselineChoice": "B"}
   ],
-  "checks": ["posterior mass sums to one", "transition precedes observation update", "zero-likelihood case triggers explicit smoothing policy"],
+  "summary": {"filterStepAccuracy": 0.75, "baselineStepAccuracy": 0.75, "finalPosteriorOnTrueState": 0.8642291569632045, "interpretation": "This particular trajectory ties on hard choices; the filter contributes calibrated mass and an inspectable recovery path, not an accuracy win."},
+  "decisionFixtures": [{"case": "impossible observation", "likelihoodA": 0, "likelihoodB": 0, "evidence": 0, "requiredAction": "reject update or invoke the predeclared likelihood-floor policy"}],
+  "checks": ["posterior mass sums to one at every row", "each row's predictedA equals .8*priorA + .2*(1-priorA)", "transition prediction precedes observation weighting", "zero-evidence case triggers an explicit recovery policy"],
   "failure": "A zero likelihood makes the unnormalized total zero; reject the update or use a predeclared likelihood floor rather than silently returning NaN.",
-  "decision": "The fixture demonstrates filtering arithmetic and recovery behavior only.",
-  "boundary": "No learned model, simulator benchmark, or physical system was measured.",
-  "reviewed": "2026-07-14"
+  "decision": "The recomputable fixture demonstrates transition-before-observation filtering and honest uncertainty. It does not show a hard-classification win over the latest-observation baseline on this trajectory.",
+  "boundary": "No learned model, simulator benchmark, or physical system was measured; the decimals are exact consequences of the declared two-state fixture up to floating-point representation.",
+  "reviewed": "2026-07-15"
 }

@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neural-field-guide.local/schemas/external-experiment-contract-1.0.json",
+  "title": "Neural Field Guide external experiment contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "courseId", "lessonId", "title", "objective", "executionLabel", "revisions", "hardware", "budgets", "commands", "seeds", "nondeterminism", "providers", "expected", "diagnostics", "output", "boundary"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "id": {"type": "string", "minLength": 3},
+    "courseId": {"type": "string", "minLength": 2},
+    "lessonId": {"type": "string", "minLength": 2},
+    "title": {"type": "string", "minLength": 8},
+    "objective": {"type": "string", "minLength": 50},
+    "executionLabel": {"const": "external"},
+    "revisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "dependencies", "models", "datasets"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 10},
+        "dependencies": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "minLength": 1}},
+        "models": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 8}},
+        "datasets": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 8}}
+      }
+    },
+    "hardware": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum", "reference", "memory", "storage"],
+      "properties": {
+        "minimum": {"type": "string", "minLength": 10},
+        "reference": {"type": "string", "minLength": 10},
+        "memory": {"type": "string", "minLength": 10},
+        "storage": {"type": "string", "minLength": 10}
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["smoke", "full", "stop"],
+      "properties": {
+        "smoke": {"type": "string", "minLength": 10},
+        "full": {"type": "string", "minLength": 20},
+        "stop": {"type": "string", "minLength": 20}
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["install", "smoke", "full"],
+      "properties": {
+        "install": {"type": "string", "minLength": 20},
+        "smoke": {"type": "string", "minLength": 30},
+        "full": {"type": "string", "minLength": 30}
+      }
+    },
+    "runbook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "publicUrl", "repositoryPath"],
+      "properties": {
+        "label": {"type": "string", "minLength": 8},
+        "publicUrl": {"type": "string", "minLength": 8},
+        "repositoryPath": {"type": "string", "minLength": 8}
+      }
+    },
+    "seeds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer"}},
+    "nondeterminism": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 15}},
+    "providers": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "setup", "run"],
+        "properties": {
+          "id": {"enum": ["colab", "local", "compatible-service"]},
+          "label": {"type": "string", "minLength": 5},
+          "setup": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 10}},
+          "run": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 10}}
+        }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invariants", "observations", "reviewedReference"],
+      "properties": {
+        "invariants": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 20}},
+        "observations": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 20}},
+        "reviewedReference": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["artifact", "sha256", "reviewed", "evidenceTier", "hardware", "seeds", "rawRows"],
+              "properties": {
+                "artifact": {"type": "string", "minLength": 5},
+                "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+                "reviewed": {"type": "string", "format": "date"},
+                "evidenceTier": {"const": "measured-external-run"},
+                "hardware": {"type": "string", "minLength": 5},
+                "seeds": {"type": "array", "minItems": 1, "items": {"type": "integer"}},
+                "rawRows": {"type": "integer", "minimum": 1}
+              }
+            }
+          ]
+        },
+        "teachingFixture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["artifact", "sha256", "boundary"],
+          "properties": {
+            "artifact": {"type": "string", "minLength": 5},
+            "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "boundary": {"type": "string", "minLength": 50}
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["symptom", "likelyCause", "retry"],
+        "properties": {
+          "symptom": {"type": "string", "minLength": 5},
+          "likelyCause": {"type": "string", "minLength": 15},
+          "retry": {"type": "string", "minLength": 20}
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "schemaVersion", "requiredFields"],
+      "properties": {
+        "path": {"type": "string", "minLength": 5},
+        "schemaVersion": {"type": "string", "minLength": 1},
+        "requiredFields": {"type": "array", "minItems": 4, "items": {"type": "string", "minLength": 2}}
+      }
+    },
+    "boundary": {"type": "string", "minLength": 80}
+  }
+}

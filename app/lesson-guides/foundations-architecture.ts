@@ -276,11 +276,11 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       { title: "Inject position geometry", body: "Add an absolute vector, relative bias, or rotation so position can change representations or attention scores.", checkpoint: "Position information is numerical structure the layers must learn to use—not grammar by itself." },
       { title: "Evaluate beyond training length", body: "Test retrieval, ordering, and generation across positions and lengths rather than assuming the formula extrapolates behavior.", checkpoint: "A model accepting 128k tokens can still neglect evidence inside that window." },
     ],
-    guidedExample: { title: "Order changes reference", setup: "Compare ‘The trophy would not fit in the suitcase because it was too large’ with the same sentence ending ‘too small’.", steps: [
-      "Token identity alone supplies ‘trophy’, ‘suitcase’, ‘it’, and the adjective.",
-      "Position and attention allow ‘it’ to gather information from earlier candidates in their ordered grammatical context.",
-      "Changing the final adjective changes which earlier object best explains the clause, showing that order and content interact rather than acting independently.",
-    ], result: "Position is not a serial number pasted on after meaning. It changes which relationships attention can learn between content-bearing tokens." },
+    guidedExample: { title: "Order changes reference without future leakage", setup: "Compare the completed causal prefixes ‘The trophy would not fit in the suitcase because it was too large’ and ‘…because it was too small’. Inspect the query at the final adjective, which comes after both candidate nouns and the pronoun.", steps: [
+      "Token identity supplies ‘trophy’, ‘suitcase’, ‘it’, and the current adjective; position distinguishes their ordered roles.",
+      "At the adjective position, a causal decoder may attend backward to ‘it’, ‘trophy’, and ‘suitcase’. No earlier ‘it’ representation is allowed to read the later adjective.",
+      "The adjective-position state combines the legal prefix evidence; later layers can use that state to predict a continuation consistent with the more plausible referent.",
+    ], result: "Order and content interact through legal backward attention. Changing the adjective changes states at that position and later—not already-computed states at earlier positions." },
     practice: { prompt: "If every token in a sequence receives the same position vector, what order information remains available to plain self-attention?", hint: "Ask whether rearranging tokens changes anything except their arrangement.", answer: "None from that shared vector. Reordering token embeddings would merely reorder the outputs, because every position received identical extra information. A varying absolute or relative signal is required to distinguish order." },
     resources: [
       { title: "Attention Is All You Need", url: "https://arxiv.org/abs/1706.03762", kind: "Paper", note: "Introduces sinusoidal positional encoding in the original Transformer." },
@@ -309,7 +309,7 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
     ],
     walkthrough: [
       { title: "Project Q, K, and V", body: "Learned matrices transform each residual vector into matching coordinates and information coordinates for each head.", checkpoint: "Q and K need compatible head dimensions; V can encode different content." },
-      { title: "Score, scale, mask, normalize", body: "Compute $QK^{\\mathsf{T}}$, scale by $\\sqrt{d_{head}}$, hide illegal future positions, and apply softmax across visible keys.", checkpoint: "Masking must occur before softmax so visible weights renormalize to one." },
+      { title: "Score, scale, mask, normalize", body: "Compute $QK^{\\mathsf{T}}$, divide every score by $\\sqrt{d_{head}}$, hide illegal future positions, and apply softmax across visible keys.", checkpoint: "Division controls score magnitude; masking must occur before softmax so visible weights renormalize to one." },
       { title: "Retrieve and write", body: "Multiply weights by V, combine heads, apply the output projection, and add the update to the residual stream.", checkpoint: "The original residual is preserved by addition, allowing attention to contribute rather than replace it." },
     ],
     guidedExample: { title: "Resolve a pronoun with a toy head", setup: "In ‘Maya put the book on the table because it was sturdy’, consider the query at ‘it’ and keys at Maya, book, and table.", steps: [

@@ -4,18 +4,27 @@
   "lessonId": "foundation-world-models-case-study",
   "evidenceTier": "sourced comparison template with deterministic decision rules",
   "question": "Which family has the closest demonstrated interface for one named task?",
-  "fixture": { "columns": ["observations", "actions", "target", "decisionUse", "data", "evaluation", "evidenceTier", "sourceUrl", "limits"], "systems": ["DreamerV3", "MuZero", "V-JEPA 2", "Genie"] },
-  "baseline": "rank by visual aesthetics or scale",
+  "fixture": {
+    "columns": ["observations", "actions", "target", "decisionUse", "data", "evaluation", "evidenceTier", "sourceUrl", "limits"],
+    "systems": ["DreamerV3", "MuZero", "V-JEPA 2", "Genie"],
+    "tasks": ["interactive video generation", "image-goal robot planning"]
+  },
+  "baseline": "rank by visual aesthetics or scale without checking the required interface",
   "changedCase": "task changes from interactive video generation to image-goal robot planning",
   "rawRows": [
-    { "system": "DreamerV3", "actionConditioned": true, "decisionUse": "actor-value imagination", "evidence": "primary paper", "sourceUrl": "https://arxiv.org/abs/2301.04104" },
-    { "system": "MuZero", "actionConditioned": true, "decisionUse": "tree search", "evidence": "primary paper", "sourceUrl": "https://www.nature.com/articles/s41586-020-03051-4" },
-    { "system": "V-JEPA 2", "actionConditioned": "post-training component", "decisionUse": "image-goal planning", "evidence": "primary paper and official artifacts", "sourceUrl": "https://ai.meta.com/research/publications/v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning/" },
-    { "system": "Genie", "actionConditioned": "latent controls", "decisionUse": "interactive generation", "evidence": "primary paper; named official release reports remain a separate evidence tier", "sourceUrl": "https://deepmind.google/research/publications/60474/" }
+    {"system": "DreamerV3", "observations": "environment observations such as pixels or low-dimensional state", "actions": "environment actions", "target": "latent dynamics with observation, reward, continuation, value, and policy learning", "decisionUse": "actor-value learning in latent imagination", "data": "agent experience from the evaluated environments", "evaluation": "task return across the paper's evaluated domains", "evidenceTier": "primary paper", "sourceUrl": "https://arxiv.org/abs/2301.04104", "limits": "demonstrates agent learning, not an interactive video-generation interface or universal robot planner"},
+    {"system": "MuZero", "observations": "observation history encoded at the search root", "actions": "task action space expanded in tree search", "target": "recurrent hidden reward plus policy and value", "decisionUse": "Monte Carlo tree search", "data": "task trajectories or self-play under the published setup", "evaluation": "task performance in the paper's evaluated game domains", "evidenceTier": "primary paper", "sourceUrl": "https://www.nature.com/articles/s41586-020-03051-4", "limits": "task-relevant hidden dynamics do not claim observation reconstruction or interactive video generation"},
+    {"system": "V-JEPA 2", "observations": "video/image observations with image-goal conditioning in the planning component", "actions": "robot actions in the post-training planning component", "target": "predictive visual representations plus action-conditioned planning components", "decisionUse": "image-goal robot planning", "data": "video pretraining plus the action-conditioned data described by the source", "evaluation": "published understanding, prediction, and planning evaluations", "evidenceTier": "primary paper and official artifacts", "sourceUrl": "https://ai.meta.com/research/publications/v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning/", "limits": "the robot action interface is a demonstrated post-training component, not a universal controller or interactive video generator"},
+    {"system": "Genie", "observations": "video frames", "actions": "learned latent action controls inferred from video", "target": "action-conditioned future video generation", "decisionUse": "interactive generated environments", "data": "video data described by the primary paper", "evaluation": "controllability and generated-environment evaluations reported by the source", "evidenceTier": "primary paper; later official releases require separate dated evidence", "sourceUrl": "https://deepmind.google/research/publications/60474/", "limits": "latent controls do not by themselves establish a typed physical robot action interface or image-goal deployment"}
   ],
-  "checks": ["unknown cells remain unknown", "task requirements precede ranking", "release claims retain source and date"],
-  "failure": "An unknown action-interface cell makes the selection conditional rather than silently awarding a score.",
-  "decision": "For image-goal robotics, begin with demonstrated action-conditioned robot interfaces and retain deployment gaps.",
-  "boundary": "This table does not normalize data, compute, or benchmark outcomes and cannot support a universal ranking.",
-  "reviewed": "2026-07-14"
+  "baselineDecision": {"task": "both tasks", "rule": "largest or most visually impressive system wins", "result": "INVALID", "reason": "scale/aesthetics do not establish required observation, action, target, or decision interfaces"},
+  "changedTaskDecisions": [
+    {"task": "interactive video generation", "requiredInterfaces": ["video observations", "controllable action input", "future visual generation"], "conditionalSelection": "Genie", "unresolvedGates": ["typed real action semantics", "task-specific fidelity and safety", "matched compute/evaluation"]},
+    {"task": "image-goal robot planning", "requiredInterfaces": ["visual observation and goal", "robot action input", "action-conditioned planning evaluation"], "conditionalSelection": "V-JEPA 2 planning component", "unresolvedGates": ["embodiment/task transfer", "latency and constraints", "matched physical validation"]}
+  ],
+  "checks": ["all nine declared columns are present in every system row", "unknown or unsupported interfaces remain limits rather than imputed scores", "task requirements precede conditional selection", "the changed task recomputes the decision instead of reusing the first ranking", "release claims retain source and review date"],
+  "failure": "A missing or only post-training action-interface claim makes a selection conditional; the table never silently awards a universal score for that cell.",
+  "decision": "Interactive generation and image-goal robot planning yield different conditional starting points, so no universal family ranking survives the task change.",
+  "boundary": "This sourced table does not normalize data, compute, implementation maturity, or benchmark outcomes and cannot establish production readiness, broad superiority, or physical transfer.",
+  "reviewed": "2026-07-15"
 }
