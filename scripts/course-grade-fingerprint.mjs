@@ -5,6 +5,20 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const courseIds = ["llm", "worldmodel", "generative", "rl", "embodied"];
+const generatedDirectoryNames = new Set([
+  ".cache",
+  ".mypy_cache",
+  ".next",
+  ".pytest_cache",
+  ".ruff_cache",
+  "__pycache__",
+  "coverage",
+  "dist",
+  "node_modules",
+  "out",
+]);
+const generatedFileNames = new Set([".DS_Store", "Thumbs.db"]);
+const generatedFileSuffixes = [".class", ".map", ".orig", ".pyc", ".pyo", ".rej", ".swo", ".swp", ".temp", ".tmp", ".tsbuildinfo", "~"];
 const common = [
   "app/activity-info.tsx",
   "app/capstone-project-view.tsx",
@@ -34,7 +48,16 @@ const scoped = {
   embodied: ["app/embodied", "external-executions/EMBODIED_POLICY.md", "external-executions/embodied_action_chunk_ablation.py", "external-executions/requirements-embodied.txt", "public/capstone-artifacts/embodied", "public/experiment-runbooks/EMBODIED_POLICY.md"],
 };
 
+export function isFingerprintSource(path) {
+  const segments = path.replaceAll("\\", "/").split("/").filter(Boolean);
+  const fileName = segments.at(-1) ?? "";
+  if (segments.some((segment) => generatedDirectoryNames.has(segment))) return false;
+  if (generatedFileNames.has(fileName)) return false;
+  return !generatedFileSuffixes.some((suffix) => fileName.endsWith(suffix));
+}
+
 async function filesUnder(path) {
+  if (!isFingerprintSource(path)) return [];
   const absolute = join(root, path);
   const info = await stat(absolute);
   if (info.isFile()) return [absolute];
@@ -42,7 +65,9 @@ async function filesUnder(path) {
   const files = [];
   for (const entry of entries) {
     const child = join(absolute, entry.name);
-    if (entry.isDirectory()) files.push(...await filesUnder(relative(root, child)));
+    const childPath = relative(root, child);
+    if (!isFingerprintSource(childPath)) continue;
+    if (entry.isDirectory()) files.push(...await filesUnder(childPath));
     else if (entry.isFile()) files.push(child);
   }
   return files;
