@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { assertArtifactEquivalent } from "./assert-artifact-equivalent.mjs";
 
 const vocabulary = ["a", "b", "c", " "];
 const sequence = [0, 1, 0, 2, 0];
@@ -125,7 +126,7 @@ export function runTinyGptReference() {
 const result = runTinyGptReference();
 if (process.argv.includes("--verify")) {
   const preserved = JSON.parse(await readFile(new URL("../public/capstone-artifacts/tiny-gpt-reference-run.json", import.meta.url), "utf8"));
-  assert.deepEqual(preserved, result);
+  assertArtifactEquivalent(preserved, result);
   console.log("Verified executable tiny-GPT reference against the preserved run.");
 } else {
   console.log(JSON.stringify(result, null, 2));
