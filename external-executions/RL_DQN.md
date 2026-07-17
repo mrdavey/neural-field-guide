@@ -26,7 +26,7 @@ python external-executions/rl_dqn_target_ablation.py \
   --output external-executions/runs/rl-dqn-full.json
 ```
 
-Full uses seeds 11/23/41/53/67, 20,000 environment steps per arm, and 100 frozen-policy evaluation episodes per seed. Preserve every arm and failure row. There is deliberately no expected numeric performance band or promised target-interval winner because no matching authentic reference run has been reviewed.
+Full uses seeds 11/23/41/53/67, 20,000 environment steps and 19,937 post-warmup optimizer updates per arm, and 100 frozen-policy evaluation episodes per seed. Preserve every arm and failure row. There is deliberately no expected numeric performance band or promised target-interval winner because no matching authentic reference run has been reviewed.
 
 ## Troubleshoot without hiding changes
 

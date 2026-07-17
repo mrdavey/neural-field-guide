@@ -1,50 +1,104 @@
 # Course page grading rubric
 
-Reviewed: 16 July 2026
+Reviewed: 17 July 2026
 
-## Population and gate
+## Population and grading unit
 
-Grade all 187 canonical released course pages: five course homes and 182 lesson pages. Root/legacy redirects are routing artifacts and are verified separately. A lesson grade covers the complete composed page—not only its short definition—including Orient, Learn, Try, Test, Extend, objective coverage, worked traces, vocabulary, code, labs, transfer, sources, external execution, validation, and capstone surfaces when present.
+Grade all 187 canonical released course pages: five course homes and 182 lesson pages. Root and legacy redirects are routing artifacts and are verified separately.
 
-Every page must score **at least 95/100**. A course average cannot compensate for one weak page. A page also fails if it has a material technical falsehood, an unmet visible objective, an undefined prerequisite required to follow the mechanism, or no meaningful commit-before-answer transfer check, regardless of arithmetic total.
+The grading unit is **one complete page read from top to bottom**. A lesson is not a collection of independently scored components. Its opening, prerequisite bridge, long-form explanation, vocabulary, worked mechanism, visual representations, guided activities, lab, transfer work, assessment, capstone material, and sources must form one coherent learning narrative. A technically strong lab cannot repair an unexplained chapter, and polished prose cannot compensate for an inaccurate mechanism.
 
-## Independent 100-point rubric
+The grader must use one reader snapshot produced by `scripts/course-page-reader-snapshot.mjs`. The snapshot places every learner-facing surface in its intended reading order and excludes previous grades. The grader reads the complete dossier before assigning any score or writing feedback.
 
-| Code | Dimension | Points | Full-credit evidence |
-|---|---|---:|---|
-| A | Technical accuracy and currentness | 25 | Mechanisms, notation, arithmetic, interfaces, and claims are correct; evidence strength matches provenance; time-sensitive details are pinned or reviewed. |
-| C | Objective coverage and progressive clarity | 25 | Every visible outcome is fully taught; terms are defined before use; prerequisites are activated; explanation progresses from plain language to precise inputs, transformation, outputs, and system role. |
-| E | Worked examples and analogy boundaries | 15 | At least one concrete, internally consistent value/shape/token/trace/scenario exposes the promised mechanism; analogies state where they stop applying. |
-| I | Active learning and diagnostic feedback | 15 | The learner predicts or decides before reveal; controls expose a causal variable; feedback is choice/error specific; retry returns to the failed reasoning step. |
-| D | Depth, limitations, and transfer | 10 | Failure modes, uncertainty, trade-offs, and claim boundaries are explicit; changed-case practice requires transfer rather than wording recall. |
-| S | Deterministic assessment and scaffolding | 5 | Required checks are locally and honestly graded where possible, with observable completion conditions, hints, worked reasoning, and a retry path. |
-| R | Reading, revision, and provenance | 5 | Sources are direct and claim-linked, resource use is explained, review/revision is visible, and simulations/fixtures/external evidence are labeled honestly. |
+## Four whole-page scores
 
-## Non-compensable floors
+Each dimension receives an integer score from 0 to 100. Scores describe the complete page, not averages of component scores.
 
-For a passing page:
+| Record field | Whole-page dimension | What a 95–100 page demonstrates |
+| --- | --- | --- |
+| `accuracy` | Accuracy | The central mechanism, terminology, notation, arithmetic, shapes, interfaces, examples, limitations, and assessment answers agree. Evidence strength matches provenance; simulations and fixtures are labeled honestly; time-sensitive claims are current or pinned. |
+| `writtenNarrative` | Written narrative | The page reads like a strong textbook chapter in plain English. It opens with a meaningful question or situation, develops ideas in complete connected paragraphs, defines terms before relying on them, sustains examples long enough to build intuition, and closes or hands off the argument without sounding assembled from cards. |
+| `flow` | Flow | Prior knowledge is activated where it is needed; each section earns the next; headings describe the concept being learned; transitions prepare visuals and activities and debrief their observations; repetition consolidates rather than restarts; the next-use statement follows naturally from the chapter. |
+| `learningContent` | Learning content | Every visible outcome is actually taught with a plain explanation, precise causal mechanism, concrete worked case, boundary or misconception, and an observable check. Learners predict or decide before reveal, receive diagnostic feedback and a retry route, and transfer the mechanism to a changed case without needing an account, teacher, or external grader. |
 
-- total must be at least 95;
-- A must be at least 24/25;
-- C must be at least 23/25;
-- E must be at least 14/15;
-- I must be at least 14/15;
-- D must be at least 9/10;
-- S must be 5/5;
-- R must be at least 4/5;
-- no blocking defect may remain.
+Course homes use the same four dimensions with page-appropriate evidence. A home must accurately motivate the subject, make a credible promise, show a coherent course arc, preserve evidence boundaries, and lead to a useful next action. It does not need to reproduce lesson-level prerequisite or assessment detail.
 
-Course homes use the same rubric with page-appropriate evidence. They are destination-led landing pages: each must accurately motivate the subject, state a credible course promise, preview the payoff and course arc, provide an effective next action, preserve honest evidence and research boundaries, and avoid promising teaching that the linked lessons do not supply. Dependency details remain available in curriculum data and lesson orientation; the home should not become a readiness checklist.
+## Passing gate
 
-## Grading procedure
+A page passes only when all of the following are true:
 
-1. Grade the current complete page from scratch; do not carry forward an earlier score.
-2. Compare every exact objective with all page surfaces and follow prerequisite/next-use links when checking ordering—not when filling missing teaching.
-3. Recalculate worked arithmetic and inspect shapes, units, masks, frames, evidence classes, and stopping rules.
-4. Deduct only for an identified page-level gap. Record the reason for every deduction and the exact source surface that would repair it.
-5. Treat uncertainty as a failure requiring verification or remediation; do not award optimistic points.
-6. After authoring changes, use a fresh independent regrade. Structural tests may verify joins but cannot assign semantic points.
+- `accuracy >= 95`;
+- `writtenNarrative >= 95`;
+- `flow >= 95`;
+- `learningContent >= 95`;
+- `overall`, the arithmetic mean of the four scores, is at least 95;
+- `blockingDefects` is empty; and
+- `pass` is `true` and exactly reflects those conditions.
+
+No course average and no exceptional section can compensate for a weak page or dimension.
+
+## Blocking defects
+
+Record a blocking defect when the page contains any of the following, regardless of its numerical scores:
+
+- a material technical falsehood, contradictory calculation, or incorrect answer;
+- an unmet visible objective or a prerequisite idea required but never introduced;
+- an incoherent or contradictory narrative that prevents the mechanism from being followed top to bottom;
+- a required interaction whose instructions, result, or evidence boundary makes its learning claim misleading;
+- no meaningful commit-before-answer changed-case check for a lesson; or
+- required learning content that cannot be completed with the page's declared self-contained path.
+
+Each blocker is one concise page-level diagnosis. Do not split one underlying narrative problem into repeated component defects.
+
+## Blind whole-page grading procedure
+
+1. Generate a current dossier with `node scripts/course-page-reader-snapshot.mjs --route /course/page/ --pretty` or the equivalent course/page filters. To start a course record, run `node scripts/course-page-reader-snapshot.mjs --course COURSE_ID --grade-draft --pretty`; this creates canonical page identities, current dossier hashes, the current source fingerprint, and null judgment fields without reading an earlier grade file. The draft is intentionally invalid as a final record until a grader fills every judgment field after a blind read.
+2. Give the independent grader only that one dossier and this rubric. Do not provide earlier grades, rationales, feedback, revision notes, or the scores of adjacent pages.
+3. Read every block once in ascending `order` before taking scoring notes. Within a block, follow any `readingSequence` or `interactionSequence` in array order and keep `disclosureContent` at its labeled reveal point. Read revealed answers, feedback, alternate lab results, and capstone references as part of the page while respecting their commit-before-reveal sequence.
+4. Recalculate important arithmetic and inspect the complete input → transformation → output chain. Check prerequisite and next-use context for ordering, not as substitutes for missing teaching.
+5. Judge whether the page forms one sustained explanation. Pay particular attention to abrupt restarts, duplicated definitions, generic transitions, activities introduced before their purpose is clear, and late sections that do not resolve or extend the opening question.
+6. Assign the four whole-page scores. Do not create or average component-level grades.
+7. Write one consolidated `wholePageReview`, then identify no more than three ordered page-level revision priorities.
+8. After revisions, use a fresh blind dossier and a fresh independent read. Do not edit the old score upward from memory.
+
+Structural tests can verify population, hashes, schema, arithmetic, and thresholds. They cannot award semantic scores or certify narrative quality.
 
 ## Required grader record
 
-Each row records route, stable page ID, A/C/E/I/D/S/R subscores, total, PASS/FAIL, and concise deduction evidence. Every failing row also records a precise remedy. Final reports preserve the audit history; they do not overwrite earlier failures.
+Each course JSON record uses rubric revision `2026-07-17` and records:
+
+- an independent whole-page grader declaration with `input: "course-page-reader-snapshot"`, `blind: true`, and `priorGradesSeen: false`;
+- the current learner-facing `sourceFingerprint`;
+- one row for every canonical route in registry order; and
+- the row's current `readerSnapshotHash`, so a score cannot silently survive a changed reading dossier.
+
+The course record contains only `rubricRevision`, `gradedAt`, `sourceFingerprint`, `grader`, `courseId`, `population`, and `pages`. The grader declaration contains only `role`, `method`, `input`, `blind`, and `priorGradesSeen`. Parallel component-feedback collections are invalid at both levels.
+
+Each page row contains only identity fields, the four scores, `overall`, `pass`, `blockingDefects`, and exactly one `wholePageReview` object:
+
+```json
+{
+  "pageType": "lesson",
+  "id": "example-lesson",
+  "route": "/course/example-lesson/",
+  "readerSnapshotHash": "sha256:…",
+  "accuracy": 96,
+  "writtenNarrative": 95,
+  "flow": 97,
+  "learningContent": 96,
+  "overall": 96,
+  "pass": true,
+  "blockingDefects": [],
+  "wholePageReview": {
+    "synopsis": "A concise account of the complete page's learning journey.",
+    "feedback": "One consolidated assessment of accuracy, narrative, flow, and learning value across the page.",
+    "revisionPriorities": [
+      "At most three ordered page-level improvements, stated once each."
+    ]
+  }
+}
+```
+
+`overall` is the exact arithmetic mean of the four integer scores. `revisionPriorities` may contain zero to three non-duplicative items; a failing page must name at least one.
+
+The grader must not add per-component scores, card-by-card comments, repeated feedback arrays, or a separate rationale. A visual, lab, paragraph, or assessment may be cited as evidence for a whole-page diagnosis, but feedback must explain how it affects the page's accuracy, narrative, flow, or learning journey rather than reviewing that component in isolation.

@@ -18,7 +18,9 @@ export function ResearchCourseLab({ lessonTitle, spec }: { lessonTitle: string; 
       commitLabel="Compare with the mechanism"
       reviseLabel="Revise explanation"
       responseLabel="Your explanation"
-      preview={<>
+      onRevise={() => setChoice(0)}
+      preview={<div className="research-case-preview"><span>Cases you will compare after committing</span><ul>{spec.cases.map((item) => <li key={item.label}>{item.label}</li>)}</ul></div>}
+    >
       <div className="research-case-control" role="group" aria-label={`${spec.controlLabel} for ${lessonTitle}`}>
         <span>{spec.controlLabel}</span>
         <div>{spec.cases.map((item, index) => <button type="button" key={item.label} className={choice === index ? "active" : ""} aria-pressed={choice === index} onClick={() => setChoice(index)}>{item.label}</button>)}</div>
@@ -28,8 +30,6 @@ export function ResearchCourseLab({ lessonTitle, spec }: { lessonTitle: string; 
         <meter min="0" max="100" value={active.meter}>{active.meter}%</meter>
         <p><MathText>{active.detail}</MathText></p>
       </div>
-      </>}
-    >
       <div className="lab-observation-guide"><span>Mechanism</span><p><MathText>{`${spec.observe} ${spec.explain}`}</MathText></p></div>
     </PredictionGate>
   </section>;

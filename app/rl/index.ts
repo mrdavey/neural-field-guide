@@ -23,7 +23,7 @@ export const rlLearningPhases = manifest.tracks.map((track,index)=>{ const items
 export const rlLessons: Lesson[] = rlSpecs.map((spec)=>spec.lesson);
 export const rlLessonById = Object.fromEntries(rlLessons.map((lesson)=>[lesson.id,lesson])) as Record<string,Lesson>;
 export const rlCurriculumMinutes = rlLessons.reduce((sum,lesson)=>sum+lesson.duration,0);
-export const rlLessonGuides = Object.fromEntries(rlSpecs.map((spec)=>{ const planned=manifest.lessons.find((lesson)=>lesson.id===spec.lesson.id)!; return [spec.lesson.id,researchGuide(spec,planned.build,planned.nextUse)]; })) as Record<string,LessonGuide>;
+export const rlLessonGuides = Object.fromEntries(rlSpecs.map((spec)=>{ const planned=manifest.lessons.find((lesson)=>lesson.id===spec.lesson.id)!; const nextId=planned.nextUse.includes(":")?planned.nextUse.split(":").at(-1)!:planned.nextUse; const nextTitle=manifest.lessons.find((lesson)=>lesson.id===nextId)?.title; return [spec.lesson.id,researchGuide(spec,planned.nextUse,nextTitle)]; })) as Record<string,LessonGuide>;
 export const rlObjectiveCoverage = Object.fromEntries(rlSpecs.map((spec)=>[spec.lesson.id,[...spec.coverage]])) as Record<string,ObjectiveCoverage[]>;
 export const rlMotionStories = Object.fromEntries(rlSpecs.map((spec)=>[spec.lesson.id,researchMotion(spec)])) as Record<string,LessonMotionStory>;
 export const rlTransferChecks = Object.fromEntries(rlSpecs.map((spec)=>[spec.lesson.id,spec.transfer])) as Record<string,WorldModelTransfer>;

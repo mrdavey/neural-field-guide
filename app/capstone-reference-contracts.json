@@ -48,23 +48,23 @@
       "requiredCells": [
         {
           "family": "flow",
-          "budgetUnit": "direct samples",
-          "budgetAmount": 100
+          "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+          "budgetAmount": 8
         },
         {
           "family": "energy",
-          "budgetUnit": "gradient evaluations per retained state",
-          "budgetAmount": 20
+          "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+          "budgetAmount": 2740
         },
         {
           "family": "energy",
-          "budgetUnit": "gradient evaluations per retained state",
-          "budgetAmount": 100
+          "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+          "budgetAmount": 13700
         },
         {
           "family": "energy",
-          "budgetUnit": "gradient evaluations per retained state",
-          "budgetAmount": 500
+          "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+          "budgetAmount": 68500
         }
       ]
     },
@@ -104,9 +104,9 @@
           61,
           62
         ],
-        "sampler": [
-          "baseline",
-          "treatment"
+        "arm": [
+          "control",
+          "nfe-intervention"
         ]
       }
     },
@@ -324,7 +324,7 @@
       },
       "primitiveBudget": {
         "environmentInteractions": 20000,
-        "optimizerUpdates": 5000
+        "optimizerUpdates": 19937
       },
       "metric": {
         "field": "evaluationSuccessRate",

@@ -66,9 +66,25 @@ test("the code path contains a defensible QLoRA experiment contract", () => {
     "adapter_config.json",
     "evaluation_report.json",
     "environment.lock.txt",
+    "MODEL_REVISION",
+    "revision=MODEL_REVISION",
+    "AutoModelForCausalLM.from_pretrained",
+    "processing_class=tokenizer",
+    "return_assistant_tokens_mask=True",
+    "assistant_masks",
+    "0 < sum(assistant_mask) < len(mask_probe[\"input_ids\"])",
   ]) {
     assert.ok(source.workshop.includes(contract), `missing QLoRA contract: ${contract}`);
   }
+  const trainerCall = source.workshop.match(/trainer = SFTTrainer\(\n([\s\S]*?)\n\)/)?.[1];
+  assert.ok(trainerCall, "SFTTrainer construction should remain inspectable");
+  assert.doesNotMatch(trainerCall, /quantization_config/);
+  assert.doesNotMatch(source.workshop, /pip install -U/);
+  assert.match(source.workshop, /trl\[peft\]==1\.7\.1/);
+  assert.match(source.workshop, /cdbee75f17c01a7cc42f958dc650907174af0554/);
+  assert.match(source.workshop, /c1899de289a04d12100db370d81485cdf75e47ca/);
+  assert.match(source.workshop, /pip freeze --all > environment\.lock\.txt/);
+  assert.match(source.workshop, /pip install -r environment\.lock\.txt/);
 });
 
 test("the workshop teaches governance, regression testing, and active planning", () => {

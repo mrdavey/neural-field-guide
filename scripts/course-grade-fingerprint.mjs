@@ -31,6 +31,7 @@ const common = [
   "app/learning-activities.css",
   "app/lesson-concept-plate.tsx",
   "app/lesson-guide-view.tsx",
+  "app/lesson-narrative-handoffs.ts",
   "app/lesson-visual-manifest.json",
   "app/lesson-visuals.ts",
   "app/math-text.tsx",

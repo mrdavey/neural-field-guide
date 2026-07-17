@@ -98,12 +98,11 @@ function DeterministicVisual({ visual }: { visual: LessonVisual }) {
       <span>{String(index + 1).padStart(2, "0")}</span>
       <div className={stageClass(index)}><StageGlyph concept={visual.concept} index={index}/></div>
       <strong>{label}</strong>
-      <p><MathText>{visual.stageDescriptions[index]}</MathText></p>
     </div>)}
   </div>;
 }
 
-export function LessonConceptPlate({ courseId, lesson }: { courseId: CourseId; lesson: Lesson }) {
+export function LessonConceptPlate({ courseId, lesson, heading }: { courseId: CourseId; lesson: Lesson; heading: string }) {
   const visual = lessonVisualFor(courseId, lesson.id);
   const titleId = `lesson-visual-title-${courseId}-${lesson.id}`;
   const style = { "--visual-accent": "var(--track)" } as CSSProperties;
@@ -112,8 +111,7 @@ export function LessonConceptPlate({ courseId, lesson }: { courseId: CourseId; l
   return <figure className={`lesson-concept-plate is-${visual.kind}`} style={style} aria-labelledby={titleId}>
     <header>
       <span className="eyebrow">Concept in one view</span>
-      <h2 id={titleId}><MathText>{lesson.simple}</MathText></h2>
-      <p><MathText>{lesson.mentalModel}</MathText></p>
+      <h2 id={titleId}><MathText>{heading}</MathText></h2>
     </header>
 
     {visual.kind === "raster" && asset ? <div className="lesson-visual-raster-frame">
@@ -125,12 +123,12 @@ export function LessonConceptPlate({ courseId, lesson }: { courseId: CourseId; l
     </div> : <DeterministicVisual visual={visual}/>} 
 
     <figcaption>
-      <div><strong>Trace the mechanism</strong><p><MathText>{visual.stageDescriptions.join(" → ")}</MathText></p></div>
-      <div><strong>Important limit</strong><p><MathText>{lesson.misconception}</MathText></p></div>
+      <div><strong>A useful mental model</strong><p><MathText>{lesson.mentalModel}</MathText></p></div>
     </figcaption>
     <details className="lesson-visual-description">
       <summary>Read a text-only explanation</summary>
-      <p><MathText>{`${lesson.mentalModel} The mechanism progresses through ${visual.labels.join(" → ")}. ${lesson.example}`}</MathText></p>
+      <p><MathText>{visual.stageDescriptions.map((description, index) => `${visual.labels[index]}: ${description}`).join(" ")}</MathText></p>
+      <p><strong>Important limit:</strong> <MathText>{lesson.misconception}</MathText></p>
     </details>
     <small className="lesson-visual-evidence">{visual.kind === "raster" ? "Generated concept illustration · exact labels are code-rendered · not a measurement" : "Deterministic SVG/HTML diagram · exact labels, illustrative layout"}</small>
   </figure>;

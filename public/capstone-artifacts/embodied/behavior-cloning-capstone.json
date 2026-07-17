@@ -2,37 +2,426 @@
   "schemaVersion": 1,
   "course": "embodied",
   "lessonId": "behavior-cloning-capstone",
-  "evidenceKind": "reviewed deterministic teaching fixture",
+  "evidenceKind": "reviewed deterministic local NumPy teaching fixture",
   "starter": {
     "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
-    "command": "python3 embodied_capstone_starter.py --project behavior-cloning-capstone --output behavior-cloning-starter.json",
-    "expected": "Episode-split declaration, nominal support, changed-start first-departure, and assistance-label checks all print true.",
-    "boundary": "The lookup policy demonstrates evidence wiring; it is not the trained cloning model required by the capstone."
+    "requirementsUrl": "capstone-artifacts/embodied/requirements-capstones.txt",
+    "command": "python3 embodied_capstone_starter.py --project behavior-cloning-capstone --profile smoke --output behavior-cloning-capstone-smoke.json",
+    "expected": "All eight episode-split, mask, scaling, trainability, checkpoint-resume, nominal rollout, support-departure, and action-ledger checks are true.",
+    "boundary": "This command trains and evaluates a small local NumPy linear policy in the deterministic course environment; it is not an external-simulator or physical-robot result."
   },
   "implementation": {
-    "requiredComponents": ["whole-episode data split", "typed observation encoder", "scaled action or chunk decoder", "masked supervised loss", "optimizer and complete checkpoint", "requested/applied logger", "closed-loop simulator evaluator", "support and first-divergence audit"],
-    "buildOrder": ["Validate lineage, units, targets, and masks", "Overfit one tiny batch", "Train the nominal baseline", "Restore and prove next-step equivalence", "Run clean closed-loop acceptance", "Branch the same policy into a changed-start rollout"],
-    "localCommands": ["python3 embodied_capstone_starter.py --project behavior-cloning-capstone --output behavior-cloning-starter.json", "python3 -m unittest test_dataset.py test_policy.py test_resume.py"],
-    "artifacts": ["dataset-manifest.json", "split-hashes.json", "checkpoint.pt", "training-curves.json", "nominal-rollouts.jsonl", "changed-start-rollouts.jsonl", "failure.log"]
+    "requiredComponents": [
+      "typed whole-episode trajectory dataset",
+      "disjoint train, validation, and test episode splits",
+      "observation and action scaling with exact inverse",
+      "masked two-field supervised objective",
+      "trainable linear policy and momentum optimizer",
+      "complete schema-versioned NPZ checkpoint",
+      "next-update-equivalent resume branch",
+      "closed-loop requested/applied and demonstrated-support evaluator"
+    ],
+    "buildOrder": [
+      "Install the pinned NumPy dependency and run tests/test_dataset.py, tests/test_policy.py, and tests/test_resume.py",
+      "Freeze episode lineage, observation fields, action fields, masks, scales, and whole-episode splits",
+      "Prove scaling round-trip and one-batch masked-loss reduction",
+      "Train direct and interrupted branches from the same seed",
+      "Restore weights, optimizer velocity, step counter, scaler, and training episode IDs and prove exact final weights",
+      "Evaluate nominal and changed-start closed loops and preserve the checkpoint receipt plus every trace row"
+    ],
+    "localCommands": [
+      "python3 -m pip install -r requirements-capstones.txt",
+      "python3 -m unittest tests/test_dataset.py tests/test_policy.py tests/test_resume.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "python3 embodied_capstone_starter.py --project behavior-cloning-capstone --profile smoke --output behavior-cloning-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --verify-dossier behavior-cloning-capstone-smoke.json"
+    ],
+    "artifacts": [
+      "behavior-cloning-capstone-smoke.json",
+      "behavior-cloning-capstone-smoke-bc-checkpoint.npz",
+      "checkpoint SHA-256 receipt",
+      "nominal-and-changed-start traces",
+      "failure.log"
+    ]
   },
   "acceptanceChecks": [
-    {"id": "targets", "action": "Check action units, target shifts, episode-end padding, and requested/applied ownership on hand examples.", "expected": "All unpadded targets match the demonstrated applied actions and padded targets contribute zero loss."},
-    {"id": "resume", "action": "Restore model, optimizer, sampler, counters, and RNG immediately before an update.", "expected": "The next batch IDs, loss, parameter hash, and counter match the uninterrupted branch."},
-    {"id": "compounding-error", "action": "Run the unchanged accepted policy from nominal and +2 cm starts under paired simulator seeds.", "expected": "Record support at every step, first state/action divergence, requested/applied commands, intervention, and final task/constraint outcome."}
+    {
+      "id": "data-and-loss",
+      "action": "Inspect complete episode IDs across splits, compare action-target and mask shapes, invert scaling, and train the masked objective.",
+      "expected": "Splits are disjoint by episode, mask and targets share shape, scaling round-trips exactly, and final masked loss is below one percent of its initial value."
+    },
+    {
+      "id": "complete-resume",
+      "action": "Interrupt after half the updates, serialize the complete NPZ state, restore it, and finish beside an uninterrupted seed-31 branch.",
+      "expected": "Weights, optimizer velocity, step counter, scaler arrays, and training episode IDs are restored; final weight arrays are exactly equal; and the checkpoint path, contents, and SHA-256 receipt are independently verified."
+    },
+    {
+      "id": "closed-loop-support",
+      "action": "Run the restored policy from nominal x=0.0 m and changed x=-0.45 m with the same support watchdog and twelve-step horizon.",
+      "expected": "The nominal rollout reaches the target autonomously; the changed start departs support at step zero, applies holds, and remains an assisted failure with requested/applied rows."
+    }
   ],
   "manifest": {
-    "policy": "lookup cloning fixture",
+    "profile": "smoke",
     "seed": 31,
-    "intervention": "2 cm start shift",
+    "datasetSchema": "typed-trajectory/1.0",
+    "splitEpisodeIds": {
+      "train": [
+        "episode-00",
+        "episode-01",
+        "episode-02",
+        "episode-03"
+      ],
+      "validation": [
+        "episode-04"
+      ],
+      "test": [
+        "episode-05"
+      ]
+    },
+    "observationFields": [
+      "x_m",
+      "target_error_m"
+    ],
+    "actionFields": [
+      "dx_m",
+      "gripper_close"
+    ],
+    "maskedLoss": "sum(mask * squared scaled error) / sum(mask)",
+    "optimizer": {
+      "name": "full-batch momentum gradient descent",
+      "updates": 360
+    },
+    "changedStartM": -0.45,
     "independentUnit": "closed-loop episode",
-    "matrixAxes": {"arm": ["nominal", "shift"]}
+    "matrixAxes": {
+      "arm": [
+        "nominal",
+        "changed_start"
+      ]
+    }
   },
-  "invariants": {"policyRevisionMatched": true, "onlyStartChanged": true, "requestedAndAppliedLogged": true, "allDeclaredCellsPresent": true},
+  "checks": {
+    "whole_episode_splits_are_disjoint": true,
+    "masks_and_scaled_targets_share_shape": true,
+    "scaling_round_trip_is_exact": true,
+    "one_batch_fit_reduces_masked_loss": true,
+    "checkpoint_restores_complete_training_state": true,
+    "nominal_closed_loop_reaches_target": true,
+    "changed_start_exposes_support_departure": true,
+    "requested_and_applied_actions_are_logged": true
+  },
   "rawRows": [
-    {"arm": "nominal", "supportDeparture": null, "workspaceExit": null, "success": true, "intervention": false, "autonomous": true},
-    {"arm": "shift", "supportDeparture": 2, "workspaceExit": 5, "success": false, "intervention": true, "autonomous": false}
+    {
+      "arm": "nominal",
+      "trainingLossStart": 0.8090199624537533,
+      "trainingLossEnd": 8.32014602560119e-9,
+      "startXM": 0,
+      "finalXM": 0.9312805232639714,
+      "success": true,
+      "supportDeparture": null,
+      "intervention": false,
+      "autonomous": true,
+      "trace": [
+        {
+          "step": 0,
+          "observationXM": 0,
+          "supportDistanceM": 0,
+          "supported": true,
+          "requestedDxM": 0.2000000000000236,
+          "appliedDxM": 0.2000000000000236,
+          "postXM": 0.2000000000000236,
+          "authority": "policy"
+        },
+        {
+          "step": 1,
+          "observationXM": 0.2000000000000236,
+          "supportDistanceM": 2.3592239273284576e-14,
+          "supported": true,
+          "requestedDxM": 0.16000000000001124,
+          "appliedDxM": 0.16000000000001124,
+          "postXM": 0.36000000000003485,
+          "authority": "policy"
+        },
+        {
+          "step": 2,
+          "observationXM": 0.36000000000003485,
+          "supportDistanceM": 3.480549182199866e-14,
+          "supported": true,
+          "requestedDxM": 0.1280000000000029,
+          "appliedDxM": 0.1280000000000029,
+          "postXM": 0.48800000000003774,
+          "authority": "policy"
+        },
+        {
+          "step": 3,
+          "observationXM": 0.48800000000003774,
+          "supportDistanceM": 3.774758283725532e-14,
+          "supported": true,
+          "requestedDxM": 0.10239999999999742,
+          "appliedDxM": 0.10239999999999742,
+          "postXM": 0.5904000000000351,
+          "authority": "policy"
+        },
+        {
+          "step": 4,
+          "observationXM": 0.5904000000000351,
+          "supportDistanceM": 3.5083047578154947e-14,
+          "supported": true,
+          "requestedDxM": 0.08191999999999403,
+          "appliedDxM": 0.08191999999999403,
+          "postXM": 0.6723200000000291,
+          "authority": "policy"
+        },
+        {
+          "step": 5,
+          "observationXM": 0.6723200000000291,
+          "supportDistanceM": 2.90878432451791e-14,
+          "supported": true,
+          "requestedDxM": 0.0655359999999921,
+          "appliedDxM": 0.0655359999999921,
+          "postXM": 0.7378560000000212,
+          "authority": "policy"
+        },
+        {
+          "step": 6,
+          "observationXM": 0.7378560000000212,
+          "supportDistanceM": 2.1094237467877974e-14,
+          "supported": true,
+          "requestedDxM": 0.052428799999991185,
+          "appliedDxM": 0.052428799999991185,
+          "postXM": 0.7902848000000123,
+          "authority": "policy"
+        },
+        {
+          "step": 7,
+          "observationXM": 0.7902848000000123,
+          "supportDistanceM": 1.2323475573339238e-14,
+          "supported": true,
+          "requestedDxM": 0.04194303999999094,
+          "appliedDxM": 0.04194303999999094,
+          "postXM": 0.8322278400000033,
+          "authority": "policy"
+        },
+        {
+          "step": 8,
+          "observationXM": 0.8322278400000033,
+          "supportDistanceM": 3.219646771412954e-15,
+          "supported": true,
+          "requestedDxM": 0.033554431999991155,
+          "appliedDxM": 0.033554431999991155,
+          "postXM": 0.8657822719999945,
+          "authority": "policy"
+        },
+        {
+          "step": 9,
+          "observationXM": 0.8657822719999945,
+          "supportDistanceM": 5.551115123125783e-15,
+          "supported": true,
+          "requestedDxM": 0.026843545599991636,
+          "appliedDxM": 0.026843545599991636,
+          "postXM": 0.8926258175999862,
+          "authority": "policy"
+        },
+        {
+          "step": 10,
+          "observationXM": 0.8926258175999862,
+          "supportDistanceM": 1.3877787807814457e-14,
+          "supported": true,
+          "requestedDxM": 0.021474836479992272,
+          "appliedDxM": 0.021474836479992272,
+          "postXM": 0.9141006540799784,
+          "authority": "policy"
+        },
+        {
+          "step": 11,
+          "observationXM": 0.9141006540799784,
+          "supportDistanceM": 2.1649348980190553e-14,
+          "supported": true,
+          "requestedDxM": 0.017179869183992995,
+          "appliedDxM": 0.017179869183992995,
+          "postXM": 0.9312805232639714,
+          "authority": "policy"
+        }
+      ]
+    },
+    {
+      "arm": "changed_start",
+      "trainingLossStart": 0.8090199624537533,
+      "trainingLossEnd": 8.32014602560119e-9,
+      "startXM": -0.45,
+      "finalXM": -0.45,
+      "success": false,
+      "supportDeparture": 0,
+      "intervention": true,
+      "autonomous": false,
+      "trace": [
+        {
+          "step": 0,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 1,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 2,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 3,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 4,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 5,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 6,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 7,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 8,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 9,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 10,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        },
+        {
+          "step": 11,
+          "observationXM": -0.45,
+          "supportDistanceM": 0.35,
+          "supported": false,
+          "requestedDxM": 0.29000000000004084,
+          "appliedDxM": 0,
+          "postXM": -0.45,
+          "authority": "support_watchdog"
+        }
+      ]
+    }
   ],
-  "decision": "The changed start exposes compounding error before task failure; nominal supervised evidence cannot establish recovery, and any later recovery-data addition must be analyzed as a separate training intervention.",
-  "failure": "The first unsupported observation at step two and workspace exit at step five remain attached to requested/applied action provenance, policy revision, simulator seed, and external intervention ownership.",
-  "boundary": "This deterministic trace is not a trained behavior-cloning measurement, general recovery result, physical-robot result, or evidence that the demonstrated support metric is complete for unseen states."
+  "artifacts": {
+    "checkpoint": "behavior-cloning-capstone-smoke-bc-checkpoint.npz",
+    "checkpointSha256": "232dd15ff43bf542b6fce53bd82c9f244ddf341e374d2d6a00adbee88de81264",
+    "weightsSha256": "2a0edaab806dc8fb616cd5e25b7c3bd16590075069f3ffa2f41440358ea377c6",
+    "trainingEvidence": {
+      "observationShape": [
+        48,
+        2
+      ],
+      "targetShape": [
+        48,
+        2
+      ],
+      "maskShape": [
+        48,
+        2
+      ],
+      "scalingRoundTripMaxAbsError": 6.938893903907228e-18,
+      "initialMaskedLoss": 0.8090199624537533,
+      "finalMaskedLoss": 8.32014602560119e-9,
+      "trainEpisodeIds": [
+        "episode-00",
+        "episode-01",
+        "episode-02",
+        "episode-03"
+      ],
+      "restoredEpisodeIds": [
+        "episode-00",
+        "episode-01",
+        "episode-02",
+        "episode-03"
+      ],
+      "directOptimizerStep": 360,
+      "resumedOptimizerStep": 360,
+      "directWeightsSha256": "2a0edaab806dc8fb616cd5e25b7c3bd16590075069f3ffa2f41440358ea377c6",
+      "resumedWeightsSha256": "2a0edaab806dc8fb616cd5e25b7c3bd16590075069f3ffa2f41440358ea377c6",
+      "directVelocitySha256": "2fea7cf655a8546d0735fd172bbfbcda30454c2c3387621ecb6759681256edb4",
+      "resumedVelocitySha256": "2fea7cf655a8546d0735fd172bbfbcda30454c2c3387621ecb6759681256edb4",
+      "scalerSha256": "3e038d3e248b29f03251e4778f65503e7ccb62dec80f8415be12c47f2ebfd52e",
+      "restoredScalerSha256": "3e038d3e248b29f03251e4778f65503e7ccb62dec80f8415be12c47f2ebfd52e"
+    }
+  },
+  "decision": "The trainable masked policy exactly resumes and closes the nominal loop; the changed start leaves demonstrated support immediately, so the watchdog holds and the run is labeled assisted failure.",
+  "failure": "The changed-start branch is retained from its step-zero support departure through twelve held actions; it prevents nominal supervised fit from being reported as recovery.",
+  "boundary": "This is a real local learned linear-policy result in a deterministic one-dimensional course environment. It is not a learned-policy result from an external simulator or physical robot, and it does not establish general imitation-learning performance."
 }

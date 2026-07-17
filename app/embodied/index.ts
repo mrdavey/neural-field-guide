@@ -22,7 +22,7 @@ export const embodiedLearningPhases=manifest.tracks.map((track,index)=>{const it
 export const embodiedLessons:Lesson[]=embodiedSpecs.map((spec)=>spec.lesson);
 export const embodiedLessonById=Object.fromEntries(embodiedLessons.map((lesson)=>[lesson.id,lesson])) as Record<string,Lesson>;
 export const embodiedCurriculumMinutes=embodiedLessons.reduce((sum,lesson)=>sum+lesson.duration,0);
-export const embodiedLessonGuides=Object.fromEntries(embodiedSpecs.map((spec)=>{const planned=manifest.lessons.find((lesson)=>lesson.id===spec.lesson.id)!;return[spec.lesson.id,researchGuide(spec,planned.build,planned.nextUse)];})) as Record<string,LessonGuide>;
+export const embodiedLessonGuides=Object.fromEntries(embodiedSpecs.map((spec)=>{const planned=manifest.lessons.find((lesson)=>lesson.id===spec.lesson.id)!;const nextId=planned.nextUse.includes(":")?planned.nextUse.split(":").at(-1)!:planned.nextUse;const nextTitle=manifest.lessons.find((lesson)=>lesson.id===nextId)?.title;return[spec.lesson.id,researchGuide(spec,planned.nextUse,nextTitle)];})) as Record<string,LessonGuide>;
 export const embodiedObjectiveCoverage=Object.fromEntries(embodiedSpecs.map((spec)=>[spec.lesson.id,[...spec.coverage]])) as Record<string,ObjectiveCoverage[]>;
 export const embodiedMotionStories=Object.fromEntries(embodiedSpecs.map((spec)=>[spec.lesson.id,researchMotion(spec)])) as Record<string,LessonMotionStory>;
 export const embodiedTransferChecks=Object.fromEntries(embodiedSpecs.map((spec)=>[spec.lesson.id,spec.transfer])) as Record<string,WorldModelTransfer>;

@@ -11,9 +11,9 @@ export const lessonTransferDistractors: Record<string, LessonDistractors> = {
     ["Well-formed booking JSON is sufficient authorization; the model can approve its own call.", "The proposed tool call itself is the execution receipt, even before a runtime runs it."],
   ],
   "tensors-shapes": [
-    ["Each query head needs four separate KV heads, so the sharing ratio is one-to-four.", "All query heads share one global KV head regardless of the stated head counts."],
-    ["Contract the two token axes in QKᵀ, leaving the head feature dimension in the output.", "Contract the batch and head axes so every sequence shares one attention map."],
-    ["The score tensor is [B, T, h_q, T], because the query-head axis follows the first token axis.", "The score tensor is [B, h_q, T, d_h], because keys leave their feature width uncontracted."],
+    ["X[2,3,4]W[4,6] has shape [2,4,6] because the token axis contracts.", "The output is [4,6] because matrix multiplication removes batch and token axes."],
+    ["The batch axis of length 2 contracts with W's first axis.", "The token axis of length 3 is summed over, leaving the input feature axis in the output."],
+    ["Offsets[3,1] and bias[6] are semantically identical because both additions preserve shape.", "Bias[6] supplies one value per token position, while offsets[3,1] supplies one value per output feature."],
   ],
   "probability-softmax": [
     ["Use −log(0.8) ≈ 1.609 and −log(0.2) ≈ 0.223; lower probability gives lower loss.", "Use linear errors 1−0.8=0.2 and 1−0.2=0.8 instead of negative log-likelihood."],
@@ -53,12 +53,12 @@ export const lessonTransferDistractors: Record<string, LessonDistractors> = {
   "layers-of-understanding": [
     ["Use h = x + Attn(Norm(x)), which is the post-norm residual operation.", "Use h = Norm(x) + Attn(x), normalizing only the skip branch before addition."],
     ["An MLP branch may return width 2d directly into a residual addition because broadcasting restores d.", "The two residual operands may use unrelated widths as long as their token axes match."],
-    ["Pre-norm weights can be relabeled as post-norm weights directly because normalization placement is cosmetic.", "Only the layer names change between pre-norm and post-norm; their training dynamics and activations are identical."],
+    ["Use identical unscaled residual initialization at any depth; normalization placement removes scale sensitivity and pre-norm weights transfer directly.", "Only the layer names change between pre-norm and post-norm, so no initialization or warm-up check is needed before relabeling the weights."],
   ],
   "learning-to-predict": [
-    ["Train system, user, and assistant tokens equally so the model learns the entire transcript as an answer.", "Mask assistant tokens and train only user/system tokens because those contain the instructions."],
-    ["Pack conversations back-to-back without a terminal token; the attention mask will infer their boundaries.", "Padding between conversations is enough even when padding is removed by sequence packing."],
-    ["Print only the raw input IDs; decoded text and label positions add no information.", "Inspect the final scalar loss only; a plausible value proves the role mask is aligned."],
+    ["Mask each final-content→EOS target because EOS is only a separator.", "Score the artificial EOS→BOS transition so the model learns how packed documents follow one another."],
+    ["Resetting position IDs to zero at each BOS is sufficient to prevent cross-document attention.", "An EOS delimiter alone blocks attention even when the attention mask permits every earlier key."],
+    ["Print only raw token IDs; their decoded labels and segment ownership cannot reveal alignment bugs.", "Inspect aggregate loss only; a plausible scalar proves cross-document attention is blocked."],
   ],
   "gpt2-from-scratch": [
     ["Change tokenizer, depth, and positional encoding together so any improvement is easier to observe.", "Compare two runs that differ in both architecture and data order, then attribute the result to the preferred treatment."],

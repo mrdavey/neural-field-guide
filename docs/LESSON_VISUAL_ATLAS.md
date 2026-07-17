@@ -2,7 +2,7 @@
 
 Reviewed: 17 July 2026
 
-The Neural Field Guide supplies one static concept plate for all 182 released lessons. These plates add a second visual explanation between the lesson definition and the interactive scroll story; they do not replace the prose, worked trace, lab, changed-case assessment, or existing semantic animation. No pilot or separate review gate divides the release: the maintained contract is the complete five-course set.
+The Neural Field Guide supplies one static concept plate for all 182 released lessons. These plates add a second visual explanation after the connected prose narrative and immediately before the interactive scroll story; they do not replace the worked trace, lab, changed-case assessment, or existing semantic animation. No pilot or separate review gate divides the release: the maintained contract is the complete five-course set.
 
 ## Complete inventory
 
@@ -21,17 +21,17 @@ The completed split is 130 generated raster plates and 52 deterministic SVG/HTML
 
 ## Representation choice
 
-Generated raster plates are used when a concrete scene, physical analogy, comparison, or systems metaphor gives a beginner another way to form a mental model. They are 3:2 editorial illustrations with no required text embedded in the pixels. The canonical plain-language lesson definition is reused as the concept heading; four exact stage labels, the lesson boundary, and the long description remain code-rendered.
+Generated raster plates are used when a concrete scene, physical analogy, comparison, or systems metaphor gives a beginner another way to form a mental model. They are 3:2 editorial illustrations with no required text embedded in the pixels. The first lesson-specific mechanism statement introduces the plate; four exact stage labels, the mental model, the lesson boundary, and the long description remain code-rendered.
 
 Deterministic SVG/HTML diagrams are used when correctness depends on exact axes, normalized mass, optimization steps, token boundaries, loops, branches, memory slots, device relationships, compression levels, or state transitions. The SVG glyph supplies the shape; HTML supplies the exact stage name and explanation. These diagrams remain meaningful under reduced motion, WebGL failure, narrow layouts, keyboard navigation, and static export.
 
 Every lesson therefore exposes the same reading sequence:
 
-1. the lesson's canonical plain-language concept explanation;
+1. the lesson's connected prose explanation and worked mechanism;
 2. one still representation of the four-stage mechanism;
-3. exact code-rendered labels and stage explanations;
-4. a misconception or evidence boundary;
-5. a complete text description; and
+3. exact code-rendered stage labels and a mental-model caption;
+4. a complete disclosure containing stage explanations and the misconception or evidence boundary;
+5. a scroll trace that pairs short stage names with full explanatory sentences; and
 6. a provenance label distinguishing generated illustration from deterministic diagram.
 
 ## Shared visual language
@@ -42,7 +42,7 @@ Generated text, equations, measurements, benchmark values, UI screenshots, logos
 
 ## Efficient and accurate generation workflow
 
-`docs/lesson-visual-prompts.json` is the complete authoring and provenance record. Each entry names the course and lesson IDs, title, track color, representation kind, historical generation question, mental-model depiction, alternative text, long description, misconception boundary, four labels, four stage explanations, output base, generation prompt, and status. That historical question records how an existing asset was commissioned; it is not displayed to learners. `app/lesson-visual-manifest.json` is the smaller client runtime projection and deliberately omits it. The shared renderer obtains the learner-facing heading from the canonical lesson `simple` field, so all 182 plates stay aligned when lesson explanations are revised.
+`docs/lesson-visual-prompts.json` is the complete authoring and provenance record. Each entry names the course and lesson IDs, title, track color, representation kind, historical generation question, mental-model depiction, alternative text, long description, misconception boundary, four labels, four stage explanations, output base, generation prompt, and status. That historical question records how an existing asset was commissioned; it is not displayed to learners. `app/lesson-visual-manifest.json` is the smaller client runtime projection and deliberately omits it. The shared renderer obtains the learner-facing heading from the first authored mechanism stage and the scroll stage names and descriptions from the visual manifest, so a heading explains the concept instead of describing the picture.
 
 For a new or intentionally regenerated raster plate:
 

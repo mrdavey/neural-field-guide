@@ -60,10 +60,10 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       { title: "Match the contracted axis", body: "For X[B,T,d] and W[d,m], d appears at the touching edges and is summed over in every dot product.", checkpoint: "If W were [m,d], the written multiplication XW would not be valid without transposing W." },
       { title: "Carry surviving axes", body: "B and T are not contracted, so they pass through. The new output feature axis m replaces d.", checkpoint: "You should predict [B,T,m] before any code runs." },
     ],
-    guidedExample: { title: "Project two tokens by hand", setup: "One sequence has two token vectors X=[[1,2],[3,1]]. Let W=[[2,0,1],[1,1,-1]], so X is [1,2,2] with the batch axis omitted and W is [2,3].", steps: [
+    guidedExample: { title: "Project two tokens by hand", setup: "One sequence has two token vectors X=[[1,2],[3,1]]. The displayed matrix omits an explicit batch axis, so its displayed shape is [T,d]=[2,2]; treating it as one batched sequence gives [B,T,d]=[1,2,2]. Let W=[[2,0,1],[1,1,-1]] with shape [d,m]=[2,3].", steps: [
       "For the first token $[1,2]$, output feature 1 is $1\\times2+2\\times1=4$; feature 2 is $1\\times0+2\\times1=2$; feature 3 is $1\\times1+2\\times(-1)=-1$.",
       "For the second token [3,1], the three dot products are 7, 1, and 2.",
-      "The output is [[4,2,-1],[7,1,2]] with shape [1,2,3]: the token count remains two while feature width changes from two to three.",
+      "The displayed output is [[4,2,-1],[7,1,2]] with shape [T,m]=[2,3]. Restoring the one-sequence batch axis gives [B,T,m]=[1,2,3]: the token count remains two while feature width changes from two to three.",
     ], result: "A linear projection applies the same learned feature detectors to every token position. Matrix notation is a compact way to describe many dot products, not a separate magical operation." },
     practice: { prompt: "X has shape [2,3,4]. Compare adding bias [4] with adding offsets [3,1]. What output shape does each produce, and what different meaning does each broadcast encode?", hint: "Both can expand to [2,3,4]. Track whether the reused values belong to features or token positions.", answer: "Both operations produce [2,3,4]. Bias [4] supplies one offset per feature and reuses those four values at every batch-token location. Offsets [3,1] supply one value per token position and repeat that value across all four features and both batches. Both shapes run, but substituting one for the other changes the computation's meaning." },
     resources: [
@@ -256,14 +256,14 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
   "positional-encoding": {
     objectives: ["Explain why content-only attention cannot determine order", "Compare absolute, relative, and rotary position signals", "Describe how position design affects long-context behavior"],
     vocabulary: [
-      { term: "Permutation equivariance", meaning: "Reordering inputs produces the same reordering of outputs when no position signal is present." },
+      { term: "Permutation equivariance", meaning: "For unmasked, content-only self-attention, reordering inputs produces the same reordering of outputs when no position signal is present." },
       { term: "Absolute position", meaning: "A signal attached to a specific index such as position 37." },
       { term: "Relative position", meaning: "A signal based on the displacement between two token positions." },
       { term: "RoPE", meaning: "Rotary position embedding, which rotates query/key coordinate pairs by position-dependent angles." },
     ],
     sections: [
-      { title: "Attention sees a set unless order is added", paragraphs: [
-        "Self-attention compares token-derived queries and keys. If the same token vectors are rearranged and no position signal exists, the calculation rearranges in exactly the same way; it has no basis for knowing that one token came first. ‘Dog bites person’ and ‘Person bites dog’ contain the same items but require different interpretations, so order must enter the representation or the attention scores.",
+      { title: "Content-only attention has a permutation symmetry", paragraphs: [
+        "Unmasked, content-only self-attention compares token-derived queries and keys. If the same token vectors are rearranged and no position signal exists, the calculation rearranges in exactly the same way; it has no basis for recovering the original index. A decoder's causal mask is different: it breaks this symmetry because a query may read only itself and earlier positions. That supplies an earlier-versus-later access direction, but it is not a reusable absolute-index or pairwise-distance geometry. ‘Dog bites person’ and ‘Person bites dog’ contain the same items but require different interpretations, so richer order information still enters through the representation or attention scores.",
         "Learned absolute embeddings add a table row for position 0, 1, 2, and so on. Sinusoidal features compute smooth waves at different frequencies. Relative biases directly modify attention according to distance. Each choice tells the model about order in a different geometry and carries different assumptions about positions beyond those seen in training.",
       ] },
       { title: "RoPE writes relative displacement into a dot product", paragraphs: [
@@ -276,12 +276,12 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       { title: "Inject position geometry", body: "Add an absolute vector, relative bias, or rotation so position can change representations or attention scores.", checkpoint: "Position information is numerical structure the layers must learn to use—not grammar by itself." },
       { title: "Evaluate beyond training length", body: "Test retrieval, ordering, and generation across positions and lengths rather than assuming the formula extrapolates behavior.", checkpoint: "A model accepting 128k tokens can still neglect evidence inside that window." },
     ],
-    guidedExample: { title: "Order changes reference without future leakage", setup: "Compare the completed causal prefixes ‘The trophy would not fit in the suitcase because it was too large’ and ‘…because it was too small’. Inspect the query at the final adjective, which comes after both candidate nouns and the pronoun.", steps: [
-      "Token identity supplies ‘trophy’, ‘suitcase’, ‘it’, and the current adjective; position distinguishes their ordered roles.",
-      "At the adjective position, a causal decoder may attend backward to ‘it’, ‘trophy’, and ‘suitcase’. No earlier ‘it’ representation is allowed to read the later adjective.",
-      "The adjective-position state combines the legal prefix evidence; later layers can use that state to predict a continuation consistent with the more plausible referent.",
-    ], result: "Order and content interact through legal backward attention. Changing the adjective changes states at that position and later—not already-computed states at earlier positions." },
-    practice: { prompt: "If every token in a sequence receives the same position vector, what order information remains available to plain self-attention?", hint: "Ask whether rearranging tokens changes anything except their arrangement.", answer: "None from that shared vector. Reordering token embeddings would merely reorder the outputs, because every position received identical extra information. A varying absolute or relative signal is required to distinguish order." },
+    guidedExample: { title: "Reorder the same content", setup: "Compare the same three token vectors in two orders: [dog, chased, cat] and [cat, chased, dog]. No token is added, removed, or replaced.", steps: [
+      "With unmasked, content-only attention and no varying position signal, the output states merely follow the input permutation. The calculation cannot identify which ordering was the original one.",
+      "A causal mask changes that result: the token at position 0 may read only itself, while the final token may read the whole prefix. The mask therefore adds directional access, so masked decoder attention is not covered by the unmasked permutation-equivariance claim.",
+      "A varying absolute, relative, or rotary signal adds index or distance geometry. Layers can then distinguish who appeared before whom and learn that swapping dog and cat changes subject/object roles.",
+    ], result: "The comparison changes order and nothing else. Unmasked content attention preserves the permutation symmetry; a causal mask adds legal earlier-to-later flow; positional signals add richer index or distance structure." },
+    practice: { prompt: "If every token receives the same position vector, what order information remains available to unmasked, content-only self-attention, and what separate information would a causal mask add?", hint: "Separate permutation-equivariant content matching from the decoder's legal-access pattern.", answer: "The shared vector adds no index or distance information: reordering token embeddings merely reorders the outputs. A causal mask separately tells each query which positions are not in its future, adding directional access but not a reusable absolute-index or pairwise-distance signal. A varying position method supplies that richer geometry." },
     resources: [
       { title: "Attention Is All You Need", url: "https://arxiv.org/abs/1706.03762", kind: "Paper", note: "Introduces sinusoidal positional encoding in the original Transformer." },
       { title: "RoFormer", url: "https://arxiv.org/abs/2104.09864", kind: "Paper", note: "The primary paper for rotary position embeddings and their relative-position property." },
@@ -312,10 +312,10 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       { title: "Score, scale, mask, normalize", body: "Compute $QK^{\\mathsf{T}}$, divide every score by $\\sqrt{d_{head}}$, hide illegal future positions, and apply softmax across visible keys.", checkpoint: "Division controls score magnitude; masking must occur before softmax so visible weights renormalize to one." },
       { title: "Retrieve and write", body: "Multiply weights by V, combine heads, apply the output projection, and add the update to the residual stream.", checkpoint: "The original residual is preserved by addition, allowing attention to contribute rather than replace it." },
     ],
-    guidedExample: { title: "Resolve a pronoun with a toy head", setup: "In ‘Maya put the book on the table because it was sturdy’, consider the query at ‘it’ and keys at Maya, book, and table.", steps: [
-      "A learned query at ‘it’ may encode a need for a plausible referent of the adjective ‘sturdy’.",
+    guidedExample: { title: "Route referent evidence without looking ahead", setup: "In ‘Maya put the book on the table because it was sturdy’, consider the query at the later token ‘sturdy’ and visible keys at Maya, book, table, and it.", steps: [
+      "A learned query at ‘sturdy’ may seek an earlier entity compatible with that property. Every candidate key is at or before the query, so the causal access is legal.",
       "Keys at ‘book’ and ‘table’ advertise different syntactic and semantic features; the table key receives the larger compatible score in this context.",
-      "The weighted value sum imports table-related features into the ‘it’ representation, which later layers can use to predict following tokens.",
+      "The weighted value sum imports table-related features into the adjective-position state, which later layers can use to predict following tokens.",
     ], result: "Attention does not replace symbolic reference resolution with one transparent rule. It provides differentiable routing that can assemble context-dependent evidence across layers." },
     practice: { prompt: "A query has visible pre-softmax scores [2,1,0] and one future position with score 5. What must happen before softmax in a causal decoder, and why?", hint: "The future score is numerically largest but legally unavailable.", answer: "Replace the future score with negative infinity (or an equivalent very negative mask value), then softmax only the three visible scores. Otherwise the model could use the answer token during training, leaking future information and invalidating autoregressive generation." },
     resources: [
@@ -337,6 +337,7 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       { title: "A block edits a shared workspace", paragraphs: [
         "Think of the residual stream as one evolving notebook page for every token position. In a common pre-norm block, LayerNorm prepares the current page for attention; attention reads across positions and writes an update; that update is added to the original page. A second normalization prepares the result for the MLP; the MLP transforms features independently at each position; its update is added again.",
         "Every sublayer returns [B,T,d], which makes residual addition possible and gives blocks a stable interface. The normalization does not carry the main content; it controls scale and geometry for the next transformation. Pre-norm and post-norm place normalization differently and produce different optimization behavior, but both combine attention, nonlinear feature processing, and skip paths.",
+        "That placement matters from the first update. In pre-norm, the skip path gives gradients a direct identity route through many blocks. In a deep post-norm stack, each residual result is normalized immediately, so gradients to an early block pass through more normalization operations and can be more sensitive to residual-branch scale and learning-rate warm-up. One concrete control is to initialize residual output projections with a depth-dependent smaller scale, such as $1/\\sqrt{2L}$ for $L$ blocks, then inspect activation and gradient norms. This is a stability heuristic to verify, not a guarantee that every pre-norm run is stable or every post-norm run is fragile.",
       ] },
       { title: "Depth supports iterative computation", paragraphs: [
         "Attention moves information between positions, while MLPs can detect and transform feature combinations at one position. Repeating blocks lets later computations operate on relationships created earlier. A first layer may identify delimiters, a middle layer may assemble a subject relation, and a later layer may turn that relation into output-relevant features. This is an illustrative decomposition, not a guaranteed clean hierarchy.",
@@ -373,6 +374,7 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       { title: "One sequence supplies many supervised examples", paragraphs: [
         "For tokens [The, cat, sat, .], the model can learn The→cat, The cat→sat, and The cat sat→. in one forward pass. Inputs exclude the last token; labels exclude the first. A causal mask ensures the hidden state at position t cannot see label t+1 even though all positions are computed in parallel on hardware.",
         "Teacher forcing supplies the true prefix at every training position. This makes optimization efficient and stable: one early sampled error does not corrupt every later training target. During generation, however, the model conditions on its own selected tokens. An unlikely mistake can move the context off the training distribution, which is one reason errors can compound.",
+        "When documents are packed together, each document ends with an explicit EOS token and its final content token must predict that EOS. Segment IDs plus a block-diagonal causal mask—or an equivalent per-sequence reset—prevent a token in document 2 from reading document 1. Resetting position IDs alone is not isolation because attention could still cross the boundary. Loss should omit padding and the artificial EOS→BOS cross-document transition, while retaining the within-document EOS target.",
       ] },
       { title: "Averaged loss compresses millions of decisions", paragraphs: [
         "The output head produces logits [B,T,V]. Cross-entropy is calculated for each non-masked target position, then reduced—often averaged over valid tokens and across devices. Backpropagation assigns credit to the output projection, every Transformer block, embeddings, and any other parameter that influenced those logits. Padding, document boundaries, and prompt masks determine which token positions count.",
@@ -380,7 +382,7 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       ] },
     ],
     walkthrough: [
-      { title: "Create shifted pairs", body: "Use tokens 0…T-2 as inputs and 1…T-1 as targets, preserving document and special-token semantics.", checkpoint: "Each target is the token immediately to the right of its prediction position." },
+      { title: "Create shifted pairs", body: "Use tokens 0…T-2 as inputs and 1…T-1 as targets. At packed boundaries, keep final-content→EOS, omit the artificial EOS→BOS target, and use segment-aware attention isolation.", checkpoint: "Every scored target belongs to the same document as its input; the final content token still predicts EOS, and no query reads a different document." },
       { title: "Predict every legal position", body: "Masked self-attention creates contextual states in parallel; the vocabulary head turns each state into V logits.", checkpoint: "Parallel training does not permit future leakage because the mask removes those attention paths." },
       { title: "Reduce and backpropagate", body: "Compute cross-entropy only at valid positions, aggregate it consistently, then differentiate the scalar loss.", checkpoint: "Changing which tokens are masked changes the actual learning objective." },
     ],
@@ -412,7 +414,7 @@ export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
       ] },
       { title: "From correct model to credible experiment", paragraphs: [
         "A model that compiles may still train incorrectly. Verify data boundaries, tokenizer pairing, causal masking, shifted targets, initialization scale, parameter counts, optimizer groups, and train/eval modes. Overfit a tiny batch first: if loss cannot approach zero, investigate correctness before renting more compute. Inspect samples only after checking numerical metrics, because fluent output can hide leakage or memorization.",
-        "A reproducible run records code, data version and mixture, tokenizer, configuration, random seeds, precision, hardware, throughput, validation data, and checkpoint state. nanochat demonstrates that the model is one part of a larger recipe: data acquisition, tokenization, base training, mid-training, supervised fine-tuning, evaluation, and inference all have explicit interfaces.",
+        "A reproducible run records code, data version and mixture, tokenizer, configuration, random seeds, precision, hardware, throughput, validation data, and checkpoint state. nanochat demonstrates that the model is one part of a larger recipe: data acquisition, tokenization, base training, mid-training, supervised fine-tuning, evaluation, and inference all have explicit interfaces. Its README at revision `92d63d4` records a 1.65-hour DCLM CORE threshold entry for training commit `a825e63` on 8×H100 GPUs; that pinned leaderboard claim is not a generic tiny-GPT runtime or a supplied course measurement.",
       ] },
     ],
     walkthrough: [

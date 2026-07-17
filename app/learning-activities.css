@@ -1,5 +1,6 @@
 .learning-activity-contract{background:var(--paper);border-left:4px solid var(--track);color:var(--ink);display:grid;gap:8px;margin:24px 0;padding:16px 18px}
 .learning-activity-contract p{font-size:.88rem;line-height:1.6;margin:0}
+.learning-activity-contract ol{display:grid;gap:1px;grid-template-columns:repeat(4,minmax(0,1fr));list-style:none;margin:4px 0;padding:1px}.learning-activity-contract li{background:color-mix(in srgb,var(--track) 7%,var(--white));display:grid;gap:7px;padding:12px}.learning-activity-contract li strong{font-family:var(--font-geist-mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase}.learning-activity-contract li span{font-size:.78rem;line-height:1.55}
 .learning-activity-boundary{color:var(--muted)}
 
 .activity-prediction-gate{background:var(--paper);border:1px solid var(--line);color:var(--ink);margin-top:20px;min-width:0}
@@ -86,6 +87,7 @@
 }
 
 @media(max-width:780px){
+  .learning-activity-contract ol{grid-template-columns:1fr}
   .lab-observation-guide{grid-template-columns:1fr}
   .activity-prediction-entry,.guided-prediction-entry,.code-change-challenge{padding:18px}
   .activity-prediction-locked,.guided-prediction-locked,.guided-example-intro{display:grid}

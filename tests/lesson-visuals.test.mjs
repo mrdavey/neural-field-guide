@@ -121,17 +121,18 @@ test("prompt and provenance records preserve accuracy and evidence boundaries", 
 
 test("the shared plate is accessible, responsive, and placed before the lesson scroll story", () => {
   assert.equal((courseApp.match(/<LessonConceptPlate /g) ?? []).length, 1);
-  assert.match(courseApp, /<section className="definition-card">[\s\S]*<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} \/>[\s\S]*<ScrollStory[\s\S]{0,100}className="lesson-motion-story"/);
+  assert.match(courseApp, /<LessonNarrativeView[\s\S]*<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} heading=\{motionStory\.stages\[0\]\.title\} \/>[\s\S]*<ScrollStory[\s\S]{0,100}className="lesson-motion-story"/);
   assert.match(component, /publicPath\(`\$\{asset\}-768\.webp`\)/);
   assert.match(component, /publicPath\(`\$\{asset\}-1536\.webp`\)/);
   assert.match(component, /loading="lazy" decoding="async"/);
   assert.match(component, /<details className="lesson-visual-description">/);
   assert.match(component, /Concept in one view/);
-  assert.match(component, /<MathText>\{lesson\.simple\}<\/MathText>/);
+  assert.match(component, /<MathText>\{heading\}<\/MathText>/);
   assert.doesNotMatch(component, /visual\.learningQuestion|What must happen between/);
-  assert.match(component, /Trace the mechanism/);
+  assert.match(component, /A useful mental model/);
   assert.match(component, /Important limit/);
   assert.match(component, /Read a text-only explanation/);
+  assert.match(component, /visual\.stageDescriptions\.map/);
   assert.match(component, /Generated concept illustration · exact labels are code-rendered · not a measurement/);
   assert.match(component, /Deterministic SVG\/HTML diagram · exact labels, illustrative layout/);
   assert.match(styles, /@media\(max-width:780px\)[^{]*\{\.lesson-concept-plate/);

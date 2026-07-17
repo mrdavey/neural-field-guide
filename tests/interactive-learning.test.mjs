@@ -115,14 +115,15 @@ test("all 182 released lessons expose a supported lab before reflection", () => 
   assert.match(sources.labs, /preview=\{<MotionSurface[^]*renderLab\(type\)/);
   assert.match(sources.labs, /probabilities\[index\]\*100\)\.toFixed\(3\)/, "server-visible probability styles use stable precision");
   assert.doesNotMatch(sources.labs, /\.toLocaleString\(\)/, "server-visible lab values must not depend on the host locale");
-  assert.match(sources.worldLabs, /preview=\{<MotionSurface[^]*wm-lab-instrument/);
-  assert.match(sources.researchLabs, /preview=\{<>[^]*research-case-control[^]*research-case-readout/);
+  assert.match(sources.worldLabs, /preview=\{\s*<MotionSurface[^]*wm-lab-instrument/);
+  assert.match(sources.researchLabs, /preview=\{<div className="research-case-preview">[^]*spec\.cases\.map/);
+  assert.ok(sources.researchLabs.indexOf('className="research-case-control"') > sources.researchLabs.indexOf("onRevise={() => setChoice(0)}"), "research results remain behind the prediction gate");
   for (const [name, source] of Object.entries({ labs: sources.labs, worldLabs: sources.worldLabs, researchLabs: sources.researchLabs })) {
     assert.match(source, /placeholder="[^"]*[Ee]xplain/, `${name} uses explanation-specific response copy`);
     assert.match(source, /responseLabel="Your explanation"/, `${name} labels the committed response as an explanation`);
   }
   assert.doesNotMatch(sources.worldLabs, /onRevise=\{\(\) => setValue/, "revising an explanation keeps the observed World Model state");
-  assert.doesNotMatch(sources.researchLabs, /onRevise=\{\(\) => setChoice/, "revising an explanation keeps the observed research case");
+  assert.match(sources.researchLabs, /onRevise=\{\(\) => setChoice\(0\)\}/, "revising resets the hidden research result before a new prediction");
 });
 
 test("guided examples use one prediction before a complete worked trace", () => {
@@ -137,8 +138,8 @@ test("guided examples use one prediction before a complete worked trace", () => 
   for (const phrase of ["Pause before step", "Reveal step", "Your forecast:"]) assert.doesNotMatch(sources.guide, new RegExp(phrase));
 });
 
-test("shared activity framing keeps only concise question and scope copy visible", () => {
-  for (const phrase of ["<strong>Question:</strong>", "<strong>Scope:</strong>", "Private; not graded."]) assert.ok(sources.activity.includes(phrase), phrase);
+test("shared activity framing exposes the complete learning loop without dashboard filler", () => {
+  for (const phrase of ["<strong>Question:</strong>", "<strong>Change</strong>", "<strong>Observe</strong>", "<strong>Explain</strong>", "<strong>Complete</strong>", "<strong>Scope:</strong>", "Private; not graded."]) assert.ok(sources.activity.includes(phrase), phrase);
   for (const phrase of ["Learning question", "1 · Do", "2 · Observe", "3 · Explain", "4 · Complete when", "Evidence boundary:"]) assert.ok(!sources.activity.includes(phrase), phrase);
   assert.match(sources.activity, /committed && <MotionReveal stateKey="committed" className="activity-after-commit">\{children\}<\/MotionReveal>/);
   assert.match(sources.activity, /disabled=\{draft\.trim\(\)\.length < minLength\}/);

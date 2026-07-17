@@ -185,6 +185,116 @@ def evaluate(model: ChunkPolicy, specs: list[dict[str, float]], prefix: int, pro
     return result
 
 
+def row_episode_spec(row: dict[str, object]) -> dict[str, object]:
+    """Return every field that defines a paired evaluation episode."""
+    return {
+        "episode": row["episode"],
+        "start": row["start"],
+        "target": row["target"],
+        "disturbance": row["disturbance"],
+    }
+
+
+def derive_invariants(pairs: list[dict[str, object]], profile: Profile) -> dict[str, bool]:
+    """Derive the release gates from raw pair, episode, and action rows."""
+    expected_seeds = list(profile.seeds)
+    required_row_fields = {
+        "episode",
+        "start",
+        "target",
+        "disturbance",
+        "prefix",
+        "steps",
+        "policy_calls",
+        "final_position",
+        "final_absolute_error",
+        "success",
+        "clipped_actions",
+        "requested_actions",
+        "applied_actions",
+    }
+    exact_seed_rows = [pair["seed"] for pair in pairs] == expected_seeds
+    shared_checkpoint = all(
+        pair["control"]["checkpoint_sha256"]
+        == pair["treatment"]["checkpoint_sha256"]
+        == pair["training"]["trained_checkpoint_sha256"]
+        for pair in pairs
+    )
+    complete_rows = len(pairs) == len(expected_seeds) and all(
+        pair["training"]["seed"] == pair["seed"]
+        and pair[arm]["episodes"] == profile.evaluation_episodes
+        and len(pair[arm]["rows"]) == profile.evaluation_episodes
+        and [row["episode"] for row in pair[arm]["rows"]]
+        == list(range(profile.evaluation_episodes))
+        for pair in pairs
+        for arm in ["control", "treatment"]
+    )
+    identical_specs = all(
+        [row_episode_spec(row) for row in pair["control"]["rows"]]
+        == [row_episode_spec(row) for row in pair["treatment"]["rows"]]
+        for pair in pairs
+    )
+    equal_opportunities = all(
+        pair[arm]["action_opportunities_per_episode"] == profile.episode_steps
+        and all(
+            row["steps"] == profile.episode_steps
+            and len(row["requested_actions"]) == profile.episode_steps
+            and len(row["applied_actions"]) == profile.episode_steps
+            for row in pair[arm]["rows"]
+        )
+        for pair in pairs
+        for arm in ["control", "treatment"]
+    )
+    required_fields = all(
+        required_row_fields <= row.keys()
+        for pair in pairs
+        for arm in ["control", "treatment"]
+        for row in pair[arm]["rows"]
+    )
+    finite_rows = all(
+        pair["training"]["all_losses_finite"]
+        and pair["training"]["finite"]
+        and pair[arm]["finite"]
+        and numeric_leaves_are_finite(pair[arm]["rows"])
+        for pair in pairs
+        for arm in ["control", "treatment"]
+    )
+    return {
+        "exact_seed_rows": exact_seed_rows,
+        "shared_checkpoint_within_pair": shared_checkpoint,
+        "identical_episode_specs_within_pair": identical_specs,
+        "equal_action_opportunities": equal_opportunities,
+        "complete_seed_and_episode_rows": complete_rows,
+        "required_raw_fields": required_fields,
+        "finite_rows": finite_rows,
+    }
+
+
+def verify_dossier(dossier: dict[str, object], profile: Profile) -> dict[str, bool]:
+    """Recompute all gates so a recorded boolean cannot authorize the full run."""
+    required_top_level = {
+        "schema_version",
+        "execution",
+        "config",
+        "pairs",
+        "invariants",
+        "decision",
+        "scope_boundary",
+    }
+    derived = derive_invariants(dossier.get("pairs", []), profile)
+    execution = dossier.get("execution", {})
+    return {
+        "required_top_level_fields": required_top_level <= dossier.keys(),
+        "requested_and_resolved_device_are_recorded": (
+            isinstance(execution, dict)
+            and execution.get("requested_device") in {"auto", "cpu", "cuda", "mps"}
+            and execution.get("resolved_device") in {"cpu", "cuda", "mps"}
+        ),
+        "recorded_invariants_match_rows": dossier.get("invariants") == derived,
+        **derived,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--profile", choices=PROFILES, default="smoke")
@@ -202,34 +312,24 @@ def main() -> None:
         specs = episode_specs(seed, profile.evaluation_episodes)
         control = evaluate(model, specs, 1, profile, device)
         treatment = evaluate(model, specs, 4, profile, device)
-        assert control["checkpoint_sha256"] == treatment["checkpoint_sha256"] == training["trained_checkpoint_sha256"]
-        assert [row["episode"] for row in control["rows"]] == [row["episode"] for row in treatment["rows"]]
-        assert all(row["steps"] == profile.episode_steps for arm in [control, treatment] for row in arm["rows"])
         pairs.append({"seed": seed, "training": training, "control": control, "treatment": treatment})
+    invariants = derive_invariants(pairs, profile)
     dossier = {
         "schema_version": "1.0",
-        "execution": {"profile": args.profile, "device": str(device), "python": platform.python_version(), "torch": torch.__version__, "numpy": np.__version__},
+        "execution": {"profile": args.profile, "requested_device": args.device, "resolved_device": str(device), "python": platform.python_version(), "torch": torch.__version__, "numpy": np.__version__},
         "config": asdict(profile) | {"chunk_horizon": CHUNK, "control_prefix": 1, "treatment_prefix": 4, "maximum_action": MAX_ACTION, "disturbance_after_step": 2},
         "pairs": pairs,
-        "invariants": {
-            "shared_checkpoint_within_pair": True,
-            "identical_episode_specs_within_pair": True,
-            "equal_action_opportunities": True,
-            "complete_seed_and_episode_rows": len(pairs) == len(profile.seeds),
-            "finite_rows": all(
-                pair["training"]["all_losses_finite"]
-                and pair["training"]["finite"]
-                and pair[arm]["finite"]
-                for pair in pairs
-                for arm in ["control", "treatment"]
-            ),
-        },
+        "invariants": invariants,
         "decision": "smoke_integration_only" if args.profile == "smoke" else "analyze_all_seed_and_episode_rows_without_promised_direction",
         "scope_boundary": "Course-scale synthetic one-dimensional action-chunk feedback study; not a physical-robot, vision-language-action, or universal chunking claim.",
     }
+    verification = verify_dossier(dossier, profile)
+    failed = [name for name, passed in verification.items() if not passed]
+    if failed:
+        raise RuntimeError(f"artifact gate failed: {', '.join(failed)}")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(dossier, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"output": str(args.output), "profile": args.profile, "device": str(device), "pairs": len(pairs)}))
+    print(json.dumps({"output": str(args.output), "profile": args.profile, "requested_device": args.device, "resolved_device": str(device), "pairs": len(pairs)}))
 
 
 if __name__ == "__main__":

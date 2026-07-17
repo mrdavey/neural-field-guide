@@ -4,6 +4,7 @@
   "lessonId": "distribution-workbench-capstone",
   "evidenceKind": "deterministic_reference_fixture",
   "manifest": {
+    "studyDesign": "paired one-factor sample-count intervention",
     "probabilities": [
       0.02,
       0.48,
@@ -13,6 +14,25 @@
       100,
       10000
     ],
+    "control": {
+      "sampleCount": 100
+    },
+    "intervention": {
+      "sampleCount": 10000,
+      "soleChangedField": "sampleCount"
+    },
+    "fixedFactors": {
+      "supportOrder": [
+        0,
+        1,
+        2
+      ],
+      "generator": "numpy.random.Generator(numpy.random.PCG64(seed))",
+      "drawApi": "Generator.choice(3, p=probabilities)",
+      "rareMode": 0,
+      "metric": "fraction of seeded batches with rareCount == 0",
+      "executionEnvironment": "same pinned NumPy CPU process for both arms"
+    },
     "seeds": [
       1,
       2,
@@ -63,31 +83,35 @@
         20
       ]
     },
-    "runtime": "Python 3 standard library"
+    "runtime": "Python 3 plus pinned NumPy"
   },
   "invariants": {
     "normalized": true,
     "supportOnly": true,
-    "sameSeedReplay": true
+    "sameSeedReplay": true,
+    "purpose": "sampler correctness only; these invariants do not establish the sample-count effect"
   },
   "rawRows": [
     {
       "sampleCount": 100,
       "seed": 1,
-      "rareCount": 1,
-      "rareMiss": false
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
     },
     {
       "sampleCount": 100,
       "seed": 2,
-      "rareCount": 0,
-      "rareMiss": true
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
     },
     {
       "sampleCount": 100,
       "seed": 3,
-      "rareCount": 4,
-      "rareMiss": false
+      "status": "planned",
+      "rareCount": null,
+      "rareMiss": null
     },
     {
       "sampleCount": 100,
@@ -349,7 +373,7 @@
       "rareMiss": null
     }
   ],
-  "decision": "The exact invariants pass. The seed-2 miss is compatible with finite sampling and does not establish zero model mass.",
-  "failure": "An exact-frequency assertion fails valid random samples; replace it with a predeclared statistical tolerance.",
-  "boundary": "These rows are a reviewed deterministic reference fixture for sampler arithmetic, not measured neural-generator quality."
+  "decision": "No sample-count conclusion is encoded in this static fixture. Execute both counts for every paired seed, pass sampler-correctness gates separately, then estimate the paired rare-mode miss-rate difference and uncertainty.",
+  "failure": "An exact-frequency assertion can reject valid random samples; diagnose that brittle sampler test separately rather than presenting it as evidence for or against the sample-count intervention.",
+  "boundary": "These are planned paired cells and deterministic contract fields, not measured miss rates. Any causal conclusion is bounded to the pinned distribution, generator, seed set, metrics, and execution environment."
 }

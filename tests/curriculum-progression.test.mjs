@@ -6,6 +6,7 @@ const files = {
   course: "../app/course-data.ts",
   courseView: "../app/course-app.tsx",
   guideView: "../app/lesson-guide-view.tsx",
+  handoffs: "../app/lesson-narrative-handoffs.ts",
   codeExamples: "../app/code-examples.ts",
   styles: "../app/globals.css",
 };
@@ -43,19 +44,36 @@ test("post-training bridge is ordered into the dependency chain", () => {
 
 test("lesson pages make prior knowledge and the next reuse explicit", () => {
   for (const phrase of [
-    "knowledge-bridge",
+    "LessonNarrativeView",
+    "priorKnowledge",
+    "nextUse",
     "next-connection",
-    "You already know",
     "You will reuse",
     "To learn",
+    "This chapter leaves you with",
+    "The next question",
   ]) {
     assert.ok(source.courseView.includes(phrase), `missing progression cue: ${phrase}`);
   }
-  assert.match(source.courseView, /prerequisite\.keyIdeas\[0\]/);
+  assert.match(source.courseView, /lessonById\[lesson\.prerequisites\.at\(-1\)!\]\.keyIdeas\[0\]/);
   assert.match(source.courseView, /nextGuide\?\.objectives\[0\]/);
+  assert.match(source.courseView, /nextUsesThisLesson = Boolean\(next\?\.prerequisites\?\.includes\(lesson\.id\)\)/);
+  assert.match(source.courseView, /lessonNarrativeResult\(course\.id, lesson\)/);
+  assert.doesNotMatch(source.courseView, /nextBridgeParent/);
+  assert.match(source.guideView, /Where this chapter begins/);
+  assert.match(source.guideView, /Where the idea leads/);
   assert.match(source.guideView, /aria-label="Lesson outcomes and checks"/);
   assert.doesNotMatch(source.guideView, /By the end, you can/);
   assert.doesNotMatch(source.courseView, /By the end, you can/);
+});
+
+test("audited section seams carry the mechanism that actually prepares the next question", () => {
+  for (const phrase of [
+    "Keep the executed action separate from the expert label",
+    "Separate reward, cost, and non-compensable action permissions",
+    "learning distribution and the workload that infrastructure must serve",
+    "chosen-versus-rejected gap relative to a fixed reference",
+  ]) assert.ok(source.handoffs.includes(phrase), phrase);
 });
 
 test("advanced lessons branch by goal instead of inventing a linear dependency", () => {

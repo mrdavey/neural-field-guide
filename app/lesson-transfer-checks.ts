@@ -14,9 +14,9 @@ export const lessonTransferChecks: Record<string, TransferRule[]> = {
     rule("Authorized effect", "What must surround the ticket purchase?", [["permission", "author", "confirm"], ["price", "itinerary", "details"], ["receipt", "record"]], "Require user permission, confirmed purchase details, and an execution receipt."),
   ],
   "tensors-shapes": [
-    rule("Head mapping", "How many query heads share each KV head?", [["4", "four"], ["query"], ["kv", "key"]], "State that each KV head serves a group of four query heads."),
-    rule("Contraction", "Which axis contracts in QKᵀ?", [["d_h", "head dimension", "feature"], ["contract", "dot"]], "Contract the head-feature axis, never batch, head, or token."),
-    rule("Score shape", "Write the final attention-score shape.", [["b"], ["h_q", "query head"], ["t,t", "t, t", "t × t", "t x t"]], "The score tensor is [B, h_q, T, T]."),
+    rule("Projection shape", "What shape does X[2,3,4]W[4,6] have?", [["2,3,6", "2, 3, 6"], ["output", "projection"]], "The contracted feature axis disappears and the output is [2,3,6]."),
+    rule("Contracted axis", "Which axis is summed over in XW?", [["4", "four"], ["feature"], ["contract", "sum", "dot"]], "Contract the input-feature axis of length 4; batch and token axes survive."),
+    rule("Broadcast semantics", "How do offsets[3,1] differ from bias[6]?", [["offset", "3,1", "3, 1"], ["token", "position"], ["bias", "6"], ["feature"]], "Offsets provide one scalar per token position; bias provides one scalar per output feature. Both broadcast to [2,3,6], but not with the same meaning."),
   ],
   "probability-softmax": [
     rule("Per-token losses", "Give both raw negative-log losses.", [["0.223"], ["1.609"]], "Use −log(0.8) ≈ 0.223 and −log(0.2) ≈ 1.609."),
@@ -56,12 +56,12 @@ export const lessonTransferChecks: Record<string, TransferRule[]> = {
   "layers-of-understanding": [
     rule("Post-norm order", "Write the first post-norm residual operation.", [["norm"], ["x+", "x +"], ["attn", "attention"]], "Use h = Norm(x + Attn(x)), then the analogous MLP residual."),
     rule("Residual width", "What width must every residual addition preserve?", [["d"], ["same", "width"]], "Both branches must return the residual width d before addition."),
-    rule("Checkpoint boundary", "State whether pre-norm weights transfer directly to post-norm, then why.", [["pre-norm"], ["cannot", "not"], ["relabel", "interchange", "direct"], ["post-norm"], ["placement", "dynamics", "normalization"]], "Write that pre-norm weights cannot be directly relabeled/interchanged as post-norm because placement/dynamics differ."),
+    rule("Initialization and checkpoint boundary", "Name one concrete post-norm stability control, then state whether pre-norm weights transfer directly.", [["scale", "warm-up", "warmup", "initial"], ["pre-norm"], ["cannot", "not"], ["relabel", "interchange", "direct"], ["post-norm"]], "Test depth-scaled residual initialization or warm-up; pre-norm weights cannot be directly relabeled/interchanged as post-norm weights."),
   ],
   "learning-to-predict": [
-    rule("Loss roles", "Which chat roles receive loss?", [["assistant"], ["user", "system"], ["mask", "ignore"]], "Train assistant tokens and mask system/user tokens with the ignore index."),
-    rule("Conversation boundary", "How do you stop cross-conversation continuation?", [["end", "boundary", "eos"], ["explicit"]], "Insert an explicit terminal/boundary token and define its loss policy."),
-    rule("Visible verification", "What should be printed before training?", [["decode"], ["label", "mask"], ["position", "contribut"]], "Print a decoded packed example with labels and contributing positions."),
+    rule("EOS supervision", "Which packed-boundary targets are scored or omitted?", [["content", "fox", "moon"], ["eos"], ["eos to bos", "eos→bos", "cross-boundary", "cross boundary"], ["omit", "mask", "ignore", "not score"]], "Keep each final-content→EOS target, but omit the artificial EOS→BOS cross-document transition."),
+    rule("Document isolation", "What prevents document 2 from attending to document 1?", [["segment", "document"], ["block-diagonal", "block diagonal", "separate sequence", "sequence reset"], ["attention", "isolation", "cross-document", "cross document"], ["position", "alone", "insufficient", "not enough"]], "Use segment IDs with block-diagonal causal attention or separate sequence execution; resetting position IDs alone does not isolate attention."),
+    rule("Visible verification", "What should be printed before training?", [["decode"], ["label", "target"], ["segment"], ["attention", "mask", "cross-boundary", "cross boundary"]], "Print decoded labels, segment IDs, and the allowed-attention/cross-boundary mask."),
   ],
   "gpt2-from-scratch": [
     rule("Single treatment", "Name the one ablation treatment.", [["character", "bpe", "position", "tokenizer"], ["versus", "on", "off"]], "Change exactly one named architecture or tokenizer treatment."),

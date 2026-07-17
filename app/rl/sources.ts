@@ -8,4 +8,5 @@ export const rlSources = {
   d4rl: { title: "D4RL: Datasets for Deep Data-Driven Reinforcement Learning", url: "https://arxiv.org/abs/2004.07219", kind: "Paper" as const, note: "Read for offline-RL dataset diversity, benchmarks, and normalized scores." },
   safety: { title: "A Comprehensive Survey of Safe Reinforcement Learning", url: "https://jmlr.org/papers/v16/garcia15a.html", kind: "Paper" as const, note: "Read for risk, constraints, exploration, and safe-policy taxonomy." },
   gymnasium: { title: "Gymnasium environment creation", url: "https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/", kind: "Documentation" as const, note: "Use the official interface documentation for reset, step, termination, truncation, spaces, and seeds." },
+  rliable: { title: "Deep Reinforcement Learning at the Edge of the Statistical Precipice", url: "https://arxiv.org/abs/2108.13264", kind: "Paper" as const, note: "Read for run-level uncertainty, bootstrap interval construction, performance profiles, and reliable aggregate reporting across RL tasks." },
 };

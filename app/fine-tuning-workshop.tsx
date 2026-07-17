@@ -5,12 +5,14 @@ import { ActivityInfo, LearningActivityContract, PredictionGate } from "./activi
 import { MotionReveal } from "./motion/motion-reveal";
 
 const MODEL_ID = "Qwen/Qwen3-4B-Instruct-2507";
+const MODEL_REVISION = "cdbee75f17c01a7cc42f958dc650907174af0554";
+const REHEARSAL_MODEL_REVISION = "c1899de289a04d12100db370d81485cdf75e47ca";
 
 const hardwareProfiles = [
-  { id: "8", label: "8 GB or less", model: "Qwen/Qwen3-0.6B", method: "Rehearse on Qwen3-0.6B", note: "Use the same workflow with a smaller checkpoint. A 4B run may be fragile once optimizer, activations, and sequence length are included." },
-  { id: "16", label: "12–16 GB", model: MODEL_ID, method: "Qwen3-4B with QLoRA", note: "The recommended workshop path: 4-bit frozen weights, the selected adapter rank, batch size 1, gradient accumulation, and a 512–1,024 token cap." },
-  { id: "24", label: "24 GB", model: MODEL_ID, method: "Qwen3-4B LoRA or QLoRA", note: "Use LoRA in bf16 for a cleaner comparison, or keep QLoRA and spend memory on longer sequences and evaluation batches." },
-  { id: "48", label: "48 GB+", model: MODEL_ID, method: "Run controlled method comparisons", note: "Compare LoRA and QLoRA before considering full tuning. Full-parameter updates add optimizer-state and checkpoint costs that are not justified by default." },
+  { id: "8", label: "8 GB or less", model: "Qwen/Qwen3-0.6B", revision: REHEARSAL_MODEL_REVISION, method: "Rehearse on Qwen3-0.6B", note: "Use the same workflow with a smaller checkpoint. A 4B run may be fragile once optimizer, activations, and sequence length are included." },
+  { id: "16", label: "12–16 GB", model: MODEL_ID, revision: MODEL_REVISION, method: "Qwen3-4B with QLoRA", note: "The recommended workshop path: 4-bit frozen weights, the selected adapter rank, batch size 1, gradient accumulation, and a 512–1,024 token cap." },
+  { id: "24", label: "24 GB", model: MODEL_ID, revision: MODEL_REVISION, method: "Qwen3-4B LoRA or QLoRA", note: "Use LoRA in bf16 for a cleaner comparison, or keep QLoRA and spend memory on longer sequences and evaluation batches." },
+  { id: "48", label: "48 GB+", model: MODEL_ID, revision: MODEL_REVISION, method: "Run controlled method comparisons", note: "Compare LoRA and QLoRA before considering full tuning. Full-parameter updates add optimizer-state and checkpoint costs that are not justified by default." },
 ];
 
 const readinessItems = [
@@ -34,11 +36,26 @@ const stages = [
       "Run the untouched model with fixed decoding settings and save raw outputs plus scores.",
     ],
     checkpoint: "You can state the desired improvement and the maximum acceptable loss on general capability before training begins.",
-    code: `from transformers import pipeline
+    code: `# Create a clean discovery environment before Stage 01:
+# python -m venv .venv-discovery
+# source .venv-discovery/bin/activate
+# python -m pip install "trl[peft]==1.7.1" bitsandbytes datasets accelerate
+# python -m pip check
+# python -m pip freeze --all > environment.lock.txt
+
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import json
 
-MODEL_ID = "${MODEL_ID}"
-generator = pipeline("text-generation", model=MODEL_ID, device_map="auto")
+MODEL_ID = "__MODEL_ID__"
+MODEL_REVISION = "__MODEL_REVISION__"
+tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=MODEL_REVISION)
+model = AutoModelForCausalLM.from_pretrained(
+    MODEL_ID,
+    revision=MODEL_REVISION,
+    device_map="auto",
+    dtype="auto",
+)
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 held_out = [
     "Classify this support request as billing, account, or technical: ...",
@@ -100,16 +117,19 @@ splits.save_to_disk("support_sft_dataset")`,
     id: "inspect",
     label: "Inspect",
     title: "Render tokens before spending GPU time",
-    purpose: "The JSON conversation is not what the model sees. Inspect the chat template, role markers, truncation, and assistant mask using the exact tokenizer that will be trained.",
+    purpose: "The JSON conversation is not what the model sees. Inspect the chat template, role markers, and truncation with the exact pinned tokenizer. In Configure, TRL installs its Qwen3 training template and the code refuses to proceed unless that template produces a real assistant-token mask.",
     actions: [
       "Render at least one normal, longest, multi-turn, and refusal example.",
       "Confirm the final assistant turn and end token appear exactly once.",
       "Measure token-length percentiles before choosing max_length; do not silently truncate the answer you want learned.",
+      "Treat the assistant mask as a hard precondition, not an assumption: Configure checks that both excluded prompt tokens and included assistant tokens exist.",
     ],
-    checkpoint: "You have looked at decoded training text and verified which tokens contribute to assistant-only loss.",
+    checkpoint: "You have inspected decoded training text and token lengths; the next stage must also pass the explicit assistant-mask assertion before training.",
     code: `from transformers import AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("${MODEL_ID}")
+MODEL_ID = "__MODEL_ID__"
+MODEL_REVISION = "__MODEL_REVISION__"
+tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=MODEL_REVISION)
 example = splits["train"][0]["messages"]
 
 rendered = tokenizer.apply_chat_template(
@@ -131,20 +151,22 @@ assert len(token_ids) <= 1024, "Decide how to handle truncation before training"
     id: "configure",
     label: "Configure",
     title: "Configure a conservative QLoRA run",
-    purpose: "QLoRA keeps the 4-bit base frozen and learns higher-precision low-rank adapters. This makes a real 4B-model experiment possible without pretending it is free or identical to full tuning.",
+    purpose: "QLoRA loads the base through a 4-bit quantization configuration, keeps those weights frozen, and learns higher-precision low-rank adapters. Loading the quantized model before constructing the trainer makes the execution boundary explicit and avoids relying on an ambiguous trainer argument.",
     actions: [
       "Use NF4 plus double quantization for the frozen base and target all linear layers with LoRA.",
       "Start with rank 16, one epoch, a 1e-4 adapter learning rate, and assistant-only loss.",
+      "Use the pinned TRL/Qwen3 training template, then stop unless its generation markers produce a non-empty assistant mask and exclude prompt tokens.",
       "Use bf16 only on compatible hardware; otherwise set bf16=False and fp16=True.",
     ],
-    checkpoint: "The printed trainable-parameter count is a small fraction of the base, and one tiny batch completes before a full run starts.",
+    checkpoint: "The pinned model loads in 4-bit, the assistant-mask assertion passes, the trainable-parameter count is a small fraction of the base, and one tiny batch completes before a full run starts.",
     code: `import torch
 from datasets import load_from_disk
 from peft import LoraConfig
-from transformers import BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from trl import SFTConfig, SFTTrainer
 
 MODEL_ID = "__MODEL_ID__"
+MODEL_REVISION = "__MODEL_REVISION__"
 splits = load_from_disk("support_sft_dataset")
 
 quantization = BitsAndBytesConfig(
@@ -153,6 +175,17 @@ quantization = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.__COMPUTE_DTYPE__,
     bnb_4bit_use_double_quant=True,
 )
+
+# Quantize the base explicitly before SFTTrainer sees it. This is the standard
+# Transformers loading boundary; SFTTrainer receives an already-loaded model.
+model = AutoModelForCausalLM.from_pretrained(
+    MODEL_ID,
+    revision=MODEL_REVISION,
+    quantization_config=quantization,
+    device_map="auto",
+    dtype=torch.__COMPUTE_DTYPE__,
+)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=MODEL_REVISION)
 
 adapter = LoraConfig(
     r=__RANK__,
@@ -185,12 +218,28 @@ args = SFTConfig(
 )
 
 trainer = SFTTrainer(
-    model=MODEL_ID,
+    model=model,
     args=args,
     train_dataset=splits["train"],
     eval_dataset=splits["test"],
-    quantization_config=quantization,
+    processing_class=tokenizer,
     peft_config=adapter,
+)
+
+# TRL 1.7.1 patches known Qwen3 templates with {% generation %}
+# markers when assistant_only_loss=True. Refuse to train if that contract ever
+# changes: a missing mask would silently teach the prompt as well as the answer.
+mask_probe = trainer.processing_class.apply_chat_template(
+    splits["train"][0]["messages"],
+    tokenize=True,
+    add_generation_prompt=False,
+    return_dict=True,
+    return_assistant_tokens_mask=True,
+)
+assistant_mask = mask_probe.get("assistant_masks")
+assert assistant_mask is not None, "No assistant mask: inspect the training chat template"
+assert 0 < sum(assistant_mask) < len(mask_probe["input_ids"]), (
+    "Expected included assistant tokens and excluded system/user tokens"
 )
 trainer.model.print_trainable_parameters()`,
   },
@@ -205,10 +254,13 @@ trainer.model.print_trainable_parameters()`,
       "Watch training and evaluation loss for divergence, but do not choose a checkpoint from loss alone.",
     ],
     checkpoint: "The run is reproducible from one environment file, one data version, one configuration, and one command.",
-    code: `# Explore in a fresh runtime, then freeze the exact compatible environment:
-# python -m pip install -U transformers trl peft datasets accelerate bitsandbytes
-# python -m pip freeze > environment.lock.txt
-# Recreate the measured run with: python -m pip install -r environment.lock.txt
+    code: `# Stage 01 created a discovery lock. Before the measured run, recreate it:
+# python -m venv .venv-measured
+# source .venv-measured/bin/activate
+# python -m pip install -r environment.lock.txt
+# python -m pip check
+# python -c "import trl; assert trl.__version__ == '1.7.1'"
+# A discovery run is not the measured run; begin only from this recreated lock.
 
 train_result = trainer.train()
 eval_metrics = trainer.evaluate()
@@ -286,6 +338,7 @@ assert (artifact / "adapter_config.json").exists()
 
 report = {
     "base_model": "__MODEL_ID__",
+    "base_revision": "__MODEL_REVISION__",
     "method": "QLoRA SFT",
     "data": "versioned dataset identifier and license summary",
     "target_metric": "held-out task score before -> after",
@@ -320,8 +373,8 @@ export function FineTuningWorkshop() {
   const readinessScore = useMemo(() => readiness.filter(Boolean).length, [readiness]);
   const stage = stages[activeStage];
   const stageCode = stage.code
-    .replaceAll(MODEL_ID, profile.model)
     .replaceAll("__MODEL_ID__", profile.model)
+    .replaceAll("__MODEL_REVISION__", profile.revision)
     .replaceAll("__DATASET_SIZE__", datasetSize.toLocaleString())
     .replaceAll("__RANK__", String(rank))
     .replaceAll("__ALPHA__", String(rank * 2))

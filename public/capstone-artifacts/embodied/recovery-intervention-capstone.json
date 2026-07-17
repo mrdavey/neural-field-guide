@@ -2,41 +2,277 @@
   "schemaVersion": 1,
   "course": "embodied",
   "lessonId": "recovery-intervention-capstone",
-  "evidenceKind": "reviewed deterministic teaching fixture",
+  "evidenceKind": "reviewed deterministic local NumPy teaching fixture",
   "starter": {
     "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
-    "command": "python3 embodied_capstone_starter.py --project recovery-intervention-capstone --output recovery-starter.json",
-    "expected": "Requested/applied divergence, fallback ownership, and human-assistance labeling checks all print true.",
-    "boundary": "The starter validates authority bookkeeping; it does not measure a physical stop, controller reliability, or human response."
+    "requirementsUrl": "capstone-artifacts/embodied/requirements-capstones.txt",
+    "command": "python3 embodied_capstone_starter.py --project recovery-intervention-capstone --profile smoke --output recovery-intervention-capstone-smoke.json",
+    "expected": "All thirteen watchdog, precedence, fallback-ownership, rollback, monotonic freshness-window, current-receipt, assistance, and authority-transfer checks are true.",
+    "boundary": "This command executes deterministic local authority and rollback logic; it does not measure physical stop distance, human factors, or operational safety."
   },
   "implementation": {
-    "requiredComponents": ["nominal closed-loop controller", "independent watchdog", "bounded fallback controller", "authority precedence table", "fault injector", "requested/applied action ledger", "rollback snapshot and compatibility check", "human resume receipt"],
-    "buildOrder": ["Prove nominal and fallback paths independently", "Test precedence and non-overridable stop", "Snapshot controller/environment/RNG state", "Inject one fault from a paired snapshot", "Measure detect-to-applied-safe-action latency", "Require explicit authority before resume"],
-    "localCommands": ["python3 embodied_capstone_starter.py --project recovery-intervention-capstone --output recovery-starter.json", "python3 -m unittest test_watchdog.py test_authority.py test_rollback.py"],
-    "artifacts": ["authority-table.json", "fault-manifest.json", "nominal-trace.jsonl", "fault-trace.jsonl", "rollback-hashes.json", "incident-bundle.json", "failure.log"]
+    "requiredComponents": [
+      "nominal controller and independent stale-camera watchdog",
+      "non-overridable authority-priority arbiter",
+      "bounded fallback-owned hold controller",
+      "typed camera-health packet with monotonic capture/receive times, a bounded freshness window, and a consecutive-fresh gate",
+      "requested/applied command ledger",
+      "controller, mode, counter, and RNG snapshot/rollback",
+      "explicit human resume receipt tied to current, unexpired recovery evidence",
+      "visible authority-transfer and assistance trace"
+    ],
+    "buildOrder": [
+      "Install the pinned NumPy dependency and run tests/test_watchdog.py, tests/test_authority.py, and tests/test_rollback.py",
+      "Freeze camera age, validity, freshness, authority, stop, fallback, and resume contracts",
+      "Prove watchdog-stop precedence against policy, fallback, and human motion requests",
+      "Inject the stale-camera fault and record requested-to-applied containment",
+      "Corrupt then restore the complete paired controller/RNG snapshot",
+      "Require three checked consecutive fresh packets inside the declared temporal window and a current, unexpired human receipt before assisted resume"
+    ],
+    "localCommands": [
+      "python3 -m pip install -r requirements-capstones.txt",
+      "python3 -m unittest tests/test_watchdog.py tests/test_authority.py tests/test_rollback.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "python3 embodied_capstone_starter.py --project recovery-intervention-capstone --profile smoke --output recovery-intervention-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --verify-dossier recovery-intervention-capstone-smoke.json"
+    ],
+    "artifacts": [
+      "recovery-intervention-capstone-smoke.json",
+      "authority event rows",
+      "rollback hashes",
+      "human resume receipt",
+      "failure.log"
+    ]
   },
   "acceptanceChecks": [
-    {"id": "precedence", "action": "Issue a policy move while watchdog stop is active.", "expected": "Applied action is hold/fallback; policy cannot override the watchdog and both commands remain logged."},
-    {"id": "paired-fault", "action": "Replay nominal and stale-camera scenarios from the same snapshot for detect, recover, and resume phases.", "expected": "All six scenario-by-phase rows exist and only the declared fault differs before containment."},
-    {"id": "rollback-resume", "action": "Restore the accepted controller and require schema/state next-step equivalence plus a human resume receipt.", "expected": "Incompatible rollback remains blocked; a human-authorized resumed task is labeled assisted rather than autonomous."}
+    {
+      "id": "watchdog-precedence",
+      "action": "Request a policy move while an 80 ms stale camera packet activates the independent watchdog and competing authority requests are present.",
+      "expected": "Watchdog stop wins non-overridable precedence, requested 0.08 m becomes applied 0.0 m, and the controller position remains unchanged."
+    },
+    {
+      "id": "rollback-and-freshness",
+      "action": "Corrupt controller state after the fault, restore the accepted snapshot, then feed valid packets plus reversed capture/receive times, an overlong recovery window, and a bad packet between good packets.",
+      "expected": "Controller and RNG hash return exactly; fallback owns every decision; reversed time, overlong windows, and bad packets reset progress; and readiness occurs only after three new consecutive valid packets."
+    },
+    {
+      "id": "assisted-resume",
+      "action": "Attempt resume with predated and expired receipts before presenting a current receipt with operator, reason, evidence time, timestamp, prior mode, selected owner, and applied action.",
+      "expected": "Predated and expired receipts are rejected; human authority owns only the current unexpired resume; the action remains a hold; and the completed path is labeled assisted rather than autonomous."
+    }
   ],
   "manifest": {
-    "controller": "authority and fallback fixture",
+    "profile": "smoke",
     "seed": 53,
-    "fault": "stale camera",
-    "independentUnit": "paired fault-injection episode",
-    "matrixAxes": {"scenario": ["nominal", "stale_camera"], "phase": ["detect", "recover", "resume"]}
+    "fault": "stale_camera",
+    "cameraAgeGateMs": 40,
+    "freshPacketsBeforeResume": 3,
+    "maxFreshWindowMs": 80,
+    "maxResumeEvidenceAgeMs": 40,
+    "cameraHealthPacketSchema": [
+      "sequence",
+      "captured_at_ms",
+      "received_at_ms",
+      "valid"
+    ],
+    "authorityPriority": {
+      "policy": 10,
+      "fallback": 30,
+      "human": 50,
+      "watchdog_stop": 100
+    },
+    "rollbackSnapshotHash": "d20ec21e4be1a1975708a4d3c009c1e3d4e2463bb2ebd0c0f00d3a8c83a7a600",
+    "independentUnit": "fault-injection episode",
+    "matrixAxes": {
+      "rowIndex": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "matrixIdentity": "rowIndex identifies the ordered executable authority events; phase is the emitted event phase."
   },
-  "invariants": {"samePreFaultSnapshot": true, "watchdogIndependent": true, "requestedAndAppliedLogged": true, "allDeclaredCellsPresent": true},
+  "checks": {
+    "watchdog_changes_requested_to_safe_applied_action": true,
+    "future_and_stale_camera_ages_are_rejected": true,
+    "watchdog_stop_has_non_overridable_precedence": true,
+    "fallback_owns_freshness_gate": true,
+    "rollback_restores_controller_and_rng_hash": true,
+    "resume_requires_three_fresh_packets": true,
+    "freshness_gate_is_derived_from_checked_packet_sequence": true,
+    "bad_packet_resets_consecutive_freshness": true,
+    "freshness_requires_monotonic_timestamps": true,
+    "freshness_requires_bounded_consecutive_window": true,
+    "resume_receipt_must_use_current_unexpired_evidence": true,
+    "human_resume_has_receipt_and_is_assisted": true,
+    "authority_transfer_is_visible_in_trace": true
+  },
   "rawRows": [
-    {"scenario": "nominal", "phase": "detect", "latencyMs": 0, "requestedAction": "move", "appliedAction": "move", "owner": "policy", "autonomous": true},
-    {"scenario": "nominal", "phase": "recover", "freshPackets": 0, "appliedAction": "move", "owner": "policy", "autonomous": true},
-    {"scenario": "nominal", "phase": "resume", "taskSuccess": true, "owner": "policy", "autonomous": true},
-    {"scenario": "stale_camera", "phase": "detect", "latencyMs": 20, "requestedAction": "move", "appliedAction": "hold", "owner": "watchdog", "autonomous": false},
-    {"scenario": "stale_camera", "phase": "recover", "freshPackets": 3, "appliedAction": "hold", "owner": "fallback", "autonomous": false},
-    {"scenario": "stale_camera", "phase": "resume", "taskSuccess": true, "owner": "human", "autonomous": false}
+    {
+      "phase": "detect_and_contain",
+      "fault": "stale_camera",
+      "accepted": false,
+      "cameraSequence": 0,
+      "capturedAtMs": 20,
+      "receivedAtMs": 100,
+      "cameraAgeMs": 80,
+      "reason": "stale_camera",
+      "freshPacketCount": 0,
+      "freshWindowStartedAtMs": null,
+      "requestedActionM": 0.08,
+      "appliedActionM": 0,
+      "owner": "watchdog_stop",
+      "preXM": 0.2,
+      "postXM": 0.2,
+      "rowIndex": 0
+    },
+    {
+      "phase": "rollback",
+      "owner": "fallback",
+      "snapshotHash": "d20ec21e4be1a1975708a4d3c009c1e3d4e2463bb2ebd0c0f00d3a8c83a7a600",
+      "corruptHash": "2fdcc637fbfc6a36dfa52d9dd9e9035f3e23785f99f52f75f204c054112a1c64",
+      "restoredHash": "d20ec21e4be1a1975708a4d3c009c1e3d4e2463bb2ebd0c0f00d3a8c83a7a600",
+      "restored": true,
+      "appliedActionM": 0,
+      "rowIndex": 1
+    },
+    {
+      "phase": "fallback_freshness_gate",
+      "accepted": true,
+      "cameraSequence": 0,
+      "capturedAtMs": 108,
+      "receivedAtMs": 120,
+      "cameraAgeMs": 12,
+      "reason": "fresh",
+      "freshPacketCount": 1,
+      "freshWindowStartedAtMs": 120,
+      "requiredFreshPackets": 3,
+      "owner": "fallback",
+      "appliedActionM": 0,
+      "freshnessSatisfied": false,
+      "resumeAuthorized": false,
+      "rowIndex": 2
+    },
+    {
+      "phase": "fallback_freshness_gate",
+      "accepted": true,
+      "cameraSequence": 1,
+      "capturedAtMs": 132,
+      "receivedAtMs": 140,
+      "cameraAgeMs": 8,
+      "reason": "fresh",
+      "freshPacketCount": 2,
+      "freshWindowStartedAtMs": 120,
+      "requiredFreshPackets": 3,
+      "owner": "fallback",
+      "appliedActionM": 0,
+      "freshnessSatisfied": false,
+      "resumeAuthorized": false,
+      "rowIndex": 3
+    },
+    {
+      "phase": "fallback_freshness_gate",
+      "accepted": true,
+      "cameraSequence": 2,
+      "capturedAtMs": 155,
+      "receivedAtMs": 160,
+      "cameraAgeMs": 5,
+      "reason": "fresh",
+      "freshPacketCount": 3,
+      "freshWindowStartedAtMs": 120,
+      "requiredFreshPackets": 3,
+      "owner": "fallback",
+      "appliedActionM": 0,
+      "freshnessSatisfied": true,
+      "resumeAuthorized": false,
+      "rowIndex": 4
+    },
+    {
+      "phase": "resume",
+      "owner": "human",
+      "appliedActionM": 0,
+      "resumeReceipt": {
+        "operator": "operator-01",
+        "reason": "scene inspected",
+        "timestampMs": 161,
+        "fromMode": "fallback",
+        "evidenceReceivedAtMs": 160,
+        "evidenceAgeMs": 1
+      },
+      "autonomous": false,
+      "rowIndex": 5
+    }
   ],
-  "decision": "The stale-camera task completes only after watchdog containment, fallback recovery, and human resume, so it must be reported as assisted recovery rather than uninterrupted autonomous success.",
-  "failure": "A shared corrupted sensor can invalidate both nominal and fallback paths; the common-mode scenario, delayed containment, requested/applied divergence, and failed rollback attempts remain explicit incident evidence.",
-  "boundary": "The artifact validates deterministic labeling, precedence, and authority logic only; it is not a physical stop-distance measurement, operational safety certification, human-factors result, or proof against unknown common-mode failures."
+  "artifacts": {
+    "adversarialEvidence": {
+      "futureCamera": {
+        "evidence": {
+          "accepted": false,
+          "cameraSequence": 0,
+          "capturedAtMs": 110,
+          "receivedAtMs": 100,
+          "cameraAgeMs": -10,
+          "reason": "camera_timestamp_from_future",
+          "freshPacketCount": 0,
+          "freshWindowStartedAtMs": null
+        },
+        "stopReason": "camera_timestamp_from_future"
+      },
+      "badPacketReset": {
+        "evidence": {
+          "accepted": false,
+          "cameraSequence": 1,
+          "capturedAtMs": 101,
+          "receivedAtMs": 110,
+          "cameraAgeMs": 9,
+          "reason": "camera_packet_invalid",
+          "freshPacketCount": 0,
+          "freshWindowStartedAtMs": null
+        },
+        "stopReason": "camera_packet_invalid",
+        "freshPacketCountAfter": 0
+      },
+      "nonMonotonicTimestamps": {
+        "evidence": {
+          "accepted": false,
+          "cameraSequence": 1,
+          "capturedAtMs": 80,
+          "receivedAtMs": 90,
+          "cameraAgeMs": 10,
+          "reason": "camera_timestamp_not_monotonic",
+          "freshPacketCount": 0,
+          "freshWindowStartedAtMs": null
+        },
+        "stopReason": "camera_timestamp_not_monotonic",
+        "freshPacketCountAfter": 0
+      },
+      "freshnessWindow": {
+        "evidence": {
+          "accepted": false,
+          "cameraSequence": 2,
+          "capturedAtMs": 171,
+          "receivedAtMs": 181,
+          "cameraAgeMs": 10,
+          "reason": "camera_freshness_window_exceeded",
+          "freshPacketCount": 0,
+          "freshWindowStartedAtMs": null
+        },
+        "stopReason": "camera_freshness_window_exceeded",
+        "freshPacketCountAfter": 0
+      },
+      "resumeTiming": {
+        "lastEvidenceReceivedAtMs": 140,
+        "predatedReceiptTimestampMs": 139,
+        "expiredReceiptTimestampMs": 181,
+        "predatedError": "resume receipt cannot predate current camera evidence",
+        "expiredError": "current camera evidence expired before resume"
+      }
+    }
+  },
+  "decision": "The independent watchdog wins authority and holds the faulted command; rollback restores the paired state, fallback owns bounded monotonic freshness checks, and only a current unexpired human receipt resumes control.",
+  "failure": "The stale-camera detect row, corrupted rollback hash, temporal-window faults, and invalid receipt attempts remain explicit; any policy override, broken freshness sequence, or stale/predated resume fails acceptance.",
+  "boundary": "This is real local deterministic authority and rollback logic. It is not a learned-policy result from a robot, a physical stop-distance measurement, a human-factors study, or an operational safety certification."
 }

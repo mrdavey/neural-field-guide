@@ -52,7 +52,13 @@ test("external experiments separate invariants, reviewed measurements, and fixtu
     assert.ok(contract.providers.some((provider) => provider.id !== "colab"));
     assert.match(contract.commands.install, /requirements-/);
     assert.match(contract.commands.smoke, /smoke/);
-    assert.match(contract.commands.full, /--device cuda/);
+    if (contract.courseId === "embodied") {
+      assert.match(contract.commands.full, /--device auto/);
+      assert.doesNotMatch(contract.commands.full, /--device cuda/);
+      assert.ok(contract.providers.some((provider) => provider.run.some((step) => /--device cuda.*optional override/i.test(step))), "Embodied CUDA must remain an explicit optional override");
+    } else {
+      assert.match(contract.commands.full, /--device cuda/);
+    }
     assert.ok(contract.expected.invariants.length >= 3);
     assert.ok(contract.expected.observations.length >= 2);
     assert.ok(contract.diagnostics.every((diagnostic) => diagnostic.retry.length >= 20));

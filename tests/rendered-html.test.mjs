@@ -45,7 +45,7 @@ test("every lesson has a directly rendered canonical static URL and LLM legacy f
   }
 
   const worldSource = (await Promise.all(sectionNames.map((name) => readFile(new URL(`../app/world-models/sections/${name}`, import.meta.url), "utf8")))).join("\n");
-  const worldLessons = [...worldSource.matchAll(/\n    id: "([^"]+)", track: "wm-[^"]+", title: "([^"]+)"/g)].map((match) => ({ id: match[1], title: match[2] }));
+  const worldLessons = [...worldSource.matchAll(/defineWorldModelLesson\(\{\s*id:\s*"([^"]+)",\s*track:\s*"wm-[^"]+",\s*title:\s*"([^"]+)"/g)].map((match) => ({ id: match[1], title: match[2] }));
   assert.equal(worldLessons.length, 46);
   for (const lesson of worldLessons) {
     const html = await readFile(new URL(`../out/worldmodel/${lesson.id}/index.html`, import.meta.url), "utf8");

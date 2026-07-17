@@ -1,12 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import type { LessonGuide, ObjectiveCoverage } from "./lesson-guides";
 import { lessonCodeExamples, type LessonCodeExample } from "./code-examples";
 import { lessonObjectiveCoverage } from "./lesson-objective-coverage";
 import { MathText } from "./math-text";
 import { ActivityInfo, codeActivityGuidance, type CodeGuidance } from "./activity-info";
 import { MotionReveal } from "./motion/motion-reveal";
+
+type LessonNarrativeViewProps = {
+  guide: LessonGuide;
+  lessonId: string;
+  lessonTitle: string;
+  simple: string;
+  priorKnowledge: ReactNode;
+  nextUse: ReactNode;
+};
+
+function headingPhrase(value: string) {
+  return value.trim().replace(/[.!?]+$/, "");
+}
+
+export function LessonNarrativeView({ guide, lessonId, lessonTitle, simple, priorKnowledge, nextUse }: LessonNarrativeViewProps) {
+  const [opening, ...chapters] = guide.sections;
+  if (!opening) throw new Error(`Missing narrative sections for ${lessonId}`);
+
+  return <section className="lesson-narrative" aria-labelledby={`${lessonId}-narrative-title`}>
+    <header className="lesson-narrative-opening">
+      <span className="eyebrow">Learn · one connected explanation</span>
+      <h2 id={`${lessonId}-narrative-title`}><MathText>{opening.title}</MathText></h2>
+      <p className="lesson-narrative-lede"><MathText>{simple}</MathText></p>
+      <aside className="lesson-narrative-context">
+        <div><strong>Where this chapter begins</strong>{priorKnowledge}</div>
+        <div><strong>Where the idea leads</strong>{nextUse}</div>
+      </aside>
+    </header>
+
+    <section className="lesson-vocabulary" aria-labelledby={`${lessonId}-vocabulary-title`}>
+      <div><span className="eyebrow">Words used in this chapter</span><h3 id={`${lessonId}-vocabulary-title`}>A small vocabulary for the argument</h3></div>
+      <dl>{guide.vocabulary.map((item) => <div key={item.term}><dt><MathText>{item.term}</MathText></dt><dd><MathText>{item.meaning}</MathText></dd></div>)}</dl>
+    </section>
+
+    <div className="lesson-opening-explanation">
+      {opening.paragraphs.map((paragraph) => <p key={paragraph}><MathText>{paragraph}</MathText></p>)}
+    </div>
+
+    {chapters.length > 0 && <section className="chapter-narrative" aria-label={`${lessonTitle} explanation`}>{chapters.map((section, index) => <article key={section.title}>
+      <span className="chapter-index">{String(index + 2).padStart(2, "0")}</span><h3><MathText>{section.title}</MathText></h3>
+      {section.paragraphs.map((paragraph) => <p key={paragraph}><MathText>{paragraph}</MathText></p>)}
+    </article>)}</section>}
+
+    <section className="concept-walkthrough" aria-labelledby={`${lessonId}-walkthrough-title`}>
+      <header className="walkthrough-heading"><span className="eyebrow">Follow the mechanism</span><div><h3 id={`${lessonId}-walkthrough-title`}>Trace the evidence, change, and conclusion</h3><p>Each step continues the chapter’s argument. Use the state check to make sure the present result is sound before carrying it into the next step.</p></div></header>
+      <div className="walkthrough-steps">{guide.walkthrough.map((step, index) => <article key={step.title}>
+        <span>{String(index + 1).padStart(2, "0")}</span><div><h4><MathText>{step.title}</MathText></h4><p><MathText>{step.body}</MathText></p><div><strong>State check</strong><MathText>{step.checkpoint}</MathText></div></div>
+      </article>)}</div>
+    </section>
+
+    <footer className="lesson-narrative-handoff">
+      <span className="eyebrow">See the same mechanism from another angle</span>
+      <p><MathText>{`The illustration and scrolling trace follow the same path from “${headingPhrase(guide.walkthrough[0].title)}” to “${headingPhrase(guide.walkthrough.at(-1)!.title)}.” As you read them, connect each visible change to the causal step that produced it.`}</MathText></p>
+    </footer>
+  </section>;
+}
 
 function ObjectiveCoverageCard({ item, index }: { item: import("./lesson-guides").ObjectiveCoverage; index: number }) {
   const [draft, setDraft] = useState("");
@@ -15,14 +71,8 @@ function ObjectiveCoverageCard({ item, index }: { item: import("./lesson-guides"
   return <li>
     <span>{String(index + 1).padStart(2, "0")}</span>
     <h4><MathText>{item.objective}</MathText></h4>
-    <div className="objective-teaching-sequence">
-      <article><strong>Plain-language meaning</strong><p><MathText>{item.explanation}</MathText></p></article>
-      <article><strong>How it works</strong><p><MathText>{item.mechanism}</MathText></p></article>
-      <article><strong>Worked trace</strong><p><MathText>{item.workedExample}</MathText></p></article>
-      <aside><strong>Boundary or failure case</strong><p><MathText>{item.boundary}</MathText></p></aside>
-    </div>
     <div className="objective-evidence">
-      <strong>Check this outcome</strong>
+      <strong>Explain the chapter in your own words</strong>
       <p><MathText>{item.check.prompt}</MathText></p>
       <label><span>Your explanation</span><textarea rows={4} value={draft} disabled={committed} onChange={(event) => setDraft(event.target.value)} placeholder="State the decision or result and trace the causal mechanism…" /></label>
       {!committed ? <button disabled={draft.trim().length < 18} onClick={() => setCommitted(true)}>Commit before comparison</button> : <MotionReveal stateKey="objective-committed" effect="feedback">
@@ -31,10 +81,19 @@ function ObjectiveCoverageCard({ item, index }: { item: import("./lesson-guides"
         <button onClick={() => setCommitted(false)}>Revise and retry</button>
       </MotionReveal>}
     </div>
+    <details className="objective-reference">
+      <summary>Stuck? Revisit the relevant explanation</summary>
+      <div className="objective-teaching-sequence">
+        <article><strong>Plain-language anchor</strong><p><MathText>{item.explanation}</MathText></p></article>
+        <article><strong>Causal mechanism</strong><p><MathText>{item.mechanism}</MathText></p></article>
+        <article><strong>Concrete trace</strong><p><MathText>{item.workedExample}</MathText></p></article>
+        <aside><strong>Limit to preserve</strong><p><MathText>{item.boundary}</MathText></p></aside>
+      </div>
+    </details>
   </li>;
 }
 
-export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, example, guidance, showVocabulary = true }: { guide: LessonGuide; lessonId: string; lessonTitle: string; coverage?: ObjectiveCoverage[]; example?: LessonCodeExample; guidance?: CodeGuidance; showVocabulary?: boolean }) {
+export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, example, guidance }: { guide: LessonGuide; lessonId: string; lessonTitle: string; coverage?: ObjectiveCoverage[]; example?: LessonCodeExample; guidance?: CodeGuidance }) {
   const codeExample = example ?? lessonCodeExamples[lessonId];
   const codeGuidance = guidance ?? codeActivityGuidance[lessonId];
   const objectiveCoverage = coverage ?? lessonObjectiveCoverage[lessonId];
@@ -56,10 +115,8 @@ export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, exampl
     setGuidedAssessment(undefined);
   };
 
-  return <section className="chapter-guide" aria-label={`${lessonTitle} guided chapter`}>
-    <section className="learning-objectives" aria-label="Lesson outcomes and checks">
-      <ol className="objective-map">{objectiveCoverage.map((item, index) => <ObjectiveCoverageCard key={item.objective} item={item} index={index} />)}</ol>
-    </section>
+  return <section className="chapter-guide lesson-practice-chapter" aria-label={`${lessonTitle} guided practice`}>
+    <header className="chapter-guide-header"><span className="eyebrow">Try · use the idea before the final test</span><p>The explanation above supplied the model. The next activities make you predict, trace, change, and explain so the mechanism becomes something you can use rather than wording you only recognize.</p></header>
     <section className="guided-example" aria-labelledby={`guided-example-${lessonId}`}>
       <div className="guided-example-intro"><div><span className="eyebrow">Worked trace</span><h3 id={`guided-example-${lessonId}`}><MathText>{guide.guidedExample.title}</MathText></h3></div><ActivityInfo mode="reflect" title="Worked example" detail="Predict the result, then compare with the trace." /></div>
       <div className="guided-example-setup"><span>Case setup</span><p><MathText>{guide.guidedExample.setup}</MathText></p></div>
@@ -88,10 +145,10 @@ export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, exampl
       <div><span className="eyebrow">Changed-case practice</span><p><MathText>{guide.practice.prompt}</MathText></p><ActivityInfo mode="reflect" /></div>
       <div className="practice-reveals"><label className="practice-draft"><span>Your reasoning</span><textarea rows={5} value={practiceDraft} disabled={practiceCommitted} onChange={(event) => setPracticeDraft(event.target.value)} placeholder="Make a decision and explain the mechanism…" /></label>{practiceCommitted ? <button onClick={() => { setPracticeCommitted(false); setPracticeAssessment(undefined); }}>Revise answer</button> : <button disabled={practiceDraft.trim().length < 18} onClick={() => setPracticeCommitted(true)}>Commit before reveal</button>}<details><summary>Need a hint?</summary><p><MathText>{guide.practice.hint}</MathText></p></details>{practiceCommitted && <details open><summary>Worked answer</summary><p><MathText>{guide.practice.answer}</MathText></p></details>}{practiceCommitted && <div className="practice-diagnosis"><span>Self-check only: which comparison is honest?</span><div>{(["matched", "partial", "missed"] as const).map((result) => <button key={result} className={practiceAssessment === result ? "active" : ""} onClick={() => setPracticeAssessment(result)}>{result === "matched" ? "My decision + reason matched" : result === "partial" ? "Decision only matched" : "Needs another attempt"}</button>)}</div>{practiceAssessment && <p className={practiceAssessment === "matched" ? "reflection" : "retry"}>{practiceAssessment === "matched" ? "Self-check recorded. The assessed transfer lab below independently verifies the component-specific transfer." : practiceAssessment === "partial" ? "Name the causal step missing from your explanation, then revise; recognition without mechanism is not yet transfer." : "Use the hint to find the first wrong assumption, then revise without copying the worked wording."}</p>}</div>}</div>
     </section>
-    {showVocabulary && <section className="lesson-vocabulary">
-      <div><span className="eyebrow">Vocabulary checkpoint</span><h3>Use each term precisely.</h3></div>
-      <dl>{guide.vocabulary.map((item) => <div key={item.term}><dt><MathText>{item.term}</MathText></dt><dd><MathText>{item.meaning}</MathText></dd></div>)}</dl>
-    </section>}
+    <section className="learning-objectives" aria-label="Lesson outcomes and checks">
+      <header><span className="eyebrow">Explain · consolidate the chapter</span><h3>Can you reconstruct the argument without rereading it?</h3><p>Each prompt refers back to the continuous explanation above. Write first; open the reminder only if you cannot locate the missing causal step.</p></header>
+      <ol className="objective-map">{objectiveCoverage.map((item, index) => <ObjectiveCoverageCard key={item.objective} item={item} index={index} />)}</ol>
+    </section>
   </section>;
 }
 

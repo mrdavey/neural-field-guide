@@ -2,37 +2,350 @@
   "schemaVersion": 1,
   "course": "embodied",
   "lessonId": "task-contract-capstone",
-  "evidenceKind": "reviewed deterministic teaching fixture",
+  "evidenceKind": "reviewed deterministic local NumPy teaching fixture",
   "starter": {
     "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
-    "command": "python3 embodied_capstone_starter.py --project task-contract-capstone --output task-contract-starter.json",
-    "expected": "The reset replay hash, requested/applied distinction, and stale-packet containment checks all print true.",
-    "boundary": "The starter executes interface fixtures; the learner must replace TaskFixture with a working reset/step simulator before baseline acceptance."
+    "requirementsUrl": "capstone-artifacts/embodied/requirements-capstones.txt",
+    "command": "python3 embodied_capstone_starter.py --project task-contract-capstone --profile smoke --output task-contract-capstone-smoke.json",
+    "expected": "All eleven typed-packet, replay, requested/applied, predicate, oracle, stale/future observation, stale/future action, and wrong-frame checks are true.",
+    "boundary": "This command executes the deterministic one-dimensional task contract locally; it does not run a learned policy, external simulator, or physical robot."
   },
   "implementation": {
-    "requiredComponents": ["versioned task manifest", "reset(seed) and step(applied_action) API", "typed observation/action validators", "success/failure/constraint predicates", "local RNG and replay snapshot", "event and requested/applied action writer"],
-    "buildOrder": ["Implement reset and schema assertions", "Implement action saturation and requested/applied logs", "Implement predicate precedence and endings", "Snapshot simulator plus RNG state", "Run the oracle on nominal and one fault branch"],
-    "localCommands": ["python3 embodied_capstone_starter.py --project task-contract-capstone --output task-contract-starter.json", "python3 -m unittest test_task_fixture.py"],
-    "artifacts": ["task-manifest.json", "nominal-transitions.jsonl", "stale-transitions.jsonl", "replay-hashes.json", "failure.log"]
+    "requiredComponents": [
+      "versioned observation, action, and task schemas",
+      "deterministic reset, observe, snapshot, restore, and step mechanics",
+      "bounded requested-to-applied action adapter",
+      "executable success, timeout, and constraint-failure predicates",
+      "packet frame, sequence, timestamp, age, and finiteness validation",
+      "state-hash replay oracle",
+      "fault containment before any position, velocity, sequence, terminal, or RNG mutation",
+      "event and predicate trace writer"
+    ],
+    "buildOrder": [
+      "Install the pinned NumPy dependency and run tests/test_task_fixture.py",
+      "Freeze packet schemas, units, frames, timestamp semantics, predicates, and precedence",
+      "Prove deterministic reset, nominal replay identity, action clipping, and oracle transitions",
+      "Inject malformed and wrong-frame packets plus stale and future timestamps on both observation and action packets",
+      "Verify every rejected packet leaves the complete simulator state hash unchanged",
+      "Run the smoke profile and preserve its manifest, checks, rows, decision, and boundary"
+    ],
+    "localCommands": [
+      "python3 -m pip install -r requirements-capstones.txt",
+      "python3 -m unittest tests/test_task_fixture.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "python3 embodied_capstone_starter.py --project task-contract-capstone --profile smoke --output task-contract-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --verify-dossier task-contract-capstone-smoke.json"
+    ],
+    "artifacts": [
+      "task-contract-capstone-smoke.json",
+      "nominal-and-fault-event-rows",
+      "state-hash replay receipt",
+      "failure.log"
+    ]
   },
   "acceptanceChecks": [
-    {"id": "schema", "action": "Reset and validate every field, unit, frame, timestamp, bound, validity flag, and ending.", "expected": "The nominal packet passes and a unit/frame mismatch is rejected before step."},
-    {"id": "replay", "action": "Restore simulator and RNG state immediately before one step and replay the same applied action.", "expected": "Next observation, events, ending flags, and SHA-256 agree exactly."},
-    {"id": "stale-containment", "action": "Change only camera age from 10 ms to 80 ms with a 40 ms gate.", "expected": "Requested move remains logged, applied command is hold, event is stale_sensor, and no task motion occurs."}
+    {
+      "id": "typed-interface",
+      "action": "Validate a nominal packet and one packet with wrong schema version, negative sequence and time, wrong frame, and a non-finite action.",
+      "expected": "The nominal packet has no errors, while the malformed packet reports all five contract faults instead of stopping after the first error."
+    },
+    {
+      "id": "nominal-oracle",
+      "action": "Replay requested actions 0.07 m and 0.03 m from seed 17 and check every transition with the independent task oracle.",
+      "expected": "The first request is clipped to 0.03 m, the second reaches target x=0.06 m, the success predicate terminates, and both trace hashes match."
+    },
+    {
+      "id": "containment",
+      "action": "Inject stale and future observation timestamps, stale and future action timestamps, and a wrong action frame at the first sequence number.",
+      "expected": "All five branches apply 0.0 m, emit their specific validation error, and preserve identical before/after hashes for position, velocity, sequence, terminal, and RNG state."
+    }
   ],
   "manifest": {
-    "simulator": "typed pick-place fixture",
+    "profile": "smoke",
     "seed": 17,
-    "intervention": "camera age 80 ms versus 40 ms gate",
-    "independentUnit": "replayed branch from the same checkpoint",
-    "matrixAxes": {"arm": ["nominal", "stale"]}
+    "taskSchema": {
+      "schema_version": "embodied-task/1.0",
+      "observation_frame": "world",
+      "action_frame": "world",
+      "max_packet_age_ms": 40,
+      "max_dx_m": 0.03,
+      "workspace_min_m": -0.05,
+      "workspace_max_m": 0.12,
+      "target_x_m": 0.06,
+      "target_tolerance_m": 1e-9,
+      "max_steps": 5
+    },
+    "nominalRequestedActionsM": [
+      0.07,
+      0.03
+    ],
+    "predicatePrecedence": [
+      "constraintFailure",
+      "success",
+      "timeout"
+    ],
+    "independentUnit": "replayed branch",
+    "matrixAxes": {
+      "arm": [
+        "nominal",
+        "malformed_action",
+        "stale_observation",
+        "future_observation",
+        "stale_action",
+        "future_action",
+        "wrong_frame"
+      ]
+    }
   },
-  "invariants": {"oneFactorChanged": true, "requestedAndAppliedLogged": true, "replayRequired": true, "allDeclaredCellsPresent": true},
+  "checks": {
+    "typed_packets_validate": true,
+    "malformed_packet_reports_all_contract_faults": true,
+    "reset_and_trace_are_replayable": true,
+    "requested_and_applied_actions_are_distinct": true,
+    "success_predicate_terminates_nominal_trace": true,
+    "oracle_validates_transition_mechanics": true,
+    "stale_observation_is_contained_without_state_change": true,
+    "future_observation_is_contained_without_state_change": true,
+    "stale_action_is_contained_without_state_change": true,
+    "future_action_is_contained_without_state_change": true,
+    "wrong_frame_is_contained_without_state_change": true
+  },
   "rawRows": [
-    {"arm": "nominal", "packetAgeMs": 10, "requestedDxM": 0.07, "appliedDxM": 0.03, "event": "act", "stateChanged": true},
-    {"arm": "stale", "packetAgeMs": 80, "requestedDxM": 0.07, "appliedDxM": 0.0, "event": "stale_sensor", "stateChanged": false}
+    {
+      "arm": "nominal",
+      "observationValidationErrors": [],
+      "actionValidationErrors": [],
+      "trace": [
+        {
+          "step": 1,
+          "packetAgeMs": 10,
+          "actionAgeMs": 10,
+          "requestedDxM": 0.07,
+          "boundedDxM": 0.03,
+          "appliedDxM": 0.03,
+          "preX": 0,
+          "postX": 0.03,
+          "validationErrors": [],
+          "predicates": {
+            "constraintFailure": false,
+            "success": false,
+            "timeout": false
+          },
+          "event": "act",
+          "contained": false,
+          "terminal": false,
+          "stateHashBefore": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15",
+          "stateHashAfter": "7759afbd974db3a355b89782b94c52844c993352053b1a18172080b7e689c726"
+        },
+        {
+          "step": 2,
+          "packetAgeMs": 10,
+          "actionAgeMs": 10,
+          "requestedDxM": 0.03,
+          "boundedDxM": 0.03,
+          "appliedDxM": 0.03,
+          "preX": 0.03,
+          "postX": 0.06,
+          "validationErrors": [],
+          "predicates": {
+            "constraintFailure": false,
+            "success": true,
+            "timeout": false
+          },
+          "event": "success",
+          "contained": false,
+          "terminal": true,
+          "stateHashBefore": "7759afbd974db3a355b89782b94c52844c993352053b1a18172080b7e689c726",
+          "stateHashAfter": "20eedca71ca573896be4db4f25325545a7156a3888bc1e8eb3ca0d1a30125bcf"
+        }
+      ],
+      "replayTrace": [
+        {
+          "step": 1,
+          "packetAgeMs": 10,
+          "actionAgeMs": 10,
+          "requestedDxM": 0.07,
+          "boundedDxM": 0.03,
+          "appliedDxM": 0.03,
+          "preX": 0,
+          "postX": 0.03,
+          "validationErrors": [],
+          "predicates": {
+            "constraintFailure": false,
+            "success": false,
+            "timeout": false
+          },
+          "event": "act",
+          "contained": false,
+          "terminal": false,
+          "stateHashBefore": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15",
+          "stateHashAfter": "7759afbd974db3a355b89782b94c52844c993352053b1a18172080b7e689c726"
+        },
+        {
+          "step": 2,
+          "packetAgeMs": 10,
+          "actionAgeMs": 10,
+          "requestedDxM": 0.03,
+          "boundedDxM": 0.03,
+          "appliedDxM": 0.03,
+          "preX": 0.03,
+          "postX": 0.06,
+          "validationErrors": [],
+          "predicates": {
+            "constraintFailure": false,
+            "success": true,
+            "timeout": false
+          },
+          "event": "success",
+          "contained": false,
+          "terminal": true,
+          "stateHashBefore": "7759afbd974db3a355b89782b94c52844c993352053b1a18172080b7e689c726",
+          "stateHashAfter": "20eedca71ca573896be4db4f25325545a7156a3888bc1e8eb3ca0d1a30125bcf"
+        }
+      ],
+      "traceHash": "c20a083e0b8612b03ff6d108db612fec64692366175df0fa7a836fcab8bd6a18",
+      "replayTraceHash": "c20a083e0b8612b03ff6d108db612fec64692366175df0fa7a836fcab8bd6a18"
+    },
+    {
+      "arm": "malformed_action",
+      "validationErrors": [
+        "action_schema_version",
+        "action_frame",
+        "action_sequence",
+        "action_timestamp",
+        "action_non_finite"
+      ],
+      "expectedValidationErrors": [
+        "action_schema_version",
+        "action_frame",
+        "action_sequence",
+        "action_timestamp",
+        "action_non_finite"
+      ]
+    },
+    {
+      "arm": "stale_observation",
+      "step": 0,
+      "packetAgeMs": 80,
+      "actionAgeMs": 0,
+      "requestedDxM": 0.02,
+      "boundedDxM": 0.02,
+      "appliedDxM": 0,
+      "preX": 0,
+      "postX": 0,
+      "validationErrors": [
+        "stale_observation"
+      ],
+      "predicates": {
+        "constraintFailure": false,
+        "success": false,
+        "timeout": false
+      },
+      "event": "fault_contained",
+      "contained": true,
+      "terminal": false,
+      "stateHashBefore": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15",
+      "stateHashAfter": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15"
+    },
+    {
+      "arm": "future_observation",
+      "step": 0,
+      "packetAgeMs": -90,
+      "actionAgeMs": 0,
+      "requestedDxM": 0.02,
+      "boundedDxM": 0.02,
+      "appliedDxM": 0,
+      "preX": 0,
+      "postX": 0,
+      "validationErrors": [
+        "observation_from_future"
+      ],
+      "predicates": {
+        "constraintFailure": false,
+        "success": false,
+        "timeout": false
+      },
+      "event": "fault_contained",
+      "contained": true,
+      "terminal": false,
+      "stateHashBefore": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15",
+      "stateHashAfter": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15"
+    },
+    {
+      "arm": "stale_action",
+      "step": 0,
+      "packetAgeMs": 0,
+      "actionAgeMs": 100,
+      "requestedDxM": 0.02,
+      "boundedDxM": 0.02,
+      "appliedDxM": 0,
+      "preX": 0,
+      "postX": 0,
+      "validationErrors": [
+        "stale_action"
+      ],
+      "predicates": {
+        "constraintFailure": false,
+        "success": false,
+        "timeout": false
+      },
+      "event": "fault_contained",
+      "contained": true,
+      "terminal": false,
+      "stateHashBefore": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15",
+      "stateHashAfter": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15"
+    },
+    {
+      "arm": "future_action",
+      "step": 0,
+      "packetAgeMs": 10,
+      "actionAgeMs": -989,
+      "requestedDxM": 0.02,
+      "boundedDxM": 0.02,
+      "appliedDxM": 0,
+      "preX": 0,
+      "postX": 0,
+      "validationErrors": [
+        "action_from_future"
+      ],
+      "predicates": {
+        "constraintFailure": false,
+        "success": false,
+        "timeout": false
+      },
+      "event": "fault_contained",
+      "contained": true,
+      "terminal": false,
+      "stateHashBefore": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15",
+      "stateHashAfter": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15"
+    },
+    {
+      "arm": "wrong_frame",
+      "step": 0,
+      "packetAgeMs": 10,
+      "actionAgeMs": 10,
+      "requestedDxM": 0.02,
+      "boundedDxM": 0.02,
+      "appliedDxM": 0,
+      "preX": 0,
+      "postX": 0,
+      "validationErrors": [
+        "action_frame"
+      ],
+      "predicates": {
+        "constraintFailure": false,
+        "success": false,
+        "timeout": false
+      },
+      "event": "fault_contained",
+      "contained": true,
+      "terminal": false,
+      "stateHashBefore": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15",
+      "stateHashAfter": "3d2da5694ed1535257423a0cfcaa9a09fe952cc686377cc8eb36ea92e5362f15"
+    }
   ],
-  "decision": "The stale-packet branch demonstrates the declared age gate and hold response in this deterministic fixture only; a learner conclusion requires the same checks from the implemented simulator and complete replay artifacts.",
-  "failure": "An implementation that applies move after the 80 ms packet fails the containment assertion and remains in the reviewed failure log with its requested/applied commands and pre-step snapshot.",
-  "boundary": "This is hand-authored simulator-interface evidence, not an external policy run, physical dynamics measurement, hardware safety result, or proof that the enumerated predicates cover every hazard."
+  "artifacts": {},
+  "decision": "The typed nominal trace reaches the success predicate, while stale/future observation and action packets plus wrong-frame packets are held before state mutation.",
+  "failure": "All four stale/future observation/action rows and the wrong-frame row are retained as containment evidence; any nonzero applied action or changed state hash would fail release.",
+  "boundary": "This is real local execution of a one-dimensional deterministic simulator contract. It is not a learned-policy result from an external simulator, a physical-robot measurement, or a safety certification."
 }

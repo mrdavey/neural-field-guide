@@ -2,37 +2,548 @@
   "schemaVersion": 1,
   "course": "embodied",
   "lessonId": "vla-policy-capstone",
-  "evidenceKind": "reviewed deterministic teaching fixture",
+  "evidenceKind": "reviewed deterministic local NumPy transformer-versus-diffusion teaching fixture",
   "starter": {
     "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
-    "command": "python3 embodied_capstone_starter.py --project vla-policy-capstone --output vla-policy-starter.json",
-    "expected": "Target-shift, future-prefix invariance, and hard-gate ordering checks all print true.",
-    "boundary": "The starter contains no trained transformer, diffusion decoder, image encoder, or timing measurement."
+    "requirementsUrl": "capstone-artifacts/embodied/requirements-capstones.txt",
+    "command": "python3 embodied_capstone_starter.py --project vla-policy-capstone --profile smoke --output vla-policy-capstone-smoke.json",
+    "expected": "All nine serializer, masked-self-attention, model-output future-edit, transformer-trainability, language-grounding, diffusion, deterministic-sampling, hard-call-gate, and failure-retention checks are true.",
+    "boundary": "This command trains a tiny one-head causal transformer and a diffusion-style noise head locally in NumPy, then decodes deterministic synthetic typed tokens; it does not measure external-simulator quality, accelerator latency, or a physical robot."
   },
   "implementation": {
-    "requiredComponents": ["typed instruction/vision/state serializer", "shared grounded condition encoder", "target-shifted causal transformer decoder", "conditional action-diffusion decoder", "action-unit and bound adapter", "matched training/evaluation budgets", "grounding counterfactual evaluator", "latency and closed-loop logger"],
-    "buildOrder": ["Freeze token, frame, time, action, and target contracts", "Pass future-token and corruption arithmetic tests", "Overfit each decoder on one tiny batch", "Restore checkpoints and verify next-step equivalence", "Accept each baseline separately", "Run matched decoder or sampler comparison"],
-    "localCommands": ["python3 embodied_capstone_starter.py --project vla-policy-capstone --output vla-policy-starter.json", "python3 -m unittest test_serializer.py test_causal_targets.py test_diffusion_actions.py"],
-    "artifacts": ["shared-manifest.json", "serializer-cases.json", "checkpoint-hashes.json", "grounding-counterfactuals.jsonl", "latency-ledger.jsonl", "paired-rollouts.jsonl", "failure.log"]
+    "requiredComponents": [
+      "typed instruction, vision, and state serializer with validity masks",
+      "shared clean action targets and bounded metric action adapter",
+      "strictly shifted causal action inputs",
+      "trained one-head causal self-attention projections plus metric action head",
+      "lower-triangular attention-weight and future-token-edit output-invariance tests",
+      "trainable conditional diffusion-style noise head",
+      "deterministic bounded three-step sampler",
+      "matched update budget, grounding counterfactual, and hard decoder-call gate"
+    ],
+    "buildOrder": [
+      "Install the pinned NumPy dependency and run tests/test_serializer.py, tests/test_causal_targets.py, and tests/test_diffusion_actions.py",
+      "Freeze vocabulary, serialization, action units, action bounds, target shift, and validity masks",
+      "Execute the causal transformer, inspect zero attention above the diagonal, and prove a future token edit cannot change earlier model outputs",
+      "Fit the transformer projections/action head and diffusion noise head for the same 480-update smoke budget",
+      "Repeat the deterministic 900-update full profile and verify its parameter/evidence hashes through dossier regeneration",
+      "Check the left/right language counterfactual and deterministic bounded diffusion sample",
+      "Apply the two-call hard gate before ranking and preserve the failing decoder row"
+    ],
+    "localCommands": [
+      "python3 -m pip install -r requirements-capstones.txt",
+      "python3 -m unittest tests/test_serializer.py tests/test_causal_targets.py tests/test_diffusion_actions.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "python3 embodied_capstone_starter.py --project vla-policy-capstone --profile smoke --output vla-policy-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --verify-dossier vla-policy-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --project vla-policy-capstone --profile full --output vla-policy-capstone-full.json",
+      "python3 embodied_capstone_starter.py --verify-dossier vla-policy-capstone-full.json"
+    ],
+    "artifacts": [
+      "vla-policy-capstone-smoke.json",
+      "serializer and transformer-causality checks",
+      "attention weights plus original/future-edited model outputs",
+      "paired transformer/diffusion decoder rows",
+      "diffusion denoising trace",
+      "failure.log"
+    ]
   },
   "acceptanceChecks": [
-    {"id": "transformer-causality", "action": "Predict a0 at o0 and a1 at o1, then replace future action/instruction tokens.", "expected": "Earlier logits remain invariant; padded keys are blocked and padded prediction rows contribute zero action loss."},
-    {"id": "diffusion-arithmetic", "action": "Reproduce one corruption and denoising update with declared shapes, scales, condition timestamp, and sampler calls.", "expected": "Hand-computed values and tensor output agree before any rollout."},
-    {"id": "release-gates", "action": "Apply grounding, deadline, constraint, recovery, and assistance gates before success ranking.", "expected": "A decoder failing any non-compensable gate is infeasible even if its aggregate task success is higher."}
+    {
+      "id": "serializer-causality",
+      "action": "Serialize a typed language/vision/state example, execute the one-head causal transformer, and edit only a future action token after two earlier prediction positions.",
+      "expected": "Modal dtypes and shapes are explicit, attention is lower triangular with zero future weight, padded validity is retained, and the earlier transformer outputs remain exactly invariant to the future edit."
+    },
+    {
+      "id": "train-and-ground",
+      "action": "Train every causal-transformer projection and its action head plus the diffusion-style noise head for the matched update budget, then swap the grounded left/right instruction under the same state.",
+      "expected": "Both objectives decrease, the transformer tiny-batch loss meets its declared reduction gate, deterministic parameter hashes reproduce for smoke/full, and the language counterfactual changes the requested action sign."
+    },
+    {
+      "id": "hard-call-gate",
+      "action": "Decode both arms behind the same action bounds and apply the declared maximum of two decoder calls before considering any quality value.",
+      "expected": "The one-call causal transformer is deadline-feasible, the deterministic three-call diffusion row is infeasible, and its denoising trace and failure text remain visible."
+    }
   ],
   "manifest": {
-    "comparison": "transformer and diffusion decision gate",
+    "profile": "smoke",
     "seed": 41,
-    "deadlineMs": 50,
-    "independentUnit": "paired evaluation cell",
-    "matrixAxes": {"arm": ["diffusion", "transformer"]}
+    "serializerSchema": "language-vision-state/1.0",
+    "vocabulary": [
+      "<pad>",
+      "<unk>",
+      "move",
+      "red",
+      "blue",
+      "left",
+      "right",
+      "object"
+    ],
+    "causalTargetContract": "input[t] contains actions strictly before target action[t]",
+    "transformerContract": {
+      "decoder": "one-head causal self-attention with residual state and action head",
+      "hiddenWidth": 6,
+      "trainableParameters": 211,
+      "mask": "lower triangular before attention softmax",
+      "futureEditCheck": "editing token 2 must leave predictions 0 and 1 unchanged"
+    },
+    "diffusionAlphaBar": [
+      0.85,
+      0.5,
+      0.2
+    ],
+    "matchedTrainingUpdates": 480,
+    "sharedCleanActionTargets": 24,
+    "deadline": {
+      "unit": "decoder calls per action",
+      "hardMaximum": 2,
+      "wallClockMeasured": false
+    },
+    "actionBoundsM": [
+      -0.2,
+      0.2
+    ],
+    "independentUnit": "paired decoder condition",
+    "matrixAxes": {
+      "arm": [
+        "causal_transformer_decoder",
+        "diffusion_style_decoder"
+      ]
+    }
   },
-  "invariants": {"sharedConditionAndActionContracts": true, "targetShiftTestRequired": true, "hardGatesPrecedeRanking": true, "allDeclaredCellsPresent": true},
+  "checks": {
+    "serializer_emits_typed_modalities_and_masks": true,
+    "causal_transformer_uses_lower_triangular_masked_self_attention": true,
+    "future_action_edit_cannot_change_earlier_transformer_outputs": true,
+    "causal_transformer_fits_one_batch": true,
+    "language_counterfactual_changes_action_sign": true,
+    "diffusion_corruption_head_is_trainable": true,
+    "diffusion_sampling_is_bounded_and_deterministic": true,
+    "hard_call_gate_precedes_decoder_ranking": true,
+    "decoder_failure_is_preserved": true
+  },
   "rawRows": [
-    {"arm": "diffusion", "success": 0.8, "latencyMs": 60, "deadlinePass": false, "grounding": true, "constraintPass": true, "feasible": false},
-    {"arm": "transformer", "success": 0.7, "latencyMs": 20, "deadlinePass": true, "grounding": false, "constraintPass": true, "feasible": false}
+    {
+      "arm": "causal_transformer_decoder",
+      "architecture": "one-head masked self-attention plus metric action head",
+      "trainingUpdates": 480,
+      "trainingLossStart": 0.006314629427765278,
+      "trainingLossEnd": 1.9796946155056343e-05,
+      "targetMask": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "targetActionM": 0.1,
+      "requestedActionM": 0.0966477669771497,
+      "appliedActionM": 0.0966477669771497,
+      "decoderCalls": 1,
+      "deadlineCallBudget": 2,
+      "deadlinePass": true,
+      "constraintPass": true,
+      "trainedParameterSha256": "cabc3b50c721f86aec2db14c2d7beaaaf944b0190c441ab6898dad42dc5c79d5",
+      "failure": null
+    },
+    {
+      "arm": "diffusion_style_decoder",
+      "trainingUpdates": 480,
+      "trainingLossStart": 0.8091840625630188,
+      "trainingLossEnd": 0.07531797102475236,
+      "targetMask": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "targetActionM": 0.1,
+      "requestedActionM": -0.02521330648456612,
+      "appliedActionM": -0.02521330648456612,
+      "decoderCalls": 3,
+      "deadlineCallBudget": 2,
+      "deadlinePass": false,
+      "constraintPass": true,
+      "failure": "three denoising calls exceed the predeclared two-call teaching deadline; this is a deterministic call gate, not measured wall-clock latency",
+      "denoisingTrace": [
+        {
+          "timestep": 2,
+          "noisyAction": [
+            -0.6664369401110779
+          ],
+          "predictedNoise": [
+            -0.9984406759173735
+          ],
+          "cleanEstimate": [
+            0.5066830510294207
+          ]
+        },
+        {
+          "timestep": 1,
+          "noisyAction": [
+            -0.347725151258462
+          ],
+          "predictedNoise": [
+            -0.5765463826401013
+          ],
+          "cleanEstimate": [
+            0.0847887577521485
+          ]
+        },
+        {
+          "timestep": 0,
+          "noisyAction": [
+            -0.14512408167066712
+          ],
+          "predictedNoise": [
+            -0.3146890930606111
+          ],
+          "cleanEstimate": [
+            -0.02521330648456612
+          ]
+        }
+      ]
+    }
   ],
-  "decision": "Neither decoder fixture passes both the deadline and grounding gates, so aggregate success cannot select a winner; the implemented comparison must retain matched contracts, primitive budgets, and complete counterexample rows.",
-  "failure": "The diffusion deadline miss and transformer word-swap grounding failure remain visible as non-compensable counterexamples with decoder revision, input condition, requested/applied action, and evaluator trace.",
-  "boundary": "These values are teaching fixtures, not trained model quality, accelerator timing, simulator rollout measurements, physical-system results, or universal architecture rankings."
+  "artifacts": {
+    "serializerEvidence": {
+      "languageTokenDtype": "int64",
+      "languageTokenShape": [
+        4
+      ],
+      "languageMask": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visionTokenShape": [
+        4
+      ],
+      "stateTokenShape": [
+        1
+      ],
+      "fresh": true
+    },
+    "transformerEvidence": {
+      "decoderInputs": [
+        [
+          0.0,
+          -0.1,
+          -0.07500000000000001
+        ],
+        [
+          0.0,
+          -0.1,
+          -0.07500000000000001
+        ],
+        [
+          0.0,
+          0.1,
+          0.07500000000000001
+        ],
+        [
+          0.0,
+          0.1,
+          0.07500000000000001
+        ],
+        [
+          0.0,
+          -0.1,
+          -0.07500000000000001
+        ],
+        [
+          0.0,
+          -0.1,
+          -0.07500000000000001
+        ],
+        [
+          0.0,
+          0.1,
+          0.07500000000000001
+        ],
+        [
+          0.0,
+          0.1,
+          0.07500000000000001
+        ]
+      ],
+      "targets": [
+        [
+          -0.1,
+          -0.07500000000000001,
+          -0.05625
+        ],
+        [
+          -0.1,
+          -0.07500000000000001,
+          -0.05625
+        ],
+        [
+          0.1,
+          0.07500000000000001,
+          0.05625
+        ],
+        [
+          0.1,
+          0.07500000000000001,
+          0.05625
+        ],
+        [
+          -0.1,
+          -0.07500000000000001,
+          -0.05625
+        ],
+        [
+          -0.1,
+          -0.07500000000000001,
+          -0.05625
+        ],
+        [
+          0.1,
+          0.07500000000000001,
+          0.05625
+        ],
+        [
+          0.1,
+          0.07500000000000001,
+          0.05625
+        ]
+      ],
+      "targetMask": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "attentionMask": [
+        [
+          true,
+          false,
+          false
+        ],
+        [
+          true,
+          true,
+          false
+        ],
+        [
+          true,
+          true,
+          true
+        ]
+      ],
+      "attentionWeights": [
+        [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.3172601638835662,
+            0.6827398361164337,
+            0.0
+          ],
+          [
+            0.12765787804646198,
+            0.2874264270573647,
+            0.5849156948961733
+          ]
+        ]
+      ],
+      "initialParameterSha256": "574ce2dbed03e1f9076eca330cf171e3658ddfbf1e37714045ee7f9183936bec",
+      "trainedParameterSha256": "cabc3b50c721f86aec2db14c2d7beaaaf944b0190c441ab6898dad42dc5c79d5",
+      "originalTokens": [
+        [
+          [
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            1.0,
+            0.11764705882352941,
+            0.11764705882352941,
+            0.23,
+            0.05,
+            0.0,
+            0.0,
+            0.25
+          ],
+          [
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            1.0,
+            0.11764705882352941,
+            0.11764705882352941,
+            0.23,
+            0.05,
+            0.1,
+            0.5,
+            0.25
+          ],
+          [
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            1.0,
+            0.11764705882352941,
+            0.11764705882352941,
+            0.23,
+            0.05,
+            0.07500000000000001,
+            1.0,
+            0.25
+          ]
+        ]
+      ],
+      "futureEditedTokens": [
+        [
+          [
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            1.0,
+            0.11764705882352941,
+            0.11764705882352941,
+            0.23,
+            0.05,
+            0.0,
+            0.0,
+            0.25
+          ],
+          [
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            1.0,
+            0.11764705882352941,
+            0.11764705882352941,
+            0.23,
+            0.05,
+            0.1,
+            0.5,
+            0.25
+          ],
+          [
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            0.0,
+            0.0,
+            0.25,
+            0.25,
+            1.0,
+            0.11764705882352941,
+            0.11764705882352941,
+            0.23,
+            0.05,
+            -0.15,
+            1.0,
+            0.25
+          ]
+        ]
+      ],
+      "originalPredictionsM": [
+        [
+          [
+            0.0966477669771497
+          ],
+          [
+            0.07078317472271407
+          ],
+          [
+            0.05129874921589388
+          ]
+        ]
+      ],
+      "futureEditedPredictionsM": [
+        [
+          [
+            0.0966477669771497
+          ],
+          [
+            0.07078317472271407
+          ],
+          [
+            0.0744342409982702
+          ]
+        ]
+      ]
+    },
+    "groundingCounterfactual": {
+      "leftRequestedActionM": -0.10408499274771936,
+      "rightRequestedActionM": 0.09660439161866186
+    },
+    "diffusionSamplingEvidence": {
+      "firstSampleM": [
+        -0.02521330648456612
+      ],
+      "repeatSampleM": [
+        -0.02521330648456612
+      ]
+    }
+  },
+  "decision": "The trained causal transformer and diffusion-style decoder execute behind the same serializer, clean targets, update count, and action bound. The three-step diffusion decoder fails the declared two-call gate; no architecture-wide quality claim follows.",
+  "failure": "The diffusion-style decoder row is retained because three deterministic denoising calls exceed the predeclared two-call teaching gate; this is not wall-clock timing.",
+  "boundary": "This is real local NumPy training of a tiny one-head causal transformer and a diffusion-style noise head, followed by deterministic decoding on synthetic tokens. It is not a learned-policy result from an external simulator, an image-model benchmark, measured accelerator latency, or a physical-robot result."
 }

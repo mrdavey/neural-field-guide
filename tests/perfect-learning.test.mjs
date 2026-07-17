@@ -32,7 +32,7 @@ test("every lesson receives a component-specific contrast and assessed transfer"
   assert.deepEqual(evidenceIds, lessonIds);
   assert.equal((evidence.match(/: evidence\(/g) ?? []).length, 44);
   assert.equal((evidence.match(/\["[^"]+", "[^"]+", "[^"]+"\],\n    "[^"]+",\n    "[^"]+",\n    \[/g) ?? []).length, 44, "each contract has two cases, a principle, and transfer prompt");
-  assert.match(evidenceView, /guide\.walkthrough\.slice\(0, 3\)/);
+  assert.doesNotMatch(evidenceView, /guide\.walkthrough|lesson\.simple|novice-mechanism-bridge/, "the final transfer does not restart the chapter's definition and walkthrough");
   assert.match(evidenceView, /evidence\.contrast\.left/);
   assert.match(evidenceView, /evidence\.contrast\.right/);
   assert.match(evidenceView, /Commit answer and check transfer/);
@@ -58,7 +58,7 @@ test("every lesson receives a component-specific contrast and assessed transfer"
   const distractorTexts = distractorPairs.flatMap((match) => [match[1], match[2]]);
   assert.equal(new Set(distractorTexts).size, 264, "all misconception choices are independently authored");
   assert.doesNotMatch(transferDistractors, /changed assumption is irrelevant|repeating the prompt's terms is sufficient/);
-  assert.match(app, /<LessonEvidenceView lesson=\{lesson\} guide=\{guide\}/);
+  assert.match(app, /<LessonEvidenceView lesson=\{lesson\}/);
 });
 
 test("code and guided practice enforce prediction before reveal without claiming self-assessed mastery", () => {

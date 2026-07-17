@@ -2,37 +2,301 @@
   "schemaVersion": 1,
   "course": "embodied",
   "lessonId": "state-estimator-capstone",
-  "evidenceKind": "reviewed deterministic teaching fixture",
+  "evidenceKind": "reviewed deterministic local NumPy teaching fixture",
   "starter": {
     "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
-    "command": "python3 embodied_capstone_starter.py --project state-estimator-capstone --output state-estimator-starter.json",
-    "expected": "Synchronized update, stale-packet abstention, and evaluator-truth separation checks all print true.",
-    "boundary": "The scalar fusion fixture is wiring evidence, not a camera-proprioception tracker or a calibration measurement."
+    "requirementsUrl": "capstone-artifacts/embodied/requirements-capstones.txt",
+    "command": "python3 embodied_capstone_starter.py --project state-estimator-capstone --profile smoke --output state-estimator-capstone-smoke.json",
+    "expected": "All twelve transform, covariance, association, update, camera/proprioception time, identity, replay, and evaluator-only-truth checks are true.",
+    "boundary": "This command executes deterministic camera/proprioception array processing locally; it does not use learned perception, real sensors, or a physical robot."
   },
   "implementation": {
-    "requiredComponents": ["timestamped camera and proprioception packets", "frame/calibration registry", "predict then update filter", "covariance and validity output", "persistent object identity", "evaluator-only truth join", "abstain and fresh-packet recovery"],
-    "buildOrder": ["Synchronize packets and reject stale frames", "Predict through applied motion", "Update with accepted residuals", "Propagate covariance and identity", "Join truth only in evaluator", "Inject delay and verify recovery"],
-    "localCommands": ["python3 embodied_capstone_starter.py --project state-estimator-capstone --output state-estimator-starter.json", "python3 -m unittest test_estimator.py"],
-    "artifacts": ["calibration.json", "packet-ledger.jsonl", "estimates.jsonl", "truth-evaluation.json", "recovery-trace.json"]
+    "requiredComponents": [
+      "timestamped typed camera and proprioception packets",
+      "declared camera-to-world rigid transform",
+      "point and anisotropic-covariance transformation",
+      "persistent track identity and covariance state",
+      "nearest valid detection association gate",
+      "Kalman-style accepted-measurement update",
+      "stale and future camera/proprioception, skewed, out-of-order, and no-match abstention paths",
+      "evaluator-only truth join and replay hash"
+    ],
+    "buildOrder": [
+      "Install the pinned NumPy dependency and run tests/test_estimator.py",
+      "Freeze frames, transform, time gates, association gate, state fields, and evaluator ownership",
+      "Hand-check camera-to-world point and anisotropic covariance rotation",
+      "Accept the nearest valid synchronized detection and prove covariance contracts",
+      "Exercise stale and future camera/proprioception plus no-association branches without mutating track state",
+      "Replay the complete packet trajectory and preserve manifest, rows, checks, decision, and boundary"
+    ],
+    "localCommands": [
+      "python3 -m pip install -r requirements-capstones.txt",
+      "python3 -m unittest tests/test_estimator.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "python3 embodied_capstone_starter.py --project state-estimator-capstone --profile smoke --output state-estimator-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --verify-dossier state-estimator-capstone-smoke.json"
+    ],
+    "artifacts": [
+      "state-estimator-capstone-smoke.json",
+      "packet-and-track rows",
+      "transform/covariance contract",
+      "failure.log"
+    ]
   },
   "acceptanceChecks": [
-    {"id": "causal-fusion", "action": "Predict with the previous applied action, then update only with synchronized observations.", "expected": "Changing evaluator truth never changes the estimator output and a future packet cannot affect an earlier estimate."},
-    {"id": "calibration", "action": "Bin declared covariance against held-out trajectory errors.", "expected": "Error, coverage, and calibration are reported by trajectory; confidence alone is not a pass."},
-    {"id": "delay-recovery", "action": "Change only camera age to 80 ms, then supply fresh packets.", "expected": "The delayed packet is invalid/abstained, variance grows, and recovery requires three declared fresh packets in this fixture."}
+    {
+      "id": "frame-and-covariance",
+      "action": "Transform the declared camera point into world coordinates and rotate a strongly anisotropic covariance by ninety degrees.",
+      "expected": "The point includes the declared 0.10 m translation and the covariance diagonal swaps axes, demonstrating that uncertainty follows the frame transform."
+    },
+    {
+      "id": "association-update",
+      "action": "Process the synchronized near and distractor detections with the declared proprioception delta and 0.25 m association gate.",
+      "expected": "Detector near is selected for track-0001, the residual is recorded, and posterior covariance trace is smaller than the predicted prior."
+    },
+    {
+      "id": "abstention-and-lineage",
+      "action": "Replay stale and future camera packets, stale and future proprioception packets, and a far unmatched detection while evaluator truth remains outside the estimator API.",
+      "expected": "Every invalid-time row abstains without mutating the track, the no-match row expands covariance without an accepted measurement, track-0001 persists, and an exact replay produces the same trace."
+    }
   ],
   "manifest": {
-    "estimator": "scalar fusion and identity fixture",
+    "profile": "smoke",
     "seed": 23,
-    "intervention": "80 ms camera delay",
-    "independentUnit": "held-out trajectory",
-    "matrixAxes": {"arm": ["nominal", "delay"]}
+    "frames": [
+      "camera",
+      "world"
+    ],
+    "cameraToWorld": {
+      "source_frame": "camera",
+      "target_frame": "world",
+      "rotation_rad": 0,
+      "translation_m": [
+        0.1,
+        0
+      ]
+    },
+    "ageGateMs": 40,
+    "syncGateMs": 20,
+    "associationGateM": 0.25,
+    "truthJoin": "evaluator-only after estimation",
+    "estimatorStepParameters": [
+      "self",
+      "camera",
+      "proprio",
+      "camera_to_world",
+      "now_ms"
+    ],
+    "independentUnit": "replayed packet trajectory",
+    "matrixAxes": {
+      "arm": [
+        "transform_contract",
+        "synchronized",
+        "stale_camera",
+        "stale_proprio",
+        "future_camera",
+        "future_proprio",
+        "no_association"
+      ]
+    }
   },
-  "invariants": {"truthIsEvaluatorOnly": true, "sameCalibrationRevision": true, "oneFactorChanged": true, "allDeclaredCellsPresent": true},
+  "checks": {
+    "camera_point_is_transformed_to_world": true,
+    "anisotropic_covariance_rotates_into_world_axes": true,
+    "nearest_valid_detection_is_associated": true,
+    "accepted_measurement_reduces_covariance": true,
+    "stale_camera_predicts_and_abstains": true,
+    "stale_proprio_rejects_without_track_mutation": true,
+    "future_camera_abstains": true,
+    "future_proprio_rejects_without_track_mutation": true,
+    "no_match_preserves_identity_and_abstains": true,
+    "covariance_expands_without_measurement": true,
+    "replay_is_exact": true,
+    "evaluator_truth_is_not_an_estimator_argument": true
+  },
   "rawRows": [
-    {"arm": "nominal", "packetAgeMs": 10, "errorM": 0.01, "varianceM2": 0.001, "valid": true, "abstain": false, "identitySwitches": 0},
-    {"arm": "delay", "packetAgeMs": 80, "errorM": 0.07, "varianceM2": 0.006, "valid": false, "abstain": true, "recoveryFreshPackets": 3, "identitySwitches": 0}
+    {
+      "arm": "transform_contract",
+      "pointCameraM": [
+        0.28,
+        0.01
+      ],
+      "pointWorldM": [
+        0.38,
+        0.01
+      ],
+      "rotationRad": 1.5707963267948966,
+      "cameraCovarianceM2": [
+        [
+          0.001,
+          0
+        ],
+        [
+          0,
+          0.1
+        ]
+      ],
+      "worldCovarianceM2": [
+        [
+          0.1,
+          -6.062001655779399e-18
+        ],
+        [
+          -6.062001655779399e-18,
+          0.001
+        ]
+      ]
+    },
+    {
+      "arm": "synchronized",
+      "packetAgeMs": 5,
+      "cameraAgeMs": 5,
+      "proprioAgeMs": 5,
+      "packetSkewMs": 0,
+      "predictedWorldM": [
+        0.37,
+        0
+      ],
+      "estimateWorldM": [
+        0.3788888888888889,
+        0.008888888888888889
+      ],
+      "priorCovarianceTraceM2": 0.048,
+      "posteriorCovarianceTraceM2": 0.0053333333333333306,
+      "trackId": "track-0001",
+      "selectedDetectorId": "near",
+      "residualDistanceM": 0.014142135623730958,
+      "valid": true,
+      "abstain": false,
+      "reason": "updated",
+      "missedUpdates": 0
+    },
+    {
+      "arm": "stale_camera",
+      "packetAgeMs": 80,
+      "cameraAgeMs": 80,
+      "proprioAgeMs": 0,
+      "packetSkewMs": 80,
+      "predictedWorldM": [
+        0.3888888888888889,
+        0.008888888888888889
+      ],
+      "estimateWorldM": [
+        0.3888888888888889,
+        0.008888888888888889
+      ],
+      "priorCovarianceTraceM2": 0.01333333333333333,
+      "posteriorCovarianceTraceM2": 0.03333333333333333,
+      "trackId": "track-0001",
+      "selectedDetectorId": null,
+      "residualDistanceM": null,
+      "valid": false,
+      "abstain": true,
+      "reason": "stale_camera",
+      "missedUpdates": 1
+    },
+    {
+      "arm": "stale_proprio",
+      "packetAgeMs": 0,
+      "cameraAgeMs": 0,
+      "proprioAgeMs": 100,
+      "packetSkewMs": 100,
+      "predictedWorldM": [
+        0.35,
+        0
+      ],
+      "estimateWorldM": [
+        0.35,
+        0
+      ],
+      "priorCovarianceTraceM2": 0.04,
+      "posteriorCovarianceTraceM2": 0.04,
+      "trackId": "track-0001",
+      "selectedDetectorId": null,
+      "residualDistanceM": null,
+      "valid": false,
+      "abstain": true,
+      "reason": "stale_proprio",
+      "missedUpdates": 0
+    },
+    {
+      "arm": "future_camera",
+      "packetAgeMs": -10,
+      "cameraAgeMs": -10,
+      "proprioAgeMs": 0,
+      "packetSkewMs": 10,
+      "predictedWorldM": [
+        0.37,
+        0
+      ],
+      "estimateWorldM": [
+        0.37,
+        0
+      ],
+      "priorCovarianceTraceM2": 0.048,
+      "posteriorCovarianceTraceM2": 0.068,
+      "trackId": "track-0001",
+      "selectedDetectorId": null,
+      "residualDistanceM": null,
+      "valid": false,
+      "abstain": true,
+      "reason": "future_camera",
+      "missedUpdates": 1
+    },
+    {
+      "arm": "future_proprio",
+      "packetAgeMs": 0,
+      "cameraAgeMs": 0,
+      "proprioAgeMs": -10,
+      "packetSkewMs": 10,
+      "predictedWorldM": [
+        0.35,
+        0
+      ],
+      "estimateWorldM": [
+        0.35,
+        0
+      ],
+      "priorCovarianceTraceM2": 0.04,
+      "posteriorCovarianceTraceM2": 0.04,
+      "trackId": "track-0001",
+      "selectedDetectorId": null,
+      "residualDistanceM": null,
+      "valid": false,
+      "abstain": true,
+      "reason": "future_proprio",
+      "missedUpdates": 0
+    },
+    {
+      "arm": "no_association",
+      "packetAgeMs": 5,
+      "cameraAgeMs": 5,
+      "proprioAgeMs": 5,
+      "packetSkewMs": 0,
+      "predictedWorldM": [
+        0.3988888888888889,
+        0.008888888888888889
+      ],
+      "estimateWorldM": [
+        0.3988888888888889,
+        0.008888888888888889
+      ],
+      "priorCovarianceTraceM2": 0.04133333333333333,
+      "posteriorCovarianceTraceM2": 0.06133333333333334,
+      "trackId": "track-0001",
+      "selectedDetectorId": null,
+      "residualDistanceM": 1.201144002016514,
+      "valid": false,
+      "abstain": true,
+      "reason": "no_match",
+      "missedUpdates": 2
+    }
   ],
-  "decision": "The changed sensor crosses the age and error gates, abstains, and then recovers after three fresh packets in the declared fixture; the implemented estimator must reproduce this causal sequence before a measured comparison.",
-  "failure": "Treating the delayed camera as fresh produces a confident wrong state and is preserved as the strongest counterexample trace with packet age, residual, covariance, identity, and downstream decision.",
-  "boundary": "The rows validate course-scale timing, calibration, identity, and recovery reasoning; they are not learned perception results, real-sensor measurements, or evidence that the estimator transfers beyond the tested trajectories and faults."
+  "artifacts": {
+    "evidenceHash": "768503e4af5fe0257a7b80e8cfc58bb840c6f5629593133e0ca940e75eecfe2c",
+    "replayEvidenceHash": "768503e4af5fe0257a7b80e8cfc58bb840c6f5629593133e0ca940e75eecfe2c"
+  },
+  "decision": "The synchronized camera packet updates the persistent track; invalid camera/proprioception time rejects or abstains, and unmatched detections propagate covariance without changing identity.",
+  "failure": "The stale/future camera and proprioception rows plus the no-association row preserve the confident-wrong alternative: accepting invalid-time evidence or an unmatched measurement would hide uncertainty and corrupt identity.",
+  "boundary": "This is real local deterministic camera/proprioception array processing, not a learned-policy result from an external simulator, a real-sensor calibration, or physical tracking evidence."
 }

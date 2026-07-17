@@ -104,13 +104,13 @@ test("introductory interactions compare concrete cases before formal machinery",
     readFile(join(root, "app/embodied/sections/foundations.ts"), "utf8"),
   ]);
 
-  assert.match(courseApp, /lesson\.number === 1 \? "No earlier lesson is required\. Bring one familiar example and a question about what this field might make possible\."/);
+  assert.match(courseApp, /lesson\.number === 1 \? "No earlier lesson is required\. Begin with the familiar situation in the opening paragraph and use it as the thread for the whole chapter\."/);
   assert.match(llmLabs, /orientation: \{ title: "Trust-boundary explorer"/);
   assert.match(llmLabs, /Rewrite notes[\s\S]*Report train delay[\s\S]*Buy a ticket/);
   assert.match(worldLabs, /"world-models": discrete\([\s\S]*Route-sensitive map[\s\S]*Vivid hallway video/);
-  assert.match(generativeSource, /id: "generation-as-distribution"[\s\S]*relevant variation[\s\S]*irrelevant difference[\s\S]*near copies/);
-  assert.match(rlSource, /id: "sequential-decision-systems"[\s\S]*left → dead end[\s\S]*right → exit[\s\S]*spin → points/);
-  assert.match(embodiedSource, /id:"embodied-task-contracts"[\s\S]*mug located[\s\S]*grasp not confirmed[\s\S]*person enters path/);
+  assert.match(generativeSource, /id:\s*"generation-as-distribution"[\s\S]*relevant variation[\s\S]*irrelevant difference[\s\S]*near copies/);
+  assert.match(rlSource, /id:\s*"sequential-decision-systems"[\s\S]*left → dead end[\s\S]*right → exit[\s\S]*spin → points/);
+  assert.match(embodiedSource, /id:\s*"embodied-task-contracts"[\s\S]*mug located[\s\S]*grasp not confirmed[\s\S]*person enters path/);
 });
 
 test("introductory guides use learner-facing language and coherent examples", () => {

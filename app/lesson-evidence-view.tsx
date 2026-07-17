@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import type { Lesson } from "./course-data";
-import type { LessonGuide } from "./lesson-guides";
 import { lessonEvidence } from "./lesson-evidence";
 import { lessonTransferChecks } from "./lesson-transfer-checks";
 import { lessonTransferDistractors } from "./lesson-transfer-distractors";
 import { MathText } from "./math-text";
 import { ActivityInfo } from "./activity-info";
 
-export function LessonEvidenceView({ lesson, guide }: { lesson: Lesson; guide: LessonGuide }) {
+export function LessonEvidenceView({ lesson }: { lesson: Lesson }) {
   const evidence = lessonEvidence[lesson.id];
   const [draft, setDraft] = useState("");
   const [committed, setCommitted] = useState(false);
@@ -43,24 +42,9 @@ export function LessonEvidenceView({ lesson, guide }: { lesson: Lesson; guide: L
 
   return <section className="lesson-evidence-lab" aria-labelledby={`evidence-title-${lesson.id}`}>
     <header className="evidence-lab-header">
-      <div><span className="eyebrow">Evidence & transfer lab</span><h2 id={`evidence-title-${lesson.id}`}>Trace the mechanism, then transfer it.</h2><ActivityInfo mode="checked" title="Three decisions are checked locally" detail="Write your explanation first. The page then checks the boundary diagnosis and three lesson-specific decisions, gives first-error feedback, and unlocks the worked solution only after the decisions pass." /></div>
-      <p>This lab closes three common learning gaps: an explicit input-to-output trace, a boundary case, and an assessed transfer rather than another recall question.</p>
+      <div><span className="eyebrow">Evidence & transfer lab</span><h2 id={`evidence-title-${lesson.id}`}>Test the chapter’s mechanism at its boundary.</h2><ActivityInfo mode="checked" title="Three decisions are checked locally" detail="Write your explanation first. The page then checks the boundary diagnosis and three lesson-specific decisions, gives first-error feedback, and unlocks the worked solution only after the decisions pass." /></div>
+      <p>The explanation, worked trace, and practice above established the mechanism. Now hold it fixed while one assumption changes, then decide whether your original conclusion survives.</p>
     </header>
-
-    <section className="novice-mechanism-bridge" aria-labelledby={`bridge-title-${lesson.id}`}>
-      <div className="mechanism-contract">
-        <span>INPUT CONTRACT</span>
-        <h3 id={`bridge-title-${lesson.id}`}>Inputs → transformation → output</h3>
-        <p><MathText>{lesson.simple}</MathText></p>
-      </div>
-      <ol className="mechanism-trace">
-        {guide.walkthrough.slice(0, 3).map((step, index) => <li key={step.title}>
-          <span>{String(index + 1).padStart(2, "0")}</span>
-          <div><h4><MathText>{step.title}</MathText></h4><p><MathText>{step.body}</MathText></p><small><b>State check:</b> <MathText>{step.checkpoint}</MathText></small></div>
-        </li>)}
-      </ol>
-      <div className="mechanism-output"><span>OUTPUT + WHY</span><p><MathText>{guide.guidedExample.result}</MathText></p></div>
-    </section>
 
     <section className="authentic-contrast" aria-labelledby={`contrast-title-${lesson.id}`}>
       <header><span className="eyebrow">Boundary-case comparison</span><h3 id={`contrast-title-${lesson.id}`}><MathText>{evidence.contrast.title}</MathText></h3><p>Hold the central mechanism in mind and identify the one assumption that changes the result.</p></header>

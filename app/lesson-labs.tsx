@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import type { Lesson } from "./course-data";
 import { MathExpression, MathText } from "./math-text";
 import { ActivityInfo, LearningActivityContract, PredictionGate } from "./activity-info";
-import { MotionSurface } from "./motion/motion-surface";
+import { MotionSurface as SemanticMotionSurface } from "./motion/motion-surface";
 import type { LlmLabMotionId } from "./motion/semantic-motion";
 
 type LabType = Exclude<NonNullable<Lesson["lab"]>, `wm-${string}` | "research">;
@@ -26,6 +26,12 @@ const meta: Record<LabType, { title: string; instruction: string; observe: strin
   block: { title: "Residual stream walkthrough", instruction: "Advance through a pre-norm block and watch same-width updates accumulate.", observe: "Norm prepares each sublayer; residual additions preserve the stream’s shape." },
   gpt: { title: "Tiny GPT shape tracer", instruction: "Advance a batch through GPT-2 and predict the tensor shape at each stage.", observe: "Most layers preserve $[B,T,d]$; only the vocabulary head changes $d$ to $V$." },
   pipeline: { title: "Pre-training control room", instruction: "Advance one optimizer step and inspect the failure mode at each station.", observe: "Data, math, communication, and recovery form one dependency chain." },
+  dataPipeline: { title: "Data mixture and filter audit", instruction: "Tighten the toy filter policy, then compare what is retained, removed, and disproportionately lost.", observe: "A filter changes both cleanliness and slice coverage; aggregate keep-rate alone can hide a damaged language or domain slice." },
+  olmoFlow: { title: "OLMo stage ledger", instruction: "Move from Dolma pre-training to Dolmino mid-training and Longmino long-context work; inspect each entering artifact and claim boundary.", observe: "Each stage changes a named data treatment and produces a new checkpoint; a final score alone cannot assign the gain to that treatment." },
+  posttrainingMap: { title: "Post-training signal map", instruction: "Switch among demonstrations, comparisons, and verified outcomes, then inspect the artifact and behavior each signal can teach.", observe: "SFT, preference learning, and reward optimization answer different supervision questions; runtime authority remains outside the weights." },
+  sftMasking: { title: "SFT label-mask debugger", instruction: "Compare assistant-only, all-token, and truncated label policies while keeping the serialized conversation visible.", observe: "Attention visibility and loss contribution are separate: masking a label does not remove that token from context." },
+  rlhfPipeline: { title: "RLHF policy-update trace", instruction: "Advance from comparison labels through reward fitting, current-policy rollouts, and a KL-constrained policy update.", observe: "Each station creates a different artifact and failure mode; a reward-model score is not itself a safe policy update." },
+  tuluRecipe: { title: "Tülu supervision router", instruction: "Choose an exact-answer or open-research task and inspect the training route, evaluator, and runtime boundary.", observe: "Stable exact outcomes can use RLVR; evolving research quality needs richer rubric evidence, while tool authorization stays deterministic." },
   objectives: { title: "Objective construction bench", instruction: "Switch objectives to inspect visible context, serialized input, and loss positions.", observe: "An objective is concrete only when input, target, loss, and stage are named." },
   systems: { title: "Eight-device topology", instruction: "Choose a partition strategy and see what each device owns or communicates.", observe: "Parallelism partitions batches, tensors, or layers; sharding partitions model state." },
   evaluation: { title: "Training diagnostics", instruction: "Select a metric trace, then diagnose it before reading the explanation.", observe: "Objective fit, generalization, and systems health require different signals." },
@@ -35,7 +41,7 @@ const meta: Record<LabType, { title: string; instruction: string; observe: strin
   decoding: { title: "Decoding policy lab", instruction: "Compare greedy, top-k, and top-p distributions before sampling.", observe: "Decoding reshapes selection without changing model weights." },
   kvcache: { title: "KV memory ledger", instruction: "Change layers, heads, sequence, and precision to estimate cache memory.", observe: "Decode avoids recomputing prior K/V tensors but memory grows with context and concurrency." },
   quantization: { title: "Precision budget", instruction: "Reduce weight precision and compare footprint against a toy error signal.", observe: "Fewer bits save memory and bandwidth; calibration and outliers decide quality loss." },
-  serving: { title: "Serving scheduler", instruction: "Change batch and sequence mix to compare latency and throughput.", observe: "Efficient serving is a scheduling problem, not just fast matrix multiplication." },
+  serving: { title: "Serving scheduler", instruction: "Before moving a control, calculate static slots as batch size × longest visible lane and predict the idle percentage; then change the request mix and check both values.", observe: "Every request stays at or below the displayed longest decode. Static slots and useful work expose why efficient serving is a scheduling problem, not just fast matrix multiplication." },
   testtime: { title: "Reasoning budget", instruction: "Hold the task fixed, then allocate samples, tokens, diversity, and verifier reliability.", observe: "Compute coverage and selection reliability are separate; neither is a promised accuracy score." },
   context: { title: "Context budget editor", instruction: "Select essential evidence and examples, then remove distractors from a fixed window.", observe: "Relevant, well-structured context beats indiscriminate prompt length." },
   rag: { title: "Retrieval pipeline", instruction: "Change chunking and top-k, then inspect relevance and evidence coverage.", observe: "Retrieval quality bounds generation quality; citations do not guarantee entailment." },
@@ -46,6 +52,20 @@ const meta: Record<LabType, { title: string; instruction: string; observe: strin
   multimodal: { title: "Modality aligner", instruction: "Change resolution and task, then diagnose which visual evidence and failure type matter.", observe: "Highlighted regions are teaching annotations, not learned attention explanations." },
   interpretability: { title: "Intervention and editing lab", instruction: "Match each method to a defensible claim, then test an edit’s efficacy and locality trade-off.", observe: "Evidence strength depends on controls and claim scope—not a universal method ranking." }
 };
+
+const motionKindByLab: Partial<Record<LabType, LlmLabMotionId>> = {
+  dataPipeline: "pipeline",
+  olmoFlow: "pipeline",
+  posttrainingMap: "preference",
+  sftMasking: "preference",
+  rlhfPipeline: "preference",
+  tuluRecipe: "preference",
+};
+
+function MotionSurface({ kind, children }: { kind: LabType | LlmLabMotionId; children: ReactNode }) {
+  const motionKind = motionKindByLab[kind as LabType] ?? kind as LlmLabMotionId;
+  return <SemanticMotionSurface kind={motionKind}>{children}</SemanticMotionSurface>;
+}
 
 export function LessonLab({ type, lesson }: { type: LabType; lesson: Lesson }) {
   const copy = meta[type];
@@ -93,6 +113,12 @@ function renderLab(type: LabType) {
     case "block": return <BlockLab />;
     case "gpt": return <GPTLab />;
     case "pipeline": return <PipelineLab />;
+    case "dataPipeline": return <DataPipelineLab />;
+    case "olmoFlow": return <OlmoFlowLab />;
+    case "posttrainingMap": return <PosttrainingMapLab />;
+    case "sftMasking": return <SftMaskLab />;
+    case "rlhfPipeline": return <RlhfPipelineLab />;
+    case "tuluRecipe": return <TuluRecipeLab />;
     case "objectives": return <ObjectivesLab />;
     case "systems": return <SystemsLab />;
     case "evaluation": return <EvaluationLab />;
@@ -187,7 +213,7 @@ function PreferenceLab() {
 }
 
 function LoraLab() {
-  const [rank,setRank]=useState(8); const d=4096; const full=d*d; const lora=2*d*rank;
+  const [rank,setRank]=useState(4); const d=4096; const full=d*d; const lora=2*d*rank;
   return <div className="lora-lab"><div className="matrix-visual"><div className="full-matrix"><MathExpression latex="W" /> <small><MathExpression latex={`${d}\\times${d}`} /><br/>frozen</small></div><span>+</span><div className="factor b"><MathExpression latex="B" /><small><MathExpression latex={`${d}\\times${rank}`} /></small></div><span>×</span><div className="factor a"><MathExpression latex="A" /><small><MathExpression latex={`${rank}\\times${d}`} /></small></div></div><label>Adapter rank <MathExpression latex="r=" /> <strong>{rank}</strong><input type="range" min="1" max="64" value={rank} onChange={(event)=>setRank(+event.target.value)}/></label><div className="lora-stats"><div><span>Full update</span><strong>{(full/1e6).toFixed(1)}M</strong></div><div><span>LoRA update</span><strong>{(lora/1e3).toFixed(0)}K</strong></div><div><span>Reduction</span><strong>{Math.round(full/lora)}×</strong></div></div></div>;
 }
 
@@ -198,7 +224,7 @@ function MoeLab() {
 }
 
 function DistillationLab() {
-  const [temperature,setTemperature]=useState(1); const probs=softmax([4,2.4,.6],temperature); const labels=["cat","dog","car"];
+  const [temperature,setTemperature]=useState(2); const probs=softmax([4,2.4,.6],temperature); const labels=["cat","dog","car"];
   return <div className="distillation-lab"><label>Teacher temperature <MathExpression latex="T=" /> <strong>{temperature.toFixed(1)}</strong><input type="range" min=".5" max="4" step=".1" value={temperature} onChange={(event)=>setTemperature(+event.target.value)}/></label><div className="teacher-student"><div><span className="lab-label">Teacher soft targets</span>{labels.map((label,index)=><p key={label}><span>{label}</span><i><b style={{width:`${(probs[index]*100).toFixed(3)}%`}}/></i><strong>{(probs[index]*100).toFixed(1)}%</strong></p>)}</div><span className="distill-arrow">knowledge →</span><div className="student-card"><strong>Student</strong><p>learns that <b>dog</b> is more cat-like than <b>car</b>, even though “cat” remains the target.</p></div></div></div>;
 }
 
@@ -212,6 +238,65 @@ function BlockLab(){const steps=[{name:"Residual stream x",shape:"[B,T,d]",note:
 function GPTLab(){const stages=[{name:"Token IDs",shape:"[B,T]"},{name:"Token + position embeddings",shape:"[B,T,d]"},{name:"12 GPT-2 blocks",shape:"[B,T,d]"},{name:"Final LayerNorm",shape:"[B,T,d]"},{name:"Vocabulary projection",shape:"[B,T,V]"},{name:"Shifted CE labels",shape:"\\operatorname{logits}[:,0{:}-1]\\leftrightarrow \\operatorname{IDs}[:,1{:}]"}];const [stage,setStage]=useState(0);return <div className="step-lab"><div className="step-track">{stages.map((item,index)=><button key={item.name} className={index<=stage?"active":""} onClick={()=>setStage(index)}><span>{index+1}</span>{item.name}</button>)}</div><div className="step-readout"><span className="lab-label">Tensor checkpoint</span><h3><MathExpression latex={stages[stage].shape} /></h3><p>{stage<4?"Residual width d stays constant so residual additions are valid.":stage===4?"Only the output head replaces d with vocabulary size V.":"Each position is trained against the token immediately to its right."}</p><code>zero_grad → forward → shifted CE → backward → optimizer.step</code></div></div>}
 
 function PipelineLab(){const stations=["sample + tokenize","forward pass","loss","backward","gradient sync","optimizer step","checkpoint + eval"];const [station,setStation]=useState(0);const failures=["bad mixture or duplicates","NaNs or shape error","target misalignment","exploding gradients","network straggler","unstable learning rate","missing RNG/data state"];return <div className="pipeline-lab"><div className="pipeline-stations">{stations.map((item,index)=><button key={item} onClick={()=>setStation(index)} className={index===station?"active":""}><span>{index+1}</span>{item}</button>)}</div><div className="failure-card"><span className="lab-label">What can go wrong here?</span><strong>{failures[station]}</strong><p>One optimizer step depends on every earlier station; observability localizes the failing subsystem.</p></div></div>}
+
+function DataPipelineLab() {
+  const policies = [
+    { label: "Balanced review", threshold: "0.55", kept: "82 / 100", slice: "Swahili 15 / 20", removed: "duplicates + obvious spam", decision: "inspect retained and removed slices" },
+    { label: "Strict filter", threshold: "0.85", kept: "55 / 100", slice: "Swahili 4 / 20", removed: "spam + informal/rare text", decision: "reject until slice loss is repaired" },
+  ] as const;
+  const [policy,setPolicy]=useState(0); const selected=policies[policy];
+  return <div className="design-lab"><span className="toy-badge">HAND-AUTHORED FILTER FIXTURE · NOT A DATASET MEASUREMENT</span><div className="objective-tabs" role="group" aria-label="Filter policy">{policies.map((item,index)=><button type="button" key={item.label} className={policy===index?"active":""} onClick={()=>setPolicy(index)}>{item.label}</button>)}</div><div className="memory-ledger" aria-live="polite"><div><span>Quality threshold</span><strong>{selected.threshold}</strong></div><div><span>Overall retained</span><strong>{selected.kept}</strong></div><div><span>Swahili retained</span><strong>{selected.slice}</strong></div></div><div className="decision-panel"><span className="lab-label">AUDIT DECISION</span><strong>{selected.decision}</strong><p>Removed: {selected.removed}. The stricter aggregate rule disproportionately removes the named slice, so keep-rate alone cannot justify it.</p></div></div>;
+}
+
+function OlmoFlowLab() {
+  const stages = [
+    { name: "Dolma · pre-train", input: "governed base mixture", treatment: "broad next-token training", artifact: "base checkpoint", evidence: "reported stage; no isolated causal claim" },
+    { name: "Dolmino · mid-train", input: "same entering checkpoint", treatment: "targeted code/math mixture", artifact: "mid-trained checkpoint", evidence: "needs equal-token mixture ablation" },
+    { name: "Longmino · context", input: "pinned mid-trained checkpoint", treatment: "longer sequences + position recipe", artifact: "long-context checkpoint", evidence: "needs distance/order tests, not allocation alone" },
+  ] as const;
+  const [stage,setStage]=useState(0); const selected=stages[stage];
+  return <div className="design-lab"><span className="toy-badge">STAGE LEDGER · RELEASE STRUCTURE, NOT A REPRODUCTION</span><div className="objective-tabs" role="group" aria-label="OLMo stage">{stages.map((item,index)=><button type="button" key={item.name} className={stage===index?"active":""} onClick={()=>setStage(index)}>{item.name}</button>)}</div><div className="memory-ledger" aria-live="polite"><div><span>Entering input</span><strong>{selected.input}</strong></div><div><span>Changed treatment</span><strong>{selected.treatment}</strong></div><div><span>Outgoing artifact</span><strong>{selected.artifact}</strong></div></div><div className="decision-panel"><span className="lab-label">EVIDENCE BOUNDARY</span><strong>{selected.evidence}</strong><p>A matched checkpoint, token budget, and evaluator are required before assigning a downstream gain to this stage.</p></div></div>;
+}
+
+function PosttrainingMapLab() {
+  const signals = [
+    { label: "Demonstration", stage: "SFT", record: "prompt + ideal response", learns: "format and demonstrated action", cannot: "rank unseen alternatives" },
+    { label: "Comparison", stage: "DPO / reward model", record: "same prompt + chosen/rejected", learns: "relative preference under a rubric", cannot: "prove a unique correct answer" },
+    { label: "Verified outcome", stage: "online RL / RLVR", record: "current-policy trajectory + reward", learns: "credit from measured outcomes", cannot: "grant tool permission" },
+  ] as const;
+  const [signal,setSignal]=useState(0); const selected=signals[signal];
+  return <div className="design-lab"><div className="objective-tabs" role="group" aria-label="Post-training signal">{signals.map((item,index)=><button type="button" key={item.label} className={signal===index?"active":""} onClick={()=>setSignal(index)}>{item.label}</button>)}</div><div className="memory-ledger" aria-live="polite"><div><span>Stage</span><strong>{selected.stage}</strong></div><div><span>Training record</span><strong>{selected.record}</strong></div><div><span>Can teach</span><strong>{selected.learns}</strong></div></div><div className="decision-panel"><span className="lab-label">BOUNDARY</span><strong>{selected.cannot}</strong><p>Use the least complex signal that directly observes the behavior gap, then evaluate regressions before adding another stage.</p></div></div>;
+}
+
+function SftMaskLab() {
+  const policies = [
+    { label: "Assistant-only", labels: "ignore, ignore, 4, <eos>", visible: "system · user · assistant", issue: "scores the intended assistant span" },
+    { label: "All-token", labels: "system, user, 4, <eos>", visible: "system · user · assistant", issue: "also trains transcript imitation" },
+    { label: "Truncated", labels: "ignore, ignore, 4, ignore", visible: "system · user · assistant", issue: "drops the assistant EOS target" },
+  ] as const;
+  const [policy,setPolicy]=useState(0); const selected=policies[policy];
+  return <div className="design-lab"><span className="toy-badge">DETERMINISTIC SERIALIZATION FIXTURE</span><div className="objective-tabs" role="group" aria-label="SFT label policy">{policies.map((item,index)=><button type="button" key={item.label} className={policy===index?"active":""} onClick={()=>setPolicy(index)}>{item.label}</button>)}</div><code>&lt;system&gt; concise &lt;user&gt; 2+2? &lt;assistant&gt; 4 &lt;eos&gt;</code><div className="memory-ledger" aria-live="polite"><div><span>Visible to attention</span><strong>{selected.visible}</strong></div><div><span>Shifted labels</span><strong>{selected.labels}</strong></div><div><span>Audit result</span><strong>{selected.issue}</strong></div></div><p className="lab-caption">Ignored labels still remain in the input context. Print token IDs, role spans, shifted labels, and EOS placement before training.</p></div>;
+}
+
+function RlhfPipelineLab() {
+  const stages = [
+    { name: "Comparisons", input: "prompt + ranked responses", artifact: "preference records", risk: "rater and length bias" },
+    { name: "Reward model", input: "preference records", artifact: "fallible reward proxy", risk: "held-out ranking failure" },
+    { name: "Current-policy rollout", input: "prompts + sampled policy", artifact: "trajectories and rewards", risk: "distribution shift / gaming" },
+    { name: "PPO + KL", input: "advantages + reference policy", artifact: "updated policy checkpoint", risk: "reward gain with harmful drift" },
+  ] as const;
+  const [stage,setStage]=useState(0); const selected=stages[stage];
+  return <div className="design-lab"><div className="objective-tabs" role="group" aria-label="RLHF stage">{stages.map((item,index)=><button type="button" key={item.name} className={stage===index?"active":""} onClick={()=>setStage(index)}>{item.name}</button>)}</div><div className="memory-ledger" aria-live="polite"><div><span>Input</span><strong>{selected.input}</strong></div><div><span>Artifact</span><strong>{selected.artifact}</strong></div><div><span>Failure to test</span><strong>{selected.risk}</strong></div></div><div className="decision-panel"><span className="lab-label">LEGAL NEXT STEP</span><strong>{stage<stages.length-1?stages[stage+1].name:"independent task, safety, and drift evaluation"}</strong><p>No station substitutes for the next one: preference labels are not rewards, and high proxy reward is not launch evidence.</p></div></div>;
+}
+
+function TuluRecipeLab() {
+  const tasks = [
+    { label: "Exact arithmetic", route: "SFT → DPO → RLVR", evaluator: "stable parser + exact verifier", record: "answer, verifier result, spoof checks", runtime: "no external authority required" },
+    { label: "Open research", route: "SFT → tool trajectories → RLER", evaluator: "evolving evidence rubric + source audit", record: "trajectory, sources, rubric updates, cost", runtime: "read-only tools, budgets, confirmation for effects" },
+  ] as const;
+  const [task,setTask]=useState(0); const selected=tasks[task];
+  return <div className="design-lab"><span className="toy-badge">RECIPE ROUTER · DESIGN EXERCISE, NOT A TRAINING RUN</span><div className="objective-tabs" role="group" aria-label="Answer space">{tasks.map((item,index)=><button type="button" key={item.label} className={task===index?"active":""} onClick={()=>setTask(index)}>{item.label}</button>)}</div><div className="memory-ledger" aria-live="polite"><div><span>Training route</span><strong>{selected.route}</strong></div><div><span>Evaluator</span><strong>{selected.evaluator}</strong></div><div><span>Required record</span><strong>{selected.record}</strong></div></div><div className="decision-panel"><span className="lab-label">RUNTIME BOUNDARY</span><strong>{selected.runtime}</strong><p>The reward source must match the answer space. Learned tool-call syntax never grants credentials or authorization.</p></div></div>;
+}
 
 function ObjectivesLab(){const [kind,setKind]=useState<"causal"|"masked"|"fim"|"span">("causal");const data={causal:{input:"Birds  can  fly",visible:"triangular left context",target:"next token at every position",loss:"token cross-entropy"},masked:{input:"Birds  [MASK]  long distances",visible:"left and right context around mask",target:"fly at masked position",loss:"masked-position cross-entropy"},fim:{input:"<PRE> def area(r): <SUF> <eos> <MID> return π*r*r",visible:"reordered prefix + suffix",target:"missing middle, left-to-right",loss:"causal token cross-entropy"},span:{input:"Birds <X> long distances",visible:"corrupted source",target:"<X> can fly",loss:"decoder token cross-entropy"}}[kind];return <div className="objectives-lab"><div className="objective-tabs">{(["causal","masked","fim","span"] as const).map(item=><button key={item} className={kind===item?"active":""} onClick={()=>setKind(item)}>{item}</button>)}</div><code>{data.input}</code><div className="objective-grid"><div><span>VISIBLE</span><strong>{data.visible}</strong></div><div><span>TARGET</span><strong>{data.target}</strong></div><div><span>LOSS</span><strong>{data.loss}</strong></div></div></div>}
 
@@ -232,7 +317,7 @@ function KVCacheLab(){const [layers,setLayers]=useState(32);const [heads,setHead
 
 function QuantizationLab(){const [bits,setBits]=useState(8);const params=7;const weightGb=params*bits/8;const levels=2**bits;const toyError=1/Math.sqrt(levels);return <div className="tradeoff-lab"><label>Weight precision <strong>{bits} bit</strong><input type="range" min="2" max="16" step="2" value={bits} onChange={e=>setBits(+e.target.value)}/></label><div className="precision-grid"><div className="quantized-wave">{Array.from({length:16}).map((_,i)=><i key={i} style={{height:`${20+Math.round((Math.sin(i/2)+1)*25/(17-bits))*(17-bits)}px`}}/>)}</div><div className="memory-ledger"><div><span>7B weights</span><strong>{weightGb.toFixed(1)} GB</strong></div><div><span>Discrete levels</span><strong>{levels.toLocaleString("en-US")}</strong></div><div><span>Toy rounding proxy ↓</span><strong>{toyError.toFixed(3)}</strong></div></div></div><p className="lab-caption">The error proxy only illustrates the trade-off. Real quality depends on weight ranges, group scales, calibration, sensitive layers, and kernels.</p></div>}
 
-function ServingLab(){const [batch,setBatch]=useState(4);const [long,setLong]=useState(10);const lengths=[2,5,long,Math.max(3,long-1)].slice(0,batch);while(lengths.length<batch)lengths.push(4+lengths.length);const staticSlots=Math.max(...lengths)*batch;const useful=lengths.reduce((a,b)=>a+b,0);return <div className="tradeoff-lab"><div className="foundation-controls"><label>Batch requests <strong>{batch}</strong><input type="range" min="2" max="8" value={batch} onChange={e=>setBatch(+e.target.value)}/></label><label>Longest decode <strong>{long} tokens</strong><input type="range" min="5" max="20" value={long} onChange={e=>setLong(+e.target.value)}/></label></div><div className="request-lanes">{lengths.map((length,i)=><div key={i}><span>R{i+1}</span>{Array.from({length:Math.max(...lengths)}).map((_,j)=><i key={j} className={j<length?"used":"waste"}/>)}</div>)}</div><div className="memory-ledger"><div><span>Static slots</span><strong>{staticSlots}</strong></div><div><span>Useful work</span><strong>{useful}</strong></div><div><span>Padding/idle</span><strong>{Math.round((1-useful/staticSlots)*100)}%</strong></div></div><p className="lab-caption">Continuous batching can retire finished lanes and admit new requests. Real schedulers must also protect time-to-first-token and tail latency.</p></div>}
+function ServingLab(){const [batch,setBatch]=useState(4);const [long,setLong]=useState(10);const candidateLengths=[2,5,long,Math.max(3,long-1),Math.max(2,long-2),Math.max(2,Math.floor(long/2)),Math.max(1,long-3),Math.max(1,long-4)];const lengths=candidateLengths.slice(0,batch).map(length=>Math.min(length,long));const staticSlots=Math.max(...lengths)*batch;const useful=lengths.reduce((a,b)=>a+b,0);return <div className="tradeoff-lab"><div className="foundation-controls"><label>Batch requests <strong>{batch}</strong><input type="range" min="2" max="8" value={batch} onChange={e=>setBatch(+e.target.value)}/></label><label>Longest decode <strong>{long} tokens</strong><input type="range" min="5" max="20" value={long} onChange={e=>setLong(+e.target.value)}/></label></div><div className="request-lanes">{lengths.map((length,i)=><div key={i}><span>R{i+1}</span>{Array.from({length:Math.max(...lengths)}).map((_,j)=><i key={j} className={j<length?"used":"waste"}/>)}</div>)}</div><div className="memory-ledger"><div><span>Static slots</span><strong>{staticSlots}</strong></div><div><span>Useful work</span><strong>{useful}</strong></div><div><span>Padding/idle</span><strong>{Math.round((1-useful/staticSlots)*100)}%</strong></div></div><p className="lab-caption">Check the ledger: static slots = batch × longest visible lane, and padding/idle = 1 − useful work ÷ static slots. Continuous batching can retire finished lanes and admit new requests; real schedulers must also protect time-to-first-token and tail latency.</p></div>}
 
 function TestTimeLab(){const [difficulty,setDifficulty]=useState(60);const [samples,setSamples]=useState(4);const [tokens,setTokens]=useState(500);const [diversity,setDiversity]=useState(60);const [verifier,setVerifier]=useState(70);const required=400+difficulty*24;const effective=tokens*(1+Math.log2(samples)*diversity/100);const coverage=Math.min(100,effective/required*100);const selection=Math.min(diversity,verifier);const cost=samples*tokens;return <div className="tradeoff-lab"><div className="foundation-controls"><label>Fixed task difficulty <strong>{difficulty}</strong><input type="range" min="10" max="100" value={difficulty} onChange={e=>setDifficulty(+e.target.value)}/></label><label>Parallel samples <strong>{samples}</strong><input type="range" min="1" max="16" value={samples} onChange={e=>setSamples(+e.target.value)}/></label><label>Tokens per attempt <strong>{tokens}</strong><input type="range" min="100" max="2000" step="100" value={tokens} onChange={e=>setTokens(+e.target.value)}/></label><label>Candidate diversity <strong>{diversity}%</strong><input type="range" min="0" max="100" value={diversity} onChange={e=>setDiversity(+e.target.value)}/></label><label>Verifier reliability <strong>{verifier}%</strong><input type="range" min="0" max="100" value={verifier} onChange={e=>setVerifier(+e.target.value)}/></label></div><div className="budget-map"><i style={{width:`${coverage.toFixed(3)}%`}}/><span>Illustrative budget coverage {coverage.toFixed(0)}% · not accuracy</span></div><div className="memory-ledger"><div><span>Total generated</span><strong>{cost.toLocaleString("en-US")} tok</strong></div><div><span>Candidate selection bottleneck</span><strong>{selection}%</strong></div><div><span>Next investment</span><strong>{coverage<60?"more useful compute":selection<60?"diversity / verifier":"measure real accuracy"}</strong></div></div><p className="lab-caption">Coverage compares a toy effective budget with a task budget; it never predicts correctness. At fixed compute, harder tasks lower coverage. Diverse candidates still need a reliable verifier.</p></div>}
 

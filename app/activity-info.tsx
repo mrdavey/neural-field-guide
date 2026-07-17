@@ -63,9 +63,15 @@ export function ActivityInfo({ mode, title, detail, requirements, children }: Ac
   </div>;
 }
 
-export function LearningActivityContract({ question, boundary }: LearningActivityContractProps) {
+export function LearningActivityContract({ question, action, observe, explain, complete, boundary }: LearningActivityContractProps) {
   return <section className="learning-activity-contract" aria-label="Activity learning contract">
     <p><strong>Question:</strong> {question}</p>
+    <ol>
+      <li><strong>Change</strong><span>{action}</span></li>
+      <li><strong>Observe</strong><span>{observe}</span></li>
+      <li><strong>Explain</strong><span>{explain}</span></li>
+      <li><strong>Complete</strong><span>{complete}</span></li>
+    </ol>
     {boundary && <p className="learning-activity-boundary"><strong>Scope:</strong> {boundary}</p>}
   </section>;
 }

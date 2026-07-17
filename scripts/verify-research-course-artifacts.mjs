@@ -9,11 +9,27 @@ const courseArtifacts = {
   rl: ["tabular-control-capstone", "value-methods-capstone", "deep-value-capstone", "on-policy-capstone", "model-based-capstone", "sequence-policy-capstone", "rl-research-capstone"],
   embodied: ["task-contract-capstone", "state-estimator-capstone", "behavior-cloning-capstone", "vla-policy-capstone", "recovery-intervention-capstone", "embodied-research-capstone"],
 };
+const artifactSchemaVersions = {
+  "generative:flow-energy-capstone": 2,
+  "generative:diffusion-model-capstone": 2,
+};
 
 let count = 0;
 for (const [course, ids] of Object.entries(courseArtifacts)) for (const id of ids) {
   const artifact = JSON.parse(readFileSync(join(root, "public/capstone-artifacts", course, `${id}.json`), "utf8"));
-  assert.equal(artifact.schemaVersion, 1, `${course}:${id} schema`);
+  const artifactKey = `${course}:${id}`;
+  const expectedSchemaVersion = artifactSchemaVersions[artifactKey] ?? 1;
+  assert.equal(artifact.schemaVersion, expectedSchemaVersion, `${artifactKey} schema`);
+  if (artifactKey === "generative:flow-energy-capstone") {
+    assert.match(artifact.manifest?.studyDesign ?? "", /cross-family benchmark/i, `${artifactKey} v2 study design`);
+    assert.match(artifact.manifest?.workAxis?.definition ?? "", /scalar arithmetic|scalar primitive/i, `${artifactKey} v2 work-axis definition`);
+    assert.match(artifact.manifest?.workAxis?.interpretation ?? "", /not wall-clock/i, `${artifactKey} v2 evidence boundary`);
+  }
+  if (artifactKey === "generative:diffusion-model-capstone") {
+    assert.match(artifact.manifest?.studyDesign ?? "", /one-factor NFE intervention/i, `${artifactKey} v2 study design`);
+    assert.match(artifact.manifest?.soleIntervention ?? "", /denoiser evaluation count/i, `${artifactKey} v2 intervention`);
+    assert.match(artifact.manifest?.interpretationBoundary ?? "", /equal-NFE study/i, `${artifactKey} v2 evidence boundary`);
+  }
   assert.equal(artifact.course, course, `${course}:${id} course`);
   assert.equal(artifact.lessonId, id, `${course}:${id} lesson`);
   assert.match(artifact.evidenceKind, /fixture/, `${course}:${id} evidence kind`);

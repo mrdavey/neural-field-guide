@@ -3,105 +3,774 @@ import { wmSources } from "../sources";
 
 export const worldModelTrainingSpecs = [
   defineWorldModelLesson({
-    id: "prediction-targets", track: "wm-training", title: "Observation, Reward and Continuation Targets", number: 15,
-    plain: "A world model can predict observations, rewards, and whether an episode continues; each target teaches a different part of the simulated interface.",
-    precise: "This lesson uses one explicit node/edge convention. Filtered node state $z_t$ parameterizes the same-index observation head $p(o_t\\mid z_t)$. The controlled transition $(z_t,a_t)$ parameterizes edge labels $p(r_t\\mid z_t,a_t)$ and $p(c_t\\mid z_t,a_t)$ and predicts $z_{t+1}$; the next node may then parameterize $p(o_{t+1}\\mid z_{t+1})$. Observation loss pressures representational coverage, reward loss preserves task outcomes, and continuation loss distinguishes terminal from nonterminal futures. Loss scales, masks, class imbalance, and timing conventions determine which signal dominates.",
-    analogy: "A simulator needs scenery, a scoreboard, and an end-of-episode whistle.", analogyBreak: "accurate scenery can coexist with a wrong scoreboard, and a correct average scoreboard can hide rare terminal hazards.",
-    ideas: ["Write the exact input, target time index, distribution, and mask for every head.", "Normalize losses by real contributing elements before weighting them.", "Evaluate heads separately and in multi-step rollouts before combining a headline loss."],
-    worked: "Write observations on nodes and controls/outcomes on edges: node 0 is $o_0=[0,1]$; edge 0 is $(a_0,r_0=0,c_0=1)$; node 1 is $o_1=[1,1]$; edge 1 is $(a_1,r_1=1,c_1=0)$; node 2 is the real terminal observation $o_2=[2,1]$. Filtered $z_1$ reconstructs $o_1$. Transition $(z_1,a_1)$ predicts the still-valid terminal reward $r_1=1$, continuation $c_1=0$, and $z_2$, from which the observation head predicts $o_2$. Only a manufactured edge 2 into padded $o_3$ is masked. Observation error averages over valid node elements; reward and continuation each average over their two real edges before declared weights combine them.",
-    misconception: "Adding reward and continuation heads does not guarantee their latent state contains enough evidence; the heads may exploit dataset shortcuts.",
-    quiz: { question: "Why predict continuation separately?", options: ["To add decorative output", "To distinguish valid future rollout from episode termination", "To replace actions", "To normalize pixels"], answer: 1, explanation: "Continuation controls whether imagined returns and transitions proceed beyond a terminal event." }, lab: "wm-rollout", prerequisites: ["rssm-planet-case-study"], sources: [wmSources.planet, wmSources.dreamerV3],
-    objectives: ["Align observation, reward, and continuation targets with latent time steps", "Choose loss normalization and weights without hiding a failing prediction head"],
-    vocabulary: [{ term: "Prediction head", meaning: "A component mapping latent state to parameters of one target distribution." }, { term: "Continuation", meaning: "A target indicating whether the episode remains active after a transition." }, { term: "Loss weight", meaning: "A declared multiplier controlling a target's contribution after normalization." }],
-    stages: ["Align targets", "Mask validity", "Normalize and combine"], checkpoints: ["Attach each target to its documented state or transition index.", "Exclude padding and post-terminal transitions while retaining terminal labels.", "Report unweighted per-head metrics before applying weights."],
-    primaryCheck: { prompt: "Given observations $o_0,o_1,o_2$, actions $a_0,a_1$, rewards $r_0=0,r_1=1$, and continuations $c_0=1,c_1=0$, commit which latent/head predicts each observation, reward, and continuation target and what is masked after termination.", expected: "Filtered $z_t$ reconstructs the same-index $o_t$ under this declared convention; transition $(z_t,a_t)$ predicts edge labels $r_t,c_t$ and dynamics leading toward $z_{t+1}/o_{t+1}$. Thus $z_1,a_1$ still receives $r_1=1$, $c_1=0$, and the real $o_2$ next-state target, but no synthetic transition from $o_2$ into padding/reset is scored. Each head is normalized over its own valid elements before weighting.", retry: "Write observations on nodes and actions/rewards/continuations on edges. Keep the real terminal edge, cross out only edges manufactured by padding or reset, then count valid elements per head." },
-    decision: { explanation: "Loss weights are engineering hypotheses that require per-head and downstream evidence.", mechanism: "Normalize each loss by valid elements, sweep one weight at a time, and compare observation slices, reward/terminal calibration, rollout return, and control while holding data and optimization constant.", workedExample: "Weighting pixel loss 100× lowers image MSE but reward sign accuracy falls from 96% to 61%, reversing planned actions. Equal raw magnitudes would not reveal the decision failure.", boundary: "A weight that works in one observation scale or task may fail after resolution, reward, or class-frequency changes.", check: { prompt: "Total loss falls only because pixel loss dominates while terminal recall collapses. What should the report and next experiment do?", expected: "Report each normalized head metric, treat terminal recall as a gate, and run a controlled weight/representation adjustment rather than citing total loss.", retry: "Decompose the scalar total back into targets and identify the one connected to the failed decision." } },
-    transfer: { prompt: "Which training dashboard is sufficient?", options: [{ text: "One summed loss", feedback: "A sum hides target-specific regressions." }, { text: "Per-head normalized losses and calibration plus rollout/control gates", feedback: "Correct: every interface is observable." }, { text: "Observation samples only", feedback: "Reward and termination can still be wrong." }], answer: 1, worked: "Preserve head-level metrics, masks, weights, and downstream tests in the run record.", retry: "List each output contract and demand one measurement that can falsify it." },
-    motion: { concept: "training", headline: "One latent state feeds several prediction contracts with different evidence.", intro: "Observation, reward, and continuation lanes remain separate through masking and normalization before their losses combine.", labels: ["LATENT", "HEADS", "MASKS", "WEIGHTED LOSS"], titles: ["The filtered state summarizes current evidence.", "Separate heads predict different environment outputs.", "Validity masks preserve episode semantics.", "Normalized signals combine under explicit weights."] },
+    id: "prediction-targets",
+    track: "wm-training",
+    title: "Observation, Reward and Continuation Targets",
+    number: 15,
+    plain:
+      "A world model can predict observations, rewards, and whether an episode continues; each target teaches a different part of the simulated interface.",
+    precise:
+      "This lesson uses one explicit node/edge convention. Filtered node state $z_t$ parameterizes the same-index observation head $p(o_t\\mid z_t)$. The controlled transition $(z_t,a_t)$ parameterizes edge labels $p(r_t\\mid z_t,a_t)$ and $p(c_t\\mid z_t,a_t)$ and predicts $z_{t+1}$; the next node may then parameterize $p(o_{t+1}\\mid z_{t+1})$. Observation loss pressures representational coverage, reward loss preserves task outcomes, and continuation loss distinguishes terminal from nonterminal futures. Loss scales, masks, class imbalance, and timing conventions determine which signal dominates.",
+    analogy:
+      "A simulator needs scenery, a scoreboard, and an end-of-episode whistle.",
+    analogyBreak:
+      "accurate scenery can coexist with a wrong scoreboard, and a correct average scoreboard can hide rare terminal hazards.",
+    ideas: [
+      "Write the exact input, target time index, distribution, and mask for every head.",
+      "Normalize losses by real contributing elements before weighting them.",
+      "Evaluate heads separately and in multi-step rollouts before combining a headline loss.",
+    ],
+    worked:
+      "Write observations on nodes and controls/outcomes on edges: node 0 is $o_0=[0,1]$; edge 0 is $(a_0,r_0=0,c_0=1)$; node 1 is $o_1=[1,1]$; edge 1 is $(a_1,r_1=1,c_1=0)$; node 2 is the real terminal observation $o_2=[2,1]$. Filtered $z_1$ reconstructs $o_1$. Transition $(z_1,a_1)$ predicts the still-valid terminal reward $r_1=1$, continuation $c_1=0$, and $z_2$, from which the observation head predicts $o_2$. Only a manufactured edge 2 into padded $o_3$ is masked. Observation error averages over valid node elements; reward and continuation each average over their two real edges before declared weights combine them.",
+    misconception:
+      "Adding reward and continuation heads does not guarantee their latent state contains enough evidence; the heads may exploit dataset shortcuts.",
+    quiz: {
+      question: "Why predict continuation separately?",
+      options: [
+        "To add decorative output",
+        "To distinguish valid future rollout from episode termination",
+        "To replace actions",
+        "To normalize pixels",
+      ],
+      answer: 1,
+      explanation:
+        "Continuation controls whether imagined returns and transitions proceed beyond a terminal event.",
+    },
+    lab: "wm-rollout",
+    prerequisites: ["rssm-planet-case-study"],
+    sources: [wmSources.planet, wmSources.dreamerV3],
+    objectives: [
+      "Align observation, reward, and continuation targets with latent time steps",
+      "Choose loss normalization and weights without hiding a failing prediction head",
+    ],
+    vocabulary: [
+      {
+        term: "Prediction head",
+        meaning:
+          "A component mapping latent state to parameters of one target distribution.",
+      },
+      {
+        term: "Continuation",
+        meaning:
+          "A target indicating whether the episode remains active after a transition.",
+      },
+      {
+        term: "Loss weight",
+        meaning:
+          "A declared multiplier controlling a target's contribution after normalization.",
+      },
+    ],
+    stages: ["Align targets", "Mask validity", "Normalize and combine"],
+    checkpoints: [
+      "Attach each target to its documented state or transition index.",
+      "Exclude padding and post-terminal transitions while retaining terminal labels.",
+      "Report unweighted per-head metrics before applying weights.",
+    ],
+    primaryCheck: {
+      prompt:
+        "Given observations $o_0,o_1,o_2$, actions $a_0,a_1$, rewards $r_0=0,r_1=1$, and continuations $c_0=1,c_1=0$, commit which latent/head predicts each observation, reward, and continuation target and what is masked after termination.",
+      expected:
+        "Filtered $z_t$ reconstructs the same-index $o_t$ under this declared convention; transition $(z_t,a_t)$ predicts edge labels $r_t,c_t$ and dynamics leading toward $z_{t+1}/o_{t+1}$. Thus $z_1,a_1$ still receives $r_1=1$, $c_1=0$, and the real $o_2$ next-state target, but no synthetic transition from $o_2$ into padding/reset is scored. Each head is normalized over its own valid elements before weighting.",
+      retry:
+        "Write observations on nodes and actions/rewards/continuations on edges. Keep the real terminal edge, cross out only edges manufactured by padding or reset, then count valid elements per head.",
+    },
+    decision: {
+      explanation:
+        "Loss weights are engineering hypotheses that require per-head and downstream evidence.",
+      mechanism:
+        "Normalize each loss by valid elements, sweep one weight at a time, and compare observation slices, reward/terminal calibration, rollout return, and control while holding data and optimization constant.",
+      workedExample:
+        "Weighting pixel loss 100× lowers image MSE but reward sign accuracy falls from 96% to 61%, reversing planned actions. Equal raw magnitudes would not reveal the decision failure.",
+      boundary:
+        "A weight that works in one observation scale or task may fail after resolution, reward, or class-frequency changes.",
+      check: {
+        prompt:
+          "Total loss falls only because pixel loss dominates while terminal recall collapses. What should the report and next experiment do?",
+        expected:
+          "Report each normalized head metric, treat terminal recall as a gate, and run a controlled weight/representation adjustment rather than citing total loss.",
+        retry:
+          "Decompose the scalar total back into targets and identify the one connected to the failed decision.",
+      },
+    },
+    transfer: {
+      prompt: "Which training dashboard is sufficient?",
+      options: [
+        {
+          text: "One summed loss",
+          feedback: "A sum hides target-specific regressions.",
+        },
+        {
+          text: "Per-head normalized losses and calibration plus rollout/control gates",
+          feedback: "Correct: every interface is observable.",
+        },
+        {
+          text: "Observation samples only",
+          feedback: "Reward and termination can still be wrong.",
+        },
+      ],
+      answer: 1,
+      worked:
+        "Preserve head-level metrics, masks, weights, and downstream tests in the run record.",
+      retry:
+        "List each output contract and demand one measurement that can falsify it.",
+    },
+    motion: {
+      concept: "training",
+      headline:
+        "One latent state feeds several prediction contracts with different evidence.",
+      intro:
+        "Observation, reward, and continuation lanes remain separate through masking and normalization before their losses combine.",
+      labels: ["LATENT", "HEADS", "MASKS", "WEIGHTED LOSS"],
+      titles: [
+        "The filtered state summarizes current evidence.",
+        "Separate heads predict different environment outputs.",
+        "Validity masks preserve episode semantics.",
+        "Normalized signals combine under explicit weights.",
+      ],
+    },
   }),
   defineWorldModelLesson({
-    id: "reconstruction-feature-prediction", track: "wm-training", title: "Reconstruction vs Feature Prediction", number: 16,
-    plain: "Reconstruction predicts raw observations; feature prediction predicts a learned representation of a future observation.",
-    precise: "A reconstruction objective scores $d(z_t)$ against pixels or sensor values. A feature-prediction objective maps context to a target encoder representation while preventing trivial collapse through stop-gradient, target encoders, masking, normalization, or other constraints. Reconstruction pressures coverage of visible detail; feature prediction can ignore unpredictable low-level detail but inherits the target representation's blind spots.",
-    analogy: "One student redraws the scene; another predicts the important notes another observer would write.", analogyBreak: "neither notes nor drawings guarantee that the model preserves action effects or safe control variables.",
-    ideas: ["Name the exact target space and which network supplies it.", "Explain how the objective avoids a constant or shortcut representation.", "Compare downstream prediction and control under matched data, capacity, and compute."],
-    worked: "Random television noise dominates pixel error but cannot be controlled. Pixel reconstruction spends capacity on it; a future-feature target may ignore it and retain agent position. If the feature encoder also ignores a tiny key, however, both future prediction and planning lose the key.",
-    misconception: "Feature prediction is not automatically semantic, causal, or collapse-free; those properties require objective design and evaluation.",
-    quiz: { question: "What risk is specific to unconstrained feature prediction?", options: ["Features may collapse to a constant solution", "Pixels become integers", "Actions disappear from the dataset", "Rewards become infinite"], answer: 0, explanation: "If predictor and targets can agree trivially, all inputs may map to the same representation." }, lab: "wm-latent", prerequisites: ["prediction-targets"], sources: [wmSources.jepa, wmSources.vjepa2],
-    objectives: ["Contrast pixel reconstruction and future-feature prediction objectives", "Design a collapse and task-relevance audit for the chosen target space"],
-    vocabulary: [{ term: "Target encoder", meaning: "The network producing feature targets the predictor must match." }, { term: "Stop-gradient", meaning: "A boundary preventing one branch from changing through a particular loss." }, { term: "Representation collapse", meaning: "Different inputs map to uninformative identical or near-identical features." }],
-    stages: ["Choose target", "Prevent shortcut", "Compare use"], checkpoints: ["State pixels, tokens, or named encoder features with shapes.", "Identify the architectural or optimization anti-collapse mechanism.", "Test nuisances, hazards, action contrasts, and downstream outcomes."],
-    primaryCheck: { prompt: "For a masked video block, state the difference between predicting pixels and predicting target-encoder features.", expected: "Pixel prediction outputs observation values for the masked block; feature prediction outputs the target encoder's latent representation for that block, with an explicit anti-collapse information boundary.", retry: "Name who creates the target, its shape, and whether the target is raw sensor data or a learned representation." },
-    decision: { explanation: "Representation collapse means distinct inputs produce the same or nearly identical, uninformative feature; task relevance asks whether the remaining distinctions support the named prediction or action. A target can avoid collapse yet still omit a small hazard.", mechanism: "First compare feature variance and pairwise distances across distinct inputs, then intervene by replacing features with their batch mean or shuffling them and measure whether predictor output changes. Confirm the anti-collapse boundary—such as a stop-gradient target encoder plus masking—cannot learn a constant shortcut. Separately run matched nuisance/hazard pairs, action-conditioned rollout, and closed-loop task slices under fixed data/compute.", workedExample: "Two hundred different clips all map to $[0.2,0.2]$; replacing every feature with the batch mean changes neither loss nor output, so the representation is collapsed. After a target-encoder repair, feature variance returns and shuffling raises loss, but key detection remains 72% versus 94% for pixels: collapse is fixed while task relevance still fails for the key.", boundary: "Nonzero variance can be a nuisance or sample-ID shortcut rather than useful state, and success on one downstream task can still hide missing variables for another goal.", check: { prompt: "A feature predictor has low loss. Commit a two-part audit that can distinguish constant/shortcut collapse from a noncollapsed representation that omits a small control-critical key.", expected: "For collapse, inspect cross-input variance/distances and replace or shuffle features; unchanged predictions reveal a constant or bypass shortcut, which must be blocked at the target/stop-gradient/masking boundary. For relevance, hold nuisance fixed, toggle only the key, and require feature, future prediction, and closed-loop action to change appropriately. Passing variance alone does not pass the key test.", retry: "Ask two separate questions in order: do distinct inputs actually travel through the feature, and does the specific outcome-changing key survive that feature?" } },
-    transfer: { prompt: "Which conclusion is valid?", options: [{ text: "Feature prediction always beats reconstruction", feedback: "The trade-off depends on target and task." }, { text: "Feature prediction reduced nuisance sensitivity in the tested setup but missed a named small object", feedback: "Correct: both gain and boundary are stated." }, { text: "Lower feature loss proves better pixels", feedback: "The losses live in different spaces." }], answer: 1, worked: "Report target-space metrics and decision-space metrics separately; never compare raw loss magnitudes across spaces.", retry: "Name the units of each loss and the downstream decision before comparing." },
-    motion: { concept: "multimodal", headline: "Two objectives predict different representations of the same future.", intro: "The future observation splits into a raw-value lane and a target-feature lane, then rejoins at task evaluation rather than at loss magnitude.", labels: ["FUTURE", "PIXELS", "FEATURES", "TASK TEST"], titles: ["Define the future evidence to predict.", "Reconstruction preserves raw visible detail.", "Feature prediction follows a learned target space.", "Controlled decisions reveal what each target omitted."] },
+    id: "reconstruction-feature-prediction",
+    track: "wm-training",
+    title: "Reconstruction vs Feature Prediction",
+    number: 16,
+    plain:
+      "Reconstruction predicts raw observations; feature prediction predicts a learned representation of a future observation.",
+    precise:
+      "A reconstruction objective scores $d(z_t)$ against pixels or sensor values. A feature-prediction objective maps context to a target-encoder representation while routing optimization asymmetrically through stop-gradient or a separately updated EMA target. That gradient boundary prevents direct same-step target chasing; it does not alone make a constant representation impossible. The full masking, architecture, normalization, target-update, and loss design must be inspected, and feature diversity plus intervention tests must verify non-collapse empirically. Reconstruction pressures coverage of visible detail; feature prediction can ignore unpredictable low-level detail but inherits the target representation's blind spots.",
+    analogy:
+      "One student redraws the scene; another predicts the important notes another observer would write.",
+    analogyBreak:
+      "neither notes nor drawings guarantee that the model preserves action effects or safe control variables.",
+    ideas: [
+      "Name the exact target space and which network supplies it.",
+      "Explain how the objective avoids a constant or shortcut representation.",
+      "Compare downstream prediction and control under matched data, capacity, and compute.",
+    ],
+    worked:
+      "Random television noise dominates pixel error but cannot be controlled. Pixel reconstruction spends capacity on it; a future-feature target may ignore it and retain agent position. If the feature encoder also ignores a tiny key, however, both future prediction and planning lose the key.",
+    misconception:
+      "Feature prediction is not automatically semantic, causal, or collapse-free; those properties require objective design and evaluation.",
+    quiz: {
+      question: "What risk is specific to unconstrained feature prediction?",
+      options: [
+        "Features may collapse to a constant solution",
+        "Pixels become integers",
+        "Actions disappear from the dataset",
+        "Rewards become infinite",
+      ],
+      answer: 0,
+      explanation:
+        "If predictor and targets can agree trivially, all inputs may map to the same representation.",
+    },
+    lab: "wm-latent",
+    prerequisites: ["prediction-targets"],
+    sources: [wmSources.jepa, wmSources.vjepa2],
+    objectives: [
+      "Contrast pixel reconstruction and future-feature prediction objectives",
+      "Design a collapse and task-relevance audit for the chosen target space",
+    ],
+    vocabulary: [
+      {
+        term: "Target encoder",
+        meaning:
+          "The network producing feature targets the predictor must match.",
+      },
+      {
+        term: "Stop-gradient",
+        meaning:
+          "A boundary preventing one branch from changing through a particular loss.",
+      },
+      {
+        term: "Representation collapse",
+        meaning:
+          "Different inputs map to uninformative identical or near-identical features.",
+      },
+    ],
+    stages: ["Choose target", "Prevent shortcut", "Compare use"],
+    checkpoints: [
+      "State pixels, tokens, or named encoder features with shapes.",
+      "Identify the architectural or optimization anti-collapse mechanism.",
+      "Test nuisances, hazards, action contrasts, and downstream outcomes.",
+    ],
+    primaryCheck: {
+      prompt:
+        "For a masked video block, state the difference between predicting pixels and predicting target-encoder features.",
+      expected:
+        "Pixel prediction outputs observation values for the masked block; feature prediction outputs the target encoder's latent representation for that block, with an explicit anti-collapse information boundary.",
+      retry:
+        "Name who creates the target, its shape, and whether the target is raw sensor data or a learned representation.",
+    },
+    decision: {
+      explanation:
+        "Representation collapse means distinct inputs produce the same or nearly identical, uninformative feature; task relevance asks whether the remaining distinctions support the named prediction or action. A target can avoid collapse yet still omit a small hazard.",
+      mechanism:
+        "First trace the stop-gradient or EMA update path and test whether the complete objective still admits a constant shortcut; the boundary alone is not a proof. Then compare feature variance and pairwise distances across distinct inputs, replace features with their batch mean or shuffle them, and measure whether predictor output changes. Separately run matched nuisance/hazard pairs, action-conditioned rollout, and closed-loop task slices under fixed data/compute.",
+      workedExample:
+        "Two hundred different clips all map to $[0.2,0.2]$; replacing every feature with the batch mean changes neither loss nor output, so the representation is collapsed. After a target-encoder repair, feature variance returns and shuffling raises loss, but key detection remains 72% versus 94% for pixels: collapse is fixed while task relevance still fails for the key.",
+      boundary:
+        "Stop-gradient or EMA defines gradient ownership, not an empirical non-collapse certificate. Nonzero variance can also be a nuisance or sample-ID shortcut rather than useful state, and success on one downstream task can still hide missing variables for another goal.",
+      check: {
+        prompt:
+          "A feature predictor has low loss. Commit a two-part audit that can distinguish constant/shortcut collapse from a noncollapsed representation that omits a small control-critical key.",
+        expected:
+          "For collapse, trace gradient/update ownership, inspect cross-input variance/distances, and replace or shuffle features; unchanged predictions reveal a constant or bypass shortcut that the complete objective failed to prevent. Stop-gradient or EMA alone is not proof. For relevance, hold nuisance fixed, toggle only the key, and require feature, future prediction, and closed-loop action to change appropriately. Passing variance alone does not pass the key test.",
+        retry:
+          "Ask two separate questions in order: do distinct inputs actually travel through the feature, and does the specific outcome-changing key survive that feature?",
+      },
+    },
+    transfer: {
+      prompt: "Which conclusion is valid?",
+      options: [
+        {
+          text: "Feature prediction always beats reconstruction",
+          feedback: "The trade-off depends on target and task.",
+        },
+        {
+          text: "Feature prediction reduced nuisance sensitivity in the tested setup but missed a named small object",
+          feedback: "Correct: both gain and boundary are stated.",
+        },
+        {
+          text: "Lower feature loss proves better pixels",
+          feedback: "The losses live in different spaces.",
+        },
+      ],
+      answer: 1,
+      worked:
+        "Report target-space metrics and decision-space metrics separately; never compare raw loss magnitudes across spaces.",
+      retry:
+        "Name the units of each loss and the downstream decision before comparing.",
+    },
+    motion: {
+      concept: "multimodal",
+      headline:
+        "Two objectives predict different representations of the same future.",
+      intro:
+        "The future observation splits into a raw-value lane and a target-feature lane, then rejoins at task evaluation rather than at loss magnitude.",
+      labels: ["FUTURE", "PIXELS", "FEATURES", "TASK TEST"],
+      titles: [
+        "Define the future evidence to predict.",
+        "Reconstruction preserves raw visible detail.",
+        "Feature prediction follows a learned target space.",
+        "Controlled decisions reveal what each target omitted.",
+      ],
+    },
   }),
   defineWorldModelLesson({
-    id: "multistep-overshooting", track: "wm-training", title: "One-Step, Multi-Step and Overshooting Objectives", number: 17,
-    plain: "Multi-step training asks the model to remain useful after several of its own predicted transitions, not only after one correct state.",
-    precise: "Teacher-forced one-step loss predicts from observation-corrected state. Open-loop rollout repeatedly applies the prior, so small errors compound. Multi-step latent objectives start from an inferred state, unroll actions for $k$ steps without intermediate observations, and match later inferred targets; latent overshooting is one variational form. Horizon weighting trades long-range pressure against optimization difficulty and stochastic ambiguity.",
-    analogy: "One-step training corrects a navigator at every corner; overshooting asks it to travel several corners before checking the map.", analogyBreak: "longer supervision cannot make inherently unpredictable detail deterministic and may blur or over-regularize the state.",
-    ideas: ["Separate teacher-forced one-step predictions from prior-only open-loop rollout.", "Align the exact action sequence and later target at every overshooting horizon.", "Measure error and decision quality by horizon rather than one aggregate."],
-    worked: "A position predictor adds +1 but has bias +0.1 per step. One-step error is 0.1; after 10 prior steps position is 1.0 too far. A five-step loss exposes 0.5 accumulated error that teacher forcing repeatedly hides.",
-    misconception: "Training at a long horizon is not universally better; gradients, stochastic futures, and target uncertainty can make distant matching harmful.",
-    quiz: { question: "Why can one-step validation look good while imagination fails?", options: ["The prior repeatedly consumes its own imperfect predictions", "Actions are never tensors", "Rewards remove all error", "Teacher forcing is multi-step search"], answer: 0, explanation: "Open-loop rollout shifts inputs away from corrected training states and compounds transition bias." }, lab: "wm-rollout", prerequisites: ["reconstruction-feature-prediction"], sources: [wmSources.planet, wmSources.dreamer],
-    objectives: ["Trace how one-step error compounds during an open-loop latent rollout", "Choose and evaluate a multi-step training horizon without hiding stochastic uncertainty"],
-    vocabulary: [{ term: "Teacher forcing", meaning: "Using observation-corrected states as inputs during training." }, { term: "Open-loop rollout", meaning: "Predicting several transitions without incorporating new observations." }, { term: "Overshooting", meaning: "Matching multi-step prior predictions to later inferred latent states." }],
-    stages: ["Start corrected", "Unroll prior", "Compare by horizon"], checkpoints: ["Name the last observation-conditioned state.", "Feed only prior states and the recorded actions afterward.", "Report error, calibration, and task relevance for each horizon."],
-    primaryCheck: { prompt: "A scalar model has +0.05 bias per step. What bias appears after 8 open-loop steps if it adds linearly?", expected: "The rollout is biased by $8(0.05)=0.4$ after eight steps, even though every isolated one-step prediction misses by only 0.05.", retry: "Write the recurrence for the error and add the same bias once per prior transition." },
-    decision: { explanation: "Horizon choice should match the decision horizon while respecting uncertainty and optimization stability.", mechanism: "Sweep horizons under matched compute, plot per-horizon proper scores and control outcomes, inspect gradient scale and mode coverage, and stop extending when marginal decision gain disappears or calibration worsens.", workedExample: "Horizon 1 yields task success 62%, horizon 5 yields 79%, and horizon 20 yields 74% with collapsed modes. Five steps matches the planner's useful horizon in this fixture.", boundary: "The chosen horizon is specific to the environment timescale, action repeat, and model capacity.", check: { prompt: "Twenty-step loss lowers mean latent distance but removes rare branches needed for safety. Which evidence controls?", expected: "The rare-branch calibration and safety outcome block the longer objective; lower mean latent distance is insufficient when it averages modes.", retry: "Separate average geometric distance from probability assigned to each decision-critical mode." } },
-    transfer: { prompt: "What should a rollout report include?", options: [{ text: "Only final-step MSE", feedback: "It hides where divergence begins and whether uncertainty is calibrated." }, { text: "Per-horizon prediction/calibration and closed-loop decision outcomes", feedback: "Correct: both mechanism and use remain visible." }, { text: "One best-looking sample", feedback: "A sample cannot show distributional coverage." }], answer: 1, worked: "Plot metrics at each step, preserve seeds/trajectories, and connect the chosen planning horizon to the measured stable range.", retry: "Find the first horizon where the planner consumes unreliable state." },
-    motion: { concept: "memory", headline: "Open-loop error accumulates because each prediction becomes the next input.", intro: "Corrected state stops at the rollout start; subsequent ledger cells are prior predictions whose error can grow with distance.", labels: ["POSTERIOR START", "PRIOR STEP", "COMPOUND", "HORIZON TEST"], titles: ["Anchor the rollout in observed evidence.", "Advance using actions without new observations.", "Prediction error enters later inputs.", "Measure each horizon and the resulting decision."] },
+    id: "multistep-overshooting",
+    track: "wm-training",
+    title: "One-Step, Multi-Step and Overshooting Objectives",
+    number: 17,
+    plain:
+      "Multi-step training asks the model to remain useful after several of its own predicted transitions, not only after one correct state.",
+    precise:
+      "Teacher-forced one-step loss predicts from observation-corrected state. Open-loop rollout repeatedly applies the prior, so small errors compound. Multi-step latent objectives start from an inferred state, unroll actions for $k$ steps without intermediate observations, and match later inferred targets; latent overshooting is one variational form. Horizon weighting trades long-range pressure against optimization difficulty and stochastic ambiguity.",
+    analogy:
+      "One-step training corrects a navigator at every corner; overshooting asks it to travel several corners before checking the map.",
+    analogyBreak:
+      "longer supervision cannot make inherently unpredictable detail deterministic and may blur or over-regularize the state.",
+    ideas: [
+      "Separate teacher-forced one-step predictions from prior-only open-loop rollout.",
+      "Align the exact action sequence and later target at every overshooting horizon.",
+      "Measure error and decision quality by horizon rather than one aggregate.",
+    ],
+    worked:
+      "A position predictor adds +1 but has bias +0.1 per step. One-step error is 0.1; after 10 prior steps position is 1.0 too far. A five-step loss exposes 0.5 accumulated error that teacher forcing repeatedly hides.",
+    misconception:
+      "Training at a long horizon is not universally better; gradients, stochastic futures, and target uncertainty can make distant matching harmful.",
+    quiz: {
+      question:
+        "Why can one-step validation look good while imagination fails?",
+      options: [
+        "The prior repeatedly consumes its own imperfect predictions",
+        "Actions are never tensors",
+        "Rewards remove all error",
+        "Teacher forcing is multi-step search",
+      ],
+      answer: 0,
+      explanation:
+        "Open-loop rollout shifts inputs away from corrected training states and compounds transition bias.",
+    },
+    lab: "wm-rollout",
+    prerequisites: ["reconstruction-feature-prediction"],
+    sources: [wmSources.planet, wmSources.dreamer],
+    objectives: [
+      "Trace how one-step error compounds during an open-loop latent rollout",
+      "Choose and evaluate a multi-step training horizon without hiding stochastic uncertainty",
+    ],
+    vocabulary: [
+      {
+        term: "Teacher forcing",
+        meaning:
+          "Using observation-corrected states as inputs during training.",
+      },
+      {
+        term: "Open-loop rollout",
+        meaning:
+          "Predicting several transitions without incorporating new observations.",
+      },
+      {
+        term: "Overshooting",
+        meaning:
+          "Matching multi-step prior predictions to later inferred latent states.",
+      },
+    ],
+    stages: ["Start corrected", "Unroll prior", "Compare by horizon"],
+    checkpoints: [
+      "Name the last observation-conditioned state.",
+      "Feed only prior states and the recorded actions afterward.",
+      "Report error, calibration, and task relevance for each horizon.",
+    ],
+    primaryCheck: {
+      prompt:
+        "A scalar model has +0.05 bias per step. What bias appears after 8 open-loop steps if it adds linearly?",
+      expected:
+        "The rollout is biased by $8(0.05)=0.4$ after eight steps, even though every isolated one-step prediction misses by only 0.05.",
+      retry:
+        "Write the recurrence for the error and add the same bias once per prior transition.",
+    },
+    decision: {
+      explanation:
+        "Horizon choice should match the decision horizon while respecting uncertainty and optimization stability.",
+      mechanism:
+        "Sweep horizons under matched compute, plot per-horizon proper scores and control outcomes, inspect gradient scale and mode coverage, and stop extending when marginal decision gain disappears or calibration worsens.",
+      workedExample:
+        "Horizon 1 yields task success 62%, horizon 5 yields 79%, and horizon 20 yields 74% with collapsed modes. Five steps matches the planner's useful horizon in this fixture.",
+      boundary:
+        "The chosen horizon is specific to the environment timescale, action repeat, and model capacity.",
+      check: {
+        prompt:
+          "Twenty-step loss lowers mean latent distance but removes rare branches needed for safety. Which evidence controls?",
+        expected:
+          "The rare-branch calibration and safety outcome block the longer objective; lower mean latent distance is insufficient when it averages modes.",
+        retry:
+          "Separate average geometric distance from probability assigned to each decision-critical mode.",
+      },
+    },
+    transfer: {
+      prompt: "What should a rollout report include?",
+      options: [
+        {
+          text: "Only final-step MSE",
+          feedback:
+            "It hides where divergence begins and whether uncertainty is calibrated.",
+        },
+        {
+          text: "Per-horizon prediction/calibration and closed-loop decision outcomes",
+          feedback: "Correct: both mechanism and use remain visible.",
+        },
+        {
+          text: "One best-looking sample",
+          feedback: "A sample cannot show distributional coverage.",
+        },
+      ],
+      answer: 1,
+      worked:
+        "Plot metrics at each step, preserve seeds/trajectories, and connect the chosen planning horizon to the measured stable range.",
+      retry:
+        "Find the first horizon where the planner consumes unreliable state.",
+    },
+    motion: {
+      concept: "memory",
+      headline:
+        "Open-loop error accumulates because each prediction becomes the next input.",
+      intro:
+        "Corrected state stops at the rollout start; subsequent ledger cells are prior predictions whose error can grow with distance.",
+      labels: ["POSTERIOR START", "PRIOR STEP", "COMPOUND", "HORIZON TEST"],
+      titles: [
+        "Anchor the rollout in observed evidence.",
+        "Advance using actions without new observations.",
+        "Prediction error enters later inputs.",
+        "Measure each horizon and the resulting decision.",
+      ],
+    },
   }),
   defineWorldModelLesson({
-    id: "latent-prior-posterior", track: "wm-training", title: "Prior–Posterior Learning and KL Balancing", number: 18,
-    plain: "The posterior learns from the current observation; the prior must predict a compatible latent before seeing it, so training balances information and predictability.",
-    precise: "Sequential variational training minimizes reconstruction/prediction losses plus KL between posterior $q(z_t\\mid h_t,x_t)$ and prior $p(z_t\\mid h_t)$. Gradient routing or KL balancing can separately train the prior toward posterior targets and regularize the posterior toward the prior. Free bits tolerate a small amount of information before penalizing KL. Too much pressure collapses state; too little leaves imagination off-distribution.",
-    analogy: "The posterior is an answer key seen after the event; the prior is the forecast that must learn from it without copying future evidence.", analogyBreak: "agreement can be achieved by both distributions becoming equally uninformative or equally wrong.",
-    ideas: ["Keep future observation evidence out of the prior path.", "Inspect gradient routing, KL direction, balancing coefficient, and free-bit threshold.", "Validate posterior information and prior-only imagination with interventions and rollouts."],
-    worked: "Posterior $q$ assigns [0.9,0.1] after seeing $x_t$ and prior $p$ assigns [0.5,0.5] from history alone. In $D_{KL}(\\operatorname{sg}(q)\\|p)$, stop-gradient makes $q$ a fixed target and the output gradient updates only prior parameters toward [0.9,0.1]. In $D_{KL}(q\\|\\operatorname{sg}(p))$, the fixed prior regularizes only posterior parameters. For per-dimension KL values [0.02,0.18,0.70] nats and a free-bit allowance $\\tau=0.10$, the charged excess $\\max(KL_i-\\tau,0)$ is [0,0.08,0.60], totaling 0.68 nats rather than charging the full 0.90. The allowance changes loss pressure; it does not prove that any dimension is informative. A weighted sum exposes both gradient routes, while latent interventions and prior-only rollouts distinguish collapse from prior lag.",
-    misconception: "A small KL is not always good and a large KL is not always bad; meaning depends on posterior information, prior accuracy, and downstream use.",
-    quiz: { question: "What can an overly strong KL penalty cause?", options: ["Posterior collapse toward an uninformative prior", "Guaranteed calibration", "More action coverage", "Perfect long horizons"], answer: 0, explanation: "The posterior may stop encoding current observation information if deviation is too costly." }, lab: "wm-uncertainty", prerequisites: ["multistep-overshooting"], sources: [wmSources.planet, wmSources.dreamerV3],
-    objectives: ["Trace information and gradients through prior and posterior KL terms", "Use telemetry and interventions to distinguish collapse from prior lag"],
-    vocabulary: [{ term: "KL balancing", meaning: "Controlling how prior-learning and posterior-regularization contributions receive gradients." }, { term: "Free bits", meaning: "A threshold allowing limited latent information before KL pressure applies." }, { term: "Prior lag", meaning: "The dynamics prior fails to match informative observation-conditioned posterior states." }],
-    stages: ["Infer posterior", "Predict prior", "Route KL gradients"], checkpoints: ["State which observation enters posterior only.", "Generate prior from history/action before current evidence.", "Document detach points, coefficient, threshold, and per-dimension KL."],
-    primaryCheck: { prompt: "Trace inputs, stop-gradients, parameter updates, and intended outputs for $D_{KL}(\\operatorname{sg}(q(z_t\\mid h_t,x_t))\\|p(z_t\\mid h_t))$ and $D_{KL}(q(z_t\\mid h_t,x_t)\\|\\operatorname{sg}(p(z_t\\mid h_t)))$.", expected: "The posterior receives $h_t,x_t$; the prior receives $h_t$ but never current $x_t$. In the first term, `sg(q)` emits no posterior gradient, so prior parameters move toward the informed posterior target. In the second, `sg(p)` emits no prior gradient, so posterior parameters are regularized toward the predictable prior. Their outputs are a more accurate observation-free prior and an informative but predictable posterior; weights/free bits set the pressure.", retry: "Draw two copies of the KL edge. On each, cross out gradients through the `sg` argument, name which network still receives gradients, and verify the prior input graph contains no current observation." },
-    decision: { explanation: "Collapse and lag produce different intervention signatures.", mechanism: "Measure KL and active dimensions, shuffle/zero posterior latents to test information use, compare prior/posterior predictions, and roll out prior-only. Repair only after identifying which branch is deficient.", workedExample: "Run A: KL≈0 and shuffling $z$ changes nothing—collapse. Run B: posterior controls reconstruction, KL=6, but prior-only samples fail—prior lag. Their treatments should differ.", boundary: "Telemetry thresholds depend on latent parameterization and loss scale; no universal KL number certifies health.", check: { prompt: "Latent shuffling damages reconstruction, but prior rollouts drift immediately. Diagnose.", expected: "The posterior is informative, so this is not collapse; the prior fails to predict that information. Train/regularize the prior and multi-step path without erasing the posterior.", retry: "Use the intervention to decide whether information exists before interpreting the KL magnitude." } },
-    transfer: { prompt: "Which pair of tests separates the two failures?", options: [{ text: "Total loss and model size", feedback: "Neither isolates information use or prior quality." }, { text: "Latent intervention plus prior-only rollout", feedback: "Correct: one tests posterior use, the other prior prediction." }, { text: "Pixel samples alone", feedback: "They conflate branches." }], answer: 1, worked: "Run both tests under fixed checkpoints and record branch-specific metrics before changing KL settings.", retry: "Ask two questions: is the latent used, and can the prior predict it?" },
-    motion: { concept: "preference", headline: "KL balancing coordinates an informed posterior with an observation-free prior.", intro: "Two distributions separate around current evidence, then controlled gradients pull them into a usable margin without forcing identical emptiness.", labels: ["HISTORY", "PRIOR", "OBSERVATION", "POSTERIOR + KL"], titles: ["Recurrent history defines available predictive context.", "The prior forecasts latent state without current evidence.", "The observation informs a corrected distribution.", "Balanced gradients train prediction without erasing information."] },
+    id: "latent-prior-posterior",
+    track: "wm-training",
+    title: "Prior–Posterior Learning and KL Balancing",
+    number: 18,
+    plain:
+      "The posterior learns from the current observation; the prior must predict a compatible latent before seeing it, so training balances information and predictability.",
+    precise:
+      "Sequential variational training minimizes reconstruction/prediction losses plus KL between posterior $q(z_t\\mid h_t,x_t)$ and prior $p(z_t\\mid h_t)$. Gradient routing or KL balancing can separately train the prior toward posterior targets and regularize the posterior toward the prior. Free bits tolerate a small amount of information before penalizing KL. Too much pressure collapses state; too little leaves imagination off-distribution.",
+    analogy:
+      "The posterior is an answer key seen after the event; the prior is the forecast that must learn from it without copying future evidence.",
+    analogyBreak:
+      "agreement can be achieved by both distributions becoming equally uninformative or equally wrong.",
+    ideas: [
+      "Keep future observation evidence out of the prior path.",
+      "Inspect gradient routing, KL direction, balancing coefficient, and free-bit threshold.",
+      "Validate posterior information and prior-only imagination with interventions and rollouts.",
+    ],
+    worked:
+      "Posterior $q$ assigns [0.9,0.1] after seeing $x_t$ and prior $p$ assigns [0.5,0.5] from history alone. In $D_{KL}(\\operatorname{sg}(q)\\|p)$, stop-gradient makes $q$ a fixed target and the output gradient updates only prior parameters toward [0.9,0.1]. In $D_{KL}(q\\|\\operatorname{sg}(p))$, the fixed prior regularizes only posterior parameters. For per-dimension KL values [0.02,0.18,0.70] nats and a free-bit allowance $\\tau=0.10$, the charged excess $\\max(KL_i-\\tau,0)$ is [0,0.08,0.60], totaling 0.68 nats rather than charging the full 0.90. The allowance changes loss pressure; it does not prove that any dimension is informative. A weighted sum exposes both gradient routes, while latent interventions and prior-only rollouts distinguish collapse from prior lag.",
+    misconception:
+      "A small KL is not always good and a large KL is not always bad; meaning depends on posterior information, prior accuracy, and downstream use.",
+    quiz: {
+      question: "What can an overly strong KL penalty cause?",
+      options: [
+        "Posterior collapse toward an uninformative prior",
+        "Guaranteed calibration",
+        "More action coverage",
+        "Perfect long horizons",
+      ],
+      answer: 0,
+      explanation:
+        "The posterior may stop encoding current observation information if deviation is too costly.",
+    },
+    lab: "wm-uncertainty",
+    prerequisites: ["multistep-overshooting"],
+    sources: [wmSources.planet, wmSources.dreamerV3],
+    objectives: [
+      "Trace information and gradients through prior and posterior KL terms",
+      "Use telemetry and interventions to distinguish collapse from prior lag",
+    ],
+    vocabulary: [
+      {
+        term: "KL balancing",
+        meaning:
+          "Controlling how prior-learning and posterior-regularization contributions receive gradients.",
+      },
+      {
+        term: "Free bits",
+        meaning:
+          "A threshold allowing limited latent information before KL pressure applies.",
+      },
+      {
+        term: "Prior lag",
+        meaning:
+          "The dynamics prior fails to match informative observation-conditioned posterior states.",
+      },
+    ],
+    stages: ["Infer posterior", "Predict prior", "Route KL gradients"],
+    checkpoints: [
+      "State which observation enters posterior only.",
+      "Generate prior from history/action before current evidence.",
+      "Document detach points, coefficient, threshold, and per-dimension KL.",
+    ],
+    primaryCheck: {
+      prompt:
+        "Trace inputs, stop-gradients, parameter updates, and intended outputs for $D_{KL}(\\operatorname{sg}(q(z_t\\mid h_t,x_t))\\|p(z_t\\mid h_t))$ and $D_{KL}(q(z_t\\mid h_t,x_t)\\|\\operatorname{sg}(p(z_t\\mid h_t)))$.",
+      expected:
+        "The posterior receives $h_t,x_t$; the prior receives $h_t$ but never current $x_t$. In the first term, `sg(q)` emits no posterior gradient, so prior parameters move toward the informed posterior target. In the second, `sg(p)` emits no prior gradient, so posterior parameters are regularized toward the predictable prior. Their outputs are a more accurate observation-free prior and an informative but predictable posterior; weights/free bits set the pressure.",
+      retry:
+        "Draw two copies of the KL edge. On each, cross out gradients through the `sg` argument, name which network still receives gradients, and verify the prior input graph contains no current observation.",
+    },
+    decision: {
+      explanation:
+        "Collapse and lag produce different intervention signatures.",
+      mechanism:
+        "Measure KL and active dimensions, shuffle/zero posterior latents to test information use, compare prior/posterior predictions, and roll out prior-only. Repair only after identifying which branch is deficient.",
+      workedExample:
+        "Run A: KL≈0 and shuffling $z$ changes nothing—collapse. Run B: posterior controls reconstruction, KL=6, but prior-only samples fail—prior lag. Their treatments should differ.",
+      boundary:
+        "Telemetry thresholds depend on latent parameterization and loss scale; no universal KL number certifies health.",
+      check: {
+        prompt:
+          "Latent shuffling damages reconstruction, but prior rollouts drift immediately. Diagnose.",
+        expected:
+          "The posterior is informative, so this is not collapse; the prior fails to predict that information. Train/regularize the prior and multi-step path without erasing the posterior.",
+        retry:
+          "Use the intervention to decide whether information exists before interpreting the KL magnitude.",
+      },
+    },
+    transfer: {
+      prompt: "Which pair of tests separates the two failures?",
+      options: [
+        {
+          text: "Total loss and model size",
+          feedback: "Neither isolates information use or prior quality.",
+        },
+        {
+          text: "Latent intervention plus prior-only rollout",
+          feedback:
+            "Correct: one tests posterior use, the other prior prediction.",
+        },
+        { text: "Pixel samples alone", feedback: "They conflate branches." },
+      ],
+      answer: 1,
+      worked:
+        "Run both tests under fixed checkpoints and record branch-specific metrics before changing KL settings.",
+      retry:
+        "Ask two questions: is the latent used, and can the prior predict it?",
+    },
+    motion: {
+      concept: "preference",
+      headline:
+        "KL balancing coordinates an informed posterior with an observation-free prior.",
+      intro:
+        "Two distributions separate around current evidence, then controlled gradients pull them into a usable margin without forcing identical emptiness.",
+      labels: ["HISTORY", "PRIOR", "OBSERVATION", "POSTERIOR + KL"],
+      titles: [
+        "Recurrent history defines available predictive context.",
+        "The prior forecasts latent state without current evidence.",
+        "The observation informs a corrected distribution.",
+        "Balanced gradients train prediction without erasing information.",
+      ],
+    },
   }),
   defineWorldModelLesson({
-    id: "trajectory-data-replay", track: "wm-training", title: "Trajectory Data, Replay and Coverage", number: 19,
-    plain: "World models learn from trajectories, so data quality depends on which states and actions were visited, in what order, and under which policy.",
-    precise: "A replay dataset stores ordered observations, actions, rewards, continuations, episode IDs, policy/version metadata, and sometimes priorities. Offline data fixes coverage; online agents change their data distribution as policies improve. Sampling windows must preserve time, resets, and sequence balance. Planning can query state-action pairs absent from replay, so coverage maps and conservative behavior are part of the model contract.",
-    analogy: "Replay is a flight recorder library; it can teach only maneuvers and conditions actually captured.", analogyBreak: "many hours can still repeat one safe route and omit rare weather or recovery actions.",
-    ideas: ["Preserve trajectory order, episode boundaries, action units, provenance, and policy version.", "Measure coverage over decision-relevant state-action slices rather than row count alone.", "Track how online collection and planner queries shift away from replay support."],
-    worked: "A buffer has 1M transitions, but 98% come from driving straight on dry roads. A planner considers sharp turns in rain; that cell has 12 examples. Dataset size sounds large while decision coverage is sparse.",
-    misconception: "Uniform replay is not automatically unbiased: the buffer reflects behavior policies, resets, task frequency, and collection failures.",
-    quiz: { question: "Why store policy version with a trajectory?", options: ["For decoration", "To identify which behavior generated coverage and distribution changes", "To replace actions", "To increase image resolution"], answer: 1, explanation: "Behavior provenance helps interpret support, off-policy learning, and shifts over collection rounds." }, lab: "wm-state", prerequisites: ["latent-prior-posterior"], sources: [wmSources.prioritizedReplay, wmSources.mbrlSurvey, wmSources.rssmCode],
-    objectives: ["Design a trajectory and replay schema that preserves temporal and provenance boundaries", "Detect an unsupported planner query using a state-action coverage audit"],
-    vocabulary: [{ term: "Replay buffer", meaning: "Stored experience sampled again for model or policy learning." }, { term: "Behavior policy", meaning: "The policy that actually generated the recorded actions." }, { term: "Support", meaning: "The region of state-action space backed by usable data." }],
-    stages: ["Record episodes", "Sample windows", "Audit support"], checkpoints: ["Store IDs, time, units, terminal flags, and collection version.", "Never cross resets; report priority and recency effects.", "Compare planned queries with data density and outcome diversity."],
-    primaryCheck: { prompt: "Name the minimum fields needed to reconstruct a transition and prevent cross-episode sampling.", expected: "Observation/state references, action with units, next observation/state, reward, continuation/terminal, episode ID/time index, and enough policy/data version provenance to interpret collection.", retry: "Write the full environment step and add identifiers needed to prove two adjacent rows belong to it." },
-    decision: { explanation: "Unsupported plans require data, uncertainty-aware fallback, or prohibition—not confident extrapolation.", mechanism: "Build coverage summaries in task-relevant features, query nearest supported transitions and action diversity, evaluate uncertainty/OOD detectors, and define an admission threshold before planning.", workedExample: "A grasp planner proposes wrist angle 80°, while replay at similar object poses covers -20° to 40°. The action is out of support; collect safe data or constrain the optimizer.", boundary: "Distance in a learned feature space may miss semantically important gaps, so coverage must be tested against outcomes and known hazards.", check: { prompt: "The planner repeatedly selects actions just outside replay bounds. What is likely happening and what control belongs outside the model?", expected: "It is exploiting extrapolation. Enforce action/support constraints or uncertainty rejection in the planner and collect targeted transitions before expansion.", retry: "Overlay candidate actions on the observed action range for matched states." } },
-    transfer: { prompt: "What does 10 million replay rows establish?", options: [{ text: "Complete state-action coverage", feedback: "Count does not reveal diversity or support." }, { text: "Only dataset volume; support requires slice and action-coverage evidence", feedback: "Correct: quantity and coverage are separate." }, { text: "Causal identification of every action", feedback: "Behavior policy confounding remains." }], answer: 1, worked: "Report distributions, rare slices, policy provenance, and planner-query support alongside volume.", retry: "Replace row count with a table of states, actions, outcomes, and missing cells." },
-    motion: { concept: "data", headline: "Replay preserves experienced transitions but exposes only the visited world.", intro: "Trajectory sources enter episode-safe windows, then a support lane separates well-covered planner queries from extrapolations.", labels: ["COLLECT", "EPISODES", "SAMPLE", "SUPPORT"], titles: ["Behavior policies create a selective data stream.", "Boundaries and provenance keep transitions interpretable.", "Replay chooses ordered windows for learning.", "Coverage checks gate proposed state-action queries."] },
+    id: "trajectory-data-replay",
+    track: "wm-training",
+    title: "Trajectory Data, Replay and Coverage",
+    number: 19,
+    plain:
+      "World models learn from trajectories, so data quality depends on which states and actions were visited, in what order, and under which policy.",
+    precise:
+      "A replay dataset stores ordered observations, actions, rewards, continuations, episode IDs, policy/version metadata, and sometimes priorities. Offline data fixes coverage; online agents change their data distribution as policies improve. Sampling windows must preserve time, resets, and sequence balance. Planning can query state-action pairs absent from replay, so coverage maps and conservative behavior are part of the model contract.",
+    analogy:
+      "Replay is a flight recorder library; it can teach only maneuvers and conditions actually captured.",
+    analogyBreak:
+      "many hours can still repeat one safe route and omit rare weather or recovery actions.",
+    ideas: [
+      "Preserve trajectory order, episode boundaries, action units, provenance, and policy version.",
+      "Measure coverage over decision-relevant state-action slices rather than row count alone.",
+      "Track how online collection and planner queries shift away from replay support.",
+    ],
+    worked:
+      "A buffer has 1M transitions, but 98% come from driving straight on dry roads. A planner considers sharp turns in rain; that cell has 12 examples. Dataset size sounds large while decision coverage is sparse.",
+    misconception:
+      "Uniform replay is not automatically unbiased: the buffer reflects behavior policies, resets, task frequency, and collection failures.",
+    quiz: {
+      question: "Why store policy version with a trajectory?",
+      options: [
+        "For decoration",
+        "To identify which behavior generated coverage and distribution changes",
+        "To replace actions",
+        "To increase image resolution",
+      ],
+      answer: 1,
+      explanation:
+        "Behavior provenance helps interpret support, off-policy learning, and shifts over collection rounds.",
+    },
+    lab: "wm-state",
+    prerequisites: ["latent-prior-posterior"],
+    sources: [
+      wmSources.prioritizedReplay,
+      wmSources.mbrlSurvey,
+      wmSources.rssmCode,
+    ],
+    objectives: [
+      "Design a trajectory and replay schema that preserves temporal and provenance boundaries",
+      "Detect an unsupported planner query using a state-action coverage audit",
+    ],
+    vocabulary: [
+      {
+        term: "Replay buffer",
+        meaning:
+          "Stored experience sampled again for model or policy learning.",
+      },
+      {
+        term: "Behavior policy",
+        meaning: "The policy that actually generated the recorded actions.",
+      },
+      {
+        term: "Support",
+        meaning: "The region of state-action space backed by usable data.",
+      },
+    ],
+    stages: ["Record episodes", "Sample windows", "Audit support"],
+    checkpoints: [
+      "Store IDs, time, units, terminal flags, and collection version.",
+      "Never cross resets; report priority and recency effects.",
+      "Compare planned queries with data density and outcome diversity.",
+    ],
+    primaryCheck: {
+      prompt:
+        "Name the minimum fields needed to reconstruct a transition and prevent cross-episode sampling.",
+      expected:
+        "Observation/state references, action with units, next observation/state, reward, continuation/terminal, episode ID/time index, and enough policy/data version provenance to interpret collection.",
+      retry:
+        "Write the full environment step and add identifiers needed to prove two adjacent rows belong to it.",
+    },
+    decision: {
+      explanation:
+        "Unsupported plans require data, uncertainty-aware fallback, or prohibition—not confident extrapolation.",
+      mechanism:
+        "Build coverage summaries in task-relevant features, query nearest supported transitions and action diversity, evaluate uncertainty/OOD detectors, and define an admission threshold before planning.",
+      workedExample:
+        "A grasp planner proposes wrist angle 80°, while replay at similar object poses covers -20° to 40°. The action is out of support; collect safe data or constrain the optimizer.",
+      boundary:
+        "Distance in a learned feature space may miss semantically important gaps, so coverage must be tested against outcomes and known hazards.",
+      check: {
+        prompt:
+          "The planner repeatedly selects actions just outside replay bounds. What is likely happening and what control belongs outside the model?",
+        expected:
+          "It is exploiting extrapolation. Enforce action/support constraints or uncertainty rejection in the planner and collect targeted transitions before expansion.",
+        retry:
+          "Overlay candidate actions on the observed action range for matched states.",
+      },
+    },
+    transfer: {
+      prompt: "What does 10 million replay rows establish?",
+      options: [
+        {
+          text: "Complete state-action coverage",
+          feedback: "Count does not reveal diversity or support.",
+        },
+        {
+          text: "Only dataset volume; support requires slice and action-coverage evidence",
+          feedback: "Correct: quantity and coverage are separate.",
+        },
+        {
+          text: "Causal identification of every action",
+          feedback: "Behavior policy confounding remains.",
+        },
+      ],
+      answer: 1,
+      worked:
+        "Report distributions, rare slices, policy provenance, and planner-query support alongside volume.",
+      retry:
+        "Replace row count with a table of states, actions, outcomes, and missing cells.",
+    },
+    motion: {
+      concept: "data",
+      headline:
+        "Replay preserves experienced transitions but exposes only the visited world.",
+      intro:
+        "Trajectory sources enter episode-safe windows, then a support lane separates well-covered planner queries from extrapolations.",
+      labels: ["COLLECT", "EPISODES", "SAMPLE", "SUPPORT"],
+      titles: [
+        "Behavior policies create a selective data stream.",
+        "Boundaries and provenance keep transitions interpretable.",
+        "Replay chooses ordered windows for learning.",
+        "Coverage checks gate proposed state-action queries.",
+      ],
+    },
   }),
   defineWorldModelLesson({
-    id: "uncertainty-ensembles", track: "wm-training", title: "Uncertainty, Calibration and Ensembles", number: 20, duration: 36,
-    plain: "Uncertainty tools estimate how much confidence to place in predicted futures, especially where data are sparse or outcomes branch.",
-    precise: "Predictive uncertainty combines modeled outcome variability and uncertainty about parameters or representations. Ensembles trained with different seeds/bootstrap samples approximate epistemic disagreement; distribution heads model within-model stochasticity. Calibration compares predicted probabilities or intervals with observed frequencies. Proper scores, coverage curves, OOD slices, and decision-aware risk tests matter more than one variance number.",
-    analogy: "Ask several independently trained forecasters and also ask each for the spread of weather it expects.", analogyBreak: "shared architecture and data can make every forecaster confidently wrong in the same way.",
-    ideas: ["Keep within-model stochasticity distinct from between-model disagreement.", "Calibrate probabilities and intervals on held-out, shifted, and rare decision slices.", "Use uncertainty in planner admission, exploration, risk, or fallback with explicit thresholds."],
-    worked: "Five models predict next x positions [1.0,1.1,1.0,3.8,1.2]. Mean 1.62 hides disagreement; the outlying member raises epistemic warning. If each model also predicts ±0.5 outcome noise, aleatoric spread and ensemble spread must be reported separately.",
-    misconception: "Low ensemble disagreement is not proof of correctness; shared blind spots, mode collapse, and correlated training can make consensus wrong.",
-    quiz: { question: "What does ensemble disagreement mainly approximate?", options: ["Uncertainty from limited learned knowledge", "Guaranteed physical randomness", "Reward scale", "Episode length"], answer: 0, explanation: "Different fitted models disagree most where data or identifiability leave parameter uncertainty." }, lab: "wm-uncertainty", prerequisites: ["trajectory-data-replay"], sources: [wmSources.deepEnsembles, wmSources.calibration, wmSources.mbrlSurvey, wmSources.dreamerV3],
-    objectives: ["Separate stochastic outcome spread from ensemble model disagreement", "Build a calibration and fallback decision from held-out uncertainty evidence"],
-    vocabulary: [{ term: "Calibration", meaning: "Agreement between stated predictive confidence and observed frequency or interval coverage." }, { term: "Ensemble", meaning: "Several models trained with meaningful diversity and compared on the same input." }, { term: "OOD", meaning: "Out of distribution relative to the evidence used for fitting or validation." }],
-    stages: ["Predict distributions", "Compare members", "Calibrate decisions"], checkpoints: ["Record each model's distribution, not only a point.", "Measure diversity and common failure correlation.", "Fit thresholds on held-out data and report false accept/reject rates."],
-    primaryCheck: { prompt: "Four models predict collision probabilities [0.1,0.12,0.11,0.75]. What two summaries should be preserved?", expected: "Preserve each model's collision probability or their mean as outcome belief plus the strong between-model disagreement as epistemic warning; do not collapse both into one average.", retry: "Separate variation inside each forecast from variation across independently fitted forecasts." },
-    decision: { explanation: "An uncertainty threshold is a deployment rule whose errors must be measured.", mechanism: "On a frozen validation set, map uncertainty scores to failures, choose a threshold from stated false-accept and fallback costs, then test it on shifted/rare slices and log decisions in closed loop.", workedExample: "Threshold 0.30 catches 92% of failures but sends 18% safe cases to fallback; 0.50 catches only 63%. A safety-critical system chooses 0.30 if fallback capacity supports the load.", boundary: "Calibration drifts when policy, environment, sensors, or data pipeline changes; the threshold requires monitoring and revalidation.", check: { prompt: "A threshold catches failures in-distribution but misses rain scenes. Can aggregate calibration justify launch?", expected: "No. Rain is a relevant shifted slice; recalibrate, improve coverage/model diversity, or constrain use before launch.", retry: "Break reliability and failure-detection metrics down by the deployment conditions that change sensing or dynamics." } },
-    transfer: { prompt: "Which statement is safe?", options: [{ text: "All ensemble members agree, so the prediction is true", feedback: "Correlated models can share a blind spot." }, { text: "Agreement lowers one warning signal; correctness still requires calibration and outcome tests", feedback: "Correct: consensus is bounded evidence." }, { text: "High variance always means randomness", feedback: "It may reflect model uncertainty, outcome variability, or both." }], answer: 1, worked: "Use multiple diagnostics and preserve a fallback for known blind spots.", retry: "List the failure modes that every ensemble member shares through data and architecture." },
-    motion: { concept: "evaluation", headline: "Uncertainty becomes useful only after it predicts real errors and drives a bounded action.", intro: "Member forecasts separate into within-model spread and between-model disagreement, then calibration slices connect scores to fallback decisions.", labels: ["DISTRIBUTIONS", "DISAGREEMENT", "CALIBRATE", "FALLBACK"], titles: ["Each model predicts possible outcomes.", "Ensemble variation exposes one knowledge signal.", "Held-out frequencies test confidence claims.", "A threshold triggers safe alternative behavior."] },
+    id: "uncertainty-ensembles",
+    track: "wm-training",
+    title: "Uncertainty, Calibration and Ensembles",
+    number: 20,
+    duration: 36,
+    plain:
+      "Uncertainty tools estimate how much confidence to place in predicted futures, especially where data are sparse or outcomes branch.",
+    precise:
+      "Predictive uncertainty combines modeled outcome variability and uncertainty about parameters or representations. Ensembles trained with different seeds/bootstrap samples approximate epistemic disagreement; distribution heads model within-model stochasticity. Calibration compares predicted probabilities or intervals with observed frequencies. Proper scores, coverage curves, OOD slices, and decision-aware risk tests matter more than one variance number.",
+    analogy:
+      "Ask several independently trained forecasters and also ask each for the spread of weather it expects.",
+    analogyBreak:
+      "shared architecture and data can make every forecaster confidently wrong in the same way.",
+    ideas: [
+      "Keep within-model stochasticity distinct from between-model disagreement.",
+      "Calibrate probabilities and intervals on held-out, shifted, and rare decision slices.",
+      "Use uncertainty in planner admission, exploration, risk, or fallback with explicit thresholds.",
+    ],
+    worked:
+      "Five models predict next x positions [1.0,1.1,1.0,3.8,1.2]. Mean 1.62 hides disagreement; the outlying member raises epistemic warning. If each model also predicts ±0.5 outcome noise, aleatoric spread and ensemble spread must be reported separately.",
+    misconception:
+      "Low ensemble disagreement is not proof of correctness; shared blind spots, mode collapse, and correlated training can make consensus wrong.",
+    quiz: {
+      question: "What does ensemble disagreement mainly approximate?",
+      options: [
+        "Uncertainty from limited learned knowledge",
+        "Guaranteed physical randomness",
+        "Reward scale",
+        "Episode length",
+      ],
+      answer: 0,
+      explanation:
+        "Different fitted models disagree most where data or identifiability leave parameter uncertainty.",
+    },
+    lab: "wm-uncertainty",
+    prerequisites: ["trajectory-data-replay"],
+    sources: [
+      wmSources.deepEnsembles,
+      wmSources.calibration,
+      wmSources.mbrlSurvey,
+      wmSources.dreamerV3,
+    ],
+    objectives: [
+      "Separate stochastic outcome spread from ensemble model disagreement",
+      "Build a calibration and fallback decision from held-out uncertainty evidence",
+    ],
+    vocabulary: [
+      {
+        term: "Calibration",
+        meaning:
+          "Agreement between stated predictive confidence and observed frequency or interval coverage.",
+      },
+      {
+        term: "Ensemble",
+        meaning:
+          "Several models trained with meaningful diversity and compared on the same input.",
+      },
+      {
+        term: "OOD",
+        meaning:
+          "Out of distribution relative to the evidence used for fitting or validation.",
+      },
+    ],
+    stages: ["Predict distributions", "Compare members", "Calibrate decisions"],
+    checkpoints: [
+      "Record each model's distribution, not only a point.",
+      "Measure diversity and common failure correlation.",
+      "Fit thresholds on held-out data and report false accept/reject rates.",
+    ],
+    primaryCheck: {
+      prompt:
+        "Four models predict collision probabilities [0.1,0.12,0.11,0.75]. What two summaries should be preserved?",
+      expected:
+        "Preserve each model's collision probability or their mean as outcome belief plus the strong between-model disagreement as epistemic warning; do not collapse both into one average.",
+      retry:
+        "Separate variation inside each forecast from variation across independently fitted forecasts.",
+    },
+    decision: {
+      explanation:
+        "An uncertainty threshold is a deployment rule whose errors must be measured.",
+      mechanism:
+        "On a frozen validation set, map uncertainty scores to failures, choose a threshold from stated false-accept and fallback costs, then test it on shifted/rare slices and log decisions in closed loop.",
+      workedExample:
+        "Threshold 0.30 catches 92% of failures but sends 18% safe cases to fallback; 0.50 catches only 63%. A safety-critical system chooses 0.30 if fallback capacity supports the load.",
+      boundary:
+        "Calibration drifts when policy, environment, sensors, or data pipeline changes; the threshold requires monitoring and revalidation.",
+      check: {
+        prompt:
+          "A threshold catches failures in-distribution but misses rain scenes. Can aggregate calibration justify launch?",
+        expected:
+          "No. Rain is a relevant shifted slice; recalibrate, improve coverage/model diversity, or constrain use before launch.",
+        retry:
+          "Break reliability and failure-detection metrics down by the deployment conditions that change sensing or dynamics.",
+      },
+    },
+    transfer: {
+      prompt: "Which statement is safe?",
+      options: [
+        {
+          text: "All ensemble members agree, so the prediction is true",
+          feedback: "Correlated models can share a blind spot.",
+        },
+        {
+          text: "Agreement lowers one warning signal; correctness still requires calibration and outcome tests",
+          feedback: "Correct: consensus is bounded evidence.",
+        },
+        {
+          text: "High variance always means randomness",
+          feedback:
+            "It may reflect model uncertainty, outcome variability, or both.",
+        },
+      ],
+      answer: 1,
+      worked:
+        "Use multiple diagnostics and preserve a fallback for known blind spots.",
+      retry:
+        "List the failure modes that every ensemble member shares through data and architecture.",
+    },
+    motion: {
+      concept: "evaluation",
+      headline:
+        "Uncertainty becomes useful only after it predicts real errors and drives a bounded action.",
+      intro:
+        "Member forecasts separate into within-model spread and between-model disagreement, then calibration slices connect scores to fallback decisions.",
+      labels: ["DISTRIBUTIONS", "DISAGREEMENT", "CALIBRATE", "FALLBACK"],
+      titles: [
+        "Each model predicts possible outcomes.",
+        "Ensemble variation exposes one knowledge signal.",
+        "Held-out frequencies test confidence claims.",
+        "A threshold triggers safe alternative behavior.",
+      ],
+    },
   }),
 ] as const;

@@ -12,10 +12,12 @@ python - <<'PY'
 import platform, torch
 print(platform.python_version(), torch.__version__, torch.version.cuda)
 print(torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else "no CUDA GPU")
+resolved = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+print("--device auto resolves to", resolved)
 PY
 ```
 
-Record the provider, image, GPU, driver/CUDA, package versions, repository revision, and any fallback. The policy input is `[position, target]`; its output is four bounded delta-position requests. The evaluator injects the declared disturbance after action opportunity 2.
+Record the provider, image, available hardware, driver/CUDA when present, package versions, repository revision, and any fallback. Every output records both `requested_device` and `resolved_device`; inspect them before interpreting the run. The policy input is `[position, target]`; its output is four bounded delta-position requests. The evaluator injects the declared disturbance after action opportunity 2.
 
 ## 2. Run the bounded smoke profile
 
@@ -37,13 +39,15 @@ Variable observations to record, not promises: first/final training loss, succes
 
 ## 3. Run the full profile
 
-First confirm at least 1 GB free device memory and persistent storage for the environment and JSON. Then run:
+First confirm at least 1 GB free compute memory on the backend that `auto` will resolve and persistent storage for the environment and JSON. Then run:
 
 ```bash
 python external-executions/embodied_action_chunk_ablation.py \
-  --profile full --device cuda \
+  --profile full --device auto \
   --output external-executions/runs/embodied-action-chunk-full.json
 ```
+
+This is the provider-neutral full command: `auto` chooses CUDA when available, then Apple MPS, then CPU, and records the resolved backend. If a protocol deliberately requires CUDA, `--device cuda` is an optional explicit override; record that choice and do not describe the result as portable to CPU or MPS without rerunning it there.
 
 The full profile uses seeds 13, 29, 47, 61, and 83; 3,000 updates; batch 512; and 200 paired evaluation episodes per seed. Each episode has 24 action opportunities. Prefix 1 makes 24 policy calls; prefix 4 normally makes 6. Stop after two hours, any non-finite value, a checkpoint/spec/budget mismatch, repeated OOM, missing row, or schema failure.
 
@@ -51,7 +55,7 @@ Expected invariants remain exact. Learned error, success, clipping, runtime, and
 
 ## 4. Troubleshoot without hiding changes
 
-- CUDA unavailable: reselect and restart a GPU runtime, reinstall the pinned requirements, and re-record the environment.
+- Unexpected resolved device: inspect CUDA/MPS availability and the recorded `requested_device`/`resolved_device`. Continue on CPU or MPS when its bounded runtime is acceptable, or deliberately use the optional `--device cuda` override after provisioning CUDA and record the protocol choice.
 - Out of memory: reduce the batch for the single shared training run, adjust updates if preserving examples is part of your revised protocol, and label the result as a new configuration.
 - Non-finite loss: retain the error log, retry smoke on CPU, verify dependency pins, and treat any learning-rate change as a new protocol revision.
 - Checkpoint hashes or episode specifications differ: discard the comparison; evaluate both prefixes from one restored checkpoint and one immutable episode table.

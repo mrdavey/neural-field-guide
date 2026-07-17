@@ -1,35 +1,795 @@
 import { plannedCourseManifests } from "../../research-curriculum-manifests";
 import { defineResearchLesson } from "../../research-courses/helpers";
 import { embodiedSeed, py } from "../seed";
-const m=plannedCourseManifests.embodied;
+const m = plannedCourseManifests.embodied;
 
-export const embodiedFoundationSpecs=[
-defineResearchLesson(m,embodiedSeed({id:"embodied-task-contracts",
-  plain:"Embodied AI gives an intelligent system a body—or a simulated body—so its choices must work through sensors, movement, timing, and the physical world.",
-  precise:"An embodied system repeatedly senses part of its surroundings, decides what to do, acts through a body, and senses again to learn whether the action worked. The body's cameras, joints, grippers, wheels, reach, speed, and limits all change what intelligence can accomplish. A text answer can be revised before anyone relies on it; a physical action can spill a cup, collide with a person, or become impossible to undo. Later lessons define the exact observation, action, timing, and safety interfaces. This introduction first makes the sense–decide–act–check loop concrete.",
-  mentalModel:"Think of intelligence moving from a notebook into a pair of eyes and hands: every idea now has to survive contact with the world.",
-  ideas:["Name what the body can sense, including what may be hidden or delayed.","Describe one small action and the physical change it is meant to cause.","Check the result through new evidence and keep a separate stop path when the world becomes unsafe."],
-  worked:"A robot is asked to place a mug on a tray. It sees the mug, moves its gripper toward the handle, closes gently, lifts, and looks again. If the mug slipped, the new camera and force evidence should trigger a retry or stop rather than pretending the planned movement succeeded.",
-  boundary:"A successful simulated pick does not prove that real cameras, friction, timing, contact forces, or people will behave like the simulation.",
-  objectives: { primary: "Explain what changes when AI must sense and act through a body", decision: "Trace a sense–decide–act–check cycle and identify when the system should retry or stop" },
-  vocabulary:[{term:"Embodiment",meaning:"The sensors, actuators, shape, movement, and limits through which a system meets the world."},{term:"Sensor",meaning:"A component that measures part of the world or the body, such as a camera or joint encoder."},{term:"Actuator",meaning:"A component that produces physical change, such as a motor, wheel, or gripper."},{term:"Feedback",meaning:"New evidence after an action that shows whether the intended change actually happened."}],
-  primaryCheck:{prompt:"Why is answering ‘pick up the mug’ in text different from a robot physically picking it up? Name at least three body or world factors that enter the physical task.",expected:"The robot must sense the mug, reach it with its particular body, control contact and force, act at the right time, and observe whether the grasp succeeded; the text answer changes none of those physical conditions.",retry:"Walk from camera to gripper to mug to new camera image, and name one possible mismatch at every handoff."},
-  decision:{explanation:"An embodied plan becomes trustworthy only when fresh sensory evidence confirms each important physical change and unsafe evidence can override the plan.",mechanism:"Sense the current situation, choose one bounded action, let the body and environment interact, compare new sensor evidence with the intended change, then continue, retry, or stop according to the observed result.",workedExample:"The robot closes its gripper around the mug handle, but the force reading stays near zero and the next image shows the mug unmoved. The check fails, so the system retries from a new view instead of lifting an empty gripper.",boundary:"A visible mug movement can still hide excessive force, a poor grip, an unsafe person nearby, or a camera error; one sensor and one success do not establish safety.",check:{prompt:"A robot's plan says the mug is grasped, but the next image shows it on the table and force remains near zero. What should happen next, and why?",expected:"The system should treat the grasp as failed, avoid the planned lift, and retry or stop after gathering a better view because observed feedback overrides the unconfirmed plan.",retry:"Separate what the controller intended from what the sensors observed, then allow only actions whose required physical condition has been confirmed."}},
-  quiz:{question:"What makes an AI system embodied?",options:["Its decisions pass through sensors and actuators in a physical or simulated world","It produces longer text","It has a colorful interface","It stores more documents"],answer:0,explanation:"Embodiment means intelligence is constrained and informed by a body's sensing and action loop."},
-  transfer:{prompt:"A robot reaches the mug, but a person steps into its path before the lift. What should the loop do?",correct:"Use the new sensor evidence to stop or replan before continuing",wrong:["Continue because the original plan was correct","Ignore the person because the mug is still visible"],worked:"Fresh evidence changes the physical situation, so the stop path overrides the old action sequence and any later attempt begins from a newly sensed state.",retry:"Ask what changed after the plan was made and which action would now have an unsafe consequence."},
-  lab:{title:"Sense–act–check story",question:"When should a mug-picking system continue, retry, or stop?",controlLabel:"Observed moment",change:"Move through the located-mug, unconfirmed-grasp, and person-in-path moments of one pick attempt.",observe:"Watch the next step change from approach to retry to stop as fresh sensor evidence changes.",explain:"Connect each new observation to the physical condition it confirms or disproves before the next action.",complete:"Inspect all three moments and explain why an unconfirmed grasp triggers retry while a person in the path triggers stop.",boundary:"The cards are deterministic teaching scenarios, not validation of a real robot or safety system.",cases:[{label:"mug located",resultLabel:"next step",resultValue:"APPROACH",meter:20,detail:"Current camera evidence supports a small bounded move toward the visible handle."},{label:"grasp not confirmed",resultLabel:"next step",resultValue:"RETRY VIEW",meter:65,detail:"The plan expected a grasp, but image and force feedback do not confirm physical contact."},{label:"person enters path",resultLabel:"next step",resultValue:"STOP",meter:100,detail:"Fresh safety evidence overrides the original plan before the robot continues moving."}]},motionConcept:"agent",
-  code:{title:"Choose continue, retry, or stop",language:"Python 3",setup:"This deterministic decision fixture labels three observed moments; it does not control a robot.",predict:"Which observation receives the non-negotiable stop?",code:py("observations=[('mug_visible',True,False),('grasp_confirmed',False,False),('person_in_path',False,True)]","for name,confirmed,hazard in observations:","    decision='STOP' if hazard else ('CONTINUE' if confirmed else 'RETRY')","    print(name,decision)","assert ('person_in_path',False,True)==observations[-1]"),observe:"The hazard stops the sequence, missing confirmation triggers a retry, and only confirmed evidence supports continuing.",tryIt:"Add a stale-camera flag and route it to retry rather than pretending the old image is current."},sourceKeys:["robotics"]})),
-defineResearchLesson(m,embodiedSeed({id:"observation-action-spaces",
-  plain:"Observation and action spaces are typed interfaces that say exactly what the policy receives and what commands it may send.",
-  precise:"An observation schema assigns every sensor tensor a shape, data type, unit, range, reference frame, timestamp, validity mask, and update rate. An action schema assigns control mode, dimension, unit, bound, reference frame, hold duration, and saturation behavior. A reference frame is the named coordinate system used to interpret direction: the same [0.1,0,0] delta can mean motion along the robot base x-axis or the rotated tool x-axis. Normalization and clipping are transformations recorded outside the raw physical values.",mentalModel:"Think of the spaces as a checked electrical connector: every pin has a signal, unit, direction, and safe range.",ideas:["Preserve raw values and metadata before normalization.","Name action semantics such as torque, position, velocity, or pose delta.","Validate shapes, units, masks, and bounds at every boundary."],worked:"A seven-degree-of-freedom arm packet contains an RGB image stored as unsigned 8-bit integers with shape [128,128,3], seven joint positions stored as 32-bit floating-point values in radians, and a validity mask. Its action is six pose changes expressed in the tool's coordinate frame plus one gripper command, clipped before a 50 ms hold.",boundary:"Matching shapes does not imply matching physical meaning; meters mistaken for millimeters can pass tensor checks and still create dangerous commands.",objectives: { primary: "Design and validate a multimodal observation schema", decision: "Design a bounded action interface with explicit control semantics" },vocabulary:[{term:"Data type (dtype)",meaning:"The numeric representation of each tensor element, such as unsigned 8-bit integer or 32-bit floating point."},{term:"Degree of freedom (DoF)",meaning:"One independent coordinate of body configuration or motion; a 7-DoF arm exposes seven joint coordinates."},{term:"Reference frame",meaning:"The named origin and axes used to interpret a spatial measurement or command."},{term:"Control mode",meaning:"The physical quantity an action commands, such as torque, velocity, position, or pose delta."},{term:"Saturation",meaning:"Clamping a requested command to an actuator or task limit."},{term:"Validity mask",meaning:"A field marking sensor values that are missing, stale, occluded, or otherwise unusable."}],
-  primaryCheck:{prompt:"RGB is [128,128,3] and joints are [7], but neither has timestamps or validity. What can validation not establish?",expected:"It can establish shape only; it cannot establish temporal alignment, freshness, missing-sensor status, or whether the modalities describe the same decision instant.",retry:"For each tensor add unit, frame, timestamp, update rate, and validity beside shape and dtype."},
-  decision:{explanation:"An action interface must make a numeric vector's physical effect predictable before a learned policy controls it.",mechanism:"Decode the vector using a named control mode and reference frame, denormalize with pinned statistics, transform base-frame or tool-frame directions explicitly, rate-limit, saturate per axis, validate workspace/force constraints, attach a hold duration, and log requested versus applied commands.",workedExample:"Policy output [1.4,−.2] normalized becomes [7 cm,−1 cm] in the tool frame; when the tool x-axis is rotated 90° from base x, that first component moves along base y, not base x. The component saturates to 3 cm, so frame, requested 7 cm, and applied 3 cm are all recorded.",boundary:"Bounded commands reduce one hazard but do not guarantee stable closed-loop behavior or collision avoidance.",check:{prompt:"A normalized tool-frame action decodes beyond the workspace and is clipped. Which frame and action values should the transition dataset store?",expected:"Store the tool reference frame, the requested and actually applied action, and the clipping reason; the next state is caused by the transformed applied command, while the request diagnoses policy behavior.",retry:"Name the axes used to decode the vector, then separate the policy request from the command that actually reached the simulator."}},
-  quiz:{question:"What must accompany an action vector?",options:["Control mode, units, frame, bounds, and duration","Only its length","Only reward","A prose label after training"],answer:0,explanation:"Those fields determine the command's physical meaning and applied effect."},transfer:{prompt:"Two robots both use action [0.1,0,0]. Can one policy share it directly?",correct:"Only after verifying control mode, units, frame, timing, and embodiment mapping",wrong:["Yes because vector length matches","No vectors can ever transfer"],worked:"Map each embodiment into an explicit canonical action meaning, then test requested/applied commands and effects.",retry:"Compare semantic metadata rather than array shape alone."},
-  lab:{title:"Interface schema inspector",question:"Which schema catches shape-only, unit, and saturation failures?",controlLabel:"Interface card",boundary:"The cards validate metadata logic, not actuator dynamics.",cases:[{label:"shape only",resultLabel:"schema",resultValue:"INSUFFICIENT",meter:90,detail:"Dimensions pass while unit, frame, time, and validity remain unknown."},{label:"typed packet",resultLabel:"schema",resultValue:"VALID",meter:20,detail:"Shape, dtype, units, frame, timestamps, validity, and rate are declared."},{label:"clipped action",resultLabel:"logging",resultValue:"REQUEST + APPLIED",meter:55,detail:"Both policy intent and causal actuator command remain inspectable."}]},motionConcept:"coordinates",code:{title:"Validate and saturate an action",language:"Python 3",setup:"A tiny schema keeps requested and applied deltas distinct.",predict:"What x command is actually applied?",code:py("requested=[.07,-.01]","limits=[.03,.03]","applied=[max(-b,min(b,x)) for x,b in zip(requested,limits)]","row={'requested_m':requested,'applied_m':applied}","print(row); assert applied[0]==.03"),observe:"The 7 cm request becomes a logged 3 cm applied command.",tryIt:"Reject an action with a mismatched dimension or non-finite value."},sourceKeys:["robotics"]})),
-defineResearchLesson(m,embodiedSeed({id:"coordinate-frames-time",
-  plain:"Coordinate frames and timestamps tell the system where a measurement lives and when it was true.",precise:"A rigid transform $T^A_B$ maps coordinates expressed in frame B into frame A with rotation $R^A_B$ and translation $t^A_B$: $p^A=R^A_Bp^B+t^A_B$. Composition follows matching frame direction: $T^A_CT^C_B$ maps B to A. Inversion transposes the rotation and transforms the negative translation: $(R^A_B)^T$ and $-(R^A_B)^Tt^A_B$. Timestamped transforms and sensor samples must be interpolated or rejected within latency tolerances; frame IDs and clock sources travel with every spatial record.",mentalModel:"A frame is graph paper attached to an object; a transform says how one sheet is positioned relative to another at a named time.",ideas:["Write transform superscripts/subscripts and test direction with landmarks.","Compose only chains whose adjacent frames match.","Measure sensor age and synchronization error before fusion or control."],worked:"Camera sees x=.20 m; its aligned origin is +.50 m in base, and base is +1.00 m in world. Composition gives base x=.70 m and world x=1.70 m. Inverting world→base subtracts 1.00 m and base→camera subtracts .50 m, returning the original camera x=.20 m.",boundary:"A mathematically valid transform can be wrong because calibration drifted, axes were mislabeled, or samples came from different times.",objectives: { primary: "Compose and invert rigid transforms with explicit frame direction", decision: "Align sensor and action records under timestamp and latency limits" },vocabulary:[{term:"Coordinate frame",meaning:"An origin and oriented axes used to express a spatial quantity."},{term:"Rigid transform",meaning:"A rotation and translation mapping coordinates between frames without deformation."},{term:"Synchronization error",meaning:"The time difference between values assumed to describe one physical instant."}],primaryCheck:{prompt:"Camera x=.20 m, camera origin is +.50 m in base, and base origin is +1.00 m in world. Compose to world, then invert both transforms. Which values should the round trip produce?",expected:"Camera-to-base gives .70 m and base-to-world gives 1.70 m. The inverse chain subtracts 1.00 m and .50 m in reverse order, returning .20 m; failure to return .20 exposes a direction or inverse error.",retry:"Draw camera, base, and world origins on one number line; add translations in the forward chain, then undo them in reverse order and verify the starting coordinate."},decision:{explanation:"Temporal alignment is a causal requirement because a moving body changes pose between sensor capture and action application.",mechanism:"Record device and host clocks, convert to one clock domain, compute age/skew, interpolate transforms only within a validated window, reject stale packets, and log observation time, policy time, and actuator-application time.",workedExample:"At 1 m/s, a camera packet 120 ms older than joint state can misplace an obstacle by roughly 12 cm before other errors; a 40 ms tolerance therefore rejects the fusion.",boundary:"Low timestamp skew does not establish low end-to-end latency or correct spatial calibration.",check:{prompt:"Camera and joint packets differ by 120 ms while the platform moves at 1 m/s. What first-order spatial discrepancy can appear?",expected:"Approximately .12 m of motion separates the samples, so fusing them as simultaneous can create about 12 cm positional error.",retry:"Multiply speed in meters per second by time difference in seconds, then compare with the declared tolerance."}},quiz:{question:"What does $T^A_B$ do in this course notation?",options:["Maps B-expressed coordinates into frame A","Maps time A into time B","Stores reward","Normalizes pixels"],answer:0,explanation:"The superscript names destination frame and subscript source frame."},transfer:{prompt:"A transform chain contains base←camera and world←tool. Can it compose directly?",correct:"No; the adjacent source/destination frames do not join",wrong:["Yes because both are 4×4","Yes after adding rewards"],worked:"Insert the missing camera/tool or base/world relationship with matching frame labels, or reject the chain.",retry:"Read the transform graph as connected source-to-destination edges."},lab:{title:"Frame and clock workbench",question:"Which transform/timestamp record supports a spatial control decision?",controlLabel:"Spatial record",boundary:"The arithmetic assumes aligned one-dimensional axes and constant speed.",cases:[{label:"correct direction",resultLabel:"base x",resultValue:"0.70 m",meter:30,detail:"Camera-to-base translation is applied in the declared mapping direction."},{label:"inverse used",resultLabel:"base x",resultValue:"−0.30 m",meter:100,detail:"Using the opposite transform changes the command direction."},{label:"120 ms stale",resultLabel:"motion error",resultValue:"≈0.12 m",meter:85,detail:"A moving platform makes asynchronous geometry decision-relevant."}]},motionConcept:"coordinates",code:{title:"Compose and invert one-axis transforms",language:"Python 3",setup:"A scalar fixture makes transform direction and sensor age inspectable.",predict:"What point and motion discrepancy result?",code:py("camera_x=.20; camera_in_base=.50; base_in_world=1.0","base_x=camera_in_base+camera_x","world_x=base_in_world+base_x","round_trip=world_x-base_in_world-camera_in_base","print(base_x,world_x,round_trip)","assert round(round_trip,2)==camera_x"),observe:"The forward chain reaches .70 m in base and 1.70 m in world; the inverse chain returns .20 m in camera.",tryIt:"Add a rotated 2-D transform, then reject a sensor packet when skew exceeds .040 seconds."},sourceKeys:["probabilistic"]})),
-defineResearchLesson(m,embodiedSeed({id:"embodied-partial-observation",
-  plain:"A physical controller acts from incomplete, delayed, noisy, and sometimes occluded evidence, so it needs memory or a belief about hidden state.",precise:"The estimator maintains decision state $z_t=f(z_{t-1},a_{t-1},o_t,\\Delta t)$ or belief $b_t(s)$. It predicts hidden state through a declared dynamics model and the previous applied action, updates with synchronized sensor likelihoods, retains covariance or calibrated uncertainty, and exposes validity to the policy. An action moves an estimated object only when the state model explicitly couples them—for example, a rigidly grasped object follows gripper motion until a grasp-validity variable says otherwise. Evaluation includes occlusion, dropout, aliasing, broken attachments, and recovery sequences.",mentalModel:"The controller carries a living case file rather than treating the latest camera frame as the whole world.",ideas:["Predict from the applied action through an explicit object–gripper dynamics relation before incorporating the new observation.","Retain uncertainty, attachment validity, and missingness instead of filling every sensor silently.","Test decision recovery after occlusion, delay, broken grasp, and contradictory evidence."],worked:"A cube is visible at world x=.40 m and is confirmed rigidly grasped. During three occluded steps the applied gripper displacement is +.02 m along world x each time. Under the stated attachment model, the predicted cube mean is $.40+3(.02)=.46$ m and variance grows. If the cube were not grasped, the same gripper motion would not justify moving the cube estimate; that is a different dynamics hypothesis.",boundary:"Memory can preserve a biased or hallucinated state. In particular, an unobserved grasp break invalidates the rigid-attachment prediction, so confidence without attachment validity, calibration, and recovery tests can make failure harder to detect.",objectives: { primary: "Build a history or belief update for an embodied state estimator", decision: "Compare memoryless and stateful control under occlusion and sensor shift" },vocabulary:[{term:"State estimator",meaning:"A process combining history, actions, and sensors into decision-relevant hidden-state information."},{term:"Occlusion",meaning:"A sensor condition where an object or region is hidden by another surface."},{term:"Covariance",meaning:"A matrix describing uncertainty magnitude and correlation across estimated variables."},{term:"Attachment model",meaning:"A declared dynamics assumption that a grasped object follows gripper motion while grasp validity holds."}],primaryCheck:{prompt:"A cube at world x=.40 m is confirmed rigidly grasped, then occluded for three applied gripper moves of +.02 m along world x. What mean does the attachment predictor carry, and when would that arithmetic be invalid?",expected:"The predicted mean is .46 m after adding three .02 m applied displacements, and uncertainty should increase. The update is invalid if the grasp was absent or broke, frames differ, or the applied—not requested—motion was not +.02 m each step.",retry:"Write the state relation cube_next=cube_now+applied_gripper_delta only under grasp_valid; then apply it three times and list the assumptions that gate the relation."},decision:{explanation:"Stateful control earns trust only when its decisions recover from missing and shifted evidence better than a memoryless baseline.",mechanism:"Run paired initial states with identical applied actions and sensor corruptions, compare latent/state error, attachment validity, calibration, task success, constraints, and recovery time, and inspect cases where memory persists after the world changes.",workedExample:"A recurrent controller succeeds through two-frame occlusion but continues grasping after an unmodeled object removal; a validity-aware filter abstains and requests a new view.",boundary:"Better simulation recovery can rely on simulator-specific noise and attachment mechanics and does not prove robustness to physical sensor or grasp failure.",check:{prompt:"The recurrent policy stays confident after the object is secretly removed. Which failure and repair should be tested?",expected:"It exhibits stale-memory persistence; test contradiction detection, uncertainty growth, active re-observation, attachment invalidation, and an abstaining recovery branch.",retry:"Change hidden state without the expected observation and see how long memory overrides new or missing evidence."}},quiz:{question:"What should uncertainty do during unobserved prediction?",options:["Usually grow unless dynamics are perfectly known","Always become zero","Become reward","Disappear from the interface"],answer:0,explanation:"Prediction without evidence compounds process and model uncertainty."},transfer:{prompt:"A latest-frame and history policy tie on clean episodes. What changed case is most diagnostic?",correct:"Paired occlusion/dropout sequences with recovery and calibration metrics",wrong:["More clean frames only","Compare parameter counts only"],worked:"Hold starts and applied actions or seeds fixed, inject controlled missing evidence and grasp breaks, and report decision recovery plus constraints.",retry:"Choose a shift whose effect depends specifically on using past information and the declared dynamics relation."},lab:{title:"Occlusion memory clinic",question:"How should object state and action change as evidence disappears or contradicts the attachment model?",controlLabel:"Evidence sequence",boundary:"The one-axis rigid-grasp predictor is a deterministic mechanism fixture, not a calibrated tracker or general contact model.",cases:[{label:"grasp valid + three moves",resultLabel:"predicted cube x",resultValue:"0.46 m",meter:55,detail:"The declared attachment model advances the cube mean with applied gripper motion while uncertainty grows."},{label:"no confirmed grasp",resultLabel:"cube update",resultValue:"DO NOT MOVE",meter:85,detail:"Gripper motion alone is not evidence that a separate object changed position."},{label:"grasp contradiction",resultLabel:"controller",resultValue:"ABSTAIN",meter:100,detail:"Unexpected absence or slip invalidates attachment and triggers re-observation rather than confident stale action."}]},motionConcept:"memory",code:{title:"Predict a grasped object through missing observations",language:"Python 3",setup:"A scalar fixture keeps the world frame, applied motion, attachment validity, mean, and variance explicit.",predict:"What mean remains after three occluded steps while grasp validity holds?",code:py("cube_world_x=.40; variance=.001; grasp_valid=True","applied_gripper_dx=[.02,.02,.02]","for dx in applied_gripper_dx:","    if grasp_valid: cube_world_x += dx","    variance += .0004","print(round(cube_world_x,2),round(variance,4))","assert round(cube_world_x,2)==.46"),observe:"Under the declared rigid-grasp model, cube mean advances to .46 m and variance grows to .0022; without grasp validity the cube mean would stay .40 m.",tryIt:"Set grasp_valid false after the first move, stop propagating gripper motion into cube state, and trigger a re-observation branch."},sourceKeys:["probabilistic"]})),
-defineResearchLesson(m,embodiedSeed({id:"task-contract-capstone",duration:36,
-  plain:"The task-contract capstone packages one bounded simulated task, typed interfaces, timing, assertions, and changed-case evidence before any learned policy is introduced.",precise:"Implement reset/step around a versioned manifest; validate observation/action schemas, frames, units, clocks, requested/applied actions, success/failure/constraint precedence, ending semantics, local RNG, and replayable event logs. An oracle or scripted controller exercises nominal, boundary, stale-sensor, and injected-failure cases.",mentalModel:"Build the wind tunnel before designing the aircraft: every gauge and emergency cutoff must work first.",ideas:["Turn the written task into executable schema and predicate assertions.","Exercise nominal, boundary, and failure traces with a scripted controller.","Package manifest, raw transitions, failures, and a simulator evidence boundary."],worked:"A pick-place fixture replays the same seed, reaches a ten-step 2 cm dwell, rejects a 60 ms stale camera packet, clips a 7 cm delta to 3 cm, and stops on 28 N contact while retaining every event.",boundary:"A verified simulated task is infrastructure for experiments; it is not evidence that contact, perception, or safety will transfer to hardware.",objectives: { primary: "Build and locally verify a complete simulated embodied-task interface", decision: "Run a controlled task-contract failure-injection study" },vocabulary:[{term:"Oracle controller",meaning:"A privileged scripted controller used to validate task mechanics, not a deployable learned policy."},{term:"Failure injection",meaning:"A deliberate sensor, timing, action, dynamics, or constraint fault used to test detection and recovery."},{term:"Replay equivalence",meaning:"Matching next-step state and logs after restoring declared simulator and random state."}],primaryCheck:{prompt:"Why run a privileged scripted controller before collecting demonstrations or training a policy?",expected:"It validates task mechanics, timing, predicates, bounds, logging, and replay independently of learning, preventing policy failures from hiding environment bugs.",retry:"Separate what the environment must guarantee from what a learner will later estimate or optimize."},decision:{explanation:"A failure-injection study asks whether contract checks detect and contain one declared violation without changing unrelated task factors.",mechanism:"Pass nominal acceptance, branch identical seed/state, inject one stale packet, frame inversion, out-of-range action, or force event, preserve requested/applied/logged values, and verify the expected reject, stop, or recovery path.",workedExample:"Control accepts a 10 ms camera packet; treatment delays it to 80 ms beyond a 40 ms limit, so the controller holds position, records stale_sensor, and does not fabricate a fresh observation.",boundary:"Passing enumerated faults does not prove completeness; unknown simulator and integration failures remain.",check:{prompt:"The treatment changes camera delay and simulator friction together. Can the containment result isolate timing?",expected:"No. Two factors changed, so restore friction or run a factorial design before attributing the altered action or failure to latency.",retry:"Compare manifests field by field and retain exactly one intended difference."}},quiz:{question:"What should be verified before policy training?",options:["Schemas, timing, predicates, constraints, replay, and failure paths","Only average reward","Only rendering quality","Only GPU use"],answer:0,explanation:"Those contracts define whether later learning evidence is interpretable."},transfer:{prompt:"The same seed diverges immediately after checkpoint restore. What is incomplete?",correct:"Simulator, actuator, clock, or RNG state required for replay equivalence",wrong:["The task needs more reward","Divergence proves better exploration"],worked:"Compare the next observation, applied action, random draws, counters, and hidden simulator state before resuming long runs.",retry:"Require next-step equivalence before accepting a restored experiment."},lab:{title:"Task acceptance dossier",question:"Which artifact proves a local interface invariant, exposes a fault, or overclaims transfer?",controlLabel:"Acceptance artifact",boundary:"Passing simulated assertions is not physical validation.",cases:[{label:"nominal replay",resultLabel:"check",resultValue:"PASS",meter:20,detail:"Restored state and RNG reproduce the next transition and event log."},{label:"80 ms packet",resultLabel:"response",resultValue:"HOLD + LOG",meter:70,detail:"The stale sensor crosses a 40 ms gate and actuation is contained."},{label:"hardware safe",resultLabel:"claim",resultValue:"OVERREACH",meter:100,detail:"Simulator assertions cannot establish physical contact or operational safety."}]},motionConcept:"evaluation",code:{title:"Gate a stale observation",language:"Python 3",setup:"A compact acceptance trace checks age, action bounds, and stop precedence.",predict:"Which command reaches the simulator?",code:py("packet_age_ms=80; max_age_ms=40","requested=.07; limit=.03","applied=0.0 if packet_age_ms>max_age_ms else max(-limit,min(limit,requested))","event='stale_sensor' if applied==0 else 'act'","print(applied,event); assert event=='stale_sensor'"),observe:"The stale packet produces a hold command and an explicit event.",tryIt:"Create a paired nominal 10 ms case and compare every manifest field."},sourceKeys:["robotics","probabilistic"]}))
+export const embodiedFoundationSpecs = [
+  defineResearchLesson(
+    m,
+    embodiedSeed({
+      id: "embodied-task-contracts",
+      plain:
+        "Embodied AI gives an intelligent system a body—or a simulated body—so its choices must work through sensors, movement, timing, and the physical world.",
+      precise:
+        "An embodied system repeatedly senses part of its surroundings, decides what to do, acts through a body, and senses again to learn whether the action worked. The body's cameras, joints, grippers, wheels, reach, speed, and limits all change what intelligence can accomplish. A text answer can be revised before anyone relies on it; a physical action can spill a cup, collide with a person, or become impossible to undo. Later lessons define the exact observation, action, timing, and safety interfaces. This introduction first makes the sense–decide–act–check loop concrete.",
+      mentalModel:
+        "Think of intelligence moving from a notebook into a pair of eyes and hands: every idea now has to survive contact with the world.",
+      ideas: [
+        "Name what the body can sense, including what may be hidden or delayed.",
+        "Describe one small action and the physical change it is meant to cause.",
+        "Check the result through new evidence and keep a separate stop path when the world becomes unsafe.",
+      ],
+      worked:
+        "A robot is asked to place a mug on a tray. It sees the mug, moves its gripper toward the handle, closes gently, lifts, and looks again. If the mug slipped, the new camera and force evidence should trigger a retry or stop rather than pretending the planned movement succeeded.",
+      boundary:
+        "A successful simulated pick does not prove that real cameras, friction, timing, contact forces, or people will behave like the simulation.",
+      objectives: {
+        primary:
+          "Explain what changes when AI must sense and act through a body",
+        decision:
+          "Trace a sense–decide–act–check cycle and identify when the system should retry or stop",
+      },
+      vocabulary: [
+        {
+          term: "Embodiment",
+          meaning:
+            "The sensors, actuators, shape, movement, and limits through which a system meets the world.",
+        },
+        {
+          term: "Sensor",
+          meaning:
+            "A component that measures part of the world or the body, such as a camera or joint encoder.",
+        },
+        {
+          term: "Actuator",
+          meaning:
+            "A component that produces physical change, such as a motor, wheel, or gripper.",
+        },
+        {
+          term: "Feedback",
+          meaning:
+            "New evidence after an action that shows whether the intended change actually happened.",
+        },
+      ],
+      primaryCheck: {
+        prompt:
+          "Why is answering ‘pick up the mug’ in text different from a robot physically picking it up? Name at least three body or world factors that enter the physical task.",
+        expected:
+          "The robot must sense the mug, reach it with its particular body, control contact and force, act at the right time, and observe whether the grasp succeeded; the text answer changes none of those physical conditions.",
+        retry:
+          "Walk from camera to gripper to mug to new camera image, and name one possible mismatch at every handoff.",
+      },
+      decision: {
+        explanation:
+          "An embodied plan becomes trustworthy only when fresh sensory evidence confirms each important physical change and unsafe evidence can override the plan.",
+        mechanism:
+          "Sense the current situation, choose one bounded action, let the body and environment interact, compare new sensor evidence with the intended change, then continue, retry, or stop according to the observed result.",
+        workedExample:
+          "The robot closes its gripper around the mug handle, but the force reading stays near zero and the next image shows the mug unmoved. The check fails, so the system retries from a new view instead of lifting an empty gripper.",
+        boundary:
+          "A visible mug movement can still hide excessive force, a poor grip, an unsafe person nearby, or a camera error; one sensor and one success do not establish safety.",
+        check: {
+          prompt:
+            "A robot's plan says the mug is grasped, but the next image shows it on the table and force remains near zero. What should happen next, and why?",
+          expected:
+            "The system should treat the grasp as failed, avoid the planned lift, and retry or stop after gathering a better view because observed feedback overrides the unconfirmed plan.",
+          retry:
+            "Separate what the controller intended from what the sensors observed, then allow only actions whose required physical condition has been confirmed.",
+        },
+      },
+      quiz: {
+        question: "What makes an AI system embodied?",
+        options: [
+          "Its decisions pass through sensors and actuators in a physical or simulated world",
+          "It produces longer text",
+          "It has a colorful interface",
+          "It stores more documents",
+        ],
+        answer: 0,
+        explanation:
+          "Embodiment means intelligence is constrained and informed by a body's sensing and action loop.",
+      },
+      transfer: {
+        prompt:
+          "A robot reaches the mug, but a person steps into its path before the lift. What should the loop do?",
+        correct:
+          "Use the new sensor evidence to stop or replan before continuing",
+        wrong: [
+          "Continue because the original plan was correct",
+          "Ignore the person because the mug is still visible",
+        ],
+        worked:
+          "Fresh evidence changes the physical situation, so the stop path overrides the old action sequence and any later attempt begins from a newly sensed state.",
+        retry:
+          "Ask what changed after the plan was made and which action would now have an unsafe consequence.",
+      },
+      lab: {
+        title: "Sense–act–check story",
+        question: "When should a mug-picking system continue, retry, or stop?",
+        controlLabel: "Observed moment",
+        change:
+          "Move through the located-mug, unconfirmed-grasp, and person-in-path moments of one pick attempt.",
+        observe:
+          "Watch the next step change from approach to retry to stop as fresh sensor evidence changes.",
+        explain:
+          "Connect each new observation to the physical condition it confirms or disproves before the next action.",
+        complete:
+          "Inspect all three moments and explain why an unconfirmed grasp triggers retry while a person in the path triggers stop.",
+        boundary:
+          "The cards are deterministic teaching scenarios, not validation of a real robot or safety system.",
+        cases: [
+          {
+            label: "mug located",
+            resultLabel: "next step",
+            resultValue: "APPROACH",
+            meter: 20,
+            detail:
+              "Current camera evidence supports a small bounded move toward the visible handle.",
+          },
+          {
+            label: "grasp not confirmed",
+            resultLabel: "next step",
+            resultValue: "RETRY VIEW",
+            meter: 65,
+            detail:
+              "The plan expected a grasp, but image and force feedback do not confirm physical contact.",
+          },
+          {
+            label: "person enters path",
+            resultLabel: "next step",
+            resultValue: "STOP",
+            meter: 100,
+            detail:
+              "Fresh safety evidence overrides the original plan before the robot continues moving.",
+          },
+        ],
+      },
+      motionConcept: "agent",
+      code: {
+        title: "Choose continue, retry, or stop",
+        language: "Python 3",
+        setup:
+          "This deterministic decision fixture labels three observed moments; it does not control a robot.",
+        predict: "Which observation receives the non-negotiable stop?",
+        code: py(
+          "observations=[('mug_visible',True,False),('grasp_confirmed',False,False),('person_in_path',False,True)]",
+          "for name,confirmed,hazard in observations:",
+          "    decision='STOP' if hazard else ('CONTINUE' if confirmed else 'RETRY')",
+          "    print(name,decision)",
+          "assert ('person_in_path',False,True)==observations[-1]",
+        ),
+        observe:
+          "The hazard stops the sequence, missing confirmation triggers a retry, and only confirmed evidence supports continuing.",
+        tryIt:
+          "Add a stale-camera flag and route it to retry rather than pretending the old image is current.",
+      },
+      sourceKeys: ["robotics"],
+    }),
+  ),
+  defineResearchLesson(
+    m,
+    embodiedSeed({
+      id: "observation-action-spaces",
+      plain:
+        "Observation and action spaces are typed interfaces that say exactly what the policy receives and what commands it may send.",
+      precise:
+        "An observation schema assigns every sensor tensor a shape, data type, unit, range, reference frame, timestamp, validity mask, and update rate. An action schema assigns control mode, dimension, unit, bound, reference frame, hold duration, and saturation behavior. A reference frame is the named coordinate system used to interpret direction: the same [0.1,0,0] delta can mean motion along the robot base x-axis or the rotated tool x-axis. Normalization and clipping are transformations recorded outside the raw physical values.",
+      mentalModel:
+        "Think of the spaces as a checked electrical connector: every pin has a signal, unit, direction, and safe range.",
+      ideas: [
+        "Preserve raw values and metadata before normalization.",
+        "Name action semantics such as torque, position, velocity, or pose delta.",
+        "Validate shapes, units, masks, and bounds at every boundary.",
+      ],
+      worked:
+        "A seven-degree-of-freedom arm packet contains an RGB image stored as unsigned 8-bit integers with shape [128,128,3], seven joint positions stored as 32-bit floating-point values in radians, and a validity mask. Its action is six pose changes expressed in the tool's coordinate frame plus one gripper command, clipped before a 50 ms hold.",
+      boundary:
+        "Matching shapes does not imply matching physical meaning; meters mistaken for millimeters can pass tensor checks and still create dangerous commands.",
+      objectives: {
+        primary: "Design and validate a multimodal observation schema",
+        decision:
+          "Design a bounded action interface with explicit control semantics",
+      },
+      vocabulary: [
+        {
+          term: "Data type (dtype)",
+          meaning:
+            "The numeric representation of each tensor element, such as unsigned 8-bit integer or 32-bit floating point.",
+        },
+        {
+          term: "Degree of freedom (DoF)",
+          meaning:
+            "One independent coordinate of body configuration or motion; a 7-DoF arm exposes seven joint coordinates.",
+        },
+        {
+          term: "Reference frame",
+          meaning:
+            "The named origin and axes used to interpret a spatial measurement or command.",
+        },
+        {
+          term: "Control mode",
+          meaning:
+            "The physical quantity an action commands, such as torque, velocity, position, or pose delta.",
+        },
+        {
+          term: "Saturation",
+          meaning: "Clamping a requested command to an actuator or task limit.",
+        },
+        {
+          term: "Validity mask",
+          meaning:
+            "A field marking sensor values that are missing, stale, occluded, or otherwise unusable.",
+        },
+      ],
+      primaryCheck: {
+        prompt:
+          "RGB is [128,128,3] and joints are [7], but neither has timestamps or validity. What can validation not establish?",
+        expected:
+          "It can establish shape only; it cannot establish temporal alignment, freshness, missing-sensor status, or whether the modalities describe the same decision instant.",
+        retry:
+          "For each tensor add unit, frame, timestamp, update rate, and validity beside shape and dtype.",
+      },
+      decision: {
+        explanation:
+          "An action interface must make a numeric vector's physical effect predictable before a learned policy controls it.",
+        mechanism:
+          "Decode the vector using a named control mode and reference frame, denormalize with pinned statistics, transform base-frame or tool-frame directions explicitly, rate-limit, saturate per axis, validate workspace/force constraints, attach a hold duration, and log requested versus applied commands.",
+        workedExample:
+          "Policy output [1.4,−.2] normalized becomes [7 cm,−1 cm] in the tool frame; when the tool x-axis is rotated 90° from base x, that first component moves along base y, not base x. The component saturates to 3 cm, so frame, requested 7 cm, and applied 3 cm are all recorded.",
+        boundary:
+          "Bounded commands reduce one hazard but do not guarantee stable closed-loop behavior or collision avoidance.",
+        check: {
+          prompt:
+            "A normalized tool-frame action decodes beyond the workspace and is clipped. Which frame and action values should the transition dataset store?",
+          expected:
+            "Store the tool reference frame, the requested and actually applied action, and the clipping reason; the next state is caused by the transformed applied command, while the request diagnoses policy behavior.",
+          retry:
+            "Name the axes used to decode the vector, then separate the policy request from the command that actually reached the simulator.",
+        },
+      },
+      quiz: {
+        question: "What must accompany an action vector?",
+        options: [
+          "Control mode, units, frame, bounds, and duration",
+          "Only its length",
+          "Only reward",
+          "A prose label after training",
+        ],
+        answer: 0,
+        explanation:
+          "Those fields determine the command's physical meaning and applied effect.",
+      },
+      transfer: {
+        prompt:
+          "Two robots both use action [0.1,0,0]. Can one policy share it directly?",
+        correct:
+          "Only after verifying control mode, units, frame, timing, and embodiment mapping",
+        wrong: [
+          "Yes because vector length matches",
+          "No vectors can ever transfer",
+        ],
+        worked:
+          "Map each embodiment into an explicit canonical action meaning, then test requested/applied commands and effects.",
+        retry: "Compare semantic metadata rather than array shape alone.",
+      },
+      lab: {
+        title: "Interface schema inspector",
+        question:
+          "Which schema catches shape-only, unit, and saturation failures?",
+        controlLabel: "Interface card",
+        boundary: "The cards validate metadata logic, not actuator dynamics.",
+        cases: [
+          {
+            label: "shape only",
+            resultLabel: "schema",
+            resultValue: "INSUFFICIENT",
+            meter: 90,
+            detail:
+              "Dimensions pass while unit, frame, time, and validity remain unknown.",
+          },
+          {
+            label: "typed packet",
+            resultLabel: "schema",
+            resultValue: "VALID",
+            meter: 20,
+            detail:
+              "Shape, dtype, units, frame, timestamps, validity, and rate are declared.",
+          },
+          {
+            label: "clipped action",
+            resultLabel: "logging",
+            resultValue: "REQUEST + APPLIED",
+            meter: 55,
+            detail:
+              "Both policy intent and causal actuator command remain inspectable.",
+          },
+        ],
+      },
+      motionConcept: "coordinates",
+      code: {
+        title: "Validate and saturate an action",
+        language: "Python 3",
+        setup: "A tiny schema keeps requested and applied deltas distinct.",
+        predict: "What x command is actually applied?",
+        code: py(
+          "requested=[.07,-.01]",
+          "limits=[.03,.03]",
+          "applied=[max(-b,min(b,x)) for x,b in zip(requested,limits)]",
+          "row={'requested_m':requested,'applied_m':applied}",
+          "print(row); assert applied[0]==.03",
+        ),
+        observe: "The 7 cm request becomes a logged 3 cm applied command.",
+        tryIt:
+          "Reject an action with a mismatched dimension or non-finite value.",
+      },
+      sourceKeys: ["robotics"],
+    }),
+  ),
+  defineResearchLesson(
+    m,
+    embodiedSeed({
+      id: "coordinate-frames-time",
+      plain:
+        "Coordinate frames and timestamps tell the system where a measurement lives and when it was true.",
+      precise:
+        "A rigid transform $T^A_B$ maps coordinates expressed in frame B into frame A with rotation $R^A_B$ and translation $t^A_B$: $p^A=R^A_Bp^B+t^A_B$. Composition follows matching frame direction: $T^A_CT^C_B$ maps B to A. Inversion transposes the rotation and transforms the negative translation: $(R^A_B)^T$ and $-(R^A_B)^Tt^A_B$. Timestamped transforms and sensor samples must be interpolated or rejected within latency tolerances; frame IDs and clock sources travel with every spatial record.",
+      mentalModel:
+        "A frame is graph paper attached to an object; a transform says how one sheet is positioned relative to another at a named time.",
+      ideas: [
+        "Write transform superscripts/subscripts and test direction with landmarks.",
+        "Compose only chains whose adjacent frames match.",
+        "Measure sensor age and synchronization error before fusion or control.",
+      ],
+      worked:
+        "Camera sees x=.20 m; its aligned origin is +.50 m in base, and base is +1.00 m in world. Composition gives base x=.70 m and world x=1.70 m. Inverting world→base subtracts 1.00 m and base→camera subtracts .50 m, returning the original camera x=.20 m.",
+      boundary:
+        "A mathematically valid transform can be wrong because calibration drifted, axes were mislabeled, or samples came from different times.",
+      objectives: {
+        primary:
+          "Compose and invert rigid transforms with explicit frame direction",
+        decision:
+          "Align sensor and action records under timestamp and latency limits",
+      },
+      vocabulary: [
+        {
+          term: "Coordinate frame",
+          meaning:
+            "An origin and oriented axes used to express a spatial quantity.",
+        },
+        {
+          term: "Rigid transform",
+          meaning:
+            "A rotation and translation mapping coordinates between frames without deformation.",
+        },
+        {
+          term: "Synchronization error",
+          meaning:
+            "The time difference between values assumed to describe one physical instant.",
+        },
+      ],
+      primaryCheck: {
+        prompt:
+          "Camera x=.20 m, camera origin is +.50 m in base, and base origin is +1.00 m in world. Compose to world, then invert both transforms. Which values should the round trip produce?",
+        expected:
+          "Camera-to-base gives .70 m and base-to-world gives 1.70 m. The inverse chain subtracts 1.00 m and .50 m in reverse order, returning .20 m; failure to return .20 exposes a direction or inverse error.",
+        retry:
+          "Draw camera, base, and world origins on one number line; add translations in the forward chain, then undo them in reverse order and verify the starting coordinate.",
+      },
+      decision: {
+        explanation:
+          "Temporal alignment is a causal requirement because a moving body changes pose between sensor capture and action application.",
+        mechanism:
+          "Record device and host clocks, convert to one clock domain, compute age/skew, interpolate transforms only within a validated window, reject stale packets, and log observation time, policy time, and actuator-application time.",
+        workedExample:
+          "At 1 m/s, a camera packet 120 ms older than joint state can misplace an obstacle by roughly 12 cm before other errors; a 40 ms tolerance therefore rejects the fusion.",
+        boundary:
+          "Low timestamp skew does not establish low end-to-end latency or correct spatial calibration.",
+        check: {
+          prompt:
+            "Camera and joint packets differ by 120 ms while the platform moves at 1 m/s. What first-order spatial discrepancy can appear?",
+          expected:
+            "Approximately .12 m of motion separates the samples, so fusing them as simultaneous can create about 12 cm positional error.",
+          retry:
+            "Multiply speed in meters per second by time difference in seconds, then compare with the declared tolerance.",
+        },
+      },
+      quiz: {
+        question: "What does $T^A_B$ do in this course notation?",
+        options: [
+          "Maps B-expressed coordinates into frame A",
+          "Maps time A into time B",
+          "Stores reward",
+          "Normalizes pixels",
+        ],
+        answer: 0,
+        explanation:
+          "The superscript names destination frame and subscript source frame.",
+      },
+      transfer: {
+        prompt:
+          "A transform chain contains base←camera and world←tool. Can it compose directly?",
+        correct: "No; the adjacent source/destination frames do not join",
+        wrong: ["Yes because both are 4×4", "Yes after adding rewards"],
+        worked:
+          "Insert the missing camera/tool or base/world relationship with matching frame labels, or reject the chain.",
+        retry:
+          "Read the transform graph as connected source-to-destination edges.",
+      },
+      lab: {
+        title: "Frame and clock workbench",
+        question:
+          "Which transform/timestamp record supports a spatial control decision?",
+        controlLabel: "Spatial record",
+        boundary:
+          "The arithmetic assumes aligned one-dimensional axes and constant speed.",
+        cases: [
+          {
+            label: "correct direction",
+            resultLabel: "base x",
+            resultValue: "0.70 m",
+            meter: 30,
+            detail:
+              "Camera-to-base translation is applied in the declared mapping direction.",
+          },
+          {
+            label: "inverse used",
+            resultLabel: "base x",
+            resultValue: "−0.30 m",
+            meter: 100,
+            detail:
+              "Using the opposite transform changes the command direction.",
+          },
+          {
+            label: "120 ms stale",
+            resultLabel: "motion error",
+            resultValue: "≈0.12 m",
+            meter: 85,
+            detail:
+              "A moving platform makes asynchronous geometry decision-relevant.",
+          },
+        ],
+      },
+      motionConcept: "coordinates",
+      code: {
+        title: "Compose and invert one-axis transforms",
+        language: "Python 3",
+        setup:
+          "A scalar fixture makes transform direction and sensor age inspectable.",
+        predict: "What point and motion discrepancy result?",
+        code: py(
+          "camera_x=.20; camera_in_base=.50; base_in_world=1.0",
+          "base_x=camera_in_base+camera_x",
+          "world_x=base_in_world+base_x",
+          "round_trip=world_x-base_in_world-camera_in_base",
+          "print(base_x,world_x,round_trip)",
+          "assert round(round_trip,2)==camera_x",
+        ),
+        observe:
+          "The forward chain reaches .70 m in base and 1.70 m in world; the inverse chain returns .20 m in camera.",
+        tryIt:
+          "Add a rotated 2-D transform, then reject a sensor packet when skew exceeds .040 seconds.",
+      },
+      sourceKeys: ["probabilistic"],
+    }),
+  ),
+  defineResearchLesson(
+    m,
+    embodiedSeed({
+      id: "embodied-partial-observation",
+      plain:
+        "A physical controller acts from incomplete, delayed, noisy, and sometimes occluded evidence, so it needs memory or a belief about hidden state.",
+      precise:
+        "The estimator maintains decision state $z_t=f(z_{t-1},a_{t-1},o_t,\\Delta t)$ or belief $b_t(s)$. It predicts hidden state through a declared dynamics model and the previous applied action, updates with synchronized sensor likelihoods, retains covariance or calibrated uncertainty, and exposes validity to the policy. An action moves an estimated object only when the state model explicitly couples them—for example, a rigidly grasped object follows gripper motion until a grasp-validity variable says otherwise. Evaluation includes occlusion, dropout, aliasing, broken attachments, and recovery sequences.",
+      mentalModel:
+        "The controller carries a living case file rather than treating the latest camera frame as the whole world.",
+      ideas: [
+        "Predict from the applied action through an explicit object–gripper dynamics relation before incorporating the new observation.",
+        "Retain uncertainty, attachment validity, and missingness instead of filling every sensor silently.",
+        "Test decision recovery after occlusion, delay, broken grasp, and contradictory evidence.",
+      ],
+      worked:
+        "A cube is visible at world x=.40 m and is confirmed rigidly grasped. During three occluded steps the applied gripper displacement is +.02 m along world x each time. Under the stated attachment model, the predicted cube mean is $.40+3(.02)=.46$ m and variance grows. If the cube were not grasped, the same gripper motion would not justify moving the cube estimate; that is a different dynamics hypothesis.",
+      boundary:
+        "Memory can preserve a biased or hallucinated state. In particular, an unobserved grasp break invalidates the rigid-attachment prediction, so confidence without attachment validity, calibration, and recovery tests can make failure harder to detect.",
+      objectives: {
+        primary:
+          "Build a history or belief update for an embodied state estimator",
+        decision:
+          "Compare memoryless and stateful control under occlusion and sensor shift",
+      },
+      vocabulary: [
+        {
+          term: "State estimator",
+          meaning:
+            "A process combining history, actions, and sensors into decision-relevant hidden-state information.",
+        },
+        {
+          term: "Occlusion",
+          meaning:
+            "A sensor condition where an object or region is hidden by another surface.",
+        },
+        {
+          term: "Covariance",
+          meaning:
+            "A matrix describing uncertainty magnitude and correlation across estimated variables.",
+        },
+        {
+          term: "Attachment model",
+          meaning:
+            "A declared dynamics assumption that a grasped object follows gripper motion while grasp validity holds.",
+        },
+      ],
+      primaryCheck: {
+        prompt:
+          "A cube at world x=.40 m is confirmed rigidly grasped, then occluded for three applied gripper moves of +.02 m along world x. What mean does the attachment predictor carry, and when would that arithmetic be invalid?",
+        expected:
+          "The predicted mean is .46 m after adding three .02 m applied displacements, and uncertainty should increase. The update is invalid if the grasp was absent or broke, frames differ, or the applied—not requested—motion was not +.02 m each step.",
+        retry:
+          "Write the state relation cube_next=cube_now+applied_gripper_delta only under grasp_valid; then apply it three times and list the assumptions that gate the relation.",
+      },
+      decision: {
+        explanation:
+          "Stateful control earns trust only when its decisions recover from missing and shifted evidence better than a memoryless baseline.",
+        mechanism:
+          "Run paired initial states with identical applied actions and sensor corruptions, compare latent/state error, attachment validity, calibration, task success, constraints, and recovery time, and inspect cases where memory persists after the world changes.",
+        workedExample:
+          "A recurrent controller succeeds through two-frame occlusion but continues grasping after an unmodeled object removal; a validity-aware filter abstains and requests a new view.",
+        boundary:
+          "Better simulation recovery can rely on simulator-specific noise and attachment mechanics and does not prove robustness to physical sensor or grasp failure.",
+        check: {
+          prompt:
+            "The recurrent policy stays confident after the object is secretly removed. Which failure and repair should be tested?",
+          expected:
+            "It exhibits stale-memory persistence; test contradiction detection, uncertainty growth, active re-observation, attachment invalidation, and an abstaining recovery branch.",
+          retry:
+            "Change hidden state without the expected observation and see how long memory overrides new or missing evidence.",
+        },
+      },
+      quiz: {
+        question: "What should uncertainty do during unobserved prediction?",
+        options: [
+          "Usually grow unless dynamics are perfectly known",
+          "Always become zero",
+          "Become reward",
+          "Disappear from the interface",
+        ],
+        answer: 0,
+        explanation:
+          "Prediction without evidence compounds process and model uncertainty.",
+      },
+      transfer: {
+        prompt:
+          "A latest-frame and history policy tie on clean episodes. What changed case is most diagnostic?",
+        correct:
+          "Paired occlusion/dropout sequences with recovery and calibration metrics",
+        wrong: ["More clean frames only", "Compare parameter counts only"],
+        worked:
+          "Hold starts and applied actions or seeds fixed, inject controlled missing evidence and grasp breaks, and report decision recovery plus constraints.",
+        retry:
+          "Choose a shift whose effect depends specifically on using past information and the declared dynamics relation.",
+      },
+      lab: {
+        title: "Occlusion memory clinic",
+        question:
+          "How should object state and action change as evidence disappears or contradicts the attachment model?",
+        controlLabel: "Evidence sequence",
+        boundary:
+          "The one-axis rigid-grasp predictor is a deterministic mechanism fixture, not a calibrated tracker or general contact model.",
+        cases: [
+          {
+            label: "grasp valid + three moves",
+            resultLabel: "predicted cube x",
+            resultValue: "0.46 m",
+            meter: 55,
+            detail:
+              "The declared attachment model advances the cube mean with applied gripper motion while uncertainty grows.",
+          },
+          {
+            label: "no confirmed grasp",
+            resultLabel: "cube update",
+            resultValue: "DO NOT MOVE",
+            meter: 85,
+            detail:
+              "Gripper motion alone is not evidence that a separate object changed position.",
+          },
+          {
+            label: "grasp contradiction",
+            resultLabel: "controller",
+            resultValue: "ABSTAIN",
+            meter: 100,
+            detail:
+              "Unexpected absence or slip invalidates attachment and triggers re-observation rather than confident stale action.",
+          },
+        ],
+      },
+      motionConcept: "memory",
+      code: {
+        title: "Predict a grasped object through missing observations",
+        language: "Python 3",
+        setup:
+          "A scalar fixture keeps the world frame, applied motion, attachment validity, mean, and variance explicit.",
+        predict:
+          "What mean remains after three occluded steps while grasp validity holds?",
+        code: py(
+          "cube_world_x=.40; variance=.001; grasp_valid=True",
+          "applied_gripper_dx=[.02,.02,.02]",
+          "for dx in applied_gripper_dx:",
+          "    if grasp_valid: cube_world_x += dx",
+          "    variance += .0004",
+          "print(round(cube_world_x,2),round(variance,4))",
+          "assert round(cube_world_x,2)==.46",
+        ),
+        observe:
+          "Under the declared rigid-grasp model, cube mean advances to .46 m and variance grows to .0022; without grasp validity the cube mean would stay .40 m.",
+        tryIt:
+          "Set grasp_valid false after the first move, stop propagating gripper motion into cube state, and trigger a re-observation branch.",
+      },
+      sourceKeys: ["probabilistic"],
+    }),
+  ),
+  defineResearchLesson(
+    m,
+    embodiedSeed({
+      id: "task-contract-capstone",
+      duration: 36,
+      plain:
+        "The task-contract capstone packages one bounded simulated task, typed interfaces, timing, assertions, and changed-case evidence before any learned policy is introduced.",
+      precise:
+        "Implement reset/step around a versioned manifest; validate observation and action schemas, frames, units, sequence numbers, and both packet timestamps against the decision clock before any state advances. Keep requested/applied actions, success/failure/constraint precedence, ending semantics, local RNG, and replayable event logs explicit. On an invalid or future/stale packet, position, velocity, step counter, terminal flag, and RNG state must remain unchanged so the same sequence can be repaired and retried. An oracle or scripted controller exercises nominal, boundary, stale/future-sensor, and injected-failure cases.",
+      mentalModel:
+        "Build the wind tunnel before designing the aircraft: every gauge and emergency cutoff must work first.",
+      ideas: [
+        "Turn the written task into executable schema and predicate assertions.",
+        "Exercise nominal, boundary, and failure traces with a scripted controller.",
+        "Package manifest, raw transitions, failures, and a simulator evidence boundary.",
+      ],
+      worked:
+        "A pick-place fixture replays the same seed, reaches a ten-step 2 cm dwell, rejects a 60 ms stale camera packet, clips a 7 cm delta to 3 cm, and stops on 28 N contact while retaining every event.",
+      boundary:
+        "A verified simulated task is infrastructure for experiments; it is not evidence that contact, perception, or safety will transfer to hardware.",
+      objectives: {
+        primary:
+          "Build and locally verify a complete simulated embodied-task interface",
+        decision: "Run a controlled task-contract failure-injection study",
+      },
+      vocabulary: [
+        {
+          term: "Oracle controller",
+          meaning:
+            "A privileged scripted controller used to validate task mechanics, not a deployable learned policy.",
+        },
+        {
+          term: "Failure injection",
+          meaning:
+            "A deliberate sensor, timing, action, dynamics, or constraint fault used to test detection and recovery.",
+        },
+        {
+          term: "Replay equivalence",
+          meaning:
+            "Matching next-step state and logs after restoring declared simulator and random state.",
+        },
+      ],
+      primaryCheck: {
+        prompt:
+          "Why run a privileged scripted controller before collecting demonstrations or training a policy?",
+        expected:
+          "It validates task mechanics, timing, predicates, bounds, logging, and replay independently of learning, preventing policy failures from hiding environment bugs.",
+        retry:
+          "Separate what the environment must guarantee from what a learner will later estimate or optimize.",
+      },
+      decision: {
+        explanation:
+          "A failure-injection study asks whether contract checks detect and contain one declared violation without changing unrelated task factors.",
+        mechanism:
+          "Pass nominal acceptance, branch identical seed/state, inject one stale packet, frame inversion, out-of-range action, or force event, preserve requested/applied/logged values, and verify the expected reject, stop, or recovery path.",
+        workedExample:
+          "Control accepts a 10 ms camera packet; treatment delays it to 80 ms beyond a 40 ms limit, so the controller holds position, records stale_sensor, and does not fabricate a fresh observation.",
+        boundary:
+          "Passing enumerated faults does not prove completeness; unknown simulator and integration failures remain.",
+        check: {
+          prompt:
+            "The treatment changes camera delay and simulator friction together. Can the containment result isolate timing?",
+          expected:
+            "No. Two factors changed, so restore friction or run a factorial design before attributing the altered action or failure to latency.",
+          retry:
+            "Compare manifests field by field and retain exactly one intended difference.",
+        },
+      },
+      quiz: {
+        question: "What should be verified before policy training?",
+        options: [
+          "Schemas, timing, predicates, constraints, replay, and failure paths",
+          "Only average reward",
+          "Only rendering quality",
+          "Only GPU use",
+        ],
+        answer: 0,
+        explanation:
+          "Those contracts define whether later learning evidence is interpretable.",
+      },
+      transfer: {
+        prompt:
+          "The same seed diverges immediately after checkpoint restore. What is incomplete?",
+        correct:
+          "Simulator, actuator, clock, or RNG state required for replay equivalence",
+        wrong: [
+          "The task needs more reward",
+          "Divergence proves better exploration",
+        ],
+        worked:
+          "Compare the next observation, applied action, random draws, counters, and hidden simulator state before resuming long runs.",
+        retry:
+          "Require next-step equivalence before accepting a restored experiment.",
+      },
+      lab: {
+        title: "Task acceptance dossier",
+        question:
+          "Which artifact proves a local interface invariant, exposes a fault, or overclaims transfer?",
+        controlLabel: "Acceptance artifact",
+        boundary: "Passing simulated assertions is not physical validation.",
+        cases: [
+          {
+            label: "nominal replay",
+            resultLabel: "check",
+            resultValue: "PASS",
+            meter: 20,
+            detail:
+              "Restored state and RNG reproduce the next transition and event log.",
+          },
+          {
+            label: "80 ms packet",
+            resultLabel: "response",
+            resultValue: "HOLD + LOG",
+            meter: 70,
+            detail:
+              "The stale sensor crosses a 40 ms gate and actuation is contained.",
+          },
+          {
+            label: "hardware safe",
+            resultLabel: "claim",
+            resultValue: "OVERREACH",
+            meter: 100,
+            detail:
+              "Simulator assertions cannot establish physical contact or operational safety.",
+          },
+        ],
+      },
+      motionConcept: "evaluation",
+      code: {
+        title: "Reject invalid packets before simulator state advances",
+        language: "Python 3",
+        setup:
+          "A dependency-free acceptance fixture snapshots position, velocity, sequence, terminal, and RNG receipts before validating both observation and action timestamps.",
+        predict:
+          "Do the stale observation and future action change any simulator state, and can a repaired packet reuse sequence zero?",
+        code: py(
+          "import copy",
+          "MAX_AGE_MS,LIMIT=40,.03",
+          "initial={'x':0.,'velocity':0.,'sequence':0,'terminal':False,'rng_state':'rng-17'}",
+          "def step(state,observation,action,now_ms):",
+          "    before=copy.deepcopy(state); errors=[]",
+          "    for name,packet in [('observation',observation),('action',action)]:",
+          "        age=now_ms-packet['captured_ms']",
+          "        if age<0: errors.append(f'{name}_from_future')",
+          "        if age>MAX_AGE_MS: errors.append(f'stale_{name}')",
+          "        if packet['sequence']!=state['sequence']: errors.append(f'{name}_sequence')",
+          "    if errors: return state,{'event':'fault_contained','errors':errors,'requested':action['dx'],'applied':0.}",
+          "    applied=max(-LIMIT,min(LIMIT,action['dx'])); state['velocity']=applied/.05; state['x']+=applied; state['sequence']+=1",
+          "    return state,{'event':'act','errors':[],'requested':action['dx'],'applied':applied}",
+          "stale_state,stale=step(copy.deepcopy(initial),{'captured_ms':20,'sequence':0},{'captured_ms':95,'sequence':0,'dx':.07},100)",
+          "future_state,future=step(copy.deepcopy(initial),{'captured_ms':95,'sequence':0},{'captured_ms':110,'sequence':0,'dx':.07},100)",
+          "repaired_state,repaired=step(copy.deepcopy(initial),{'captured_ms':95,'sequence':0},{'captured_ms':96,'sequence':0,'dx':.07},100)",
+          "print(stale,future,repaired)",
+          "assert stale_state==initial and future_state==initial",
+          "assert stale['errors']==['stale_observation'] and future['errors']==['action_from_future']",
+          "assert repaired_state['sequence']==1 and repaired['applied']==LIMIT",
+        ),
+        observe:
+          "Both invalid branches apply zero and leave every snapshot field untouched; the repaired sequence-zero packet then clips $.07$ to $.03$ and advances exactly once.",
+        tryIt:
+          "Add a wrong frame and verify it cannot mutate terminal or RNG state, then compare the nominal replay hash after reset.",
+      },
+      sourceKeys: ["robotics", "probabilistic"],
+    }),
+  ),
 ];

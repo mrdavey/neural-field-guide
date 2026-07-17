@@ -36,7 +36,9 @@ export const generativeLessonById = Object.fromEntries(generativeLessons.map((le
 export const generativeCurriculumMinutes = generativeLessons.reduce((sum, lesson) => sum + lesson.duration, 0);
 export const generativeLessonGuides = Object.fromEntries(generativeSpecs.map((spec) => {
   const planned = manifest.lessons.find((lesson) => lesson.id === spec.lesson.id)!;
-  return [spec.lesson.id, researchGuide(spec, planned.build, planned.nextUse)];
+  const nextId = planned.nextUse.includes(":") ? planned.nextUse.split(":").at(-1)! : planned.nextUse;
+  const nextTitle = manifest.lessons.find((lesson) => lesson.id === nextId)?.title;
+  return [spec.lesson.id, researchGuide(spec, planned.nextUse, nextTitle)];
 })) as Record<string, LessonGuide>;
 export const generativeObjectiveCoverage = Object.fromEntries(generativeSpecs.map((spec) => [spec.lesson.id, [...spec.coverage]])) as Record<string, ObjectiveCoverage[]>;
 export const generativeMotionStories = Object.fromEntries(generativeSpecs.map((spec) => [spec.lesson.id, researchMotion(spec)])) as Record<string, LessonMotionStory>;

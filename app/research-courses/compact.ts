@@ -37,6 +37,9 @@ export type CompactSeedInput = {
 };
 
 export function compactResearchSeed(input: CompactSeedInput): ResearchLessonSeed {
+  const caseNames = input.lab.cases.map((item) => item.label).join(", ");
+  const outcomeSequence = input.lab.cases.map((item) => `${item.label} gives ${item.resultLabel} ${item.resultValue}`).join("; ");
+
   return {
     id: input.id,
     duration: input.duration,
@@ -66,10 +69,10 @@ export function compactResearchSeed(input: CompactSeedInput): ResearchLessonSeed
     lab: {
       title: input.lab.title,
       question: input.lab.question,
-      change: input.lab.change ?? `Select each ${input.lab.controlLabel.toLowerCase()} case while holding the displayed fixture contract fixed.`,
-      observe: input.lab.observe ?? "Compare the result label, value, meter, and diagnostic explanation across all three cases.",
-      explain: input.lab.explain ?? `Use the mechanism from ${input.lab.question} to identify the first causal step that changes the readout.`,
-      complete: input.lab.complete ?? "Commit a prediction, inspect all three deliberately contrasting cases, and explain why one case crosses the diagnostic boundary.",
+      change: input.lab.change ?? `Use the ${input.lab.controlLabel.toLowerCase()} control to compare ${caseNames}. Keep this question in view: ${input.lab.question}`,
+      observe: input.lab.observe ?? `Follow the outcomes across the same comparison: ${outcomeSequence}. Identify the first result that changes the decision before reading the case explanation.`,
+      explain: input.lab.explain ?? `Explain the contrast by applying this reasoning to the selected case: ${input.decision.mechanism}`,
+      complete: input.lab.complete ?? `Inspect all three cases, answer “${input.lab.question}”, and explain why this limit still matters: ${input.lab.boundary}`,
       boundary: input.lab.boundary,
       controlLabel: input.lab.controlLabel,
       cases: input.lab.cases,

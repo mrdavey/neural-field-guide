@@ -101,6 +101,40 @@ test("every RL lesson exposes Change → Observe → Explain, transfer, motion, 
   }
 });
 
+test("audited RL lessons execute learned dynamics, behavior cloning, and paired intervals", () => {
+  for (const id of ["learned-dynamics-control", "behavior-cloning", "rl-evaluation-seeds", "rl-research-capstone"]) {
+    const run = spawnSync("python3", ["-c", course.rlCodeExamples[id].code], { encoding: "utf8" });
+    assert.equal(run.status, 0, `${id}: ${run.stderr}`);
+  }
+  assert.match(course.rlCodeExamples["learned-dynamics-control"].code, /def fit\(target,logistic=False\)/);
+  assert.match(course.rlCodeExamples["behavior-cloning"].code, /for _ in range\(2500\)/);
+  const evaluation = course.rlLessonById["rl-evaluation-seeds"];
+  assert.match(evaluation.deep, /paired percentile-bootstrap 95% interval/);
+  assert.match(evaluation.example, /\[−31\.0,4\.6\]/);
+  assert.match(course.rlCodeExamples["rl-evaluation-seeds"].code, /random\.Random\(2026\)/);
+  const sourceText = readFileSync(join(root, "app/rl/sources.ts"), "utf8");
+  assert.match(sourceText, /2108\.13264/);
+});
+
+test("RL CPU baselines and research budgets match executable paths", async () => {
+  const starter = readFileSync(join(root, "public/capstone-artifacts/rl/rl_capstone_starter.py"), "utf8");
+  for (const implementation of ["train_dqn", "train_actor_critic", "fit_tabular_dynamics", "fit_cloning_policy", "rl_research"]) {
+    assert.ok(starter.includes(`def ${implementation}`), implementation);
+  }
+  for (const id of course.rlLessons.filter((lesson) => lesson.capstone).map((lesson) => lesson.id)) {
+    const projectText = JSON.stringify(course.rlCapstoneProjects[id]);
+    assert.match(projectText, /--profile smoke/, id);
+    assert.match(projectText, /--profile full/, id);
+    assert.doesNotMatch(projectText, /Replace the named fixture/, id);
+  }
+  const research = course.rlLessonById["rl-research-capstone"];
+  assert.match(research.deep, /19,937 post-warmup updates/);
+  assert.match(research.example, /20,000 interactions/);
+  const artifact = JSON.parse(await readFile(join(root, "public/capstone-artifacts/rl/rl-research-capstone.json"), "utf8"));
+  assert.equal(artifact.manifest.primitiveBudget.optimizerUpdates, 19937);
+  assert.ok(artifact.rawRows.every((row) => row.budget.optimizerUpdates === 19937));
+});
+
 test("seven RL capstones include complete projects and honest downloadable fixtures", async () => {
   const ids = course.rlLessons.filter((lesson) => lesson.capstone).map((lesson) => lesson.id);
   assert.equal(ids.length, 7);
@@ -145,7 +179,12 @@ test("RL capstone references match canonical five-seed budgets and all starter m
       const dossier = JSON.parse(await readFile(output, "utf8"));
       assert.equal(dossier.lessonId, id);
       assert.ok(Object.values(dossier.checks).every(Boolean), `${id} starter checks`);
-      assert.match(dossier.boundary, /not trained-agent performance/);
+      assert.equal(dossier.manifest.profile, "smoke");
+      assert.match(dossier.evidenceKind, /real local CPU execution/);
+      assert.match(dossier.boundary, /not trained-agent performance on an external benchmark/);
+      if (["deep-value-capstone", "on-policy-capstone", "model-based-capstone", "sequence-policy-capstone", "rl-research-capstone"].includes(id)) {
+        assert.match(dossier.boundary, /training or planning evidence/);
+      }
       assert.match(projectText, /five canonical seed|5 canonical seed|Canonical 5-seed/, `${id} project must expose the canonical seed count`);
     }
     const tabular = JSON.parse(await readFile(join(root, "public/capstone-artifacts/rl/tabular-control-capstone.json"), "utf8"));

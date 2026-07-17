@@ -89,7 +89,7 @@ test("dark panels use readable companion colors for labels and secondary copy", 
 
 test("every interactive lab family shares an explicit dark/light color contract", () => {
   assert.match(llmLabs, /<section className="lab-shell" data-lab=\{type\}>/);
-  assert.match(worldModelLabs, /<section className="lab-shell world-model-lab" data-lab=\{type\}/);
+  assert.match(worldModelLabs, /<section\s+className="lab-shell world-model-lab"\s+data-lab=\{type\}/);
   assert.match(researchLabs, /<section className="lab-shell research-course-lab" data-lab="research">/);
   for (const token of ["--lab-surface:#13192a", "--lab-instrument:#0c1221", "--lab-panel:#182137", "--lab-control:#172035", "--lab-text:#f7f8fb", "--lab-muted:#b7bfce", "--lab-on-light:#0b1020", "--lab-accent-text:#0b1020"]) {
     assert.ok(globalStyles.includes(token), `missing shared lab token ${token}`);

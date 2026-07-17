@@ -1,79 +1,129 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "course": "generative",
   "lessonId": "flow-energy-capstone",
   "evidenceKind": "deterministic_reference_fixture",
   "manifest": {
+    "studyDesign": "bounded cross-family benchmark; no causal treatment arm",
     "target": "eight-mode 2D ring",
-    "flowBudget": {
-      "directSamples": 100
+    "matchedFactors": [
+      "train and validation draws",
+      "retained sample count",
+      "generation seed policy",
+      "target mode boundaries",
+      "shared quality evaluator",
+      "float64 numeric precision",
+      "execution environment"
+    ],
+    "retainedSamplesPerCell": 100,
+    "sharedQualityEvaluator": "occupied modes and mean distance to nearest pinned target center",
+    "workAxis": {
+      "name": "deterministic scalar primitive operations per retained sample (DWU)",
+      "definition": "one declared scalar arithmetic, comparison, or transcendental operation in generation; RNG generation and quality evaluation are excluded and reported separately",
+      "interpretation": "reproducible algorithmic accounting, not wall-clock, energy, hardware, or information equivalence",
+      "flowDirectTransformPerState": {
+        "matrixMultiplications": 4,
+        "matrixReductionAdditions": 2,
+        "shiftAdditions": 2,
+        "total": 8
+      },
+      "ebmPerGradientStepPerState": {
+        "energyAndGradientOperations": 129,
+        "langevinStateUpdateOperations": 8,
+        "total": 137
+      }
     },
-    "ebmBudget": {
-      "retainedSamples": 100,
-      "gradientEvaluationsPerRetainedState": [
-        20,
-        100,
-        500
+    "familySpecificDiagnostics": {
+      "flow": [
+        "direct transforms",
+        "round-trip error",
+        "held-out normalized NLL"
+      ],
+      "energy": [
+        "gradient evaluations",
+        "random variates",
+        "raw energy",
+        "lag-one state autocorrelation"
       ]
     },
     "requiredCells": [
       {
         "family": "flow",
-        "budgetUnit": "direct samples",
-        "budgetAmount": 100
+        "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+        "budgetAmount": 8
       },
       {
         "family": "energy",
-        "budgetUnit": "gradient evaluations per retained state",
-        "budgetAmount": 20
+        "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+        "budgetAmount": 2740
       },
       {
         "family": "energy",
-        "budgetUnit": "gradient evaluations per retained state",
-        "budgetAmount": 100
+        "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+        "budgetAmount": 13700
       },
       {
         "family": "energy",
-        "budgetUnit": "gradient evaluations per retained state",
-        "budgetAmount": 500
+        "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+        "budgetAmount": 68500
       }
     ]
   },
   "rawRows": [
     {
       "family": "flow",
-      "budgetUnit": "direct samples",
-      "budgetAmount": 100,
+      "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+      "budgetAmount": 8,
       "status": "planned",
       "retainedSamples": 100,
-      "measurement": null
+      "familyOperationUnit": "direct transforms per retained sample",
+      "familyOperationCount": 1,
+      "randomVariatesPerRetainedSample": 2,
+      "sharedQualityMeasurement": null,
+      "roundTripError": null,
+      "heldOutNormalizedNll": null
     },
     {
       "family": "energy",
-      "budgetUnit": "gradient evaluations per retained state",
-      "budgetAmount": 20,
+      "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+      "budgetAmount": 2740,
       "status": "planned",
       "retainedSamples": 100,
-      "measurement": null
+      "familyOperationUnit": "gradient evaluations per retained state",
+      "familyOperationCount": 20,
+      "randomVariatesPerRetainedSample": 40,
+      "sharedQualityMeasurement": null,
+      "rawEnergy": null,
+      "lagOneStateAutocorrelation": null
     },
     {
       "family": "energy",
-      "budgetUnit": "gradient evaluations per retained state",
-      "budgetAmount": 100,
+      "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+      "budgetAmount": 13700,
       "status": "planned",
       "retainedSamples": 100,
-      "measurement": null
+      "familyOperationUnit": "gradient evaluations per retained state",
+      "familyOperationCount": 100,
+      "randomVariatesPerRetainedSample": 200,
+      "sharedQualityMeasurement": null,
+      "rawEnergy": null,
+      "lagOneStateAutocorrelation": null
     },
     {
       "family": "energy",
-      "budgetUnit": "gradient evaluations per retained state",
-      "budgetAmount": 500,
+      "budgetUnit": "deterministic scalar primitive operations per retained sample (DWU)",
+      "budgetAmount": 68500,
       "status": "planned",
       "retainedSamples": 100,
-      "measurement": null
+      "familyOperationUnit": "gradient evaluations per retained state",
+      "familyOperationCount": 500,
+      "randomVariatesPerRetainedSample": 1000,
+      "sharedQualityMeasurement": null,
+      "rawEnergy": null,
+      "lagOneStateAutocorrelation": null
     }
   ],
-  "decision": "The sample counts match but primitive operation budgets do not; quality results would require cost curves, not a single winner.",
-  "failure": "Raw EBM energy and normalized flow NLL are non-comparable quantities and must never share a ranking column.",
-  "boundary": "Operation counts are deterministic teaching rows; no flow or EBM was trained for this artifact."
+  "decision": "No family winner or causal effect is encoded. Execute both fitted systems, recompute DWU from the ledger, plot shared quality against DWU, and interpret native flow and EBM diagnostics in separate columns.",
+  "failure": "Direct flow transforms and EBM gradient calls are not equivalent cost units, while normalized flow NLL and raw EBM energy are not comparable quality values; neither pair may share a ranking column.",
+  "boundary": "DWU is a transparent wall-clock-independent operation count for this implementation, not a latency, energy, hardware, or information-equivalence claim. These planned rows contain no trained benchmark measurements."
 }

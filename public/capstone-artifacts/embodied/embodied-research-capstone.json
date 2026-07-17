@@ -2,40 +2,780 @@
   "schemaVersion": 1,
   "course": "embodied",
   "lessonId": "embodied-research-capstone",
-  "evidenceKind": "reviewed deterministic teaching fixture",
+  "evidenceKind": "reviewed deterministic local NumPy teaching fixture",
   "starter": {
     "publicUrl": "capstone-artifacts/embodied/embodied_capstone_starter.py",
-    "command": "python3 embodied_capstone_starter.py --project embodied-research-capstone --output embodied-research-starter.json",
-    "expected": "Complete seed-by-arm matrix, paired-row, and deadline-gate checks all print true.",
-    "boundary": "The starter calculates a decision fixture; it does not reproduce or train the learner-selected embodied system."
+    "requirementsUrl": "capstone-artifacts/embodied/requirements-capstones.txt",
+    "command": "python3 embodied_capstone_starter.py --project embodied-research-capstone --profile smoke --output embodied-research-capstone-smoke.json",
+    "expected": "All eleven pinned-baseline, profile-seed, complete-matrix, required-field, pairing, one-change, recomputation, deadline, horizon, assistance, and paired-effect checks are true.",
+    "boundary": "This command executes a pinned deterministic one-dimensional teaching study locally; it is not an external benchmark, physical-robot measurement, real timing study, or general embodied conclusion."
   },
   "implementation": {
-    "requiredComponents": ["accepted embodied baseline", "portable smoke/full profile", "complete checkpoint and resume state", "one isolated intervention", "matched primitive-budget ledger", "seed-by-cell trajectory writer", "assistance/constraint/deadline gates", "run-level uncertainty analysis", "failure and alternative-explanation dossier"],
-    "buildOrder": ["Preregister construct, falsifier, matrix, gates, and stop rule", "Pass smoke invariants", "Reproduce baseline acceptance on every seed/cell", "Restore one paired checkpoint and change one mechanism", "Run every baseline/treatment cell", "Reconcile rows before analysis", "Apply hard gates then uncertainty", "Package a bounded claim and next falsifier"],
-    "localCommands": ["python3 embodied_capstone_starter.py --project embodied-research-capstone --output embodied-research-starter.json", "python3 scripts/verify_my_embodied_study.py runs/manifest.json"],
-    "artifacts": ["preregistration.json", "runtime-manifest.json", "checkpoints/", "raw-trajectories/", "seed-cell-rows.jsonl", "paired-analysis.json", "videos/", "failures/", "decision.md"]
+    "requiredComponents": [
+      "portable-linear-reach-v1 pinned baseline",
+      "embodied-starter/2.0 implementation revision and numpy==2.4.4 dependency",
+      "smoke and bounded full seed profiles",
+      "paired baseline gain 0.35 and treatment gain 0.55 rollouts",
+      "matched initial state, disturbance, horizon, action, call, and scheduled-tick budgets",
+      "complete seed-by-arm raw trajectory writer",
+      "hard deadline and assistance/autonomy gates",
+      "built-in raw-trajectory and metric recomputation verifier",
+      "paired final-error analysis and bounded decision"
+    ],
+    "buildOrder": [
+      "Install numpy==2.4.4 and run tests/test_research_study.py",
+      "Freeze portable-linear-reach-v1, embodied-starter/2.0, gains, profiles, horizon, action bound, ticks, and success tolerance",
+      "Run smoke seeds 101, 202, and 303 for baseline gain 0.35 and treatment gain 0.55",
+      "Reconcile all six paired rows and verify only controllerGain changes within each seed",
+      "Recompute initial states, disturbances, every transition, final errors, success, deadlines, assistance labels, and paired effects from raw traces",
+      "Run the built-in --verify-study receipt, then execute the bounded twelve-seed full profile before any broader interpretation"
+    ],
+    "localCommands": [
+      "python3 -m pip install -r requirements-capstones.txt",
+      "python3 -m unittest tests/test_research_study.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "python3 embodied_capstone_starter.py --project embodied-research-capstone --profile smoke --output embodied-research-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --verify-study embodied-research-capstone-smoke.json",
+      "python3 embodied_capstone_starter.py --project embodied-research-capstone --profile full --output embodied-research-capstone-full.json"
+    ],
+    "artifacts": [
+      "embodied-research-capstone-smoke.json",
+      "embodied-research-capstone-full.json",
+      "built-in verifier receipt",
+      "all seed-by-arm traces",
+      "pairedEffects",
+      "failure.log"
+    ]
   },
   "acceptanceChecks": [
-    {"id": "baseline", "action": "Run correctness, behavior, grounding, timing, constraint, and recovery acceptance for every declared baseline seed/cell.", "expected": "No intervention is interpreted until baseline discrepancies are resolved or retained as failed reproduction rows."},
-    {"id": "matrix", "action": "Take the Cartesian product of declared seeds, cells, and arms and join it to raw artifacts.", "expected": "Every expected key has exactly one measured, failed, or predeclared-excluded record; duplicate and missing keys block analysis."},
-    {"id": "paired-decision", "action": "Compute paired run-level effects and uncertainty, then apply grounding, assistance, constraint, and deadline gates.", "expected": "A favorable average cannot rescue a treatment with a non-compensable gate failure."}
+    {
+      "id": "pinned-portable-baseline",
+      "action": "Inspect the smoke manifest before execution for baseline ID, implementation revision, dependency, seeds, gains, horizon, action limit, and scheduled ticks.",
+      "expected": "It pins portable-linear-reach-v1 at embodied-starter/2.0 with numpy==2.4.4, seeds 101/202/303, gain 0.35 versus 0.55, and no external assets."
+    },
+    {
+      "id": "paired-recomputation",
+      "action": "Join the Cartesian product of three smoke seeds and two arms, then recompute every rollout transition and summary metric from its pinned seed and raw trace.",
+      "expected": "Exactly six unique rows exist; pair IDs, initial states, disturbance hashes, budgets, scheduled ticks, assistance/autonomy labels, and trace lengths match while controllerGain is the only changed field."
+    },
+    {
+      "id": "independent-verifier",
+      "action": "Run python3 embodied_capstone_starter.py --verify-study embodied-research-capstone-smoke.json after the smoke project command.",
+      "expected": "The built-in verifier independently returns all eleven checks true; any missing, duplicate, forged, coordinated gain, treatment-only assistance, paired-effect, or deadline fault blocks the study."
+    }
   ],
   "manifest": {
-    "study": "action-prefix decision fixture",
-    "seeds": [11, 23],
-    "arms": ["baseline", "treatment"],
-    "hardGate": "zero deadline misses",
-    "independentUnit": "seeded run",
-    "matrixAxes": {"seed": [11, 23], "arm": ["baseline", "treatment"]}
+    "profile": "smoke",
+    "portableBaseline": {
+      "id": "portable-linear-reach-v1",
+      "algorithm": "bounded proportional controller in deterministic 1-D environment",
+      "implementationRevision": "embodied-starter/2.0",
+      "requiredDependency": "numpy==2.4.4",
+      "externalAssets": [],
+      "horizon": 10,
+      "targetXM": 0.8,
+      "actionLimitM": 0.2,
+      "scheduledComputeTicksPerStep": 5,
+      "successToleranceM": 0.06,
+      "controllerGains": {
+        "baseline": 0.35,
+        "treatment": 0.55
+      },
+      "assisted": false,
+      "autonomous": true
+    },
+    "seeds": [
+      101,
+      202,
+      303
+    ],
+    "arms": [
+      "baseline",
+      "treatment"
+    ],
+    "matrixAxes": {
+      "seed": [
+        101,
+        202,
+        303
+      ],
+      "arm": [
+        "baseline",
+        "treatment"
+      ]
+    },
+    "intervention": {
+      "onlyChangedField": "controllerGain",
+      "controllerGain": {
+        "baseline": 0.35,
+        "treatment": 0.55
+      }
+    },
+    "matchedPrimitiveBudgets": [
+      "initial state",
+      "disturbance sequence",
+      "horizon",
+      "action bound",
+      "policy calls",
+      "scheduled deadline ticks"
+    ],
+    "hardDeadline": {
+      "unit": "deterministic scheduled compute ticks",
+      "ticksPerControlStep": 5,
+      "wallClockMeasured": false
+    },
+    "independentUnit": "paired seeded rollout"
   },
-  "invariants": {"matchedPrimitiveBudgets": true, "pairedSeeds": true, "failureRowsRetained": true, "allDeclaredCellsPresent": true},
+  "checks": {
+    "portable_baseline_revision_and_dependency_are_pinned": true,
+    "profile_seed_matrix_matches_declared_budget": true,
+    "complete_seed_by_arm_matrix": true,
+    "all_raw_rows_have_verifier_fields": true,
+    "baseline_and_intervention_are_paired": true,
+    "exactly_one_predeclared_mechanism_changes": true,
+    "raw_trajectories_and_metrics_recompute_from_pinned_seeds": true,
+    "hard_deadline_gate_passes_every_accepted_row": true,
+    "trace_lengths_match_declared_horizons": true,
+    "no_assisted_run_is_counted_as_autonomous": true,
+    "paired_effects_recompute_from_verified_rows": true
+  },
   "rawRows": [
-    {"seed": 11, "arm": "baseline", "success": 0.70, "deadlineMiss": 0, "feasible": true},
-    {"seed": 11, "arm": "treatment", "success": 0.80, "deadlineMiss": 0, "feasible": true},
-    {"seed": 23, "arm": "baseline", "success": 0.75, "deadlineMiss": 0, "feasible": true},
-    {"seed": 23, "arm": "treatment", "success": 0.90, "deadlineMiss": 1, "feasible": false}
+    {
+      "seed": 101,
+      "pairId": "seed-101",
+      "arm": "baseline",
+      "controllerGain": 0.35,
+      "initialXM": 0.030236376963693856,
+      "targetXM": 0.8,
+      "horizon": 10,
+      "actionLimitM": 0.2,
+      "policyCalls": 10,
+      "scheduledComputeTicks": 50,
+      "deadlineBudgetTicks": 50,
+      "deadlinePass": true,
+      "deadlineMiss": 0,
+      "disturbanceHash": "6b4e119802493bff945296eed15a0651adae5d2f6dee6a0417b12d45591d9a1f",
+      "finalErrorM": 0.015457336983965675,
+      "success": true,
+      "assisted": false,
+      "autonomous": true,
+      "trace": [
+        {
+          "step": 0,
+          "preXM": 0.030236376963693856,
+          "requestedDxM": 0.26941726806270716,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0022324889638211105,
+          "postXM": 0.22800388799987276
+        },
+        {
+          "step": 1,
+          "preXM": 0.22800388799987276,
+          "requestedDxM": 0.20019863920004455,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0014725745786043458,
+          "postXM": 0.42653131342126843
+        },
+        {
+          "step": 2,
+          "preXM": 0.42653131342126843,
+          "requestedDxM": 0.13071404030255607,
+          "appliedDxM": 0.13071404030255607,
+          "disturbanceM": -0.0017421503777571273,
+          "postXM": 0.5555032033460674
+        },
+        {
+          "step": 3,
+          "preXM": 0.5555032033460674,
+          "requestedDxM": 0.08557387882887642,
+          "appliedDxM": 0.08557387882887642,
+          "disturbanceM": -0.0018827604351215658,
+          "postXM": 0.6391943217398223
+        },
+        {
+          "step": 4,
+          "preXM": 0.6391943217398223,
+          "requestedDxM": 0.056281987391062216,
+          "appliedDxM": 0.056281987391062216,
+          "disturbanceM": 0.002230940143950657,
+          "postXM": 0.6977072492748352
+        },
+        {
+          "step": 5,
+          "preXM": 0.6977072492748352,
+          "requestedDxM": 0.0358024627538077,
+          "appliedDxM": 0.0358024627538077,
+          "disturbanceM": 0.00021831840508023447,
+          "postXM": 0.7337280304337231
+        },
+        {
+          "step": 6,
+          "preXM": 0.7337280304337231,
+          "requestedDxM": 0.023195189348196914,
+          "appliedDxM": 0.023195189348196914,
+          "disturbanceM": -0.0014050097265426505,
+          "postXM": 0.7555182100553774
+        },
+        {
+          "step": 7,
+          "preXM": 0.7555182100553774,
+          "requestedDxM": 0.015568626480617907,
+          "appliedDxM": 0.015568626480617907,
+          "disturbanceM": -0.0019523037377311247,
+          "postXM": 0.7691345327982643
+        },
+        {
+          "step": 8,
+          "preXM": 0.7691345327982643,
+          "requestedDxM": 0.01080291352060752,
+          "appliedDxM": 0.01080291352060752,
+          "disturbanceM": -0.00016820297500526029,
+          "postXM": 0.7797692433438665
+        },
+        {
+          "step": 9,
+          "preXM": 0.7797692433438665,
+          "requestedDxM": 0.0070807648296467235,
+          "appliedDxM": 0.0070807648296467235,
+          "disturbanceM": -0.002307345157478875,
+          "postXM": 0.7845426630160344
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "pairId": "seed-101",
+      "arm": "treatment",
+      "controllerGain": 0.55,
+      "initialXM": 0.030236376963693856,
+      "targetXM": 0.8,
+      "horizon": 10,
+      "actionLimitM": 0.2,
+      "policyCalls": 10,
+      "scheduledComputeTicks": 50,
+      "deadlineBudgetTicks": 50,
+      "deadlinePass": true,
+      "deadlineMiss": 0,
+      "disturbanceHash": "6b4e119802493bff945296eed15a0651adae5d2f6dee6a0417b12d45591d9a1f",
+      "finalErrorM": 0.003526633352831987,
+      "success": true,
+      "assisted": false,
+      "autonomous": true,
+      "trace": [
+        {
+          "step": 0,
+          "preXM": 0.030236376963693856,
+          "requestedDxM": 0.42336999266996844,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0022324889638211105,
+          "postXM": 0.22800388799987276
+        },
+        {
+          "step": 1,
+          "preXM": 0.22800388799987276,
+          "requestedDxM": 0.3145978616000701,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0014725745786043458,
+          "postXM": 0.42653131342126843
+        },
+        {
+          "step": 2,
+          "preXM": 0.42653131342126843,
+          "requestedDxM": 0.2054077776183024,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0017421503777571273,
+          "postXM": 0.6247891630435113
+        },
+        {
+          "step": 3,
+          "preXM": 0.6247891630435113,
+          "requestedDxM": 0.09636596032606883,
+          "appliedDxM": 0.09636596032606883,
+          "disturbanceM": -0.0018827604351215658,
+          "postXM": 0.7192723629344585
+        },
+        {
+          "step": 4,
+          "preXM": 0.7192723629344585,
+          "requestedDxM": 0.04440020038604785,
+          "appliedDxM": 0.04440020038604785,
+          "disturbanceM": 0.002230940143950657,
+          "postXM": 0.765903503464457
+        },
+        {
+          "step": 5,
+          "preXM": 0.765903503464457,
+          "requestedDxM": 0.01875307309454867,
+          "appliedDxM": 0.01875307309454867,
+          "disturbanceM": 0.00021831840508023447,
+          "postXM": 0.7848748949640859
+        },
+        {
+          "step": 6,
+          "preXM": 0.7848748949640859,
+          "requestedDxM": 0.008318807769752773,
+          "appliedDxM": 0.008318807769752773,
+          "disturbanceM": -0.0014050097265426505,
+          "postXM": 0.791788693007296
+        },
+        {
+          "step": 7,
+          "preXM": 0.791788693007296,
+          "requestedDxM": 0.004516218845987203,
+          "appliedDxM": 0.004516218845987203,
+          "disturbanceM": -0.0019523037377311247,
+          "postXM": 0.7943526081155521
+        },
+        {
+          "step": 8,
+          "preXM": 0.7943526081155521,
+          "requestedDxM": 0.003106065536446379,
+          "appliedDxM": 0.003106065536446379,
+          "disturbanceM": -0.00016820297500526029,
+          "postXM": 0.7972904706769932
+        },
+        {
+          "step": 9,
+          "preXM": 0.7972904706769932,
+          "requestedDxM": 0.0014902411276537576,
+          "appliedDxM": 0.0014902411276537576,
+          "disturbanceM": -0.002307345157478875,
+          "postXM": 0.7964733666471681
+        }
+      ]
+    },
+    {
+      "seed": 202,
+      "pairId": "seed-202",
+      "arm": "baseline",
+      "controllerGain": 0.35,
+      "initialXM": -0.1787993750266902,
+      "targetXM": 0.8,
+      "horizon": 10,
+      "actionLimitM": 0.2,
+      "policyCalls": 10,
+      "scheduledComputeTicks": 50,
+      "deadlineBudgetTicks": 50,
+      "deadlinePass": true,
+      "deadlineMiss": 0,
+      "disturbanceHash": "7a2ce0d00757843ec9825a1ef065de4d4bc55fd23309a04ad1cf6e75ba6f042d",
+      "finalErrorM": 0.018252862194772956,
+      "success": true,
+      "assisted": false,
+      "autonomous": true,
+      "trace": [
+        {
+          "step": 0,
+          "preXM": -0.1787993750266902,
+          "requestedDxM": 0.3425797812593416,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.001331426564436042,
+          "postXM": 0.019869198408873773
+        },
+        {
+          "step": 1,
+          "preXM": 0.019869198408873773,
+          "requestedDxM": 0.27304578055689416,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.002079740310316871,
+          "postXM": 0.2177894580985569
+        },
+        {
+          "step": 2,
+          "preXM": 0.2177894580985569,
+          "requestedDxM": 0.2037736896655051,
+          "appliedDxM": 0.2,
+          "disturbanceM": 0.0005137130604555358,
+          "postXM": 0.41830317115901244
+        },
+        {
+          "step": 3,
+          "preXM": 0.41830317115901244,
+          "requestedDxM": 0.13359389009434566,
+          "appliedDxM": 0.13359389009434566,
+          "disturbanceM": 0.0018965964035185098,
+          "postXM": 0.5537936576568766
+        },
+        {
+          "step": 4,
+          "preXM": 0.5537936576568766,
+          "requestedDxM": 0.0861722198200932,
+          "appliedDxM": 0.0861722198200932,
+          "disturbanceM": -0.0012333646114204573,
+          "postXM": 0.6387325128655493
+        },
+        {
+          "step": 5,
+          "preXM": 0.6387325128655493,
+          "requestedDxM": 0.05644362049705775,
+          "appliedDxM": 0.05644362049705775,
+          "disturbanceM": 0.00039453048742306727,
+          "postXM": 0.6955706638500302
+        },
+        {
+          "step": 6,
+          "preXM": 0.6955706638500302,
+          "requestedDxM": 0.03655026765248945,
+          "appliedDxM": 0.03655026765248945,
+          "disturbanceM": 0.0004946134936821778,
+          "postXM": 0.7326155449962019
+        },
+        {
+          "step": 7,
+          "preXM": 0.7326155449962019,
+          "requestedDxM": 0.023584559251329365,
+          "appliedDxM": 0.023584559251329365,
+          "disturbanceM": -0.0005145592635402678,
+          "postXM": 0.755685544983991
+        },
+        {
+          "step": 8,
+          "preXM": 0.755685544983991,
+          "requestedDxM": 0.015510059255603168,
+          "appliedDxM": 0.015510059255603168,
+          "disturbanceM": -0.0018966857219391033,
+          "postXM": 0.7692989185176551
+        },
+        {
+          "step": 9,
+          "preXM": 0.7692989185176551,
+          "requestedDxM": 0.010745378518820736,
+          "appliedDxM": 0.010745378518820736,
+          "disturbanceM": 0.001702840768751232,
+          "postXM": 0.7817471378052271
+        }
+      ]
+    },
+    {
+      "seed": 202,
+      "pairId": "seed-202",
+      "arm": "treatment",
+      "controllerGain": 0.55,
+      "initialXM": -0.1787993750266902,
+      "targetXM": 0.8,
+      "horizon": 10,
+      "actionLimitM": 0.2,
+      "policyCalls": 10,
+      "scheduledComputeTicks": 50,
+      "deadlineBudgetTicks": 50,
+      "deadlinePass": true,
+      "deadlineMiss": 0,
+      "disturbanceHash": "7a2ce0d00757843ec9825a1ef065de4d4bc55fd23309a04ad1cf6e75ba6f042d",
+      "finalErrorM": 0.0007093942219764671,
+      "success": true,
+      "assisted": false,
+      "autonomous": true,
+      "trace": [
+        {
+          "step": 0,
+          "preXM": -0.1787993750266902,
+          "requestedDxM": 0.5383396562646797,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.001331426564436042,
+          "postXM": 0.019869198408873773
+        },
+        {
+          "step": 1,
+          "preXM": 0.019869198408873773,
+          "requestedDxM": 0.42907194087511946,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.002079740310316871,
+          "postXM": 0.2177894580985569
+        },
+        {
+          "step": 2,
+          "preXM": 0.2177894580985569,
+          "requestedDxM": 0.32021579804579375,
+          "appliedDxM": 0.2,
+          "disturbanceM": 0.0005137130604555358,
+          "postXM": 0.41830317115901244
+        },
+        {
+          "step": 3,
+          "preXM": 0.41830317115901244,
+          "requestedDxM": 0.2099332558625432,
+          "appliedDxM": 0.2,
+          "disturbanceM": 0.0018965964035185098,
+          "postXM": 0.6201997675625309
+        },
+        {
+          "step": 4,
+          "preXM": 0.6201997675625309,
+          "requestedDxM": 0.09889012784060802,
+          "appliedDxM": 0.09889012784060802,
+          "disturbanceM": -0.0012333646114204573,
+          "postXM": 0.7178565307917185
+        },
+        {
+          "step": 5,
+          "preXM": 0.7178565307917185,
+          "requestedDxM": 0.045178908064554844,
+          "appliedDxM": 0.045178908064554844,
+          "disturbanceM": 0.00039453048742306727,
+          "postXM": 0.7634299693436964
+        },
+        {
+          "step": 6,
+          "preXM": 0.7634299693436964,
+          "requestedDxM": 0.02011351686096698,
+          "appliedDxM": 0.02011351686096698,
+          "disturbanceM": 0.0004946134936821778,
+          "postXM": 0.7840380996983456
+        },
+        {
+          "step": 7,
+          "preXM": 0.7840380996983456,
+          "requestedDxM": 0.00877904516590995,
+          "appliedDxM": 0.00877904516590995,
+          "disturbanceM": -0.0005145592635402678,
+          "postXM": 0.7923025856007153
+        },
+        {
+          "step": 8,
+          "preXM": 0.7923025856007153,
+          "requestedDxM": 0.0042335779196066015,
+          "appliedDxM": 0.0042335779196066015,
+          "disturbanceM": -0.0018966857219391033,
+          "postXM": 0.7946394777983828
+        },
+        {
+          "step": 9,
+          "preXM": 0.7946394777983828,
+          "requestedDxM": 0.0029482872108894612,
+          "appliedDxM": 0.0029482872108894612,
+          "disturbanceM": 0.001702840768751232,
+          "postXM": 0.7992906057780236
+        }
+      ]
+    },
+    {
+      "seed": 303,
+      "pairId": "seed-303",
+      "arm": "baseline",
+      "controllerGain": 0.35,
+      "initialXM": -0.22494865330077146,
+      "targetXM": 0.8,
+      "horizon": 10,
+      "actionLimitM": 0.2,
+      "policyCalls": 10,
+      "scheduledComputeTicks": 50,
+      "deadlineBudgetTicks": 50,
+      "deadlinePass": true,
+      "deadlineMiss": 0,
+      "disturbanceHash": "d7330e23c7014c93358cb3acf9a06465bf706001db0755d648a3a5bda8ebb659",
+      "finalErrorM": 0.02234739752257897,
+      "success": true,
+      "assisted": false,
+      "autonomous": true,
+      "trace": [
+        {
+          "step": 0,
+          "preXM": -0.22494865330077146,
+          "requestedDxM": 0.35873202865527,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0026605238572231724,
+          "postXM": -0.02760917715799463
+        },
+        {
+          "step": 1,
+          "preXM": -0.02760917715799463,
+          "requestedDxM": 0.2896632120052981,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0003427880136877315,
+          "postXM": 0.17204803482831765
+        },
+        {
+          "step": 2,
+          "preXM": 0.17204803482831765,
+          "requestedDxM": 0.21978318781008882,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0019450952416432724,
+          "postXM": 0.3701029395866744
+        },
+        {
+          "step": 3,
+          "preXM": 0.3701029395866744,
+          "requestedDxM": 0.15046397114466398,
+          "appliedDxM": 0.15046397114466398,
+          "disturbanceM": -0.00006166530204441911,
+          "postXM": 0.520505245429294
+        },
+        {
+          "step": 4,
+          "preXM": 0.520505245429294,
+          "requestedDxM": 0.09782316409974712,
+          "appliedDxM": 0.09782316409974712,
+          "disturbanceM": 0.0008298122778671569,
+          "postXM": 0.6191582218069083
+        },
+        {
+          "step": 5,
+          "preXM": 0.6191582218069083,
+          "requestedDxM": 0.06329462236758211,
+          "appliedDxM": 0.06329462236758211,
+          "disturbanceM": -0.002828536551827187,
+          "postXM": 0.6796243076226632
+        },
+        {
+          "step": 6,
+          "preXM": 0.6796243076226632,
+          "requestedDxM": 0.04213149233206788,
+          "appliedDxM": 0.04213149233206788,
+          "disturbanceM": 0.0025904459092215416,
+          "postXM": 0.7243462458639527
+        },
+        {
+          "step": 7,
+          "preXM": 0.7243462458639527,
+          "requestedDxM": 0.026478813947616572,
+          "appliedDxM": 0.026478813947616572,
+          "disturbanceM": -0.001319506798608075,
+          "postXM": 0.7495055530129612
+        },
+        {
+          "step": 8,
+          "preXM": 0.7495055530129612,
+          "requestedDxM": 0.017673056445463603,
+          "appliedDxM": 0.017673056445463603,
+          "disturbanceM": -0.00033598785498298024,
+          "postXM": 0.7668426216034419
+        },
+        {
+          "step": 9,
+          "preXM": 0.7668426216034419,
+          "requestedDxM": 0.011605082438795366,
+          "appliedDxM": 0.011605082438795366,
+          "disturbanceM": -0.0007951015648161457,
+          "postXM": 0.7776526024774211
+        }
+      ]
+    },
+    {
+      "seed": 303,
+      "pairId": "seed-303",
+      "arm": "treatment",
+      "controllerGain": 0.55,
+      "initialXM": -0.22494865330077146,
+      "targetXM": 0.8,
+      "horizon": 10,
+      "actionLimitM": 0.2,
+      "policyCalls": 10,
+      "scheduledComputeTicks": 50,
+      "deadlineBudgetTicks": 50,
+      "deadlinePass": true,
+      "deadlineMiss": 0,
+      "disturbanceHash": "d7330e23c7014c93358cb3acf9a06465bf706001db0755d648a3a5bda8ebb659",
+      "finalErrorM": 0.002987640511167511,
+      "success": true,
+      "assisted": false,
+      "autonomous": true,
+      "trace": [
+        {
+          "step": 0,
+          "preXM": -0.22494865330077146,
+          "requestedDxM": 0.5637217593154243,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0026605238572231724,
+          "postXM": -0.02760917715799463
+        },
+        {
+          "step": 1,
+          "preXM": -0.02760917715799463,
+          "requestedDxM": 0.4551850474368971,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0003427880136877315,
+          "postXM": 0.17204803482831765
+        },
+        {
+          "step": 2,
+          "preXM": 0.17204803482831765,
+          "requestedDxM": 0.3453735808444253,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.0019450952416432724,
+          "postXM": 0.3701029395866744
+        },
+        {
+          "step": 3,
+          "preXM": 0.3701029395866744,
+          "requestedDxM": 0.23644338322732913,
+          "appliedDxM": 0.2,
+          "disturbanceM": -0.00006166530204441911,
+          "postXM": 0.57004127428463
+        },
+        {
+          "step": 4,
+          "preXM": 0.57004127428463,
+          "requestedDxM": 0.12647729914345351,
+          "appliedDxM": 0.12647729914345351,
+          "disturbanceM": 0.0008298122778671569,
+          "postXM": 0.6973483857059507
+        },
+        {
+          "step": 5,
+          "preXM": 0.6973483857059507,
+          "requestedDxM": 0.05645838786172714,
+          "appliedDxM": 0.05645838786172714,
+          "disturbanceM": -0.002828536551827187,
+          "postXM": 0.7509782370158506
+        },
+        {
+          "step": 6,
+          "preXM": 0.7509782370158506,
+          "requestedDxM": 0.026961969641282172,
+          "appliedDxM": 0.026961969641282172,
+          "disturbanceM": 0.0025904459092215416,
+          "postXM": 0.7805306525663543
+        },
+        {
+          "step": 7,
+          "preXM": 0.7805306525663543,
+          "requestedDxM": 0.010708141088505136,
+          "appliedDxM": 0.010708141088505136,
+          "disturbanceM": -0.001319506798608075,
+          "postXM": 0.7899192868562515
+        },
+        {
+          "step": 8,
+          "preXM": 0.7899192868562515,
+          "requestedDxM": 0.005544392229061724,
+          "appliedDxM": 0.005544392229061724,
+          "disturbanceM": -0.00033598785498298024,
+          "postXM": 0.7951276912303302
+        },
+        {
+          "step": 9,
+          "preXM": 0.7951276912303302,
+          "requestedDxM": 0.002679769823318401,
+          "appliedDxM": 0.002679769823318401,
+          "disturbanceM": -0.0007951015648161457,
+          "postXM": 0.7970123594888325
+        }
+      ]
+    }
   ],
-  "decision": "The treatment has favorable success rows but is infeasible under the predeclared zero-deadline-miss gate; all four paired rows are required, so treatment-only averaging cannot support acceptance.",
-  "failure": "The seed-23 treatment deadline failure is retained with its paired baseline, trajectory, checkpoint, timing stages, assistance, and budget ledger and prevents a favorable mean from becoming an accepted conclusion.",
-  "boundary": "This is a deterministic decision fixture, not an authentic training run, simulator benchmark, physical experiment, safety result, or universal intervention finding; a learner study must generate and preserve its own execution evidence."
+  "artifacts": {
+    "pairedEffects": [
+      {
+        "seed": 101,
+        "baselineFinalErrorM": 0.015457336983965675,
+        "treatmentFinalErrorM": 0.003526633352831987,
+        "treatmentMinusBaselineErrorM": -0.011930703631133688
+      },
+      {
+        "seed": 202,
+        "baselineFinalErrorM": 0.018252862194772956,
+        "treatmentFinalErrorM": 0.0007093942219764671,
+        "treatmentMinusBaselineErrorM": -0.01754346797279649
+      },
+      {
+        "seed": 303,
+        "baselineFinalErrorM": 0.02234739752257897,
+        "treatmentFinalErrorM": 0.002987640511167511,
+        "treatmentMinusBaselineErrorM": -0.01935975701141146
+      }
+    ]
+  },
+  "decision": "The gain-only intervention is reported from every paired seed after the deterministic deadline gate. The result is bounded to this portable one-dimensional baseline and profile.",
+  "failure": "No canonical smoke row fails; a missing, duplicate, forged, coordinated-gain, treatment-only-assistance, paired-effect, or deadline fault is a retained falsifier and must make --verify-study exit nonzero.",
+  "boundary": "This is real local deterministic execution of a pinned portable teaching baseline. It is not a learned-policy result from an external benchmark, a physical-robot measurement, real timing evidence, or a general embodied-system conclusion."
 }

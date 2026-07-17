@@ -41,7 +41,16 @@ for (const [key, contract] of Object.entries(externalExperiments)) {
   invariant(contract.providers.some((provider) => provider.id === "local" || provider.id === "compatible-service"), `${key}: portable fallback`);
   invariant(/requirements-/.test(contract.commands.install), `${key}: pinned install command`);
   invariant(/smoke/.test(contract.commands.smoke), `${key}: bounded smoke command`);
-  invariant(/--device cuda/.test(contract.commands.full), `${key}: full accelerator command`);
+  const fullDevicePattern = contract.courseId === "embodied"
+    ? /--device auto/
+    : /--device cuda/;
+  invariant(fullDevicePattern.test(contract.commands.full), `${key}: full device command`);
+  if (contract.courseId === "embodied") {
+    invariant(
+      contract.expected.invariants.some((item) => /requested device.*resolved.*CPU.*CUDA.*MPS/i.test(item)),
+      `${key}: provider-neutral full run records the resolved backend`,
+    );
+  }
   invariant(contract.providers.every((provider) => provider.setup.length >= 2 && provider.run.length >= 2), `${key}: complete provider steps`);
   invariant(contract.expected.invariants.length >= 3 && contract.expected.observations.length >= 2, `${key}: expected results split`);
   invariant(contract.diagnostics.length >= 2 && contract.diagnostics.every((item) => item.retry.length >= 20), `${key}: diagnostic retry routes`);

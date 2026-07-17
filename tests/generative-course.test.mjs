@@ -32,9 +32,9 @@ test("Generative Models ships the reviewed 30-lesson build ladder", () => {
   assert.match(catalogSource, /courseIds = \["llm", "worldmodel", "generative", "rl", "embodied"\]/);
   assert.match(catalogSource, /generative: \{/);
   assert.deepEqual(course.generativeLessonById["generation-as-distribution"].programPrerequisites, []);
-  assert.match(courseAppSource, /course\.id !== "llm" && guide/);
+  assert.match(courseAppSource, /<LessonNarrativeView guide=\{guide\}/);
   assert.match(courseAppSource, /program-prerequisite-list/);
-  assert.match(courseAppSource, /showVocabulary=\{course\.id === "llm"\}/);
+  assert.doesNotMatch(courseAppSource, /showVocabulary/);
 });
 
 test("every exact objective has five authored teaching dimensions and a committed changed-case test", () => {
@@ -73,6 +73,120 @@ test("every lesson has a semantic Change → Observe → Explain lab, transfer c
   }
 });
 
+test("audited sampling, flow, and DDPM mechanisms keep their exact causal contracts", () => {
+  const sampling = course.generativeLessonById["sampling-randomness"];
+  assert.match(sampling.deep, /x_2\\sim p\(x_2\\mid x_1\)/);
+  assert.match(sampling.example, /\(B,go\)/);
+  assert.match(sampling.example, /\(A,stop\)/);
+  assert.match(course.generativeCodeExamples["sampling-randomness"].code, /next_given\[x1\]/);
+
+  const flowTransfer = course.generativeTransferChecks["normalizing-flows"];
+  assert.match(flowTransfer.options[0].text, /Forward sampling can run/);
+  assert.match(flowTransfer.options[0].text, /exact data density/);
+  assert.match(flowTransfer.options[0].feedback, /inverse and log-determinant/);
+
+  const ddpm = course.generativeLessonById["ddpm-objective"];
+  assert.match(ddpm.deep, /v=a_t\\epsilon-s_tx_0/);
+  assert.match(ddpm.deep, /\\hat x_0=a_tx_t-s_t\\hat v/);
+  assert.match(ddpm.example, /1\.775/);
+  assert.match(ddpm.example, /1\.904/);
+  assert.match(course.generativeCodeExamples["ddpm-objective"].code, /x0_hats/);
+});
+
+test("the three Generative model capstones expose complete local CPU build paths", () => {
+  const starter = readFileSync(join(root, "public/capstone-artifacts/generative/generative_capstone_starter.py"), "utf8");
+  for (const implementation of ["train_vae", "fit_triangular_flow", "mixture_energy_and_gradient", "solve_diffusion_coefficients", "reverse_diffusion"]) {
+    assert.ok(starter.includes(`def ${implementation}`), implementation);
+  }
+  assert.match(starter, /--profile/);
+  assert.match(starter, /real local CPU execution of a course-scale baseline/);
+  for (const id of ["latent-models-capstone", "flow-energy-capstone", "diffusion-model-capstone"]) {
+    const projectText = JSON.stringify(course.generativeCapstoneProjects[id]);
+    assert.match(projectText, /--profile smoke/);
+    assert.match(projectText, /--profile full/);
+    assert.doesNotMatch(projectText, /Replace the named fixture/);
+  }
+});
+
+test("distribution count, cross-family cost, and diffusion NFE studies keep distinct evidence contracts", async () => {
+  const starter = join(root, "public/capstone-artifacts/generative/generative_capstone_starter.py");
+  const distributionProject = course.generativeCapstoneProjects["distribution-workbench-capstone"];
+  const distributionText = JSON.stringify(distributionProject);
+  assert.equal(distributionProject.stages[2].title, "Change only the sample count");
+  assert.match(distributionText, /sole intervention is N=10,000/);
+  assert.match(distributionText, /PCG64 generator/);
+  assert.match(distributionText, /correctness gates and the paired miss-rate conclusion are reported separately/);
+
+  const flowProject = course.generativeCapstoneProjects["flow-energy-capstone"];
+  const flowText = JSON.stringify(flowProject);
+  assert.equal(flowProject.stages[2].id, "benchmark");
+  assert.equal(flowProject.stages[2].title, "Run the bounded benchmark");
+  assert.match(flowText, /not a one-factor causal intervention/);
+  assert.match(flowText, /deterministic work units \(DWU\)/);
+  assert.match(flowText, /8 DWU/);
+  for (const budget of [2740, 13700, 68500]) assert.ok(flowText.includes(String(budget)));
+  assert.match(flowText, /never ranks raw EBM energy against normalized flow NLL/);
+
+  const diffusionProject = course.generativeCapstoneProjects["diffusion-model-capstone"];
+  const diffusionText = JSON.stringify(diffusionProject);
+  assert.equal(diffusionProject.stages[2].title, "Change only the denoiser evaluation count");
+  assert.match(diffusionText, /50-versus-20 NFE curve/);
+  assert.match(diffusionText, /checkpoint, deterministic DDIM-style update equation, canonical starting tensors, evaluator and thresholds/);
+  assert.match(diffusionText, /equal-NFE sampler comparison/);
+
+  const staticDistribution = JSON.parse(await readFile(join(root, "public/capstone-artifacts/generative/distribution-workbench-capstone.json"), "utf8"));
+  assert.equal(staticDistribution.rawRows.length, 40);
+  assert.ok(staticDistribution.rawRows.every((row) => row.status === "planned" && row.rareMiss === null));
+  assert.equal(staticDistribution.manifest.intervention.soleChangedField, "sampleCount");
+  assert.match(staticDistribution.invariants.purpose, /do not establish the sample-count effect/);
+
+  const staticFlow = JSON.parse(await readFile(join(root, "public/capstone-artifacts/generative/flow-energy-capstone.json"), "utf8"));
+  assert.match(staticFlow.manifest.studyDesign, /no causal treatment arm/);
+  assert.deepEqual(staticFlow.manifest.requiredCells.map((cell) => cell.budgetAmount), [8, 2740, 13700, 68500]);
+  assert.equal(new Set(staticFlow.manifest.requiredCells.map((cell) => cell.budgetUnit)).size, 1);
+  assert.equal(staticFlow.manifest.workAxis.ebmPerGradientStepPerState.total, 137);
+  assert.notEqual(staticFlow.rawRows[0].familyOperationUnit, staticFlow.rawRows[1].familyOperationUnit);
+
+  const staticDiffusion = JSON.parse(await readFile(join(root, "public/capstone-artifacts/generative/diffusion-model-capstone.json"), "utf8"));
+  assert.deepEqual(staticDiffusion.manifest.matrixAxes.arm, ["control", "nfe-intervention"]);
+  assert.equal(staticDiffusion.rawRows.length, 64);
+  assert.equal(new Set(staticDiffusion.rawRows.map((row) => row.sampler)).size, 1);
+  assert.match(staticDiffusion.manifest.interpretationBoundary, /separate equal-NFE study/);
+
+  const work = await mkdtemp(join(tmpdir(), "generative-audited-contracts-"));
+  try {
+    const dossiers = {};
+    for (const id of ["distribution-workbench-capstone", "flow-energy-capstone", "diffusion-model-capstone"]) {
+      const output = join(work, `${id}-full.json`);
+      const run = spawnSync("python3", [starter, "--project", id, "--profile", "full", "--output", output], { encoding: "utf8" });
+      assert.equal(run.status, 0, `${id} full starter: ${run.stderr}`);
+      dossiers[id] = JSON.parse(await readFile(output, "utf8"));
+      assert.ok(Object.values(dossiers[id].checks).every(Boolean), `${id} full checks`);
+    }
+
+    const distribution = dossiers["distribution-workbench-capstone"];
+    assert.equal(distribution.rawRows.length, 40);
+    assert.match(distribution.manifest.correctnessEvidence, /separate exact sampler invariants/);
+    assert.match(distribution.manifest.effectEvidence, /paired rareModeMissed rows/);
+
+    const flow = dossiers["flow-energy-capstone"];
+    assert.equal(new Set(flow.rawRows.map((row) => row.budgetUnit)).size, 1);
+    assert.notEqual(flow.rawRows[0].familyOperationUnit, flow.rawRows[1].familyOperationUnit);
+    assert.deepEqual(flow.rawRows.map((row) => row.budgetAmount), [8, 2740, 13700, 68500]);
+
+    const diffusion = dossiers["diffusion-model-capstone"];
+    assert.equal(diffusion.rawRows.length, 64);
+    for (const seed of diffusion.manifest.startSeeds) {
+      const pair = diffusion.rawRows.filter((row) => row.startSeed === seed);
+      assert.deepEqual(pair.map((row) => row.modelEvaluationsPerSample), [50, 20]);
+      for (const field of ["sampler", "startTensorDigest", "checkpointDigest", "trainingRunId", "evaluatorId", "executionEnvironment"]) assert.deepEqual(pair[0][field], pair[1][field], `${seed} ${field}`);
+    }
+    assert.match(diffusion.manifest.interpretationBoundary, /comparing sampler families requires a separate experiment/);
+  } finally {
+    await rm(work, { recursive: true, force: true });
+  }
+});
+
 test("six capstones include projects, evidence packs, and honest machine-readable reference artifacts", async () => {
   const ids = course.generativeLessons.filter((lesson) => lesson.capstone).map((lesson) => lesson.id);
   assert.equal(ids.length, 6);
@@ -81,10 +195,10 @@ test("six capstones include projects, evidence packs, and honest machine-readabl
     const project = course.generativeCapstoneProjects[id];
     assert.equal(project.stages.length, 4);
     assert.ok(project.deliverables.length >= 3 && project.rubric.length >= 4);
-    assert.match(project.exemplar.summary, /do not claim that a model was trained/);
-    assert.doesNotMatch(project.exemplar.summary, /reproduces|executes/);
+    assert.match(project.exemplar.summary, /smoke\/full CPU execution/);
+    assert.match(project.exemplar.summary, /does not claim production quality/);
     const referenceCopy = course.generativeCapstoneEvidencePacks[id].reference.sections.map((section) => section.content).join(" ");
-    assert.match(referenceCopy, /does not claim they ran/);
+    assert.match(referenceCopy, /genuine local CPU evidence/);
     assert.match(referenceCopy, /Planned or null cells are instructions, not observations/);
     assert.doesNotMatch(referenceCopy, /gates pass before branching/);
     const artifact = JSON.parse(await readFile(join(root, "public/capstone-artifacts/generative", `${id}.json`), "utf8"));
@@ -116,7 +230,12 @@ test("Generative capstone references match the canonical source contract and all
       const dossier = JSON.parse(await readFile(output, "utf8"));
       assert.equal(dossier.lessonId, id);
       assert.ok(Object.values(dossier.checks).every(Boolean), `${id} starter checks`);
-      assert.match(dossier.boundary, /not a trained-generator result/);
+      assert.equal(dossier.manifest.profile, "smoke");
+      assert.match(dossier.evidenceKind, /real local CPU execution/);
+      assert.match(dossier.boundary, /not a benchmark/);
+      if (["latent-models-capstone", "flow-energy-capstone", "diffusion-model-capstone"].includes(id)) {
+        assert.match(dossier.boundary, /training or fitting/);
+      }
       if (id === "distribution-workbench-capstone") assert.match(projectText, new RegExp(`${contract.matrixAxes.seed.length} canonical seeds`));
       if (id === "diffusion-model-capstone") assert.match(projectText, new RegExp(`${contract.matrixAxes.startSeed.length} canonical fixed start tensors`));
       if (id === "flow-energy-capstone") assert.ok(contract.requiredCells.filter((cell) => cell.family === "energy").every((cell) => projectText.includes(String(cell.budgetAmount))), `${id} promised EBM budgets join canonical cells`);
