@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { activeStoryStage, clampStoryValue, storyStagePosition } from "./scroll-story-progress";
+import { activeStoryStage, clampStoryValue, furthestStoryStagePosition, storyStagePosition, storyStageRevealProgress } from "./scroll-story-progress";
 import { STORY_PROGRESS_EVENT, ThreeStoryCanvas } from "./three-story-canvas";
 import type { ThreeStoryConcept, ThreeStoryScene } from "./three-story-math";
 import { StoryMechanismDiagram } from "./story-mechanism-diagram";
@@ -32,7 +32,10 @@ type ScrollStoryProps = {
 
 export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels, steps, className = "", chromeLabel = "NEURAL FIELD GUIDE / LIVE TRACE", canvasHint }: ScrollStoryProps) {
   const [active, setActive] = useState(0);
+  const [revealedThrough, setRevealedThrough] = useState(0);
   const activeRef = useRef(0);
+  const revealedThroughRef = useRef(0);
+  const furthestStagePositionRef = useRef(0);
   const layoutRef = useRef<HTMLDivElement | null>(null);
   const visualRef = useRef<HTMLDivElement | null>(null);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
@@ -57,8 +60,11 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
       });
       const lastIndex = centers.length - 1;
       const stagePosition = storyStagePosition(centers, anchor);
+      const revealedPosition = furthestStoryStagePosition(furthestStagePositionRef.current, stagePosition);
+      furthestStagePositionRef.current = revealedPosition;
       const progress = lastIndex > 0 ? clampStoryValue(stagePosition / lastIndex) : 0;
       const nextActive = activeStoryStage(stagePosition, centers.length);
+      const nextRevealedThrough = activeStoryStage(revealedPosition, centers.length);
       const direction = stagePosition >= previousStage ? "forward" : "backward";
       previousStage = stagePosition;
 
@@ -86,15 +92,15 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
 
       nodeVisuals.forEach((node, index) => {
         const activation = clampStoryValue(1 - Math.abs(index - stagePosition));
-        const past = index < stagePosition ? clampStoryValue((stagePosition - index) / Math.max(1, lastIndex)) : 0;
-        node.style.setProperty("--node-opacity", (.24 + activation * .76 + past * .18).toFixed(3));
-        node.style.setProperty("--node-y", `${(12 - activation * 24).toFixed(2)}px`);
-        node.style.setProperty("--node-scale", (.86 + activation * .19 + past * .04).toFixed(3));
+        const reveal = storyStageRevealProgress(index, revealedPosition);
+        node.style.setProperty("--node-opacity", (.2 + reveal * .8).toFixed(3));
+        node.style.setProperty("--node-y", `${(12 - reveal * 12 - activation * 10).toFixed(2)}px`);
+        node.style.setProperty("--node-scale", (.86 + reveal * .08 + activation * .09).toFixed(3));
         node.style.setProperty("--node-halo", `${(activation * 12).toFixed(2)}px`);
       });
 
       lineVisuals.forEach((line, index) => {
-        const activation = clampStoryValue(stagePosition - index);
+        const activation = clampStoryValue(revealedPosition - index);
         line.style.setProperty("--line-scale", activation.toFixed(3));
         line.style.setProperty("--line-opacity", (.18 + activation * .82).toFixed(3));
       });
@@ -102,6 +108,10 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
       if (nextActive !== activeRef.current) {
         activeRef.current = nextActive;
         setActive(nextActive);
+      }
+      if (nextRevealedThrough > revealedThroughRef.current) {
+        revealedThroughRef.current = nextRevealedThrough;
+        setRevealedThrough(nextRevealedThrough);
       }
     };
 
@@ -123,7 +133,7 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
       window.removeEventListener("scroll", scheduleProgress);
       window.removeEventListener("resize", scheduleProgress);
     };
-  }, [concept, steps.length]);
+  }, [concept, eyebrow, steps.length]);
 
   const moveToStep = (index: number) => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -160,12 +170,12 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
               "--particle-dy": `${-30 - (index % 5) * 10}px`,
             } as React.CSSProperties} />)}</div>
             <div className="story-lines">{sceneLabels.slice(0, -1).map((label, index) => <i key={`${label}-${index}`} />)}</div>
-            <div className="story-nodes">{sceneLabels.map((label, index) => <i className={`story-node ${index === active ? "is-active" : ""} ${index < active ? "is-past" : ""}`} key={`${label}-${index}`} style={{ "--node": index } as React.CSSProperties}><span>{label}</span></i>)}</div>
+            <div className="story-nodes">{sceneLabels.map((label, index) => <i className={`story-node ${index === active ? "is-active" : ""} ${index <= revealedThrough ? "is-revealed" : ""}`} key={`${label}-${index}`} style={{ "--node": index } as React.CSSProperties}><span>{label}</span></i>)}</div>
             <div className="story-core"><span>{String(active + 1).padStart(2, "0")}</span><i /></div>
             <div className="story-signal"><span>{activeStep.signal ?? activeStep.label}</span><b>{sceneLabels[Math.min(active, sceneLabels.length - 1)]}</b></div>
           </div>
           <div className="story-stage-controls" role="group" aria-label="Scroll story stages">
-            {steps.map((step, index) => <button key={`${step.label}-${index}`} className={index === active ? "active" : ""} aria-pressed={index === active} onClick={() => moveToStep(index)}><span>{String(index + 1).padStart(2, "0")}</span><b>{step.label}</b></button>)}
+            {steps.map((step, index) => <button key={`${step.label}-${index}`} className={`${index === active ? "active" : ""} ${index <= revealedThrough ? "is-revealed" : ""}`.trim()} aria-current={index === active ? "step" : undefined} aria-pressed={index === active} onClick={() => moveToStep(index)}><span>{String(index + 1).padStart(2, "0")}</span><b>{step.label}</b></button>)}
           </div>
         </div>
       </div>

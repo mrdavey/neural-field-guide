@@ -50,7 +50,7 @@
 
 .lab-shell>.learning-activity-contract{margin-top:24px}
 .lab-shell>.activity-prediction-gate{margin-top:24px}
-.lab-observation-guide{background:var(--track);color:var(--ink);display:grid;gap:12px;grid-template-columns:170px minmax(0,1fr);padding:18px 22px}
+.lab-observation-guide{background:var(--track);color:var(--lab-accent-text,var(--ink));display:grid;gap:12px;grid-template-columns:170px minmax(0,1fr);padding:18px 22px}
 .lab-observation-guide p{font-size:.9rem;line-height:1.65;margin:0}
 .lab-instrument{margin-top:0!important}
 

@@ -57,8 +57,7 @@ export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, exampl
   };
 
   return <section className="chapter-guide" aria-label={`${lessonTitle} guided chapter`}>
-    <section className="learning-objectives" aria-labelledby={`${lessonId}-learning-objectives-title`}>
-      <div><span className="chapter-index">01</span><h3 id={`${lessonId}-learning-objectives-title`}>By the end, you can…</h3></div>
+    <section className="learning-objectives" aria-label="Lesson outcomes and checks">
       <ol className="objective-map">{objectiveCoverage.map((item, index) => <ObjectiveCoverageCard key={item.objective} item={item} index={index} />)}</ol>
     </section>
     <section className="guided-example" aria-labelledby={`guided-example-${lessonId}`}>

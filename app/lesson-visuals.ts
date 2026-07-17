@@ -9,7 +9,6 @@ export type LessonVisual = {
   lessonId: string;
   kind: LessonVisualKind;
   concept: ThreeStoryConcept;
-  learningQuestion: string;
   labels: [string, string, string, string];
   stageDescriptions: [string, string, string, string];
   assetBase: string | null;

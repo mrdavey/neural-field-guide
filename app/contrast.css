@@ -29,6 +29,22 @@ input::placeholder,textarea::placeholder{color:#555d6d;opacity:1}
 .token-output>span{color:#000}
 .metric-trace i span{color:var(--ink)}
 .budget-map span{background:var(--white);padding:4px 6px;top:16px}
+/* Every course lab uses the same explicit dark/light foreground contract. This
+   prevents the light prediction gate from leaking ink-colored text back into
+   its dark instrument preview. */
+.lab-shell .lab-instrument{background:var(--lab-instrument);border-color:var(--lab-border);color:var(--lab-text)}
+:where(.lab-shell .lab-instrument) :where(p,label,legend,small){color:var(--lab-muted)}
+:where(.lab-shell .lab-instrument) :where(h3,h4,strong,b,code,output){color:var(--lab-text)}
+:where(.lab-shell .lab-instrument button){background:var(--lab-control);border-color:var(--lab-border);color:var(--lab-text)}
+:where(.lab-shell .lab-instrument button:is(.active,.anchor,.done)),:where(.lab-shell .lab-instrument .lab-action:not(.secondary)){background:var(--track);color:var(--lab-accent-text)}
+:where(.lab-shell .lab-instrument button.risk){background:#4a2028;border-color:#d08a98;color:#fff}
+:where(.lab-shell .lab-instrument) :where(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),textarea,select){background:var(--lab-panel);border:1px solid var(--lab-border);color:var(--lab-text)}
+:where(.lab-shell .lab-instrument) :where(input,button,select,textarea):focus-visible{outline:3px solid var(--track);outline-offset:3px}
+.lab-shell .lab-instrument .token-output>span :is(b,small),.lab-shell .lab-instrument .factor small,.lab-shell .lab-instrument .position-sequence span.active small,.lab-shell .lab-instrument .expert-pool>div.active :is(b,small),.lab-shell .lab-instrument .trace-waterfall>div.fault strong{color:var(--lab-accent-text)}
+.lab-shell :is(.learning-activity-contract,.activity-prediction-gate,.research-case-control){color:var(--lab-on-light)}
+.lab-shell .research-case-control button{background:var(--white);border-color:var(--line);color:var(--lab-on-light)}
+.lab-shell .research-case-control button.active{background:var(--ink);border-color:var(--track);color:#fff}
+.lab-shell .research-case-readout{background:var(--ink);color:var(--lab-text)}
 .lesson-breadcrumb button,
 .chapter-guide-header>.eyebrow,
 .prerequisite-strip button:hover,

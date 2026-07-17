@@ -57,6 +57,7 @@ const canonicalCourses = {
   embodied: embodied.embodiedLessons,
 };
 const canonicalKeys = Object.entries(canonicalCourses).flatMap(([courseId, lessons]) => lessons.map(({ id }) => `${courseId}:${id}`));
+const canonicalLessonByKey = new Map(Object.entries(canonicalCourses).flatMap(([courseId, lessons]) => lessons.map((lesson) => [`${courseId}:${lesson.id}`, lesson])));
 
 test("every one of the 182 released lessons owns exactly one static concept visual", () => {
   assert.equal(canonicalKeys.length, 182);
@@ -87,9 +88,12 @@ test("the completed visual mix is 130 generated rasters and 52 exact code-native
   });
 
   for (const visual of clientManifest) {
+    const key = `${visual.courseId}:${visual.lessonId}`;
+    const lesson = canonicalLessonByKey.get(key);
+    assert.ok(lesson?.simple.trim().length > 30, `${key} canonical concept explanation`);
     assert.equal(visual.labels.length, 4, `${visual.courseId}:${visual.lessonId} labels`);
     assert.equal(visual.stageDescriptions.length, 4, `${visual.courseId}:${visual.lessonId} descriptions`);
-    assert.match(visual.learningQuestion, /^What must happen between /);
+    assert.ok(!("learningQuestion" in visual), `${key} must not ship a generic learner-facing heading`);
     if (visual.kind === "raster") assert.match(visual.assetBase, new RegExp(`^lesson-visuals/${visual.courseId}/${visual.lessonId}$`));
     else assert.equal(visual.assetBase, null);
   }
@@ -102,6 +106,7 @@ test("prompt and provenance records preserve accuracy and evidence boundaries", 
     assert.ok(visual.alt.length > 50, `${visual.courseId}:${visual.lessonId} alt`);
     assert.ok(visual.longDescription.length > 140, `${visual.courseId}:${visual.lessonId} long description`);
     assert.ok(visual.boundary.length > 70, `${visual.courseId}:${visual.lessonId} boundary`);
+    assert.match(visual.learningQuestion, /^What must happen between /, `${visual.courseId}:${visual.lessonId} historical generation question`);
     if (visual.kind === "raster") {
       assert.equal(visual.provenance.generator, "OpenAI built-in image generation");
       assert.equal(visual.provenance.status, "generated");
@@ -116,12 +121,17 @@ test("prompt and provenance records preserve accuracy and evidence boundaries", 
 
 test("the shared plate is accessible, responsive, and placed before the lesson scroll story", () => {
   assert.equal((courseApp.match(/<LessonConceptPlate /g) ?? []).length, 1);
-  assert.match(courseApp, /<section className="definition-card">[\s\S]*<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} \/>[\s\S]*<ScrollStory\s+className="lesson-motion-story"/);
+  assert.match(courseApp, /<section className="definition-card">[\s\S]*<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} \/>[\s\S]*<ScrollStory[\s\S]{0,100}className="lesson-motion-story"/);
   assert.match(component, /publicPath\(`\$\{asset\}-768\.webp`\)/);
   assert.match(component, /publicPath\(`\$\{asset\}-1536\.webp`\)/);
   assert.match(component, /loading="lazy" decoding="async"/);
   assert.match(component, /<details className="lesson-visual-description">/);
-  assert.match(component, /Where the picture stops/);
+  assert.match(component, /Concept in one view/);
+  assert.match(component, /<MathText>\{lesson\.simple\}<\/MathText>/);
+  assert.doesNotMatch(component, /visual\.learningQuestion|What must happen between/);
+  assert.match(component, /Trace the mechanism/);
+  assert.match(component, /Important limit/);
+  assert.match(component, /Read a text-only explanation/);
   assert.match(component, /Generated concept illustration · exact labels are code-rendered · not a measurement/);
   assert.match(component, /Deterministic SVG\/HTML diagram · exact labels, illustrative layout/);
   assert.match(styles, /@media\(max-width:780px\)[^{]*\{\.lesson-concept-plate/);

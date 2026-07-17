@@ -22,10 +22,11 @@ const registries = {
   embodied: loadTypeScriptModule(join(root, "app/embodied/index.ts")).embodiedLessons,
 };
 
-const [rubric, inventory, catalog] = await Promise.all([
+const [rubric, inventory, catalog, fingerprintSource] = await Promise.all([
   readFile(new URL("../docs/COURSE_PAGE_GRADING_RUBRIC.md", import.meta.url), "utf8"),
   readFile(new URL("../docs/CURRICULUM_INVENTORY.md", import.meta.url), "utf8"),
   readFile(new URL("../app/course-catalog.ts", import.meta.url), "utf8"),
+  readFile(new URL("../scripts/course-grade-fingerprint.mjs", import.meta.url), "utf8"),
 ]);
 
 const expectedPopulations = { llm: 45, worldmodel: 47, generative: 31, rl: 33, embodied: 31 };
@@ -40,6 +41,14 @@ test("the page-grade population covers five homes and all 182 released lessons",
 });
 
 test("course fingerprints ignore generated caches and transient files", async () => {
+  for (const sharedSource of [
+    "app/contrast.css",
+    "app/lesson-concept-plate.tsx",
+    "app/lesson-visual-manifest.json",
+    "app/lesson-visuals.ts",
+    "app/scroll-story-progress.ts",
+  ]) assert.ok(fingerprintSource.includes(`\"${sharedSource}\"`), `${sharedSource} must invalidate stale shared page grades`);
+  assert.doesNotMatch(fingerprintSource, /course-alignment-bridge|course-alignments/);
   for (const path of [
     "public/capstone-artifacts/rl/__pycache__/starter.pyc",
     "app/.pytest_cache/rows.json",

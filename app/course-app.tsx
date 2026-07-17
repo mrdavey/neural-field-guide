@@ -19,8 +19,6 @@ import { WorldModelTransferView } from "./world-models/transfer-view";
 import { WorldModelTechnicalValidation } from "./world-models/technical-validations";
 import { CourseMotionOrchestrator } from "./motion/course-motion-orchestrator";
 import { MotionReveal } from "./motion/motion-reveal";
-import { CourseAlignmentBridge } from "./course-alignment-bridge";
-import { courseAlignmentByLesson } from "./course-alignments";
 import { ResearchCourseLab } from "./research-courses/lab";
 import { ExternalExperimentView } from "./external-experiment-view";
 import { externalExperiments } from "./external-experiments";
@@ -306,7 +304,6 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
   const specializationChoices = lesson.track === course.specializationTrackId
     ? lessons.filter((candidate) => candidate.track === course.specializationTrackId && candidate.id !== lesson.id)
     : [];
-  const courseAlignment = courseAlignmentByLesson[`${course.id}:${lesson.id}`];
   const externalExperiment = Object.values(externalExperiments).find((contract) => contract.courseId === course.id && contract.lessonId === lesson.id);
 
   const answerQuiz = (answer: number) => setProgress((current) => ({ ...current, quizAnswers: { ...current.quizAnswers, [lesson.id]: answer } }));
@@ -357,8 +354,6 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       </div>
     </section> : null}
 
-    {courseAlignment && <CourseAlignmentBridge alignment={courseAlignment} />}
-
     <section className="definition-card">
       <div className="depth-toggle" role="group" aria-label="Explanation depth">
         <button className={depth === "simple" ? "active" : ""} onClick={() => setDepth("simple")}><span>01</span> Plain English</button>
@@ -373,6 +368,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
     <LessonConceptPlate courseId={course.id} lesson={lesson} />
 
     <ScrollStory
+      key={lesson.id}
       className="lesson-motion-story"
       eyebrow={`${motionStory.stages[0].label} → ${motionStory.stages[3].label}`}
       title={<MathText>{motionStory.headline}</MathText>}

@@ -53,7 +53,8 @@ test("lesson pages make prior knowledge and the next reuse explicit", () => {
   }
   assert.match(source.courseView, /prerequisite\.keyIdeas\[0\]/);
   assert.match(source.courseView, /nextGuide\?\.objectives\[0\]/);
-  assert.match(source.guideView, /By the end, you can…/);
+  assert.match(source.guideView, /aria-label="Lesson outcomes and checks"/);
+  assert.doesNotMatch(source.guideView, /By the end, you can/);
   assert.doesNotMatch(source.courseView, /By the end, you can/);
 });
 

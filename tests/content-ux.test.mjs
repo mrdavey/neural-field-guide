@@ -112,14 +112,22 @@ test("course homes use a motivation-led landing-page hierarchy", () => {
   assert.match(styles, /@media\(max-width:780px\)[^]*\.course-pitch>header,\.course-payoffs,\.course-pitch blockquote,\.home-proof,\.home-proof nav,\.home-finale\{grid-template-columns:1fr\}/);
 });
 
-test("lesson objectives appear once in the dedicated by-the-end section", () => {
+test("lesson outcomes appear once without a repetitive by-the-end heading", () => {
   const orient = app.slice(app.indexOf('className="world-model-orient"'), app.indexOf("{lesson.prerequisites?.length"));
-  const bridge = app.slice(app.indexOf('className="knowledge-bridge"'), app.indexOf("{courseAlignment &&"));
+  const bridge = app.slice(app.indexOf('className="knowledge-bridge"'), app.indexOf('className="definition-card"'));
   assert.doesNotMatch(orient, /Observable outcomes|guide\.objectives\.map/);
   assert.doesNotMatch(bridge, /By the end, you can|guide\?\.objectives\[0\]/);
   assert.doesNotMatch(discussion, /objectives|What I am expected to be able to do/);
-  assert.match(guide, /By the end, you can…/);
+  assert.doesNotMatch(guide, /By the end, you can/);
+  assert.match(guide, /aria-label="Lesson outcomes and checks"/);
   assert.match(guide, /objectiveCoverage\.map/);
+});
+
+test("lesson reading begins with the concept instead of a program bridge prediction gate", () => {
+  assert.doesNotMatch(app, /CourseAlignmentBridge|courseAlignmentByLesson|Program bridge/);
+  const lessonView = app.slice(app.indexOf("function LessonView"), app.indexOf("function SynthesisMap"));
+  assert.ok(lessonView.indexOf('className="definition-card"') > lessonView.indexOf('className="knowledge-bridge"'));
+  assert.match(lessonView, /<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} \/>/);
 });
 
 test("post-objective teaching connects outcomes to mechanisms and observable checks", () => {
@@ -148,11 +156,11 @@ test("shared lesson surfaces use topic-specific headings instead of repeated fil
   ]) assert.ok(!`${app}\n${guide}`.includes(phrase), phrase);
   assert.match(app, /motionStory\.stages\[0\]\.title/);
   for (const phrase of [
-    "By the end, you can…",
     "Use each term precisely.",
     "Choose the answer your mechanism predicts.",
     "Trace the mechanism, then transfer it.",
   ]) assert.ok(`${app}\n${guide}\n${evidence}`.includes(phrase), phrase);
+  assert.doesNotMatch(`${app}\n${guide}`, /By the end, you can/);
   for (const phrase of ["These are learning promises, not a preview checklist", "Use the outcome map to connect each claim", "Choose first. Explanations appear after you commit."]) assert.ok(!`${app}\n${guide}`.includes(phrase), phrase);
   for (const pattern of [
     /Test your model of \{lesson\.title\}/,
@@ -179,7 +187,7 @@ test("scroll storytelling is wired across home, every lesson, and capstones", ()
 });
 
 test("scroll storytelling remains progressive, controllable, and motion-safe", () => {
-  for (const phrase of ["requestAnimationFrame", "ResizeObserver", "{ passive: true }", "storyStagePosition(centers, anchor)", "activeStoryStage(stagePosition", "aria-pressed={index === active}", "scrollIntoView", "prefers-reduced-motion: reduce", "aria-hidden=\"true\""]) assert.ok(scrollStory.includes(phrase), phrase);
+  for (const phrase of ["requestAnimationFrame", "ResizeObserver", "{ passive: true }", "storyStagePosition(centers, anchor)", "activeStoryStage(stagePosition", "furthestStoryStagePosition", "storyStageRevealProgress", "is-revealed", "aria-current={index === active ? \"step\" : undefined}", "aria-pressed={index === active}", "scrollIntoView", "prefers-reduced-motion: reduce", "aria-hidden=\"true\""]) assert.ok(scrollStory.includes(phrase), phrase);
   assert.doesNotMatch(scrollStory, /IntersectionObserver/);
   assert.match(scrollStory, /<ThreeStoryCanvas concept=\{concept\}/);
   assert.match(scrollStory, /chromeLabel = "NEURAL FIELD GUIDE \/ LIVE TRACE"/);

@@ -6,7 +6,7 @@ This audit asks one question of every animated or manipulable surface: **what le
 
 ## Static lesson concept plates
 
-All 182 released lessons now place one still concept plate after the plain/deep definition and before the interactive scroll story. The complete atlas is 130 generated raster illustrations plus 52 deterministic SVG/HTML diagrams. The still plate asks which causal change connects its first and fourth stages, provides four exact code-native labels and explanations, states where the picture stops, and exposes a complete text description. Generated plates are explicitly labeled as illustrations rather than measurements; deterministic diagrams are labeled as illustrative layouts. `docs/LESSON_VISUAL_ATLAS.md` owns the full inventory, style, prompt/provenance, generation, accessibility, and verification contract.
+All 182 released lessons now place one still concept plate after the plain/deep definition and before the interactive scroll story. The complete atlas is 130 generated raster illustrations plus 52 deterministic SVG/HTML diagrams. Each plate uses the lesson's canonical plain-language definition as its heading, provides four exact code-native mechanism labels and explanations, names an important conceptual limit, and exposes a complete text-only explanation. Generated plates are explicitly labeled as illustrations rather than measurements; deterministic diagrams are labeled as illustrative layouts. `docs/LESSON_VISUAL_ATLAS.md` owns the full inventory, style, prompt/provenance, generation, accessibility, and verification contract.
 
 This surface is intentionally not manipulable: its role is to give the learner an inspectable picture before motion begins. Raster art carries a concrete analogy or scene, while exact words, notation, state relationships, and evidence boundaries stay in HTML/SVG. Reduced motion and WebGL failure therefore change nothing about the plate. The subsequent story and lab continue to own Change → Observe → Explain.
 
@@ -123,12 +123,6 @@ Nine deterministic lab modes cover the 46 lessons. Each lab places its controls 
 The World Models course also adds six preserved technical-validation dossiers at its section syntheses. These are labeled inspected deterministic fixtures, link to machine-readable JSON, and state the exact claim boundary; they are never presented as browser model executions or external benchmark reproductions.
 
 The 15 July 2026 evidence re-audit also tightened the six dossiers and the research capstone. Belief filtering now exposes every transition, likelihood, unnormalized mass, evidence term, and posterior; the RSSM case rejects a prior whose output changes with the current observation; ensemble uncertainty preserves two confident shared-bias misses; and the Dyna comparison matches 96 model transitions while making terminal reward timing and value bootstrapping explicit. Foundation-model selection changes with the required interface, operations distinguishes same-shape semantic incompatibility from shadow false alarms and canary latency, and the research case retains a complete $3\times4$ seed-by-angle matrix plus three contact counterexamples. These additions are deterministic audit evidence, not learned-model runs or external reproductions.
-
-## Cross-course transfer bridges
-
-Selected high-leverage LLM and World Models lessons include a program bridge before the new mechanism begins. The learning question is whether a mechanism transfers unchanged into a later system. The learner-controlled variable is the committed written prediction; committing reveals the reusable mechanism, ownership boundary, destination build, and evidence artifact. Completion means comparing the prediction with expected reasoning and a specific retry route. This is labeled guided reflection, not automated grading.
-
-The reveal uses shared motion emphasis only after commitment. Reduced motion removes that emphasis without changing content, order, or access. Unreleased destinations remain labeled as future handoffs and are not linked; the same data activates a static route only after the complete course enters the registry. The interaction establishes conceptual transfer and claim boundaries, not mastery of the later course or evidence that an external experiment ran.
 
 ## Course-home causal traces
 

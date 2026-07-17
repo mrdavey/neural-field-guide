@@ -4,10 +4,10 @@
   "population": 47,
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 introduction regrade plus a complete static-visual compatibility regrade; compared every changed introduction objective and all 182 added plates with their exact labels, stage mechanisms, worked context, misconception boundary, accessible description, provenance, and whole-page beginner fit."
+    "method": "Independent 17 July 2026 course-wide semantic regrade of all 187 composed pages after concept-first visual headings, cumulative story reveals, outcome-heading removal, shared lab contrast rules, and retirement of 21 supplemental program bridges; confirmed that required transfer, depth, checks, boundaries, and provenance remain intact."
   },
-  "gradedAt": "2026-07-17T07:41:21Z",
-  "sourceFingerprint": "sha256:0b15e3eb6033dd7ed886d8b0b257a391a7dec810bc3847e5353c1b4217175ec0",
+  "gradedAt": "2026-07-17T08:50:28Z",
+  "sourceFingerprint": "sha256:57dc9c1f27357414c8d14709153fb5c1b304f48d3890ce35c63ccf2637eebe42",
   "pages": [
     {
       "pageType": "home",

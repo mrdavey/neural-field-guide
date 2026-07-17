@@ -4,7 +4,6 @@
     "lessonId": "introduction",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “ASK” and “CHECK” in Introduction?",
     "labels": [
       "ASK",
       "BUILD",
@@ -24,7 +23,6 @@
     "lessonId": "tensors-shapes",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “AXES” and “OUTPUT SHAPE” in Tensors, Shapes & Matrix Multiplication?",
     "labels": [
       "AXES",
       "VALUES",
@@ -44,7 +42,6 @@
     "lessonId": "probability-softmax",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “LOGITS” and “TARGET LOSS” in Probability, Softmax & Cross-Entropy?",
     "labels": [
       "LOGITS",
       "EXPONENTIATE",
@@ -64,7 +61,6 @@
     "lessonId": "gradients-backprop",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “FORWARD VALUE” and “PARAMETER GRADIENT” in Neural Networks, Gradients & Backpropagation?",
     "labels": [
       "FORWARD VALUE",
       "LOSS",
@@ -84,7 +80,6 @@
     "lessonId": "optimizers",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “GRADIENT” and “NEW WEIGHTS” in Optimizers?",
     "labels": [
       "GRADIENT",
       "OPTIMIZER STATE",
@@ -104,7 +99,6 @@
     "lessonId": "tokenization",
     "kind": "raster",
     "concept": "segmentation",
-    "learningQuestion": "What must happen between “TEXT” and “SEQUENCE” in Tokenization?",
     "labels": [
       "TEXT",
       "BOUNDARIES",
@@ -124,7 +118,6 @@
     "lessonId": "embedding-layer",
     "kind": "raster",
     "concept": "embedding",
-    "learningQuestion": "What must happen between “TOKEN ID” and “LEARNED GEOMETRY” in The Embedding Layer?",
     "labels": [
       "TOKEN ID",
       "ROW LOOKUP",
@@ -144,7 +137,6 @@
     "lessonId": "positional-encoding",
     "kind": "raster",
     "concept": "position",
-    "learningQuestion": "What must happen between “TOKEN CONTENT” and “ORDER-AWARE STATE” in Positional Encoding?",
     "labels": [
       "TOKEN CONTENT",
       "POSITION INDEX",
@@ -164,7 +156,6 @@
     "lessonId": "attention",
     "kind": "raster",
     "concept": "attention",
-    "learningQuestion": "What must happen between “QUERY” and “VALUE MIX” in Attention?",
     "labels": [
       "QUERY",
       "KEY SCORES",
@@ -184,7 +175,6 @@
     "lessonId": "layers-of-understanding",
     "kind": "raster",
     "concept": "layers",
-    "learningQuestion": "What must happen between “RESIDUAL STATE” and “DEEPER STATE” in Layers of Understanding?",
     "labels": [
       "RESIDUAL STATE",
       "ATTENTION UPDATE",
@@ -204,7 +194,6 @@
     "lessonId": "learning-to-predict",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CAUSAL CONTEXT” and “MEAN LOSS” in Learning to Predict?",
     "labels": [
       "CAUSAL CONTEXT",
       "VOCAB LOGITS",
@@ -224,7 +213,6 @@
     "lessonId": "gpt2-from-scratch",
     "kind": "raster",
     "concept": "layers",
-    "learningQuestion": "What must happen between “TOKEN IDS” and “VOCAB LOGITS” in GPT-2 → nanochat: Build the Stack?",
     "labels": [
       "TOKEN IDS",
       "EMBED + POSITION",
@@ -244,7 +232,6 @@
     "lessonId": "pretraining-overview",
     "kind": "raster",
     "concept": "training",
-    "learningQuestion": "What must happen between “DATA BATCH” and “CHECKPOINT” in Overview?",
     "labels": [
       "DATA BATCH",
       "PREDICTION LOSS",
@@ -264,7 +251,6 @@
     "lessonId": "objectives-details",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “INPUT TOKENS” and “LOSS MASK” in Training Objectives and Architectural Details?",
     "labels": [
       "INPUT TOKENS",
       "VISIBILITY RULE",
@@ -284,7 +270,6 @@
     "lessonId": "scaling-laws",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “PARAMETERS” and “MEASURED FRONTIER” in Scaling Laws and Optimization?",
     "labels": [
       "PARAMETERS",
       "TRAINING TOKENS",
@@ -304,7 +289,6 @@
     "lessonId": "data-engineering",
     "kind": "raster",
     "concept": "data",
-    "learningQuestion": "What must happen between “SOURCES” and “MIX + SAMPLE” in Training Data Engineering?",
     "labels": [
       "SOURCES",
       "FILTER + GOVERN",
@@ -324,7 +308,6 @@
     "lessonId": "infrastructure",
     "kind": "deterministic",
     "concept": "systems",
-    "learningQuestion": "What must happen between “GLOBAL BATCH” and “CONSISTENT UPDATE” in Training Infrastructure and Systems?",
     "labels": [
       "GLOBAL BATCH",
       "SHARD WORK",
@@ -344,7 +327,6 @@
     "lessonId": "advanced-objectives",
     "kind": "raster",
     "concept": "training",
-    "learningQuestion": "What must happen between “INPUT CORRUPTION” and “TRANSFER TEST” in Advanced Pretraining Objectives?",
     "labels": [
       "INPUT CORRUPTION",
       "TARGET DESIGN",
@@ -364,7 +346,6 @@
     "lessonId": "pretraining-evaluation",
     "kind": "deterministic",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CHECKPOINT” and “REGRESSION DECISION” in Evaluation During Pretraining?",
     "labels": [
       "CHECKPOINT",
       "HELD-OUT LOSS",
@@ -384,7 +365,6 @@
     "lessonId": "olmo3-case-study",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “DOLMA 3 MIX” and “OLMES EVIDENCE” in Case Study — OLMo 3 Model Flow?",
     "labels": [
       "DOLMA 3 MIX",
       "DOLMINO",
@@ -404,7 +384,6 @@
     "lessonId": "instruction-tuning-rlhf",
     "kind": "raster",
     "concept": "preference",
-    "learningQuestion": "What must happen between “BASE MODEL” and “OUTCOME FEEDBACK” in Bridge: From Base Model to Assistant?",
     "labels": [
       "BASE MODEL",
       "DEMONSTRATIONS",
@@ -424,7 +403,6 @@
     "lessonId": "posttraining-overview",
     "kind": "raster",
     "concept": "preference",
-    "learningQuestion": "What must happen between “PROMPT” and “UPDATED POLICY” in Overview?",
     "labels": [
       "PROMPT",
       "CANDIDATE RESPONSES",
@@ -444,7 +422,6 @@
     "lessonId": "sft",
     "kind": "raster",
     "concept": "training",
-    "learningQuestion": "What must happen between “CHAT TEMPLATE” and “SFT UPDATE” in Supervised Fine-Tuning?",
     "labels": [
       "CHAT TEMPLATE",
       "PROMPT MASK",
@@ -464,7 +441,6 @@
     "lessonId": "preference-optimization",
     "kind": "deterministic",
     "concept": "preference",
-    "learningQuestion": "What must happen between “SHARED PROMPT” and “POLICY UPDATE” in Preference Optimization?",
     "labels": [
       "SHARED PROMPT",
       "CHOSEN / REJECTED",
@@ -484,7 +460,6 @@
     "lessonId": "rl-fundamentals",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “STATE” and “ADVANTAGE UPDATE” in RL Fundamentals?",
     "labels": [
       "STATE",
       "SAMPLED ACTION",
@@ -504,7 +479,6 @@
     "lessonId": "rlhf",
     "kind": "raster",
     "concept": "preference",
-    "learningQuestion": "What must happen between “HUMAN RANKINGS” and “PPO + KL” in RLHF?",
     "labels": [
       "HUMAN RANKINGS",
       "REWARD MODEL",
@@ -524,7 +498,6 @@
     "lessonId": "tools-safety",
     "kind": "raster",
     "concept": "security",
-    "learningQuestion": "What must happen between “MODEL REQUEST” and “RESULT + TRACE” in Tools and Safety Tuning?",
     "labels": [
       "MODEL REQUEST",
       "SCHEMA CHECK",
@@ -544,7 +517,6 @@
     "lessonId": "tulu3-case-study",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “SFT MIX” and “AGENT EVALUATION” in Case Study — Tülu 3 → DR Tulu?",
     "labels": [
       "SFT MIX",
       "PREFERENCE STAGE",
@@ -564,7 +536,6 @@
     "lessonId": "decoding-sampling",
     "kind": "deterministic",
     "concept": "decoding",
-    "learningQuestion": "What must happen between “LOGITS” and “SAMPLED TOKEN” in Decoding and Sampling?",
     "labels": [
       "LOGITS",
       "TEMPERATURE",
@@ -584,7 +555,6 @@
     "lessonId": "generation-kv-cache",
     "kind": "deterministic",
     "concept": "memory",
-    "learningQuestion": "What must happen between “PREFILL” and “APPEND + DECODE” in The Generation Loop and KV Cache?",
     "labels": [
       "PREFILL",
       "LAYER K/V",
@@ -604,7 +574,6 @@
     "lessonId": "quantization-memory",
     "kind": "deterministic",
     "concept": "compression",
-    "learningQuestion": "What must happen between “FLOAT VALUES” and “LOW-BIT KERNEL” in Quantization and Memory?",
     "labels": [
       "FLOAT VALUES",
       "SCALE + ZERO POINT",
@@ -624,7 +593,6 @@
     "lessonId": "serving-systems",
     "kind": "deterministic",
     "concept": "systems",
-    "learningQuestion": "What must happen between “ARRIVAL QUEUE” and “RETIRE / ADMIT” in Serving: Batching, Throughput and Latency?",
     "labels": [
       "ARRIVAL QUEUE",
       "PREFILL",
@@ -644,7 +612,6 @@
     "lessonId": "test-time-compute",
     "kind": "raster",
     "concept": "routing",
-    "learningQuestion": "What must happen between “PROBLEM” and “VERIFIER” in Reasoning and Test-Time Compute?",
     "labels": [
       "PROBLEM",
       "COMPUTE BUDGET",
@@ -664,7 +631,6 @@
     "lessonId": "context-engineering",
     "kind": "raster",
     "concept": "data",
-    "learningQuestion": "What must happen between “POLICY” and “ORDERED CONTEXT” in Prompting and Context Engineering?",
     "labels": [
       "POLICY",
       "EVIDENCE",
@@ -684,7 +650,6 @@
     "lessonId": "rag",
     "kind": "raster",
     "concept": "retrieval",
-    "learningQuestion": "What must happen between “DOCUMENT CHUNKS” and “GROUNDED ANSWER” in Embeddings, Semantic Search and RAG?",
     "labels": [
       "DOCUMENT CHUNKS",
       "QUERY EMBEDDING",
@@ -704,7 +669,6 @@
     "lessonId": "agent-loops",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “GOAL + STATE” and “OBSERVE / STOP” in Tool Use and Agent Loops?",
     "labels": [
       "GOAL + STATE",
       "DECIDE",
@@ -724,7 +688,6 @@
     "lessonId": "evaluation-design",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “TASK CONTRACT” and “ERROR ANALYSIS” in LLM Evaluation and LLM-as-a-Judge?",
     "labels": [
       "TASK CONTRACT",
       "TEST CASES",
@@ -744,7 +707,6 @@
     "lessonId": "security-privacy",
     "kind": "raster",
     "concept": "security",
-    "learningQuestion": "What must happen between “TRUST BOUNDARIES” and “SAFE EFFECT” in Security, Privacy and Prompt Injection?",
     "labels": [
       "TRUST BOUNDARIES",
       "UNTRUSTED INPUT",
@@ -764,7 +726,6 @@
     "lessonId": "observability-governance",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “REQUEST TRACE” and “OWNER DECISION” in Production Observability, Cost and Governance?",
     "labels": [
       "REQUEST TRACE",
       "STAGE METRICS",
@@ -784,7 +745,6 @@
     "lessonId": "distillation",
     "kind": "raster",
     "concept": "compression",
-    "learningQuestion": "What must happen between “TEACHER LOGITS” and “COMPACT MODEL” in Distillation?",
     "labels": [
       "TEACHER LOGITS",
       "SOFT TARGETS",
@@ -804,7 +764,6 @@
     "lessonId": "lora",
     "kind": "raster",
     "concept": "adapter",
-    "learningQuestion": "What must happen between “FROZEN WEIGHT” and “ADDITIVE DELTA” in LoRA?",
     "labels": [
       "FROZEN WEIGHT",
       "LOW-RANK A",
@@ -824,7 +783,6 @@
     "lessonId": "moe",
     "kind": "raster",
     "concept": "routing",
-    "learningQuestion": "What must happen between “TOKEN STATE” and “WEIGHTED COMBINE” in Mixture of Experts (MoE)?",
     "labels": [
       "TOKEN STATE",
       "ROUTER SCORES",
@@ -844,7 +802,6 @@
     "lessonId": "multimodal-models",
     "kind": "raster",
     "concept": "multimodal",
-    "learningQuestion": "What must happen between “MODALITY ENCODERS” and “CROSS-MODAL DECODE” in Multimodal Language Models?",
     "labels": [
       "MODALITY ENCODERS",
       "PATCH / TOKEN FEATURES",
@@ -864,7 +821,6 @@
     "lessonId": "interpretability-editing",
     "kind": "raster",
     "concept": "interpretability",
-    "learningQuestion": "What must happen between “ACTIVATIONS” and “CAUSAL EVIDENCE” in Interpretability and Model Editing?",
     "labels": [
       "ACTIVATIONS",
       "FEATURE HYPOTHESIS",
@@ -884,7 +840,6 @@
     "lessonId": "world-models",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “SITUATION” and “CHECK” in What Is a World Model??",
     "labels": [
       "SITUATION",
       "POSSIBILITIES",
@@ -904,7 +859,6 @@
     "lessonId": "dynamics-tensors",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “STATE” and “NEXT STATE” in Tensors and Shapes for Dynamics?",
     "labels": [
       "STATE",
       "ACTION",
@@ -924,7 +878,6 @@
     "lessonId": "stochastic-futures",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONDITION” and “DECISION” in Probability and Stochastic Futures?",
     "labels": [
       "CONDITION",
       "BRANCH",
@@ -944,7 +897,6 @@
     "lessonId": "learning-dynamics",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “PREDICT” and “UPDATE” in Neural Networks, Gradients and Dynamics Learning?",
     "labels": [
       "PREDICT",
       "LOSS",
@@ -964,7 +916,6 @@
     "lessonId": "sequential-state",
     "kind": "raster",
     "concept": "memory",
-    "learningQuestion": "What must happen between “OBSERVATION” and “NEXT EMISSION” in State, Observation, Action and Trajectory?",
     "labels": [
       "OBSERVATION",
       "HISTORY",
@@ -984,7 +935,6 @@
     "lessonId": "rewards-returns-policies",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “REWARD” and “POLICY” in Rewards, Returns and Policies?",
     "labels": [
       "REWARD",
       "RETURN",
@@ -1004,7 +954,6 @@
     "lessonId": "mdps-bellman",
     "kind": "deterministic",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “STATE + ACTION” and “BACKUP” in MDPs and Bellman Backups?",
     "labels": [
       "STATE + ACTION",
       "SUCCESSORS",
@@ -1024,7 +973,6 @@
     "lessonId": "belief-states-filtering",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “PRIOR” and “POSTERIOR” in POMDPs, Belief States and Filtering?",
     "labels": [
       "PRIOR",
       "ACTION PREDICT",
@@ -1044,7 +992,6 @@
     "lessonId": "sensor-representations",
     "kind": "raster",
     "concept": "embedding",
-    "learningQuestion": "What must happen between “SENSOR” and “AUDIT” in From Sensors to Predictive Features?",
     "labels": [
       "SENSOR",
       "ENCODER",
@@ -1064,7 +1011,6 @@
     "lessonId": "autoencoders-latents",
     "kind": "raster",
     "concept": "compression",
-    "learningQuestion": "What must happen between “OBSERVATION” and “RECONSTRUCT” in Autoencoders and Latent Compression?",
     "labels": [
       "OBSERVATION",
       "ENCODE",
@@ -1084,7 +1030,6 @@
     "lessonId": "stochastic-latents-vaes",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “MEAN + SCALE” and “KL + RECON” in Stochastic Latents and Variational Autoencoders?",
     "labels": [
       "MEAN + SCALE",
       "NOISE",
@@ -1104,7 +1049,6 @@
     "lessonId": "action-conditioned-transitions",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “STATE” and “CONTRAST” in Action-Conditioned Transition Models?",
     "labels": [
       "STATE",
       "ACTION",
@@ -1124,7 +1068,6 @@
     "lessonId": "recurrent-state-space",
     "kind": "raster",
     "concept": "memory",
-    "learningQuestion": "What must happen between “MEMORY” and “POSTERIOR” in Recurrent and State-Space Models?",
     "labels": [
       "MEMORY",
       "PRIOR",
@@ -1144,7 +1087,6 @@
     "lessonId": "rssm-planet-case-study",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “ENCODE” and “CONTROL” in Case Study — World Models to PlaNet?",
     "labels": [
       "ENCODE",
       "DYNAMICS",
@@ -1164,7 +1106,6 @@
     "lessonId": "prediction-targets",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “LATENT” and “WEIGHTED LOSS” in Observation, Reward and Continuation Targets?",
     "labels": [
       "LATENT",
       "HEADS",
@@ -1184,7 +1125,6 @@
     "lessonId": "reconstruction-feature-prediction",
     "kind": "raster",
     "concept": "multimodal",
-    "learningQuestion": "What must happen between “FUTURE” and “TASK TEST” in Reconstruction vs Feature Prediction?",
     "labels": [
       "FUTURE",
       "PIXELS",
@@ -1204,7 +1144,6 @@
     "lessonId": "multistep-overshooting",
     "kind": "deterministic",
     "concept": "memory",
-    "learningQuestion": "What must happen between “POSTERIOR START” and “HORIZON TEST” in One-Step, Multi-Step and Overshooting Objectives?",
     "labels": [
       "POSTERIOR START",
       "PRIOR STEP",
@@ -1224,7 +1163,6 @@
     "lessonId": "latent-prior-posterior",
     "kind": "deterministic",
     "concept": "preference",
-    "learningQuestion": "What must happen between “HISTORY” and “POSTERIOR + KL” in Prior–Posterior Learning and KL Balancing?",
     "labels": [
       "HISTORY",
       "PRIOR",
@@ -1244,7 +1182,6 @@
     "lessonId": "trajectory-data-replay",
     "kind": "raster",
     "concept": "data",
-    "learningQuestion": "What must happen between “COLLECT” and “SUPPORT” in Trajectory Data, Replay and Coverage?",
     "labels": [
       "COLLECT",
       "EPISODES",
@@ -1264,7 +1201,6 @@
     "lessonId": "uncertainty-ensembles",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “DISTRIBUTIONS” and “FALLBACK” in Uncertainty, Calibration and Ensembles?",
     "labels": [
       "DISTRIBUTIONS",
       "DISAGREEMENT",
@@ -1284,7 +1220,6 @@
     "lessonId": "imagined-rollouts",
     "kind": "deterministic",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “START STATE” and “RETURN” in Imagined Rollouts and Return Estimates?",
     "labels": [
       "START STATE",
       "ACTIONS",
@@ -1304,7 +1239,6 @@
     "lessonId": "shooting-cem",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “PROPOSAL” and “REFIT” in Random Shooting and the Cross-Entropy Method?",
     "labels": [
       "PROPOSAL",
       "SAMPLES",
@@ -1324,7 +1258,6 @@
     "lessonId": "model-predictive-control",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “OBSERVE” and “REPLAN” in Model-Predictive Control and Replanning?",
     "labels": [
       "OBSERVE",
       "PLAN",
@@ -1344,7 +1277,6 @@
     "lessonId": "differentiable-planning",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “ACTIONS” and “PROJECT” in Differentiable Latent Planning?",
     "labels": [
       "ACTIONS",
       "ROLLOUT",
@@ -1364,7 +1296,6 @@
     "lessonId": "actor-critic-lambda",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “IMAGINE” and “ACTOR” in Actor–Critic Learning and λ-Returns?",
     "labels": [
       "IMAGINE",
       "λ-RETURN",
@@ -1384,7 +1315,6 @@
     "lessonId": "dreamer-imagination",
     "kind": "raster",
     "concept": "training",
-    "learningQuestion": "What must happen between “COLLECT” and “ACT” in Dreamer and Learning Behavior in Imagination?",
     "labels": [
       "COLLECT",
       "MODEL",
@@ -1404,7 +1334,6 @@
     "lessonId": "muzero-tree-search",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “ROOT” and “BACKUP” in MuZero and Task-Relevant Tree Search?",
     "labels": [
       "ROOT",
       "EXPAND",
@@ -1424,7 +1353,6 @@
     "lessonId": "dyna-tdmpc-case-study",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “MODEL TARGET” and “DECISION” in Case Study — Dyna, Dreamer, MuZero and TD-MPC?",
     "labels": [
       "MODEL TARGET",
       "TRAINING USE",
@@ -1444,7 +1372,6 @@
     "lessonId": "video-tokenization",
     "kind": "deterministic",
     "concept": "segmentation",
-    "learningQuestion": "What must happen between “FRAMES” and “ACTION ALIGN” in Video as Sequential Data and Spatiotemporal Tokens?",
     "labels": [
       "FRAMES",
       "PATCH + STRIDE",
@@ -1464,7 +1391,6 @@
     "lessonId": "autoregressive-diffusion-dynamics",
     "kind": "raster",
     "concept": "decoding",
-    "learningQuestion": "What must happen between “CONTEXT” and “VERIFY” in Autoregressive and Diffusion Video Dynamics?",
     "labels": [
       "CONTEXT",
       "AR PATH",
@@ -1484,7 +1410,6 @@
     "lessonId": "latent-actions-passive-video",
     "kind": "raster",
     "concept": "routing",
-    "learningQuestion": "What must happen between “BEFORE + AFTER” and “INTERVENE” in Latent Actions from Passive Video?",
     "labels": [
       "BEFORE + AFTER",
       "INFER CODE",
@@ -1504,7 +1429,6 @@
     "lessonId": "jepa-vjepa",
     "kind": "raster",
     "concept": "multimodal",
-    "learningQuestion": "What must happen between “VISIBLE” and “TRANSFER” in JEPA and V-JEPA Predictive Representations?",
     "labels": [
       "VISIBLE",
       "TARGET",
@@ -1524,7 +1448,6 @@
     "lessonId": "genie-interactive-worlds",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “START” and “CONTINUE” in Genie and Generative Interactive Environments?",
     "labels": [
       "START",
       "CONTROL",
@@ -1544,7 +1467,6 @@
     "lessonId": "foundation-world-models-case-study",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “INTERFACE” and “EVIDENCE” in Case Study — Comparing Foundation World Models?",
     "labels": [
       "INTERFACE",
       "TARGET",
@@ -1564,7 +1486,6 @@
     "lessonId": "world-model-evaluation",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “DECIDE” in Evaluating World Models?",
     "labels": [
       "CONTRACT",
       "PREDICT",
@@ -1584,7 +1505,6 @@
     "lessonId": "compounding-error-exploitation",
     "kind": "raster",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “ONE-STEP BIAS” and “REALITY CHECK” in Compounding Error and Model Exploitation?",
     "labels": [
       "ONE-STEP BIAS",
       "ROLLOUT DRIFT",
@@ -1604,7 +1524,6 @@
     "lessonId": "goal-conditioned-robotics",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “OBSERVE + GOAL” and “ACT + VERIFY” in Goal-Conditioned Robotics?",
     "labels": [
       "OBSERVE + GOAL",
       "IMAGINE",
@@ -1624,7 +1543,6 @@
     "lessonId": "system-identification-sim-to-real",
     "kind": "raster",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “INPUT” and “TRANSFER GAP” in System Identification and Sim-to-Real?",
     "labels": [
       "INPUT",
       "RESPONSE",
@@ -1644,7 +1562,6 @@
     "lessonId": "safe-constrained-planning",
     "kind": "raster",
     "concept": "routing",
-    "learningQuestion": "What must happen between “PROPOSAL” and “FALLBACK” in Safe and Constrained Planning?",
     "labels": [
       "PROPOSAL",
       "CONSTRAINTS",
@@ -1664,7 +1581,6 @@
     "lessonId": "world-model-operations-case-study",
     "kind": "raster",
     "concept": "systems",
-    "learningQuestion": "What must happen between “BUNDLE” and “ROLLBACK” in Case Study — Operating a World-Model Controller?",
     "labels": [
       "BUNDLE",
       "SHADOW",
@@ -1684,7 +1600,6 @@
     "lessonId": "object-centric-dynamics",
     "kind": "raster",
     "concept": "routing",
-    "learningQuestion": "What must happen between “SCENE” and “MATCH” in Object-Centric Dynamics?",
     "labels": [
       "SCENE",
       "SLOTS",
@@ -1704,7 +1619,6 @@
     "lessonId": "hierarchical-multiscale",
     "kind": "raster",
     "concept": "layers",
-    "learningQuestion": "What must happen between “SLOW STATE” and “BOUNDARY” in Hierarchical and Multi-Scale World Models?",
     "labels": [
       "SLOW STATE",
       "SUBGOAL",
@@ -1724,7 +1638,6 @@
     "lessonId": "geometry-physical-priors",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “FRAME” and “COMPARE” in Geometry and Physical Priors?",
     "labels": [
       "FRAME",
       "TRANSFORM",
@@ -1744,7 +1657,6 @@
     "lessonId": "causal-counterfactual-models",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “MECHANISMS” and “COUNTERFACT” in Causal and Counterfactual World Models?",
     "labels": [
       "MECHANISMS",
       "OBSERVE",
@@ -1764,7 +1676,6 @@
     "lessonId": "language-multimodal-world-models",
     "kind": "raster",
     "concept": "multimodal",
-    "learningQuestion": "What must happen between “CLOCKS” and “TEST” in Language and Multimodal World Models?",
     "labels": [
       "CLOCKS",
       "ALIGN",
@@ -1784,7 +1695,6 @@
     "lessonId": "world-model-research-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “HYPOTHESIS” and “BOUNDARY” in Research Capstone — A Falsifiable World-Model Study?",
     "labels": [
       "HYPOTHESIS",
       "PROTOCOL",
@@ -1804,7 +1714,6 @@
     "lessonId": "generation-as-distribution",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “QUESTION” and “LIMIT” in What Is a Generative Model??",
     "labels": [
       "QUESTION",
       "EXAMPLE",
@@ -1824,7 +1733,6 @@
     "lessonId": "likelihood-cross-entropy",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Likelihood, Cross-Entropy & Units?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1844,7 +1752,6 @@
     "lessonId": "sampling-randomness",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Sampling, Seeds & Random Variables?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1864,7 +1771,6 @@
     "lessonId": "divergences-distance",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in KL, Divergences & Distance?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1884,7 +1790,6 @@
     "lessonId": "distribution-workbench-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Distribution Workbench?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1904,7 +1809,6 @@
     "lessonId": "autoregressive-generators",
     "kind": "raster",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Autoregressive Generators Beyond Text?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1924,7 +1828,6 @@
     "lessonId": "latent-variable-models",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Latent-Variable Models?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1944,7 +1847,6 @@
     "lessonId": "amortized-inference-elbo",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Amortized Inference & the ELBO?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1964,7 +1866,6 @@
     "lessonId": "vae-posterior-collapse",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in VAEs & Posterior Collapse?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -1984,7 +1885,6 @@
     "lessonId": "latent-models-capstone",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build and Diagnose a VAE?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2004,7 +1904,6 @@
     "lessonId": "change-of-variables",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Change of Variables?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2024,7 +1923,6 @@
     "lessonId": "normalizing-flows",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Normalizing Flows?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2044,7 +1942,6 @@
     "lessonId": "energy-based-models",
     "kind": "raster",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Energy-Based Models?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2064,7 +1961,6 @@
     "lessonId": "mcmc-langevin-sampling",
     "kind": "raster",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in MCMC & Langevin Sampling?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2084,7 +1980,6 @@
     "lessonId": "flow-energy-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Flows vs Energies: Sampling Lab?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2104,7 +1999,6 @@
     "lessonId": "corruption-denoising",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Corruption & Denoising?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2124,7 +2018,6 @@
     "lessonId": "score-matching",
     "kind": "raster",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Scores & Denoising Score Matching?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2144,7 +2037,6 @@
     "lessonId": "ddpm-objective",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in The DDPM Training Objective?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2164,7 +2056,6 @@
     "lessonId": "diffusion-samplers-schedules",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Diffusion Samplers & Schedules?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2184,7 +2075,6 @@
     "lessonId": "diffusion-model-capstone",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Diffusion Model?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2204,7 +2094,6 @@
     "lessonId": "conditional-generation",
     "kind": "raster",
     "concept": "multimodal",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Conditional Generation?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2224,7 +2113,6 @@
     "lessonId": "classifier-free-guidance",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Classifier-Free Guidance?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2244,7 +2132,6 @@
     "lessonId": "inverse-problems-editing",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Inverse Problems & Editing?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2264,7 +2151,6 @@
     "lessonId": "compositional-control",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Composition, Control & Trade-offs?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2284,7 +2170,6 @@
     "lessonId": "conditional-safety-capstone",
     "kind": "raster",
     "concept": "security",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Conditional Generation Safety Audit?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2304,7 +2189,6 @@
     "lessonId": "generative-data-systems",
     "kind": "raster",
     "concept": "systems",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Data & Systems for Generative Models?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2324,7 +2208,6 @@
     "lessonId": "memorization-privacy",
     "kind": "raster",
     "concept": "security",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Memorization, Privacy & Misuse?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2344,7 +2227,6 @@
     "lessonId": "matched-budget-evaluation",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Matched-Budget Generative Evaluation?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2364,7 +2246,6 @@
     "lessonId": "reproducible-gpu-experiments",
     "kind": "raster",
     "concept": "systems",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproducible GPU Experiments?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2384,7 +2265,6 @@
     "lessonId": "generative-research-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Matched-Family Research Study?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2404,7 +2284,6 @@
     "lessonId": "sequential-decision-systems",
     "kind": "deterministic",
     "concept": "agent",
-    "learningQuestion": "What must happen between “QUESTION” and “LIMIT” in What Is Reinforcement Learning??",
     "labels": [
       "QUESTION",
       "EXAMPLE",
@@ -2424,7 +2303,6 @@
     "lessonId": "mdps-rewards",
     "kind": "deterministic",
     "concept": "agent",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in MDPs, Rewards & Discounting?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2444,7 +2322,6 @@
     "lessonId": "partial-observation",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Partial Observation & Belief?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2464,7 +2341,6 @@
     "lessonId": "policies-occupancy",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Policies, Occupancy & Evaluation?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2484,7 +2360,6 @@
     "lessonId": "tabular-control-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Tabular Control Workbench?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2504,7 +2379,6 @@
     "lessonId": "dynamic-programming",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Dynamic Programming?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2524,7 +2398,6 @@
     "lessonId": "monte-carlo-estimation",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Monte Carlo Estimation?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2544,7 +2417,6 @@
     "lessonId": "temporal-difference-learning",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Temporal-Difference Learning?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2564,7 +2436,6 @@
     "lessonId": "sarsa-q-learning",
     "kind": "deterministic",
     "concept": "routing",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in SARSA, Q-Learning & Off-Policy Targets?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2584,7 +2455,6 @@
     "lessonId": "value-methods-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Value-Learning Agent?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2604,7 +2474,6 @@
     "lessonId": "function-approximation",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Function Approximation?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2624,7 +2493,6 @@
     "lessonId": "replay-target-networks",
     "kind": "raster",
     "concept": "systems",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Replay Buffers & Target Networks?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2644,7 +2512,6 @@
     "lessonId": "dqn",
     "kind": "raster",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Deep Q-Networks?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2664,7 +2531,6 @@
     "lessonId": "exploration-deep-rl",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Exploration in Deep RL?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2684,7 +2550,6 @@
     "lessonId": "deep-value-capstone",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build and Diagnose a DQN?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2704,7 +2569,6 @@
     "lessonId": "policy-gradients",
     "kind": "deterministic",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Policy Gradients?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2724,7 +2588,6 @@
     "lessonId": "baselines-advantages",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Baselines, Advantages & GAE?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2744,7 +2607,6 @@
     "lessonId": "actor-critic",
     "kind": "deterministic",
     "concept": "preference",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Actor-Critic Methods?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2764,7 +2626,6 @@
     "lessonId": "on-policy-capstone",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build an On-Policy Agent?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2784,7 +2645,6 @@
     "lessonId": "learned-dynamics-control",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Learned Dynamics for Control?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2804,7 +2664,6 @@
     "lessonId": "shooting-mpc",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Shooting, CEM & Model Predictive Control?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2824,7 +2683,6 @@
     "lessonId": "dyna-imagination",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Dyna & Imagination Learning?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2844,7 +2702,6 @@
     "lessonId": "model-uncertainty-exploitation",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Model Uncertainty & Exploitation?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2864,7 +2721,6 @@
     "lessonId": "model-based-capstone",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Model-Based Agent?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2884,7 +2740,6 @@
     "lessonId": "behavior-cloning",
     "kind": "raster",
     "concept": "training",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Behavior Cloning?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2904,7 +2759,6 @@
     "lessonId": "covariate-shift-dagger",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Covariate Shift & Dataset Aggregation?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2924,7 +2778,6 @@
     "lessonId": "offline-rl-coverage",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Offline RL, Coverage & Conservatism?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2944,7 +2797,6 @@
     "lessonId": "sequence-policy-capstone",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Sequence Policies from Logged Data?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2964,7 +2816,6 @@
     "lessonId": "rl-evaluation-seeds",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in RL Evaluation, Seeds & Uncertainty?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -2984,7 +2835,6 @@
     "lessonId": "safe-constrained-rl",
     "kind": "raster",
     "concept": "security",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Constraints, Intervention & Safe RL?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3004,7 +2854,6 @@
     "lessonId": "reproducible-rl-gpu",
     "kind": "raster",
     "concept": "systems",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproducible GPU RL?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3024,7 +2873,6 @@
     "lessonId": "rl-research-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproduced Baseline + Original Intervention?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3044,7 +2892,6 @@
     "lessonId": "embodied-task-contracts",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “QUESTION” and “LIMIT” in What Is Embodied AI??",
     "labels": [
       "QUESTION",
       "EXAMPLE",
@@ -3064,7 +2911,6 @@
     "lessonId": "observation-action-spaces",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Observation & Action Spaces?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3084,7 +2930,6 @@
     "lessonId": "coordinate-frames-time",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Coordinate Frames, Time & Synchronization?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3104,7 +2949,6 @@
     "lessonId": "embodied-partial-observation",
     "kind": "raster",
     "concept": "memory",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Partial Observation in the Physical Loop?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3124,7 +2968,6 @@
     "lessonId": "task-contract-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build an Embodied Task Contract?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3144,7 +2987,6 @@
     "lessonId": "cameras-proprioception",
     "kind": "raster",
     "concept": "multimodal",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Cameras, Proprioception & Sensor Noise?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3164,7 +3006,6 @@
     "lessonId": "calibration-transforms",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Calibration & Spatial Transforms?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3184,7 +3025,6 @@
     "lessonId": "spatial-object-representations",
     "kind": "raster",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Spatial & Object Representations?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3204,7 +3044,6 @@
     "lessonId": "sensor-fusion-tracking",
     "kind": "deterministic",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Sensor Fusion & Tracking?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3224,7 +3063,6 @@
     "lessonId": "state-estimator-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Multimodal State Estimator?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3244,7 +3082,6 @@
     "lessonId": "teleoperation-demonstrations",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Teleoperation & Demonstrations?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3264,7 +3101,6 @@
     "lessonId": "trajectory-datasets",
     "kind": "raster",
     "concept": "data",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Trajectory Schemas & Dataset Cards?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3284,7 +3120,6 @@
     "lessonId": "robot-data-quality",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Robot Data Quality & Coverage?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3304,7 +3139,6 @@
     "lessonId": "action-representations-chunking",
     "kind": "raster",
     "concept": "pipeline",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Action Representations & Chunking?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3324,7 +3158,6 @@
     "lessonId": "behavior-cloning-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Behavior-Cloning Policy?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3344,7 +3177,6 @@
     "lessonId": "language-grounding",
     "kind": "raster",
     "concept": "multimodal",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Language Grounding?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3364,7 +3196,6 @@
     "lessonId": "multimodal-policy-encoders",
     "kind": "raster",
     "concept": "attention",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Multimodal Policy Encoders?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3384,7 +3215,6 @@
     "lessonId": "transformer-action-policies",
     "kind": "raster",
     "concept": "attention",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Transformer Action Policies?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3404,7 +3234,6 @@
     "lessonId": "diffusion-policies",
     "kind": "raster",
     "concept": "distribution",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Diffusion Policies?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3424,7 +3253,6 @@
     "lessonId": "vla-policy-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Language-Conditioned Action Policy?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3444,7 +3272,6 @@
     "lessonId": "feedback-control",
     "kind": "deterministic",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Feedback Control for Learned Policies?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3464,7 +3291,6 @@
     "lessonId": "world-model-robot-planning",
     "kind": "raster",
     "concept": "agent",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in World-Model Planning for Robots?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3484,7 +3310,6 @@
     "lessonId": "hierarchical-skills",
     "kind": "raster",
     "concept": "routing",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Hierarchical Skills & Long Horizons?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3504,7 +3329,6 @@
     "lessonId": "sim-to-real-identification",
     "kind": "raster",
     "concept": "optimization",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in System Identification & Sim-to-Real?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3524,7 +3348,6 @@
     "lessonId": "recovery-intervention-capstone",
     "kind": "raster",
     "concept": "security",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Recovery, Intervention & Human Control?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3544,7 +3367,6 @@
     "lessonId": "embodied-evaluation-suites",
     "kind": "deterministic",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Embodied Evaluation Suites?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3564,7 +3386,6 @@
     "lessonId": "robustness-generalization",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Robustness & Generalization?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3584,7 +3405,6 @@
     "lessonId": "latency-safety-operations",
     "kind": "raster",
     "concept": "systems",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Latency, Safety & Operations?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3604,7 +3424,6 @@
     "lessonId": "reproducible-embodied-gpu",
     "kind": "raster",
     "concept": "systems",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproducible Embodied GPU Runs?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",
@@ -3624,7 +3443,6 @@
     "lessonId": "embodied-research-capstone",
     "kind": "raster",
     "concept": "evaluation",
-    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Original Embodied-System Study?",
     "labels": [
       "CONTRACT",
       "TRANSFORM",

@@ -20,3 +20,12 @@ export function storyStagePosition(centers: number[], anchor: number) {
 export function activeStoryStage(stagePosition: number, stageCount: number) {
   return clampStoryValue(Math.floor(stagePosition + .5), 0, Math.max(0, stageCount - 1));
 }
+
+export function furthestStoryStagePosition(previousFurthest: number, stagePosition: number) {
+  return Math.max(previousFurthest, stagePosition);
+}
+
+export function storyStageRevealProgress(stageIndex: number, furthestPosition: number) {
+  if (stageIndex === 0) return 1;
+  return clampStoryValue((furthestPosition - (stageIndex - .7)) / .7);
+}

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [globalStyles, learningActivityStyles, contrastStyles, layout, llmData, worldModelData, researchCourseData] = await Promise.all([
+const [globalStyles, learningActivityStyles, contrastStyles, layout, llmData, worldModelData, researchCourseData, llmLabs, worldModelLabs, researchLabs] = await Promise.all([
   readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   readFile(new URL("../app/learning-activities.css", import.meta.url), "utf8"),
   readFile(new URL("../app/contrast.css", import.meta.url), "utf8"),
@@ -10,6 +10,9 @@ const [globalStyles, learningActivityStyles, contrastStyles, layout, llmData, wo
   readFile(new URL("../app/course-data.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/world-models/index.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/research-curriculum-manifests.ts", import.meta.url), "utf8"),
+  readFile(new URL("../app/lesson-labs.tsx", import.meta.url), "utf8"),
+  readFile(new URL("../app/world-models/labs.tsx", import.meta.url), "utf8"),
+  readFile(new URL("../app/research-courses/lab.tsx", import.meta.url), "utf8"),
 ]);
 const styles = `${globalStyles}\n${learningActivityStyles}\n${contrastStyles}`;
 
@@ -82,4 +85,21 @@ test("dark panels use readable companion colors for labels and secondary copy", 
     assert.ok(contrast("#aeb5c6", background) >= 4.5, `secondary dark-panel text must contrast with ${background}`);
   }
   assert.ok(contrast("#b7bfce", "#0b1020") >= 4.5, "dark-panel muted text must contrast with ink");
+});
+
+test("every interactive lab family shares an explicit dark/light color contract", () => {
+  assert.match(llmLabs, /<section className="lab-shell" data-lab=\{type\}>/);
+  assert.match(worldModelLabs, /<section className="lab-shell world-model-lab" data-lab=\{type\}/);
+  assert.match(researchLabs, /<section className="lab-shell research-course-lab" data-lab="research">/);
+  for (const token of ["--lab-surface:#13192a", "--lab-instrument:#0c1221", "--lab-panel:#182137", "--lab-control:#172035", "--lab-text:#f7f8fb", "--lab-muted:#b7bfce", "--lab-on-light:#0b1020", "--lab-accent-text:#0b1020"]) {
+    assert.ok(globalStyles.includes(token), `missing shared lab token ${token}`);
+  }
+  assert.match(contrastStyles, /\.lab-shell \.lab-instrument\{[^}]*color:var\(--lab-text\)/);
+  assert.match(contrastStyles, /:where\(\.lab-shell \.lab-instrument\) :where\(p,label,legend,small\)\{color:var\(--lab-muted\)\}/);
+  assert.match(contrastStyles, /:where\(\.lab-shell \.lab-instrument button\)\{[^}]*color:var\(--lab-text\)/);
+  assert.match(contrastStyles, /\.lab-shell :is\(\.learning-activity-contract,\.activity-prediction-gate,\.research-case-control\)\{color:var\(--lab-on-light\)\}/);
+  assert.ok(contrast("#f7f8fb", "#0c1221") >= 4.5, "primary lab text must contrast with the instrument");
+  assert.ok(contrast("#b7bfce", "#0c1221") >= 4.5, "secondary lab text must contrast with the instrument");
+  assert.ok(contrast("#f7f8fb", "#172035") >= 4.5, "lab control text must contrast with controls");
+  assert.ok(contrast("#ffffff", "#4a2028") >= 4.5, "risk-state text must contrast with its control");
 });

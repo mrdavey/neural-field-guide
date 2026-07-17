@@ -111,26 +111,26 @@ export function LessonConceptPlate({ courseId, lesson }: { courseId: CourseId; l
 
   return <figure className={`lesson-concept-plate is-${visual.kind}`} style={style} aria-labelledby={titleId}>
     <header>
-      <span className="eyebrow">See the concept · one still picture</span>
-      <h2 id={titleId}><MathText>{visual.learningQuestion}</MathText></h2>
+      <span className="eyebrow">Concept in one view</span>
+      <h2 id={titleId}><MathText>{lesson.simple}</MathText></h2>
       <p><MathText>{lesson.mentalModel}</MathText></p>
     </header>
 
     {visual.kind === "raster" && asset ? <div className="lesson-visual-raster-frame">
       <picture>
         <source media="(max-width: 780px)" srcSet={publicPath(`${asset}-768.webp`)} type="image/webp"/>
-        <img src={publicPath(`${asset}-1536.webp`)} width="1536" height="1024" loading="lazy" decoding="async" alt={`Visual explanation of ${lesson.title}. ${lesson.simple}`}/>
+        <img src={publicPath(`${asset}-1536.webp`)} width="1536" height="1024" loading="lazy" decoding="async" alt={`Concept illustration for ${lesson.title}. ${lesson.simple}`}/>
       </picture>
       <ol aria-label="Causal stages shown in the illustration">{visual.labels.map((label, index) => <li key={label}><span>{index + 1}</span><strong>{label}</strong></li>)}</ol>
     </div> : <DeterministicVisual visual={visual}/>} 
 
     <figcaption>
-      <div><strong>Look for</strong><p><MathText>{visual.stageDescriptions.join(" → ")}</MathText></p></div>
-      <div><strong>Where the picture stops</strong><p><MathText>{lesson.misconception}</MathText></p></div>
+      <div><strong>Trace the mechanism</strong><p><MathText>{visual.stageDescriptions.join(" → ")}</MathText></p></div>
+      <div><strong>Important limit</strong><p><MathText>{lesson.misconception}</MathText></p></div>
     </figcaption>
     <details className="lesson-visual-description">
-      <summary>Read the complete visual description</summary>
-      <p><MathText>{`${lesson.mentalModel} The picture moves through ${visual.labels.join(" → ")}. ${lesson.example}`}</MathText></p>
+      <summary>Read a text-only explanation</summary>
+      <p><MathText>{`${lesson.mentalModel} The mechanism progresses through ${visual.labels.join(" → ")}. ${lesson.example}`}</MathText></p>
     </details>
     <small className="lesson-visual-evidence">{visual.kind === "raster" ? "Generated concept illustration · exact labels are code-rendered · not a measurement" : "Deterministic SVG/HTML diagram · exact labels, illustrative layout"}</small>
   </figure>;
