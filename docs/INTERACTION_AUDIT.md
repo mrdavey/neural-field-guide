@@ -4,6 +4,12 @@ Reviewed: 17 July 2026
 
 This audit asks one question of every animated or manipulable surface: **what learner-visible mechanism becomes easier to reason about because this moves?** Motion that cannot answer that question is decorative and does not pass.
 
+## Static lesson concept plates
+
+All 182 released lessons now place one still concept plate after the plain/deep definition and before the interactive scroll story. The complete atlas is 130 generated raster illustrations plus 52 deterministic SVG/HTML diagrams. The still plate asks which causal change connects its first and fourth stages, provides four exact code-native labels and explanations, states where the picture stops, and exposes a complete text description. Generated plates are explicitly labeled as illustrations rather than measurements; deterministic diagrams are labeled as illustrative layouts. `docs/LESSON_VISUAL_ATLAS.md` owns the full inventory, style, prompt/provenance, generation, accessibility, and verification contract.
+
+This surface is intentionally not manipulable: its role is to give the learner an inspectable picture before motion begins. Raster art carries a concrete analogy or scene, while exact words, notation, state relationships, and evidence boundaries stay in HTML/SVG. Reduced motion and WebGL failure therefore change nothing about the plate. The subsequent story and lab continue to own Change → Observe → Explain.
+
 ## Anime.js semantic orchestration
 
 Anime.js 4.5.0 is pinned as the shared orchestration layer. It does not own lesson truth, grading, persistence, or required content. React state and deterministic fixtures continue to own values; Anime.js only emphasizes a change that has already occurred in that state.

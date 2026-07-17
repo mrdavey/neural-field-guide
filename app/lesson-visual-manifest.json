@@ -1,0 +1,3642 @@
+[
+  {
+    "courseId": "llm",
+    "lessonId": "introduction",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “ASK” and “CHECK” in Introduction?",
+    "labels": [
+      "ASK",
+      "BUILD",
+      "INSPECT",
+      "CHECK"
+    ],
+    "stageDescriptions": [
+      "A prompt states the job and supplies relevant material.",
+      "The model constructs a response from learned language patterns.",
+      "The learner separates supplied content from new claims.",
+      "Current facts, expert decisions, and consequential actions receive outside checks."
+    ],
+    "assetBase": "lesson-visuals/llm/introduction"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "tensors-shapes",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “AXES” and “OUTPUT SHAPE” in Tensors, Shapes & Matrix Multiplication?",
+    "labels": [
+      "AXES",
+      "VALUES",
+      "MULTIPLY",
+      "OUTPUT SHAPE"
+    ],
+    "stageDescriptions": [
+      "Name batch, position, and feature axes before calculating.",
+      "A coordinate stores a number; its axis gives that number a role.",
+      "Matrix multiplication mixes the shared inner dimension.",
+      "The untouched axes and new output width determine the result."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "probability-softmax",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “LOGITS” and “TARGET LOSS” in Probability, Softmax & Cross-Entropy?",
+    "labels": [
+      "LOGITS",
+      "EXPONENTIATE",
+      "NORMALIZE",
+      "TARGET LOSS"
+    ],
+    "stageDescriptions": [
+      "Logits rank possibilities without yet being probabilities.",
+      "Exponentiation makes score gaps matter multiplicatively.",
+      "Division by the shared sum makes all probabilities add to one.",
+      "Cross-entropy reads how much mass reached the correct class."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "gradients-backprop",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “FORWARD VALUE” and “PARAMETER GRADIENT” in Neural Networks, Gradients & Backpropagation?",
+    "labels": [
+      "FORWARD VALUE",
+      "LOSS",
+      "LOCAL DERIVATIVES",
+      "PARAMETER GRADIENT"
+    ],
+    "stageDescriptions": [
+      "The forward pass records the quantities that produced the prediction.",
+      "A scalar loss states how wrong this example was.",
+      "The chain rule multiplies local sensitivities along each path.",
+      "Each parameter receives a direction that would change the loss."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "optimizers",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “GRADIENT” and “NEW WEIGHTS” in Optimizers?",
+    "labels": [
+      "GRADIENT",
+      "OPTIMIZER STATE",
+      "STEP SIZE",
+      "NEW WEIGHTS"
+    ],
+    "stageDescriptions": [
+      "The gradient supplies a local direction, not a complete route.",
+      "Momentum or moment estimates remember useful recent structure.",
+      "The learning rate scales how far the update travels.",
+      "The new parameters change every later forward pass."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "tokenization",
+    "kind": "raster",
+    "concept": "segmentation",
+    "learningQuestion": "What must happen between “TEXT” and “SEQUENCE” in Tokenization?",
+    "labels": [
+      "TEXT",
+      "BOUNDARIES",
+      "TOKEN IDS",
+      "SEQUENCE"
+    ],
+    "stageDescriptions": [
+      "Start with characters exactly as encoded, including spaces and bytes.",
+      "The tokenizer selects vocabulary pieces using fixed rules.",
+      "Each selected piece receives a discrete integer label.",
+      "The resulting ID sequence sets context length and prediction steps."
+    ],
+    "assetBase": "lesson-visuals/llm/tokenization"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "embedding-layer",
+    "kind": "raster",
+    "concept": "embedding",
+    "learningQuestion": "What must happen between “TOKEN ID” and “LEARNED GEOMETRY” in The Embedding Layer?",
+    "labels": [
+      "TOKEN ID",
+      "ROW LOOKUP",
+      "DENSE VECTOR",
+      "LEARNED GEOMETRY"
+    ],
+    "stageDescriptions": [
+      "An integer ID names a row; its numeric size carries no meaning.",
+      "Lookup copies the selected learned row into the sequence state.",
+      "The row supplies one coordinate for every model feature.",
+      "Distances and directions reflect learned usage, not dictionary definitions."
+    ],
+    "assetBase": "lesson-visuals/llm/embedding-layer"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "positional-encoding",
+    "kind": "raster",
+    "concept": "position",
+    "learningQuestion": "What must happen between “TOKEN CONTENT” and “ORDER-AWARE STATE” in Positional Encoding?",
+    "labels": [
+      "TOKEN CONTENT",
+      "POSITION INDEX",
+      "POSITION SIGNAL",
+      "ORDER-AWARE STATE"
+    ],
+    "stageDescriptions": [
+      "Token embeddings alone do not say which occurrence came first.",
+      "Each sequence slot supplies a distinct index or relative offset.",
+      "Addition or rotation injects that position into the representation.",
+      "Attention can now distinguish reordered sequences and relative distance."
+    ],
+    "assetBase": "lesson-visuals/llm/positional-encoding"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "attention",
+    "kind": "raster",
+    "concept": "attention",
+    "learningQuestion": "What must happen between “QUERY” and “VALUE MIX” in Attention?",
+    "labels": [
+      "QUERY",
+      "KEY SCORES",
+      "MASK + SOFTMAX",
+      "VALUE MIX"
+    ],
+    "stageDescriptions": [
+      "The current token projects a query describing what it needs.",
+      "Dot products compare that query with every allowed key.",
+      "Masking removes illegal positions before weights are normalized.",
+      "The weighted value sum writes context into the current token state."
+    ],
+    "assetBase": "lesson-visuals/llm/attention"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "layers-of-understanding",
+    "kind": "raster",
+    "concept": "layers",
+    "learningQuestion": "What must happen between “RESIDUAL STATE” and “DEEPER STATE” in Layers of Understanding?",
+    "labels": [
+      "RESIDUAL STATE",
+      "ATTENTION UPDATE",
+      "MLP UPDATE",
+      "DEEPER STATE"
+    ],
+    "stageDescriptions": [
+      "Each block receives the complete current token representation.",
+      "Attention moves information between token positions.",
+      "The MLP transforms features independently at each position.",
+      "Residual additions let later layers reuse and refine earlier features."
+    ],
+    "assetBase": "lesson-visuals/llm/layers-of-understanding"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "learning-to-predict",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CAUSAL CONTEXT” and “MEAN LOSS” in Learning to Predict?",
+    "labels": [
+      "CAUSAL CONTEXT",
+      "VOCAB LOGITS",
+      "SHIFTED TARGET",
+      "MEAN LOSS"
+    ],
+    "stageDescriptions": [
+      "A position may use only tokens at or before that position.",
+      "The language-model head scores the full vocabulary at each slot.",
+      "Targets are the input sequence shifted one token to the left.",
+      "Valid token losses are averaged into the scalar used for learning."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "gpt2-from-scratch",
+    "kind": "raster",
+    "concept": "layers",
+    "learningQuestion": "What must happen between “TOKEN IDS” and “VOCAB LOGITS” in GPT-2 → nanochat: Build the Stack?",
+    "labels": [
+      "TOKEN IDS",
+      "EMBED + POSITION",
+      "DECODER BLOCKS",
+      "VOCAB LOGITS"
+    ],
+    "stageDescriptions": [
+      "The batch enters as integer token IDs with a causal target shift.",
+      "Token and position information form the initial residual stream.",
+      "Masked attention and MLP sublayers repeatedly update that stream.",
+      "Normalization and the output head produce next-token scores."
+    ],
+    "assetBase": "lesson-visuals/llm/gpt2-from-scratch"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "pretraining-overview",
+    "kind": "raster",
+    "concept": "training",
+    "learningQuestion": "What must happen between “DATA BATCH” and “CHECKPOINT” in Overview?",
+    "labels": [
+      "DATA BATCH",
+      "PREDICTION LOSS",
+      "DISTRIBUTED UPDATE",
+      "CHECKPOINT"
+    ],
+    "stageDescriptions": [
+      "A sampled token batch defines the evidence available for this step.",
+      "Causal prediction turns that batch into many supervised targets.",
+      "Workers aggregate gradients before the optimizer changes shared weights.",
+      "A checkpoint preserves weights, state, configuration, and evidence for review."
+    ],
+    "assetBase": "lesson-visuals/llm/pretraining-overview"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "objectives-details",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “INPUT TOKENS” and “LOSS MASK” in Training Objectives and Architectural Details?",
+    "labels": [
+      "INPUT TOKENS",
+      "VISIBILITY RULE",
+      "TARGETS",
+      "LOSS MASK"
+    ],
+    "stageDescriptions": [
+      "The training example first becomes a fixed tensor of token IDs.",
+      "Architecture and mask rules define what each position may inspect.",
+      "The objective assigns a desired output to selected positions.",
+      "Only valid, intended positions contribute to the optimizer signal."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "scaling-laws",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “PARAMETERS” and “MEASURED FRONTIER” in Scaling Laws and Optimization?",
+    "labels": [
+      "PARAMETERS",
+      "TRAINING TOKENS",
+      "COMPUTE BUDGET",
+      "MEASURED FRONTIER"
+    ],
+    "stageDescriptions": [
+      "Model size controls capacity and the cost of each token.",
+      "Training tokens determine how much evidence updates those parameters.",
+      "Hardware time constrains which size–data combinations are feasible.",
+      "Held-out measurements reveal the useful frontier for this exact setup."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "data-engineering",
+    "kind": "raster",
+    "concept": "data",
+    "learningQuestion": "What must happen between “SOURCES” and “MIX + SAMPLE” in Training Data Engineering?",
+    "labels": [
+      "SOURCES",
+      "FILTER + GOVERN",
+      "DEDUPLICATE",
+      "MIX + SAMPLE"
+    ],
+    "stageDescriptions": [
+      "Every source arrives with different quality, rights, language, and risk.",
+      "Policy and quality checks remove material that should not train the model.",
+      "Deduplication limits repeated documents and contaminated splits.",
+      "Mixture weights decide which retained examples the optimizer sees most often."
+    ],
+    "assetBase": "lesson-visuals/llm/data-engineering"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "infrastructure",
+    "kind": "deterministic",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “GLOBAL BATCH” and “CONSISTENT UPDATE” in Training Infrastructure and Systems?",
+    "labels": [
+      "GLOBAL BATCH",
+      "SHARD WORK",
+      "COLLECTIVES",
+      "CONSISTENT UPDATE"
+    ],
+    "stageDescriptions": [
+      "The global batch is partitioned across devices and parallel dimensions.",
+      "Each worker computes its local forward and backward contributions.",
+      "Collective communication combines the values the algorithm requires.",
+      "All replicas must apply the same valid update or recover from a known checkpoint."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "advanced-objectives",
+    "kind": "raster",
+    "concept": "training",
+    "learningQuestion": "What must happen between “INPUT CORRUPTION” and “TRANSFER TEST” in Advanced Pretraining Objectives?",
+    "labels": [
+      "INPUT CORRUPTION",
+      "TARGET DESIGN",
+      "TRAINING SIGNAL",
+      "TRANSFER TEST"
+    ],
+    "stageDescriptions": [
+      "The objective may hide, replace, reorder, or group parts of an example.",
+      "Targets specify what information must be reconstructed or predicted.",
+      "That target pattern changes where gradients enter the network.",
+      "Only downstream evaluation shows whether the learned representation transfers."
+    ],
+    "assetBase": "lesson-visuals/llm/advanced-objectives"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "pretraining-evaluation",
+    "kind": "deterministic",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CHECKPOINT” and “REGRESSION DECISION” in Evaluation During Pretraining?",
+    "labels": [
+      "CHECKPOINT",
+      "HELD-OUT LOSS",
+      "CAPABILITY SLICES",
+      "REGRESSION DECISION"
+    ],
+    "stageDescriptions": [
+      "Freeze a checkpoint and its exact tokenizer, config, and data revision.",
+      "Held-out loss tests prediction on examples excluded from optimization.",
+      "Task and subgroup slices probe abilities that one average cannot represent.",
+      "Selection weighs gains, regressions, uncertainty, and contamination evidence."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "olmo3-case-study",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “DOLMA 3 MIX” and “OLMES EVIDENCE” in Case Study — OLMo 3 Model Flow?",
+    "labels": [
+      "DOLMA 3 MIX",
+      "DOLMINO",
+      "LONGMINO",
+      "OLMES EVIDENCE"
+    ],
+    "stageDescriptions": [
+      "Broad pretraining establishes the base checkpoint and general token distribution.",
+      "Dolmino targets selected capability mixtures from that known base.",
+      "Longmino changes the context-length curriculum in a later stage.",
+      "Released evaluations and artifacts bound which conclusions the flow supports."
+    ],
+    "assetBase": "lesson-visuals/llm/olmo3-case-study"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "instruction-tuning-rlhf",
+    "kind": "raster",
+    "concept": "preference",
+    "learningQuestion": "What must happen between “BASE MODEL” and “OUTCOME FEEDBACK” in Bridge: From Base Model to Assistant?",
+    "labels": [
+      "BASE MODEL",
+      "DEMONSTRATIONS",
+      "PREFERENCES",
+      "OUTCOME FEEDBACK"
+    ],
+    "stageDescriptions": [
+      "The base model begins as a next-token predictor over its pretraining mixture.",
+      "Supervised examples teach the prompt-to-response format directly.",
+      "Pairwise preferences teach relative desirability between plausible responses.",
+      "Outcome feedback updates behavior using rewards that may arrive after a trajectory."
+    ],
+    "assetBase": "lesson-visuals/llm/instruction-tuning-rlhf"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "posttraining-overview",
+    "kind": "raster",
+    "concept": "preference",
+    "learningQuestion": "What must happen between “PROMPT” and “UPDATED POLICY” in Overview?",
+    "labels": [
+      "PROMPT",
+      "CANDIDATE RESPONSES",
+      "BEHAVIOR SIGNAL",
+      "UPDATED POLICY"
+    ],
+    "stageDescriptions": [
+      "A prompt defines the context in which behavior will be judged.",
+      "The current policy supplies plausible outputs rather than one fixed label.",
+      "Demonstration, comparison, or reward data expresses a different kind of supervision.",
+      "The update changes response probabilities and must be checked for regressions."
+    ],
+    "assetBase": "lesson-visuals/llm/posttraining-overview"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "sft",
+    "kind": "raster",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CHAT TEMPLATE” and “SFT UPDATE” in Supervised Fine-Tuning?",
+    "labels": [
+      "CHAT TEMPLATE",
+      "PROMPT MASK",
+      "RESPONSE TARGETS",
+      "SFT UPDATE"
+    ],
+    "stageDescriptions": [
+      "The template serializes roles, separators, and turns into exact tokens.",
+      "Prompt tokens usually provide context without becoming answer targets.",
+      "Response tokens are shifted to create supervised next-token labels.",
+      "The optimizer increases the likelihood of demonstrated behavior within that format."
+    ],
+    "assetBase": "lesson-visuals/llm/sft"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "preference-optimization",
+    "kind": "deterministic",
+    "concept": "preference",
+    "learningQuestion": "What must happen between “SHARED PROMPT” and “POLICY UPDATE” in Preference Optimization?",
+    "labels": [
+      "SHARED PROMPT",
+      "CHOSEN / REJECTED",
+      "LOG-RATIO MARGIN",
+      "POLICY UPDATE"
+    ],
+    "stageDescriptions": [
+      "Both responses must be evaluated under the same prompt and serialization.",
+      "A preference label identifies a relative choice, not an absolute truth score.",
+      "The objective compares response likelihoods, often relative to a reference policy.",
+      "The gradient raises the preferred margin while regularization limits drift."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "rl-fundamentals",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “STATE” and “ADVANTAGE UPDATE” in RL Fundamentals?",
+    "labels": [
+      "STATE",
+      "SAMPLED ACTION",
+      "RETURN",
+      "ADVANTAGE UPDATE"
+    ],
+    "stageDescriptions": [
+      "The state summarizes information available before an action is chosen.",
+      "The policy samples an action from a probability distribution.",
+      "Later rewards are accumulated into a return for the trajectory.",
+      "Advantage compares that return with a baseline to scale the policy gradient."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "rlhf",
+    "kind": "raster",
+    "concept": "preference",
+    "learningQuestion": "What must happen between “HUMAN RANKINGS” and “PPO + KL” in RLHF?",
+    "labels": [
+      "HUMAN RANKINGS",
+      "REWARD MODEL",
+      "POLICY ROLLOUTS",
+      "PPO + KL"
+    ],
+    "stageDescriptions": [
+      "Annotators compare sampled responses under a defined rubric.",
+      "A reward model learns to predict those finite, noisy preferences.",
+      "The current policy generates fresh trajectories near its own distribution.",
+      "PPO-style constraints and KL regularization limit each reward-seeking update."
+    ],
+    "assetBase": "lesson-visuals/llm/rlhf"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "tools-safety",
+    "kind": "raster",
+    "concept": "security",
+    "learningQuestion": "What must happen between “MODEL REQUEST” and “RESULT + TRACE” in Tools and Safety Tuning?",
+    "labels": [
+      "MODEL REQUEST",
+      "SCHEMA CHECK",
+      "AUTHORIZATION",
+      "RESULT + TRACE"
+    ],
+    "stageDescriptions": [
+      "The model proposes a typed action; it does not directly possess authority.",
+      "Validation rejects malformed names, arguments, and unexpected output shapes.",
+      "Independent policy checks identity, scope, confirmation, and least privilege.",
+      "Execution returns bounded results while logs preserve what was attempted."
+    ],
+    "assetBase": "lesson-visuals/llm/tools-safety"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "tulu3-case-study",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “SFT MIX” and “AGENT EVALUATION” in Case Study — Tülu 3 → DR Tulu?",
+    "labels": [
+      "SFT MIX",
+      "PREFERENCE STAGE",
+      "RL SIGNAL",
+      "AGENT EVALUATION"
+    ],
+    "stageDescriptions": [
+      "Instruction mixtures establish response format and baseline task behavior.",
+      "Preference data reshapes relative response likelihoods.",
+      "RL stages optimize verifier or outcome signals under a stated recipe.",
+      "Agent and safety evaluations test whether the combined policy transfers beyond training prompts."
+    ],
+    "assetBase": "lesson-visuals/llm/tulu3-case-study"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "decoding-sampling",
+    "kind": "deterministic",
+    "concept": "decoding",
+    "learningQuestion": "What must happen between “LOGITS” and “SAMPLED TOKEN” in Decoding and Sampling?",
+    "labels": [
+      "LOGITS",
+      "TEMPERATURE",
+      "TOP-K / TOP-P",
+      "SAMPLED TOKEN"
+    ],
+    "stageDescriptions": [
+      "The model emits unnormalized scores for every vocabulary item.",
+      "Temperature changes distribution sharpness before probabilities are formed.",
+      "Top-k or top-p removes candidates and renormalizes the survivors.",
+      "One chosen token joins the context and changes the next distribution."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "generation-kv-cache",
+    "kind": "deterministic",
+    "concept": "memory",
+    "learningQuestion": "What must happen between “PREFILL” and “APPEND + DECODE” in The Generation Loop and KV Cache?",
+    "labels": [
+      "PREFILL",
+      "LAYER K/V",
+      "NEW QUERY",
+      "APPEND + DECODE"
+    ],
+    "stageDescriptions": [
+      "Prefill processes prompt positions in parallel and creates every layer state.",
+      "Keys and values for earlier positions persist in cache memory.",
+      "Decode computes one query for the newly generated token at each layer.",
+      "The new K/V entry is appended before the next sequential token step."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "quantization-memory",
+    "kind": "deterministic",
+    "concept": "compression",
+    "learningQuestion": "What must happen between “FLOAT VALUES” and “LOW-BIT KERNEL” in Quantization and Memory?",
+    "labels": [
+      "FLOAT VALUES",
+      "SCALE + ZERO POINT",
+      "ROUND + CLIP",
+      "LOW-BIT KERNEL"
+    ],
+    "stageDescriptions": [
+      "Floating values begin with a range that may vary sharply by channel.",
+      "Scale and optional zero-point map that range to integer levels.",
+      "Rounding and clipping introduce an error that must be measured.",
+      "Compatible kernels determine whether compact storage becomes real speed."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "serving-systems",
+    "kind": "deterministic",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “ARRIVAL QUEUE” and “RETIRE / ADMIT” in Serving: Batching, Throughput and Latency?",
+    "labels": [
+      "ARRIVAL QUEUE",
+      "PREFILL",
+      "CONTINUOUS DECODE",
+      "RETIRE / ADMIT"
+    ],
+    "stageDescriptions": [
+      "Admission control decides which requests may consume memory and compute.",
+      "Prefill work creates the first token and each request's cache state.",
+      "Continuous batching groups active decode steps while sequences differ in length.",
+      "Completed requests release slots that the scheduler immediately reuses."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "test-time-compute",
+    "kind": "raster",
+    "concept": "routing",
+    "learningQuestion": "What must happen between “PROBLEM” and “VERIFIER” in Reasoning and Test-Time Compute?",
+    "labels": [
+      "PROBLEM",
+      "COMPUTE BUDGET",
+      "CANDIDATES",
+      "VERIFIER"
+    ],
+    "stageDescriptions": [
+      "Task value and uncertainty determine whether escalation is justified.",
+      "The policy allocates sequential steps, parallel samples, or tool checks.",
+      "Useful extra compute must create meaningfully different candidate solutions.",
+      "A trustworthy verifier selects, rejects, or requests another bounded attempt."
+    ],
+    "assetBase": "lesson-visuals/llm/test-time-compute"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "context-engineering",
+    "kind": "raster",
+    "concept": "data",
+    "learningQuestion": "What must happen between “POLICY” and “ORDERED CONTEXT” in Prompting and Context Engineering?",
+    "labels": [
+      "POLICY",
+      "EVIDENCE",
+      "EXAMPLES + STATE",
+      "ORDERED CONTEXT"
+    ],
+    "stageDescriptions": [
+      "System and developer policy establish the highest-authority task contract.",
+      "Retrieved or user-provided evidence must stay distinguishable from instructions.",
+      "Examples and state should earn their limited context space through relevance.",
+      "Delimiters and ordering create the exact conditional input the model receives."
+    ],
+    "assetBase": "lesson-visuals/llm/context-engineering"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "rag",
+    "kind": "raster",
+    "concept": "retrieval",
+    "learningQuestion": "What must happen between “DOCUMENT CHUNKS” and “GROUNDED ANSWER” in Embeddings, Semantic Search and RAG?",
+    "labels": [
+      "DOCUMENT CHUNKS",
+      "QUERY EMBEDDING",
+      "RETRIEVE + RERANK",
+      "GROUNDED ANSWER"
+    ],
+    "stageDescriptions": [
+      "Ingestion creates searchable chunks while preserving source and access metadata.",
+      "The query becomes dense, sparse, or hybrid retrieval features.",
+      "Candidate recall comes first; reranking then spends effort on precision.",
+      "Generation must cite evidence that actually entails each supported claim."
+    ],
+    "assetBase": "lesson-visuals/llm/rag"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "agent-loops",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “GOAL + STATE” and “OBSERVE / STOP” in Tool Use and Agent Loops?",
+    "labels": [
+      "GOAL + STATE",
+      "DECIDE",
+      "TOOL ACTION",
+      "OBSERVE / STOP"
+    ],
+    "stageDescriptions": [
+      "The loop begins with a goal, current state, budget, and policy constraints.",
+      "The model proposes a next action from the information it currently has.",
+      "A tool layer validates and executes the action under real authorization.",
+      "The result updates state; a stop rule ends or bounds the next cycle."
+    ],
+    "assetBase": "lesson-visuals/llm/agent-loops"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "evaluation-design",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “TASK CONTRACT” and “ERROR ANALYSIS” in LLM Evaluation and LLM-as-a-Judge?",
+    "labels": [
+      "TASK CONTRACT",
+      "TEST CASES",
+      "SCORER / RUBRIC",
+      "ERROR ANALYSIS"
+    ],
+    "stageDescriptions": [
+      "Define the behavior and decision the evaluation is meant to measure.",
+      "Cases must represent important distributions, boundaries, and adversarial failures.",
+      "Deterministic checks, humans, and model judges each need calibrated roles.",
+      "Inspect disagreements and slices before turning scores into a product decision."
+    ],
+    "assetBase": "lesson-visuals/llm/evaluation-design"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "security-privacy",
+    "kind": "raster",
+    "concept": "security",
+    "learningQuestion": "What must happen between “TRUST BOUNDARIES” and “SAFE EFFECT” in Security, Privacy and Prompt Injection?",
+    "labels": [
+      "TRUST BOUNDARIES",
+      "UNTRUSTED INPUT",
+      "POLICY ENFORCEMENT",
+      "SAFE EFFECT"
+    ],
+    "stageDescriptions": [
+      "Label which components may instruct, supply data, authorize, or execute.",
+      "Retrieved pages and user text remain untrusted even when they look imperative.",
+      "Deterministic controls validate permissions, data flow, and allowed tool effects.",
+      "The system minimizes disclosure and limits the blast radius of a bad decision."
+    ],
+    "assetBase": "lesson-visuals/llm/security-privacy"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "observability-governance",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “REQUEST TRACE” and “OWNER DECISION” in Production Observability, Cost and Governance?",
+    "labels": [
+      "REQUEST TRACE",
+      "STAGE METRICS",
+      "ALERT + SLICE",
+      "OWNER DECISION"
+    ],
+    "stageDescriptions": [
+      "A trace records model, prompt, retrieval, tools, timing, and outcome identifiers.",
+      "Stage-level metrics separate retrieval, generation, safety, latency, and cost failures.",
+      "Alerts use slices and thresholds tied to real service objectives.",
+      "Named owners can investigate, degrade, roll back, or update policy with evidence."
+    ],
+    "assetBase": "lesson-visuals/llm/observability-governance"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "distillation",
+    "kind": "raster",
+    "concept": "compression",
+    "learningQuestion": "What must happen between “TEACHER LOGITS” and “COMPACT MODEL” in Distillation?",
+    "labels": [
+      "TEACHER LOGITS",
+      "SOFT TARGETS",
+      "STUDENT LOSS",
+      "COMPACT MODEL"
+    ],
+    "stageDescriptions": [
+      "The teacher exposes relative scores or generated examples for chosen inputs.",
+      "Temperature can reveal relationships hidden by a hard argmax label.",
+      "The student balances distillation targets with task or ground-truth supervision.",
+      "Evaluation checks which capabilities survived the reduced capacity and cost."
+    ],
+    "assetBase": "lesson-visuals/llm/distillation"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "lora",
+    "kind": "raster",
+    "concept": "adapter",
+    "learningQuestion": "What must happen between “FROZEN WEIGHT” and “ADDITIVE DELTA” in LoRA?",
+    "labels": [
+      "FROZEN WEIGHT",
+      "LOW-RANK A",
+      "LOW-RANK B",
+      "ADDITIVE DELTA"
+    ],
+    "stageDescriptions": [
+      "The pretrained matrix continues to provide the base linear transformation.",
+      "The first factor projects activations into a small rank dimension.",
+      "The second factor expands that small representation back to output width.",
+      "Their product is scaled and added without storing a full trainable matrix."
+    ],
+    "assetBase": "lesson-visuals/llm/lora"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "moe",
+    "kind": "raster",
+    "concept": "routing",
+    "learningQuestion": "What must happen between “TOKEN STATE” and “WEIGHTED COMBINE” in Mixture of Experts (MoE)?",
+    "labels": [
+      "TOKEN STATE",
+      "ROUTER SCORES",
+      "TOP-K EXPERTS",
+      "WEIGHTED COMBINE"
+    ],
+    "stageDescriptions": [
+      "The token's current representation enters a learned routing function.",
+      "The router assigns a score to each available expert.",
+      "A sparse rule dispatches the token to only the selected experts.",
+      "Expert outputs are weighted and returned to the residual stream."
+    ],
+    "assetBase": "lesson-visuals/llm/moe"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "multimodal-models",
+    "kind": "raster",
+    "concept": "multimodal",
+    "learningQuestion": "What must happen between “MODALITY ENCODERS” and “CROSS-MODAL DECODE” in Multimodal Language Models?",
+    "labels": [
+      "MODALITY ENCODERS",
+      "PATCH / TOKEN FEATURES",
+      "SHARED PROJECTION",
+      "CROSS-MODAL DECODE"
+    ],
+    "stageDescriptions": [
+      "Each modality first needs an encoder suited to its raw structure.",
+      "Images become patches or features while text becomes token states.",
+      "Projection layers match the dimensions and training interface used for fusion.",
+      "Attention and decoding condition language outputs on the aligned evidence."
+    ],
+    "assetBase": "lesson-visuals/llm/multimodal-models"
+  },
+  {
+    "courseId": "llm",
+    "lessonId": "interpretability-editing",
+    "kind": "raster",
+    "concept": "interpretability",
+    "learningQuestion": "What must happen between “ACTIVATIONS” and “CAUSAL EVIDENCE” in Interpretability and Model Editing?",
+    "labels": [
+      "ACTIVATIONS",
+      "FEATURE HYPOTHESIS",
+      "INTERVENTION",
+      "CAUSAL EVIDENCE"
+    ],
+    "stageDescriptions": [
+      "Record internal states for a precisely defined set of inputs and positions.",
+      "A probe or decomposition proposes a human-interpretable feature.",
+      "Ablation, patching, or editing changes that feature under controlled conditions.",
+      "Behavioral differences support a bounded causal claim only when confounds are ruled out."
+    ],
+    "assetBase": "lesson-visuals/llm/interpretability-editing"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "world-models",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “SITUATION” and “CHECK” in What Is a World Model??",
+    "labels": [
+      "SITUATION",
+      "POSSIBILITIES",
+      "CONSEQUENCES",
+      "CHECK"
+    ],
+    "stageDescriptions": [
+      "The environment supplies the starting evidence.",
+      "The model imagines more than one possible next step.",
+      "Each possibility leads to a consequence that could affect the choice.",
+      "A chooser acts, then reality tests the prediction."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/world-models"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "dynamics-tensors",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “STATE” and “NEXT STATE” in Tensors and Shapes for Dynamics?",
+    "labels": [
+      "STATE",
+      "ACTION",
+      "CONCAT",
+      "NEXT STATE"
+    ],
+    "stageDescriptions": [
+      "Select the pre-action latent state.",
+      "Align the action at the same transition index.",
+      "Join only the feature axes.",
+      "Project back to the latent-state width."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "stochastic-futures",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONDITION” and “DECISION” in Probability and Stochastic Futures?",
+    "labels": [
+      "CONDITION",
+      "BRANCH",
+      "PROBABILITY",
+      "DECISION"
+    ],
+    "stageDescriptions": [
+      "Hold the current state and action fixed.",
+      "Keep distinct future modes separate.",
+      "Assign and calibrate probability mass.",
+      "Apply expected or risk-sensitive costs."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/stochastic-futures"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "learning-dynamics",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “PREDICT” and “UPDATE” in Neural Networks, Gradients and Dynamics Learning?",
+    "labels": [
+      "PREDICT",
+      "LOSS",
+      "GRADIENT",
+      "UPDATE"
+    ],
+    "stageDescriptions": [
+      "Apply the current dynamics parameters.",
+      "Compare with the observed next state.",
+      "Trace sensitivity through the transition.",
+      "Change parameters and rerun the same case."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "sequential-state",
+    "kind": "raster",
+    "concept": "memory",
+    "learningQuestion": "What must happen between “OBSERVATION” and “NEXT EMISSION” in State, Observation, Action and Trajectory?",
+    "labels": [
+      "OBSERVATION",
+      "HISTORY",
+      "ACTION",
+      "NEXT EMISSION"
+    ],
+    "stageDescriptions": [
+      "Sensors reveal only part of the environment.",
+      "A state summarizes decision-relevant history.",
+      "The chosen action intervenes on the process.",
+      "The environment returns the next evidence and outcome."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/sequential-state"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "rewards-returns-policies",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “REWARD” and “POLICY” in Rewards, Returns and Policies?",
+    "labels": [
+      "REWARD",
+      "RETURN",
+      "VALUE",
+      "POLICY"
+    ],
+    "stageDescriptions": [
+      "Each transition produces an immediate signal.",
+      "Discounted addition forms a future objective.",
+      "Expectation fixes the policy and starting state.",
+      "The policy chooses actions within external constraints."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "mdps-bellman",
+    "kind": "deterministic",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “STATE + ACTION” and “BACKUP” in MDPs and Bellman Backups?",
+    "labels": [
+      "STATE + ACTION",
+      "SUCCESSORS",
+      "REWARD + VALUE",
+      "BACKUP"
+    ],
+    "stageDescriptions": [
+      "Fix the state and candidate action.",
+      "Enumerate predicted next states and probabilities.",
+      "Attach immediate reward and downstream value.",
+      "Sum the discounted expectation for comparison."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "belief-states-filtering",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “PRIOR” and “POSTERIOR” in POMDPs, Belief States and Filtering?",
+    "labels": [
+      "PRIOR",
+      "ACTION PREDICT",
+      "OBSERVE",
+      "POSTERIOR"
+    ],
+    "stageDescriptions": [
+      "Begin with uncertainty over hidden states.",
+      "Move that mass through action-conditioned dynamics.",
+      "Weight each state by the new evidence likelihood.",
+      "Normalize and plan without erasing ambiguity."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/belief-states-filtering"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "sensor-representations",
+    "kind": "raster",
+    "concept": "embedding",
+    "learningQuestion": "What must happen between “SENSOR” and “AUDIT” in From Sensors to Predictive Features?",
+    "labels": [
+      "SENSOR",
+      "ENCODER",
+      "FEATURE",
+      "AUDIT"
+    ],
+    "stageDescriptions": [
+      "Raw modalities arrive with explicit shapes and timing.",
+      "The encoder contracts spatial detail into learned features.",
+      "The compact state feeds dynamics and planning.",
+      "Controlled pairs reveal what was retained or erased."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/sensor-representations"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "autoencoders-latents",
+    "kind": "raster",
+    "concept": "compression",
+    "learningQuestion": "What must happen between “OBSERVATION” and “RECONSTRUCT” in Autoencoders and Latent Compression?",
+    "labels": [
+      "OBSERVATION",
+      "ENCODE",
+      "LATENT",
+      "RECONSTRUCT"
+    ],
+    "stageDescriptions": [
+      "The input contains both signal and nuisance detail.",
+      "The encoder selects a compact set of features.",
+      "Capacity limits what can remain recoverable.",
+      "The decoder exposes retained and missing information."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/autoencoders-latents"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "stochastic-latents-vaes",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “MEAN + SCALE” and “KL + RECON” in Stochastic Latents and Variational Autoencoders?",
+    "labels": [
+      "MEAN + SCALE",
+      "NOISE",
+      "SAMPLE",
+      "KL + RECON"
+    ],
+    "stageDescriptions": [
+      "The encoder parameterizes a posterior distribution.",
+      "Independent noise supplies stochasticity.",
+      "Reparameterization creates a differentiable sample.",
+      "Two losses balance information and predictability."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/stochastic-latents-vaes"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "action-conditioned-transitions",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “STATE” and “CONTRAST” in Action-Conditioned Transition Models?",
+    "labels": [
+      "STATE",
+      "ACTION",
+      "TRANSITION",
+      "CONTRAST"
+    ],
+    "stageDescriptions": [
+      "Hold the current information state fixed.",
+      "Encode one candidate intervention with units and bounds.",
+      "Condition the next-state distribution on both inputs.",
+      "Swap the action and verify the predicted difference."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/action-conditioned-transitions"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "recurrent-state-space",
+    "kind": "raster",
+    "concept": "memory",
+    "learningQuestion": "What must happen between “MEMORY” and “POSTERIOR” in Recurrent and State-Space Models?",
+    "labels": [
+      "MEMORY",
+      "PRIOR",
+      "OBSERVATION",
+      "POSTERIOR"
+    ],
+    "stageDescriptions": [
+      "Recurrent state summarizes past transitions.",
+      "Dynamics predicts a latent distribution.",
+      "The current sensor feature supplies new evidence.",
+      "The posterior corrects the uncertain state."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/recurrent-state-space"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "rssm-planet-case-study",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “ENCODE” and “CONTROL” in Case Study — World Models to PlaNet?",
+    "labels": [
+      "ENCODE",
+      "DYNAMICS",
+      "IMAGINE",
+      "CONTROL"
+    ],
+    "stageDescriptions": [
+      "Observations become compact latent evidence.",
+      "Recurrent dynamics carry state through actions.",
+      "The learned model generates possible futures.",
+      "A controller or online planner chooses real actions."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/rssm-planet-case-study"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "prediction-targets",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “LATENT” and “WEIGHTED LOSS” in Observation, Reward and Continuation Targets?",
+    "labels": [
+      "LATENT",
+      "HEADS",
+      "MASKS",
+      "WEIGHTED LOSS"
+    ],
+    "stageDescriptions": [
+      "The filtered state summarizes current evidence.",
+      "Separate heads predict different environment outputs.",
+      "Validity masks preserve episode semantics.",
+      "Normalized signals combine under explicit weights."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "reconstruction-feature-prediction",
+    "kind": "raster",
+    "concept": "multimodal",
+    "learningQuestion": "What must happen between “FUTURE” and “TASK TEST” in Reconstruction vs Feature Prediction?",
+    "labels": [
+      "FUTURE",
+      "PIXELS",
+      "FEATURES",
+      "TASK TEST"
+    ],
+    "stageDescriptions": [
+      "Define the future evidence to predict.",
+      "Reconstruction preserves raw visible detail.",
+      "Feature prediction follows a learned target space.",
+      "Controlled decisions reveal what each target omitted."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/reconstruction-feature-prediction"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "multistep-overshooting",
+    "kind": "deterministic",
+    "concept": "memory",
+    "learningQuestion": "What must happen between “POSTERIOR START” and “HORIZON TEST” in One-Step, Multi-Step and Overshooting Objectives?",
+    "labels": [
+      "POSTERIOR START",
+      "PRIOR STEP",
+      "COMPOUND",
+      "HORIZON TEST"
+    ],
+    "stageDescriptions": [
+      "Anchor the rollout in observed evidence.",
+      "Advance using actions without new observations.",
+      "Prediction error enters later inputs.",
+      "Measure each horizon and the resulting decision."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "latent-prior-posterior",
+    "kind": "deterministic",
+    "concept": "preference",
+    "learningQuestion": "What must happen between “HISTORY” and “POSTERIOR + KL” in Prior–Posterior Learning and KL Balancing?",
+    "labels": [
+      "HISTORY",
+      "PRIOR",
+      "OBSERVATION",
+      "POSTERIOR + KL"
+    ],
+    "stageDescriptions": [
+      "Recurrent history defines available predictive context.",
+      "The prior forecasts latent state without current evidence.",
+      "The observation informs a corrected distribution.",
+      "Balanced gradients train prediction without erasing information."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "trajectory-data-replay",
+    "kind": "raster",
+    "concept": "data",
+    "learningQuestion": "What must happen between “COLLECT” and “SUPPORT” in Trajectory Data, Replay and Coverage?",
+    "labels": [
+      "COLLECT",
+      "EPISODES",
+      "SAMPLE",
+      "SUPPORT"
+    ],
+    "stageDescriptions": [
+      "Behavior policies create a selective data stream.",
+      "Boundaries and provenance keep transitions interpretable.",
+      "Replay chooses ordered windows for learning.",
+      "Coverage checks gate proposed state-action queries."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/trajectory-data-replay"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "uncertainty-ensembles",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “DISTRIBUTIONS” and “FALLBACK” in Uncertainty, Calibration and Ensembles?",
+    "labels": [
+      "DISTRIBUTIONS",
+      "DISAGREEMENT",
+      "CALIBRATE",
+      "FALLBACK"
+    ],
+    "stageDescriptions": [
+      "Each model predicts possible outcomes.",
+      "Ensemble variation exposes one knowledge signal.",
+      "Held-out frequencies test confidence claims.",
+      "A threshold triggers safe alternative behavior."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/uncertainty-ensembles"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "imagined-rollouts",
+    "kind": "deterministic",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “START STATE” and “RETURN” in Imagined Rollouts and Return Estimates?",
+    "labels": [
+      "START STATE",
+      "ACTIONS",
+      "PREDICT",
+      "RETURN"
+    ],
+    "stageDescriptions": [
+      "Anchor in current observed evidence.",
+      "Propose a bounded action sequence.",
+      "Roll dynamics, reward, and continuation heads.",
+      "Discount, stop, and optionally bootstrap."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "shooting-cem",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “PROPOSAL” and “REFIT” in Random Shooting and the Cross-Entropy Method?",
+    "labels": [
+      "PROPOSAL",
+      "SAMPLES",
+      "ELITES",
+      "REFIT"
+    ],
+    "stageDescriptions": [
+      "Define bounded distributions for every action step.",
+      "Draw candidates under a fixed rollout budget.",
+      "Rank by one declared return/risk score.",
+      "Update proposal statistics and repeat."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "model-predictive-control",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “OBSERVE” and “REPLAN” in Model-Predictive Control and Replanning?",
+    "labels": [
+      "OBSERVE",
+      "PLAN",
+      "ACT ONCE",
+      "REPLAN"
+    ],
+    "stageDescriptions": [
+      "Filter the latest real evidence.",
+      "Optimize a bounded future sequence.",
+      "Validate and execute only the first action.",
+      "Use the new outcome to rebuild the plan."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/model-predictive-control"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "differentiable-planning",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “ACTIONS” and “PROJECT” in Differentiable Latent Planning?",
+    "labels": [
+      "ACTIONS",
+      "ROLLOUT",
+      "GRADIENT",
+      "PROJECT"
+    ],
+    "stageDescriptions": [
+      "Initialize bounded continuous action variables.",
+      "Compute predicted consequences and return.",
+      "Backpropagate return into action coordinates.",
+      "Enforce constraints and verify the candidate."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "actor-critic-lambda",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “IMAGINE” and “ACTOR” in Actor–Critic Learning and λ-Returns?",
+    "labels": [
+      "IMAGINE",
+      "λ-RETURN",
+      "CRITIC",
+      "ACTOR"
+    ],
+    "stageDescriptions": [
+      "The world model supplies latent trajectories and rewards.",
+      "Multi-step targets blend evidence and bootstrap.",
+      "The critic learns expected future return.",
+      "The actor moves toward actions with higher estimated value."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/actor-critic-lambda"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "dreamer-imagination",
+    "kind": "raster",
+    "concept": "training",
+    "learningQuestion": "What must happen between “COLLECT” and “ACT” in Dreamer and Learning Behavior in Imagination?",
+    "labels": [
+      "COLLECT",
+      "MODEL",
+      "IMAGINE",
+      "ACT"
+    ],
+    "stageDescriptions": [
+      "The current actor gathers real trajectories.",
+      "Replay trains a filtered latent dynamics model.",
+      "Posterior starts seed prior-only practice.",
+      "Updated behavior returns to the environment."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/dreamer-imagination"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "muzero-tree-search",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “ROOT” and “BACKUP” in MuZero and Task-Relevant Tree Search?",
+    "labels": [
+      "ROOT",
+      "EXPAND",
+      "EVALUATE",
+      "BACKUP"
+    ],
+    "stageDescriptions": [
+      "Observation history becomes a hidden search state.",
+      "Candidate actions produce next hidden states and rewards.",
+      "Policy and value score newly reached nodes.",
+      "Returns and visits reshape the root action policy."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/muzero-tree-search"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "dyna-tdmpc-case-study",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “MODEL TARGET” and “DECISION” in Case Study — Dyna, Dreamer, MuZero and TD-MPC?",
+    "labels": [
+      "MODEL TARGET",
+      "TRAINING USE",
+      "ONLINE USE",
+      "DECISION"
+    ],
+    "stageDescriptions": [
+      "Identify what each learned dynamics model predicts.",
+      "Locate synthetic updates or imagined behavior learning.",
+      "Count search or direct policy computation per action.",
+      "Choose only after matched budgets and gates."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/dyna-tdmpc-case-study"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "video-tokenization",
+    "kind": "deterministic",
+    "concept": "segmentation",
+    "learningQuestion": "What must happen between “FRAMES” and “ACTION ALIGN” in Video as Sequential Data and Spatiotemporal Tokens?",
+    "labels": [
+      "FRAMES",
+      "PATCH + STRIDE",
+      "TOKENS",
+      "ACTION ALIGN"
+    ],
+    "stageDescriptions": [
+      "Begin with exact frame rate and resolution.",
+      "Choose spatial and temporal boundaries.",
+      "Encode each region into compact codes.",
+      "Attach controls to the interval they affect."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "autoregressive-diffusion-dynamics",
+    "kind": "raster",
+    "concept": "decoding",
+    "learningQuestion": "What must happen between “CONTEXT” and “VERIFY” in Autoregressive and Diffusion Video Dynamics?",
+    "labels": [
+      "CONTEXT",
+      "AR PATH",
+      "DENOISE PATH",
+      "VERIFY"
+    ],
+    "stageDescriptions": [
+      "Fix history, actions, conditioning, and seed policy.",
+      "Predict ordered future tokens or blocks.",
+      "Iteratively refine a noisy future sample.",
+      "Compare real compute and decision-relevant failures."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/autoregressive-diffusion-dynamics"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "latent-actions-passive-video",
+    "kind": "raster",
+    "concept": "routing",
+    "learningQuestion": "What must happen between “BEFORE + AFTER” and “INTERVENE” in Latent Actions from Passive Video?",
+    "labels": [
+      "BEFORE + AFTER",
+      "INFER CODE",
+      "CONDITION",
+      "INTERVENE"
+    ],
+    "stageDescriptions": [
+      "A transition supplies evidence without labels.",
+      "A bottleneck invents a compact change code.",
+      "Dynamics consumes state and inferred code.",
+      "Code swaps test stable controllable effects."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/latent-actions-passive-video"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "jepa-vjepa",
+    "kind": "raster",
+    "concept": "multimodal",
+    "learningQuestion": "What must happen between “VISIBLE” and “TRANSFER” in JEPA and V-JEPA Predictive Representations?",
+    "labels": [
+      "VISIBLE",
+      "TARGET",
+      "PREDICT",
+      "TRANSFER"
+    ],
+    "stageDescriptions": [
+      "The context encoder sees selected space-time regions.",
+      "A target encoder represents hidden regions.",
+      "The predictor matches target features without raw reconstruction.",
+      "Separate tests establish recognition or action-conditioned planning."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/jepa-vjepa"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "genie-interactive-worlds",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “START” and “CONTINUE” in Genie and Generative Interactive Environments?",
+    "labels": [
+      "START",
+      "CONTROL",
+      "NEXT FRAME",
+      "CONTINUE"
+    ],
+    "stageDescriptions": [
+      "A prompt or image initializes a generated world.",
+      "A learned action code conditions the transition.",
+      "Dynamics produces the next visual state.",
+      "The new frame becomes context for another controlled step."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/genie-interactive-worlds"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "foundation-world-models-case-study",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “INTERFACE” and “EVIDENCE” in Case Study — Comparing Foundation World Models?",
+    "labels": [
+      "INTERFACE",
+      "TARGET",
+      "DECISION USE",
+      "EVIDENCE"
+    ],
+    "stageDescriptions": [
+      "List observations, actions, and conditioning.",
+      "Name pixels, features, rewards, values, or policies predicted.",
+      "Trace search, actor, MPC, or interactive control.",
+      "Attach protocol, source tier, and limitations."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/foundation-world-models-case-study"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "world-model-evaluation",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “DECIDE” in Evaluating World Models?",
+    "labels": [
+      "CONTRACT",
+      "PREDICT",
+      "CONTROL",
+      "DECIDE"
+    ],
+    "stageDescriptions": [
+      "Fix starts, actions, horizons, and evidence source.",
+      "Measure multi-step error and uncertainty by slice.",
+      "Run matched closed-loop tasks and constraint checks.",
+      "Apply predeclared gates and state the remaining boundary."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/world-model-evaluation"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "compounding-error-exploitation",
+    "kind": "raster",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “ONE-STEP BIAS” and “REALITY CHECK” in Compounding Error and Model Exploitation?",
+    "labels": [
+      "ONE-STEP BIAS",
+      "ROLLOUT DRIFT",
+      "SEARCH PRESSURE",
+      "REALITY CHECK"
+    ],
+    "stageDescriptions": [
+      "Measure local residuals and their direction.",
+      "Compose transitions and track support by horizon.",
+      "Watch selected estimates become more extreme with search.",
+      "Replay elites and constrain the failure route."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/compounding-error-exploitation"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "goal-conditioned-robotics",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “OBSERVE + GOAL” and “ACT + VERIFY” in Goal-Conditioned Robotics?",
+    "labels": [
+      "OBSERVE + GOAL",
+      "IMAGINE",
+      "GATE",
+      "ACT + VERIFY"
+    ],
+    "stageDescriptions": [
+      "Filter current evidence and encode the success target.",
+      "Roll bounded candidate actions through learned dynamics.",
+      "Reject collisions, infeasibility, and unsupported states.",
+      "Execute one action, reobserve, and apply the success predicate."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/goal-conditioned-robotics"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "system-identification-sim-to-real",
+    "kind": "raster",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “INPUT” and “TRANSFER GAP” in System Identification and Sim-to-Real?",
+    "labels": [
+      "INPUT",
+      "RESPONSE",
+      "FIT",
+      "TRANSFER GAP"
+    ],
+    "stageDescriptions": [
+      "Apply bounded signals that reveal relevant dynamics.",
+      "Measure state changes with units and timing.",
+      "Estimate parameters and uncertainty on training traces.",
+      "Test held-out simulation and staged real behavior separately."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/system-identification-sim-to-real"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "safe-constrained-planning",
+    "kind": "raster",
+    "concept": "routing",
+    "learningQuestion": "What must happen between “PROPOSAL” and “FALLBACK” in Safe and Constrained Planning?",
+    "labels": [
+      "PROPOSAL",
+      "CONSTRAINTS",
+      "AUTHORITY",
+      "FALLBACK"
+    ],
+    "stageDescriptions": [
+      "The nominal planner suggests a bounded action.",
+      "Independent checks evaluate risk, support, and timing.",
+      "Only an authorized safe proposal reaches actuators.",
+      "Uncertain or infeasible cases enter a known recovery path."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/safe-constrained-planning"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "world-model-operations-case-study",
+    "kind": "raster",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “BUNDLE” and “ROLLBACK” in Case Study — Operating a World-Model Controller?",
+    "labels": [
+      "BUNDLE",
+      "SHADOW",
+      "CANARY",
+      "ROLLBACK"
+    ],
+    "stageDescriptions": [
+      "Freeze compatible models, schemas, planner, and safeguards.",
+      "Log proposals with no actuator authority.",
+      "Grant limited authority under explicit gates and stops.",
+      "Restore a tested bundle and preserve incident evidence."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/world-model-operations-case-study"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "object-centric-dynamics",
+    "kind": "raster",
+    "concept": "routing",
+    "learningQuestion": "What must happen between “SCENE” and “MATCH” in Object-Centric Dynamics?",
+    "labels": [
+      "SCENE",
+      "SLOTS",
+      "INTERACT",
+      "MATCH"
+    ],
+    "stageDescriptions": [
+      "Observations contain overlapping entity and background evidence.",
+      "Competitive assignment forms an unordered set of hypotheses.",
+      "Actions and relations update selected slots.",
+      "Permutation-aware tests compare identity, attributes, and outcomes."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/object-centric-dynamics"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "hierarchical-multiscale",
+    "kind": "raster",
+    "concept": "layers",
+    "learningQuestion": "What must happen between “SLOW STATE” and “BOUNDARY” in Hierarchical and Multi-Scale World Models?",
+    "labels": [
+      "SLOW STATE",
+      "SUBGOAL",
+      "FAST STEPS",
+      "BOUNDARY"
+    ],
+    "stageDescriptions": [
+      "A persistent latent summarizes longer-range intent or event context.",
+      "The upper level conditions a lower-level target.",
+      "Fast dynamics predicts and acts at the environment rate.",
+      "Evidence decides whether to continue, terminate, or replan."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/hierarchical-multiscale"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "geometry-physical-priors",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “FRAME” and “COMPARE” in Geometry and Physical Priors?",
+    "labels": [
+      "FRAME",
+      "TRANSFORM",
+      "PREDICT",
+      "COMPARE"
+    ],
+    "stageDescriptions": [
+      "Assign every quantity a coordinate frame and unit.",
+      "Apply a declared symmetry or continuous-time step.",
+      "Run the same model under transformed evidence.",
+      "Compare with the mathematically transformed reference and stress failures."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "causal-counterfactual-models",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “MECHANISMS” and “COUNTERFACT” in Causal and Counterfactual World Models?",
+    "labels": [
+      "MECHANISMS",
+      "OBSERVE",
+      "INTERVENE",
+      "COUNTERFACT"
+    ],
+    "stageDescriptions": [
+      "Variables arise from parents and unobserved context.",
+      "Conditioning updates beliefs without changing the system.",
+      "An intervention replaces one generating mechanism.",
+      "A counterfactual reuses inferred context under the changed mechanism."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/causal-counterfactual-models"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "language-multimodal-world-models",
+    "kind": "raster",
+    "concept": "multimodal",
+    "learningQuestion": "What must happen between “CLOCKS” and “TEST” in Language and Multimodal World Models?",
+    "labels": [
+      "CLOCKS",
+      "ALIGN",
+      "CONDITION",
+      "TEST"
+    ],
+    "stageDescriptions": [
+      "Each modality arrives with its own rate, units, and missingness.",
+      "Synchronization and masks establish what co-occurs without leakage.",
+      "Fusion conditions dynamics, goals, or action consequences.",
+      "Swaps and ablations test grounding and safe degradation."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/language-multimodal-world-models"
+  },
+  {
+    "courseId": "worldmodel",
+    "lessonId": "world-model-research-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “HYPOTHESIS” and “BOUNDARY” in Research Capstone — A Falsifiable World-Model Study?",
+    "labels": [
+      "HYPOTHESIS",
+      "PROTOCOL",
+      "EVIDENCE",
+      "BOUNDARY"
+    ],
+    "stageDescriptions": [
+      "Write a claim and threshold that can fail.",
+      "Pin the matched fixture, intervention, baseline, and checks.",
+      "Preserve raw results, failures, uncertainty, and artifacts.",
+      "Apply the rule, state scope, and propose a discriminating next test."
+    ],
+    "assetBase": "lesson-visuals/worldmodel/world-model-research-capstone"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "generation-as-distribution",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “QUESTION” and “LIMIT” in What Is a Generative Model??",
+    "labels": [
+      "QUESTION",
+      "EXAMPLE",
+      "COMPARE",
+      "LIMIT"
+    ],
+    "stageDescriptions": [
+      "Name what kind of thing should be created and what request should guide it.",
+      "Generate more than one result so variation becomes visible instead of assumed.",
+      "Compare relevance, variety, missing cases, and suspicious copying before judging quality.",
+      "These cards are hand-authored evaluation fixtures, not outputs from a trained image model."
+    ],
+    "assetBase": "lesson-visuals/generative/generation-as-distribution"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "likelihood-cross-entropy",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Likelihood, Cross-Entropy & Units?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Use logs to replace fragile probability products with stable additive terms.",
+      "Name the reduction unit—example, token, dimension, nat, or bit—before comparing values.",
+      "Inspect per-case contributions so an average cannot hide rare catastrophic assignments.",
+      "The fixture checks measurement compatibility, not whether likelihood predicts human preference."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "sampling-randomness",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Sampling, Seeds & Random Variables?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Treat randomness as an explicit input to the program and artifact.",
+      "Separate repeatability of one path from coverage across independent seeds.",
+      "Record sampling order and stopping rules because they consume the random stream.",
+      "This plans random streams; it does not execute stochastic training or estimate real variance."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "divergences-distance",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in KL, Divergences & Distance?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Write the argument order because forward and reverse KL answer different questions.",
+      "Check support zeros before computing logarithms or interpreting infinity.",
+      "Choose a comparison whose geometry and failure emphasis match the decision.",
+      "Values use two-outcome arithmetic and do not estimate high-dimensional sample quality."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "distribution-workbench-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Distribution Workbench?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Build one narrow interface that makes every assumption inspectable.",
+      "Test invariants separately from stochastic observations and convergence bands.",
+      "Preserve failing seeds and changed distributions as first-class evidence.",
+      "The cards specify tests; no browser random experiment is presented as a measurement."
+    ],
+    "assetBase": "lesson-visuals/generative/distribution-workbench-capstone"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "autoregressive-generators",
+    "kind": "raster",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Autoregressive Generators Beyond Text?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Declare the serialization before constructing causal inputs and targets.",
+      "Use a causal mask so no prediction reads the variable it must predict or any later variable.",
+      "Evaluate both log-likelihood and order-sensitive sampling cost or failure.",
+      "This is a four-variable dependency fixture, not a trained image model."
+    ],
+    "assetBase": "lesson-visuals/generative/autoregressive-generators"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "latent-variable-models",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Latent-Variable Models?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Separate the generative direction prior→latent→observation from posterior inference.",
+      "Marginalize hidden alternatives rather than selecting one explanation prematurely.",
+      "Intervene on latent values to test what the decoder actually uses.",
+      "A two-latent Bayes table demonstrates inference arithmetic, not neural representation quality."
+    ],
+    "assetBase": "lesson-visuals/generative/latent-variable-models"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "amortized-inference-elbo",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Amortized Inference & the ELBO?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Keep reconstruction and KL terms separate in the training ledger.",
+      "Use reparameterization to expose randomness while retaining a differentiable path.",
+      "Interpret the ELBO as a bound with an approximation gap, not exact evidence.",
+      "Fixed terms illustrate bookkeeping; no encoder or decoder is trained in the browser."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "vae-posterior-collapse",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in VAEs & Posterior Collapse?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Treat low KL as a clue and test whether decoder output responds to z.",
+      "Inspect distributions across examples and dimensions rather than one mean.",
+      "Evaluate interventions under matched reconstruction and sampling contracts.",
+      "The cards are deterministic diagnostic fixtures, not trained VAE results."
+    ],
+    "assetBase": "lesson-visuals/generative/vae-posterior-collapse"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "latent-models-capstone",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build and Diagnose a VAE?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Prove correctness on one batch before interpreting prior samples.",
+      "Preserve reconstruction, KL, posterior statistics, and interventions separately.",
+      "Run one matched collapse intervention and report negative or mixed results.",
+      "This checklist does not execute training or certify a model's quality."
+    ],
+    "assetBase": "lesson-visuals/generative/latent-models-capstone"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "change-of-variables",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Change of Variables?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Trace both the transformed point and the local volume correction.",
+      "Use absolute determinant because orientation flips do not create negative density.",
+      "Check invertibility and normalization independently of visual plausibility.",
+      "This one-dimensional uniform fixture does not expose high-dimensional Jacobian cost."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "normalizing-flows",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Normalizing Flows?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Implement forward, inverse, and log determinant as one inseparable layer contract.",
+      "Compose log determinants in the same order as transformations.",
+      "Test round-trip error and density against an analytically solvable case before training.",
+      "These are deterministic layer traces, not a trained flow benchmark."
+    ],
+    "assetBase": "lesson-visuals/generative/normalizing-flows"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "energy-based-models",
+    "kind": "raster",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Energy-Based Models?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Distinguish unnormalized energy differences from normalized probabilities.",
+      "Keep positive data examples and negative model samples visible in the gradient ledger.",
+      "Audit whether the sampler explores modes before trusting training loss.",
+      "Finite tables make Z exact; real continuous EBMs may require approximate sampling."
+    ],
+    "assetBase": "lesson-visuals/generative/energy-based-models"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "mcmc-langevin-sampling",
+    "kind": "raster",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in MCMC & Langevin Sampling?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Trace drift and noise as separate update contributions.",
+      "Evaluate chain mixing and mode occupancy rather than plotting only the final state.",
+      "Report step size, burn-in, thinning policy, starts, and transition budget.",
+      "The readouts are teaching fixtures, not measured MCMC diagnostics."
+    ],
+    "assetBase": "lesson-visuals/generative/mcmc-langevin-sampling"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "flow-energy-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Flows vs Energies: Sampling Lab?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Match target data, parameters, optimizer steps, and evaluation cases before comparison.",
+      "Use family-appropriate diagnostics without forcing a false single ranking.",
+      "Report direct-sampling speed and chain quality with their exact compute units.",
+      "No models run here; the cards audit study design."
+    ],
+    "assetBase": "lesson-visuals/generative/flow-energy-capstone"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "corruption-denoising",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Corruption & Denoising?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Keep clean data, sampled noise, timestep, and corrupted input in the training record.",
+      "Interpret schedules through signal-to-noise, not timestep number alone.",
+      "Distinguish the fixed forward process from learned reverse dynamics.",
+      "Scalar coefficients illustrate the process; no image model or reverse denoiser runs here."
+    ],
+    "assetBase": "lesson-visuals/generative/corruption-denoising"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "score-matching",
+    "kind": "raster",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Scores & Denoising Score Matching?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Distinguish scalar log density from its vector gradient field.",
+      "Check analytic scores on simple distributions before fitting a network.",
+      "Evaluate direction, magnitude, and trajectory consequences across noise levels.",
+      "These one-dimensional fields are deterministic analytic fixtures, not learned high-dimensional score measurements."
+    ],
+    "assetBase": "lesson-visuals/generative/score-matching"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "ddpm-objective",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in The DDPM Training Objective?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Record x0, t, epsilon, xt, prediction, and reduction together.",
+      "Pass timestep information explicitly so one network represents many noise levels.",
+      "Test target parameterization and weighting with algebraic conversions.",
+      "The records are deterministic fixtures; no neural loss is measured."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "diffusion-samplers-schedules",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Diffusion Samplers & Schedules?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Count network function evaluations and stochastic draws explicitly.",
+      "Hold starting noises and model weights fixed when comparing trajectories.",
+      "Inspect intermediate states and failure onset, not only final image grids.",
+      "The cards specify sampler arithmetic and experiments; no runtime or sample-quality number is measured here."
+    ],
+    "assetBase": "lesson-visuals/generative/diffusion-samplers-schedules"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "diffusion-model-capstone",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Diffusion Model?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Build schedule and algebra tests before training the denoiser.",
+      "Use fixed-noise trajectory panels plus held-out losses and coverage evidence.",
+      "Separate CPU smoke invariants from optional GPU observations and provenance.",
+      "The gate teaches provenance; it is not itself a diffusion run."
+    ],
+    "assetBase": "lesson-visuals/generative/diffusion-model-capstone"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "conditional-generation",
+    "kind": "raster",
+    "concept": "multimodal",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Conditional Generation?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Specify condition type, representation, missing-value policy, and authority.",
+      "Evaluate adherence separately from fidelity and within-condition diversity.",
+      "Use counterfactual condition swaps to expose ignored or shortcut conditions.",
+      "The panels are deterministic fixtures, not generated model outputs."
+    ],
+    "assetBase": "lesson-visuals/generative/conditional-generation"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "classifier-free-guidance",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Classifier-Free Guidance?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Trace unconditional, conditional, difference, and guided prediction separately.",
+      "Interpret guidance scale as an inference intervention, not retraining.",
+      "Measure adherence, diversity, fidelity, and saturation across a scale curve.",
+      "A scalar mixture verifies CFG arithmetic, not image quality."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "inverse-problems-editing",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Inverse Problems & Editing?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Write the forward measurement operator before designing its inverse.",
+      "Separate observed-pixel consistency from prior-driven completion.",
+      "Represent multiple valid reconstructions and uncertainty where the measurement is insufficient.",
+      "A four-value mask fixture does not assess perceptual priors."
+    ],
+    "assetBase": "lesson-visuals/generative/inverse-problems-editing"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "compositional-control",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Composition, Control & Trade-offs?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Represent each condition and its authority or priority explicitly.",
+      "Measure the full conjunction and pairwise interactions, not only marginals.",
+      "Include conflicting and unseen combinations with a declared resolution policy.",
+      "Percentages are deterministic teaching fixtures, not model measurements."
+    ],
+    "assetBase": "lesson-visuals/generative/compositional-control"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "conditional-safety-capstone",
+    "kind": "raster",
+    "concept": "security",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Conditional Generation Safety Audit?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Predeclare condition grammar, allowed uses, conflicts, and release gates.",
+      "Use a paired seed-condition-scale matrix so selection cannot hide failures.",
+      "Keep model behavior, data rights, memorization evidence, and runtime controls distinct.",
+      "The values are deterministic fixtures and do not certify a real generator."
+    ],
+    "assetBase": "lesson-visuals/generative/conditional-safety-capstone"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "generative-data-systems",
+    "kind": "raster",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Data & Systems for Generative Models?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Version data and preprocessing as carefully as code and checkpoints.",
+      "Name ownership and units for every performance or memory measurement.",
+      "Test interruption and resume before committing a long GPU budget.",
+      "These are deterministic metadata and arithmetic fixtures; no GPU memory or training trajectory is measured in the browser."
+    ],
+    "assetBase": "lesson-visuals/generative/generative-data-systems"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "memorization-privacy",
+    "kind": "raster",
+    "concept": "security",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Memorization, Privacy & Misuse?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Define the threat actor, access, target records, query budget, and success threshold.",
+      "Compare generated outputs with training and held-out neighbors using the same representation.",
+      "Preserve null attacks as scoped results rather than universal guarantees.",
+      "The cases are hypothetical fixtures and contain no real personal or copyrighted records."
+    ],
+    "assetBase": "lesson-visuals/generative/memorization-privacy"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "matched-budget-evaluation",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Matched-Budget Generative Evaluation?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Define the construct and unit before selecting a metric.",
+      "Match or expose every resource that could explain the observed difference.",
+      "Report uncertainty, slices, and trade-off frontiers instead of one winner.",
+      "The values are design fixtures, not measured model benchmarks."
+    ],
+    "assetBase": "lesson-visuals/generative/matched-budget-evaluation"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "reproducible-gpu-experiments",
+    "kind": "raster",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproducible GPU Experiments?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Use one provider-neutral command and externalize only environment setup.",
+      "Separate smoke integration from full experimental evidence and enforce stop limits.",
+      "Never publish a numeric expected band without a reviewed provenance-backed run.",
+      "No external service is contacted by this browser lab."
+    ],
+    "assetBase": "lesson-visuals/generative/reproducible-gpu-experiments"
+  },
+  {
+    "courseId": "generative",
+    "lessonId": "generative-research-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Matched-Family Research Study?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Reproduce before intervening so implementation novelty is not confounded with baseline failure.",
+      "Change one causal factor and match every relevant budget and seed rule.",
+      "Treat null and negative results as complete outcomes when the protocol passes.",
+      "The seed rows are deterministic fixtures, not results from an executed GPU experiment."
+    ],
+    "assetBase": "lesson-visuals/generative/generative-research-capstone"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "sequential-decision-systems",
+    "kind": "deterministic",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “QUESTION” and “LIMIT” in What Is Reinforcement Learning??",
+    "labels": [
+      "QUESTION",
+      "EXAMPLE",
+      "COMPARE",
+      "LIMIT"
+    ],
+    "stageDescriptions": [
+      "Name what the agent can observe and which actions it can choose.",
+      "Follow each action to the consequence that arrives afterward.",
+      "Compare the feedback being optimized with the success and safety outcomes people actually care about.",
+      "The cards illustrate a deterministic learning story; they do not train or evaluate an RL algorithm."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "mdps-rewards",
+    "kind": "deterministic",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in MDPs, Rewards & Discounting?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Test whether the declared state is Markov for the prediction needed.",
+      "Keep reward shaping separate from success and constraint measurements.",
+      "Inspect transition and reward units, then compare policies under the declared horizon and discount before applying Bellman equations.",
+      "These finite tables demonstrate contract behavior, not learned policy performance or the ethically correct discount."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "partial-observation",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Partial Observation & Belief?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Predict the hidden-state distribution through actions before using new evidence.",
+      "Normalize observation-weighted mass and retain uncertainty.",
+      "Test recovery after misleading or missing observations.",
+      "The two-state filter is an exact arithmetic fixture, not a calibrated real sensor."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "policies-occupancy",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Policies, Occupancy & Evaluation?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Normalize action probabilities separately at each state.",
+      "Compute visitation from policy plus transition dynamics, not policy probabilities alone.",
+      "Audit target-policy support under logged behavior before off-policy claims.",
+      "The cards show finite support logic, not a real off-policy estimate."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "tabular-control-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Tabular Control Workbench?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Validate the MDP schema and exact solution before sampling estimates.",
+      "Keep environment truth separate from what an online learner later estimates.",
+      "Use changed transitions and starts to test transfer rather than replay one table.",
+      "This gate classifies evidence; it does not solve the learner's custom MDP."
+    ],
+    "assetBase": "lesson-visuals/rl/tabular-control-capstone"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "dynamic-programming",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Dynamic Programming?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Separate policy evaluation from greedy policy improvement.",
+      "Trace probability, reward, discount, and continuation value in every backup.",
+      "Stop on a declared residual and verify the greedy policy independently.",
+      "The values are exact table fixtures, not sampled control performance."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "monte-carlo-estimation",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Monte Carlo Estimation?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Compute returns backward from the terminal or truncated boundary.",
+      "Declare first-visit or every-visit counting before aggregation.",
+      "Separate within-episode samples from independent training or evaluation seeds.",
+      "The episode rows are fixed arithmetic fixtures rather than measured benchmark results."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "temporal-difference-learning",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Temporal-Difference Learning?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Compute target, TD error, then parameter update as separate values.",
+      "Mask bootstrap by true termination rather than a generic done flag.",
+      "Compare learning curves and asymptotic bias against Monte Carlo or exact values.",
+      "This exact scalar fixture does not establish neural TD stability."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "sarsa-q-learning",
+    "kind": "deterministic",
+    "concept": "routing",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in SARSA, Q-Learning & Off-Policy Targets?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Use the sampled next action only in the SARSA target.",
+      "Use a max with declared tie behavior only in Q-learning.",
+      "Compare safety under the behavior actually executed, not only greedy evaluation.",
+      "The scalar targets demonstrate update semantics, not benchmark superiority."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "value-methods-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Value-Learning Agent?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Make every algorithm pass the same transition and ending tests.",
+      "Use exact values to separate estimator error from environment mismatch.",
+      "Preserve all independent seeds and changed-case failures.",
+      "The gate audits artifacts and does not execute the learner's algorithms."
+    ],
+    "assetBase": "lesson-visuals/rl/value-methods-capstone"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "function-approximation",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Function Approximation?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Name input features, parameter shapes, scalar output, and target ownership.",
+      "Test generalization on changed states separately from training fit.",
+      "Track target drift, gradient norms, and prediction scale under bootstrapping.",
+      "The two-feature regression is an exact fixture, not a neural convergence result."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "replay-target-networks",
+    "kind": "raster",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Replay Buffers & Target Networks?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Record transition age, source policy, priority, and ending flags.",
+      "Measure target drift separately from online prediction error.",
+      "Sweep replay ratio and target lag under a fixed environment-interaction budget.",
+      "The dashboard values are deterministic design fixtures, not DQN measurements."
+    ],
+    "assetBase": "lesson-visuals/rl/replay-target-networks"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "dqn",
+    "kind": "raster",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Deep Q-Networks?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Assert observation, action, reward, ending, and Q tensor shapes.",
+      "Gather only the logged action prediction for each loss row.",
+      "Separate collection policy, training updates, and evaluation policy in artifacts.",
+      "The traces are teaching fixtures, not benchmark results."
+    ],
+    "assetBase": "lesson-visuals/rl/dqn"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "exploration-deep-rl",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Exploration in Deep RL?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Distinguish action entropy from meaningful state coverage.",
+      "Measure discovery and safety costs on the same interaction budget.",
+      "Predeclare exploration decay, reset distribution, and constraint policy.",
+      "The cards are deterministic comparison scenarios rather than executed agents."
+    ],
+    "assetBase": "lesson-visuals/rl/exploration-deep-rl"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "deep-value-capstone",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build and Diagnose a DQN?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Pass micro-tests before spending environment interactions.",
+      "Reproduce the baseline acceptance range without inventing expected scores.",
+      "Change one replay, target, loss, or exploration factor under matched interactions.",
+      "The cards audit readiness and contain no measured DQN result."
+    ],
+    "assetBase": "lesson-visuals/rl/deep-value-capstone"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "policy-gradients",
+    "kind": "deterministic",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Policy Gradients?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Trace logits to probabilities, sampled action, log probability, return, and gradient sign.",
+      "Treat trajectories as owned by the policy revision that generated them.",
+      "Evaluate return, entropy, KL change, and seed variance together.",
+      "The scalar categorical fixture does not measure learned control performance."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "baselines-advantages",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Baselines, Advantages & GAE?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Compute TD residuals before accumulating GAE backward.",
+      "Mask only true terminal continuation and document truncation bootstrap.",
+      "Report value error and advantage scale beside policy return.",
+      "The meter illustrates estimator structure, not measured variance."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "actor-critic",
+    "kind": "deterministic",
+    "concept": "preference",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Actor-Critic Methods?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Detach advantages from the actor loss unless a deliberate coupled objective is derived.",
+      "Log actor, critic, entropy, KL, and gradient contributions separately.",
+      "Evaluate policy behavior independently of critic training loss.",
+      "Values are diagnostic fixtures and not an executed PPO benchmark."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "on-policy-capstone",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build an On-Policy Agent?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Verify estimator arithmetic before long rollouts.",
+      "Keep behavior revision and update count attached to every batch.",
+      "Change one lambda, critic, entropy, or clip setting under matched interactions.",
+      "The gate classifies evidence and does not train an agent."
+    ],
+    "assetBase": "lesson-visuals/rl/on-policy-capstone"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "learned-dynamics-control",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Learned Dynamics for Control?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Assert action changes predicted next state on controlled pairs.",
+      "Slice model error by horizon, occupancy, reward, and constraint events.",
+      "Evaluate decisions made through the model, not prediction loss alone.",
+      "The scalar traces are deterministic fixtures, not trained-model measurements."
+    ],
+    "assetBase": "lesson-visuals/rl/learned-dynamics-control"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "shooting-mpc",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Shooting, CEM & Model Predictive Control?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Count candidate sequences, horizon, iterations, and ensemble members as primitive model calls.",
+      "Separate predicted score from real executed outcome.",
+      "Apply hard constraints before ranking feasible action sequences.",
+      "Costs and outcomes are teaching fixtures, not runtime measurements."
+    ],
+    "assetBase": "lesson-visuals/rl/shooting-mpc"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "dyna-imagination",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Dyna & Imagination Learning?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Tag every training row as real or imagined with model revision.",
+      "Match total updates and environment steps separately.",
+      "Gate imagination by support, uncertainty, horizon, and real-validation checks.",
+      "The row counts are exact design fixtures, not learned performance."
+    ],
+    "assetBase": "lesson-visuals/rl/dyna-imagination"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "model-uncertainty-exploitation",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Model Uncertainty & Exploitation?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Separate ensemble mean error, disagreement, and actual error.",
+      "Pair planner choices with real or trusted-simulator outcomes.",
+      "Make fallback authority and constraint thresholds explicit.",
+      "Scores are hypothetical fixtures and not calibrated controller measurements."
+    ],
+    "assetBase": "lesson-visuals/rl/model-uncertainty-exploitation"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "model-based-capstone",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Model-Based Agent?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Validate the model before asking a planner to optimize it.",
+      "Count every predicted transition and every real interaction.",
+      "Force an exploitation case and verify fallback authority.",
+      "The checklist is not a model or planner execution."
+    ],
+    "assetBase": "lesson-visuals/rl/model-based-capstone"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "behavior-cloning",
+    "kind": "raster",
+    "concept": "training",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Behavior Cloning?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Split by episode or scenario before creating overlapping windows.",
+      "Trace observation and action shapes, units, masks, and normalization.",
+      "Evaluate closed-loop recovery in addition to held-out imitation loss.",
+      "The percentages are deterministic teaching scenarios, not policy measurements."
+    ],
+    "assetBase": "lesson-visuals/rl/behavior-cloning"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "covariate-shift-dagger",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Covariate Shift & Dataset Aggregation?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Keep executed action separate from expert label.",
+      "Track learner-visited state coverage and expert query provenance by iteration.",
+      "Define safety shields and stop authority before learner rollouts.",
+      "The counts are design fixtures, not real expert interactions."
+    ],
+    "assetBase": "lesson-visuals/rl/covariate-shift-dagger"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "offline-rl-coverage",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Offline RL, Coverage & Conservatism?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Audit critical state-action coverage before optimization.",
+      "Compare behavior cloning, value learning, and conservative variants on the same logs.",
+      "Abstain where target actions have no credible support or validated model evidence.",
+      "Counts and Q values are finite fixtures rather than dataset measurements."
+    ],
+    "assetBase": "lesson-visuals/rl/offline-rl-coverage"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "sequence-policy-capstone",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Sequence Policies from Logged Data?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Test serialization, target shifting, masks, and episode boundaries exactly.",
+      "Compare with behavior cloning under the same data and update budget.",
+      "Treat desired return as context, not a guarantee of achieving it.",
+      "The checklist does not train or evaluate a real sequence model."
+    ],
+    "assetBase": "lesson-visuals/rl/sequence-policy-capstone"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "rl-evaluation-seeds",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in RL Evaluation, Seeds & Uncertainty?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Predeclare seed count, primary metric, window, stop rule, and failure handling.",
+      "Separate training return from frozen-policy evaluation episodes.",
+      "Show individual curves and uncertainty at the independent-run level.",
+      "The returns are fixed teaching rows, not benchmark measurements."
+    ],
+    "assetBase": "lesson-visuals/rl/rl-evaluation-seeds"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "safe-constrained-rl",
+    "kind": "raster",
+    "concept": "security",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Constraints, Intervention & Safe RL?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Separate reward, cost, and non-compensable action permissions.",
+      "Measure violation frequency, magnitude, recovery, and intervention burden.",
+      "Define who can override, stop, reset, and resume the policy.",
+      "The policies and costs are deterministic scenarios, not deployed-agent results."
+    ],
+    "assetBase": "lesson-visuals/rl/safe-constrained-rl"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "reproducible-rl-gpu",
+    "kind": "raster",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproducible GPU RL?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Use one provider-neutral command for Colab, compatible services, and local execution.",
+      "Separate smoke integration from full seed-level evidence.",
+      "Publish expected observations only from exact invariants or reviewed authentic runs.",
+      "No external service is contacted and no benchmark number is measured here."
+    ],
+    "assetBase": "lesson-visuals/rl/reproducible-rl-gpu"
+  },
+  {
+    "courseId": "rl",
+    "lessonId": "rl-research-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproduced Baseline + Original Intervention?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Reproduce before intervening.",
+      "Change one causal factor and match every relevant primitive budget.",
+      "Treat null and failed runs as results rather than omissions.",
+      "The rows are deterministic examples and not executed research results."
+    ],
+    "assetBase": "lesson-visuals/rl/rl-research-capstone"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "embodied-task-contracts",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “QUESTION” and “LIMIT” in What Is Embodied AI??",
+    "labels": [
+      "QUESTION",
+      "EXAMPLE",
+      "COMPARE",
+      "LIMIT"
+    ],
+    "stageDescriptions": [
+      "Name what the body can sense, including what may be hidden or delayed.",
+      "Describe one small action and the physical change it is meant to cause.",
+      "Check the result through new evidence and keep a separate stop path when the world becomes unsafe.",
+      "The cards are deterministic teaching scenarios, not validation of a real robot or safety system."
+    ],
+    "assetBase": "lesson-visuals/embodied/embodied-task-contracts"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "observation-action-spaces",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Observation & Action Spaces?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Preserve raw values and metadata before normalization.",
+      "Name action semantics such as torque, position, velocity, or pose delta.",
+      "Validate shapes, units, masks, and bounds at every boundary.",
+      "The cards validate metadata logic, not actuator dynamics."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "coordinate-frames-time",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Coordinate Frames, Time & Synchronization?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Write transform superscripts/subscripts and test direction with landmarks.",
+      "Compose only chains whose adjacent frames match.",
+      "Measure sensor age and synchronization error before fusion or control.",
+      "The arithmetic assumes aligned one-dimensional axes and constant speed."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "embodied-partial-observation",
+    "kind": "raster",
+    "concept": "memory",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Partial Observation in the Physical Loop?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Predict from the applied action through an explicit object–gripper dynamics relation before incorporating the new observation.",
+      "Retain uncertainty, attachment validity, and missingness instead of filling every sensor silently.",
+      "Test decision recovery after occlusion, delay, broken grasp, and contradictory evidence.",
+      "The one-axis rigid-grasp predictor is a deterministic mechanism fixture, not a calibrated tracker or general contact model."
+    ],
+    "assetBase": "lesson-visuals/embodied/embodied-partial-observation"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "task-contract-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build an Embodied Task Contract?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Turn the written task into executable schema and predicate assertions.",
+      "Exercise nominal, boundary, and failure traces with a scripted controller.",
+      "Package manifest, raw transitions, failures, and a simulator evidence boundary.",
+      "Passing simulated assertions is not physical validation."
+    ],
+    "assetBase": "lesson-visuals/embodied/task-contract-capstone"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "cameras-proprioception",
+    "kind": "raster",
+    "concept": "multimodal",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Cameras, Proprioception & Sensor Noise?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Keep device timestamps, units, validity, and calibration revision with every modality.",
+      "Distinguish measurement noise, missingness, normalization, and training augmentation.",
+      "Test single-sensor dropout and disagreement before policy learning.",
+      "The packet ages and signals are constructed fixtures, not sensor measurements."
+    ],
+    "assetBase": "lesson-visuals/embodied/cameras-proprioception"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "calibration-transforms",
+    "kind": "deterministic",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Calibration & Spatial Transforms?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Separate camera intrinsics from camera-to-robot extrinsics.",
+      "Fit on one pose set and validate on held-out spatial coverage.",
+      "Propagate transform uncertainty and trigger recalibration on drift.",
+      "Uncertainty arithmetic is illustrative and not a calibrated camera run."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "spatial-object-representations",
+    "kind": "raster",
+    "concept": "coordinates",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Spatial & Object Representations?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Choose representation from the control query, not visual novelty.",
+      "Attach frame, time, extent, visibility, identity, and uncertainty to objects.",
+      "Test permutation, occlusion, and relation changes without leaking simulator truth.",
+      "The geometric cases are fixed fixtures, not perception outputs."
+    ],
+    "assetBase": "lesson-visuals/embodied/spatial-object-representations"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "sensor-fusion-tracking",
+    "kind": "deterministic",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Sensor Fusion & Tracking?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Predict before associating and correcting observations.",
+      "Use uncertainty-scaled innovation gates rather than nearest point alone.",
+      "Measure identity swaps, calibration, dropout recovery, and decision effects.",
+      "The scalar Gaussian update and swap scenario are deterministic fixtures."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "state-estimator-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Multimodal State Estimator?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Verify each transform and filter operation against hand-computable fixtures.",
+      "Keep hidden simulator truth available only to the evaluator.",
+      "Change one sensor or calibration factor and preserve failure/recovery evidence.",
+      "The gate classifies simulator evidence and does not validate hardware."
+    ],
+    "assetBase": "lesson-visuals/embodied/state-estimator-capstone"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "teleoperation-demonstrations",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Teleoperation & Demonstrations?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Calibrate operator input to applied robot command and log both.",
+      "Preserve corrections, failures, interventions, and reset causes.",
+      "Measure operator/session coverage, latency, quality, and rights.",
+      "The sessions are constructed evidence examples, not human-subject measurements."
+    ],
+    "assetBase": "lesson-visuals/embodied/teleoperation-demonstrations"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "trajectory-datasets",
+    "kind": "raster",
+    "concept": "data",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Trajectory Schemas & Dataset Cards?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Version schema, manifests, checksums, and transformation lineage.",
+      "Split whole episodes, operators, scenes, or robots according to the claim.",
+      "Write coverage, exclusions, rights, and known limitations in the dataset card.",
+      "The cards classify data contracts and do not measure policy quality."
+    ],
+    "assetBase": "lesson-visuals/embodied/trajectory-datasets"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "robot-data-quality",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Robot Data Quality & Coverage?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Measure coverage at decision-relevant joint state-action slices.",
+      "Detect duplicates and shared demonstrations across evaluation boundaries.",
+      "Preserve rejection, rights, privacy, and failure evidence in the manifest.",
+      "Counts are constructed fixtures rather than a real dataset audit."
+    ],
+    "assetBase": "lesson-visuals/embodied/robot-data-quality"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "action-representations-chunking",
+    "kind": "raster",
+    "concept": "pipeline",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Action Representations & Chunking?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Compare absolute, delta, joint, and task-space semantics through forward effects.",
+      "Align chunk inputs/targets and mask padding across episode ends.",
+      "Measure smoothness, latency, compounding error, and recovery as chunk length changes.",
+      "Durations and recovery cases are deterministic design fixtures."
+    ],
+    "assetBase": "lesson-visuals/embodied/action-representations-chunking"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "behavior-cloning-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Behavior-Cloning Policy?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Prove dataset lineage, targets, masks, and action scaling before training.",
+      "Compare aggregate and critical-slice imitation evidence.",
+      "Run closed-loop perturbations and retain first divergence and recovery traces.",
+      "The cases classify simulator evidence, not physical competence."
+    ],
+    "assetBase": "lesson-visuals/embodied/behavior-cloning-capstone"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "language-grounding",
+    "kind": "raster",
+    "concept": "multimodal",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Language Grounding?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Turn language into explicit referents, relations, goals, and constraints.",
+      "Separate semantic match from physical affordance and current feasibility.",
+      "Ask, abstain, or recover when multiple bindings remain plausible.",
+      "The scores are fixed teaching values, not calibrated perception or language outputs."
+    ],
+    "assetBase": "lesson-visuals/embodied/language-grounding"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "multimodal-policy-encoders",
+    "kind": "raster",
+    "concept": "attention",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Multimodal Policy Encoders?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Assert every modality's source shape, projected width, mask, and time semantics.",
+      "Preserve spatial/temporal position and modality identity through fusion.",
+      "Use ablations, shuffles, and counterfactual changes to test reliance.",
+      "Token counts and actions are teaching fixtures, not model measurements."
+    ],
+    "assetBase": "lesson-visuals/embodied/multimodal-policy-encoders"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "transformer-action-policies",
+    "kind": "raster",
+    "concept": "attention",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Transformer Action Policies?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Specify token order, prediction position, and attention permission for every action target.",
+      "Shift targets onto pre-action positions and mask episode padding without crossing episode boundaries.",
+      "Compare teacher-forced likelihood with free-running and chunked control.",
+      "The token examples are serialization fixtures rather than trained-policy results."
+    ],
+    "assetBase": "lesson-visuals/embodied/transformer-action-policies"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "diffusion-policies",
+    "kind": "raster",
+    "concept": "distribution",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Diffusion Policies?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Trace action, noise, timestep, condition, and prediction shapes through training.",
+      "Separate denoising iterations from real control steps and policy calls.",
+      "Measure action multimodality, sampling latency, prefix execution, and recovery.",
+      "Corruption and latency values are deterministic teaching fixtures."
+    ],
+    "assetBase": "lesson-visuals/embodied/diffusion-policies"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "vla-policy-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Build a Language-Conditioned Action Policy?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Share data, encoder contract, action semantics, seeds, and evaluation across decoders.",
+      "Prove causal masks and diffusion corruption before long training.",
+      "Apply grounding, deadline, support, and safety gates before task-success trade-offs.",
+      "The cards classify course-scale simulator evidence."
+    ],
+    "assetBase": "lesson-visuals/embodied/vla-policy-capstone"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "feedback-control",
+    "kind": "deterministic",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Feedback Control for Learned Policies?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Trace reference, estimate, error, raw command, applied command, and next observation.",
+      "Measure delay, saturation, overshoot, settling, steady error, and constraint events.",
+      "Assign fallback and anti-windup outside the learned policy.",
+      "The scalar traces are fixtures, not a hardware stability proof."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "world-model-robot-planning",
+    "kind": "raster",
+    "concept": "agent",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in World-Model Planning for Robots?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Keep predicted and realized outcome rows paired by action.",
+      "Count model calls, latency, horizon, and replanning separately.",
+      "Reject plans beyond support, uncertainty, or safety limits.",
+      "Scores are deterministic examples, not robot runs."
+    ],
+    "assetBase": "lesson-visuals/embodied/world-model-robot-planning"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "hierarchical-skills",
+    "kind": "raster",
+    "concept": "routing",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Hierarchical Skills & Long Horizons?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Specify preconditions, arguments, effects, invariants, and all termination causes.",
+      "Keep selection separate from low-level execution evidence.",
+      "Replan after violated postconditions or timeouts.",
+      "The traces are deterministic state-machine cases."
+    ],
+    "assetBase": "lesson-visuals/embodied/hierarchical-skills"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "sim-to-real-identification",
+    "kind": "raster",
+    "concept": "optimization",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in System Identification & Sim-to-Real?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Check identifiability before interpreting fitted values.",
+      "Separate calibration trajectories from held-out transfer evaluation.",
+      "Report randomized factors, adaptation data, and residual confounds.",
+      "The force values are fixtures, not hardware measurements."
+    ],
+    "assetBase": "lesson-visuals/embodied/sim-to-real-identification"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "recovery-intervention-capstone",
+    "kind": "raster",
+    "concept": "security",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Recovery, Intervention & Human Control?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Put runtime authority after every optimizing component.",
+      "Inject sensor, model, controller, skill, and dynamics faults separately.",
+      "Measure detection, intervention latency, fallback, recovery, and residual risk.",
+      "The cases are simulated authority fixtures."
+    ],
+    "assetBase": "lesson-visuals/embodied/recovery-intervention-capstone"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "embodied-evaluation-suites",
+    "kind": "deterministic",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Embodied Evaluation Suites?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Cross task capability with explicit shift and intervention axes.",
+      "Separate autonomous, assisted, safe, grounded, and deadline-qualified success.",
+      "Report cell-level independent-unit denominators, interval method, failures, and aggregate weights.",
+      "The rates and Wilson intervals are deterministic calculations from fixed teaching counts, not measured robot capability."
+    ],
+    "assetBase": null
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "robustness-generalization",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Robustness & Generalization?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Name whether each change is nuisance, task-relevant, compositional, or out-of-range.",
+      "Verify no source or derived window leaks across held-out groups.",
+      "Use severity curves and counterfactual pairs, not one average shift.",
+      "The shifts are deterministic scenarios, not field statistics."
+    ],
+    "assetBase": "lesson-visuals/embodied/robustness-generalization"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "latency-safety-operations",
+    "kind": "raster",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Latency, Safety & Operations?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Measure end-to-end age and every stage contribution at tail percentiles against a predeclared SLO.",
+      "Define deadline, stale-input, overload, constraint, and watchdog actions.",
+      "Test rollback, incident replay, authority, and revision provenance.",
+      "Latencies are constructed fixtures, not hardware benchmarks; the p99 estimate assumes the named load and measurement procedure."
+    ],
+    "assetBase": "lesson-visuals/embodied/latency-safety-operations"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "reproducible-embodied-gpu",
+    "kind": "raster",
+    "concept": "systems",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Reproducible Embodied GPU Runs?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Use one provider-neutral command for Colab, compatible GPU services, and local runs.",
+      "Separate exact smoke invariants from stochastic full-run observations.",
+      "Preserve every episode/seed/cell, video, failure, and provenance record.",
+      "The browser classifies evidence and does not execute the external runner."
+    ],
+    "assetBase": "lesson-visuals/embodied/reproducible-embodied-gpu"
+  },
+  {
+    "courseId": "embodied",
+    "lessonId": "embodied-research-capstone",
+    "kind": "raster",
+    "concept": "evaluation",
+    "learningQuestion": "What must happen between “CONTRACT” and “BOUND” in Original Embodied-System Study?",
+    "labels": [
+      "CONTRACT",
+      "TRANSFORM",
+      "OBSERVE",
+      "BOUND"
+    ],
+    "stageDescriptions": [
+      "Reproduce and accept the working baseline before branching treatment.",
+      "Change one mechanism with matched data, interactions, updates, calls, and cells.",
+      "Publish all seeds, failures, assistance, costs, limits, and the next falsifying experiment.",
+      "The checklist cannot award external scientific validity."
+    ],
+    "assetBase": "lesson-visuals/embodied/embodied-research-capstone"
+  }
+]

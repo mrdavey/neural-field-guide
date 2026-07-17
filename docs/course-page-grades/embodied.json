@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-16",
-  "gradedAt": "2026-07-17T03:59:25Z",
-  "sourceFingerprint": "sha256:10394e0c5d9502680073b2429e1d397e23f4d234223f6d9ab331e181e75199b3",
+  "gradedAt": "2026-07-17T07:41:21Z",
+  "sourceFingerprint": "sha256:057bbf67b8680e19a7173c576c7608500245ae17d6a7102ac0984a41bf4a225c",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
+    "method": "Independent 17 July 2026 introduction regrade plus a complete static-visual compatibility regrade; compared every changed introduction objective and all 182 added plates with their exact labels, stage mechanisms, worked context, misconception boundary, accessible description, provenance, and whole-page beginner fit."
   },
   "courseId": "embodied",
   "population": 31,

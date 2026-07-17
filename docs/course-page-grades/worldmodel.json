@@ -4,10 +4,10 @@
   "population": 47,
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
+    "method": "Independent 17 July 2026 introduction regrade plus a complete static-visual compatibility regrade; compared every changed introduction objective and all 182 added plates with their exact labels, stage mechanisms, worked context, misconception boundary, accessible description, provenance, and whole-page beginner fit."
   },
-  "gradedAt": "2026-07-17T03:59:25Z",
-  "sourceFingerprint": "sha256:17b7fbea03069d68afe7b14090eda973cbaa8ae63b87770d21413849376ff336",
+  "gradedAt": "2026-07-17T07:41:21Z",
+  "sourceFingerprint": "sha256:0b15e3eb6033dd7ed886d8b0b257a391a7dec810bc3847e5353c1b4217175ec0",
   "pages": [
     {
       "pageType": "home",

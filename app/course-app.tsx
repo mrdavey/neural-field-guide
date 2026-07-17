@@ -24,6 +24,7 @@ import { courseAlignmentByLesson } from "./course-alignments";
 import { ResearchCourseLab } from "./research-courses/lab";
 import { ExternalExperimentView } from "./external-experiment-view";
 import { externalExperiments } from "./external-experiments";
+import { LessonConceptPlate } from "./lesson-concept-plate";
 
 const FineTuningWorkshop = lazy(() => import("./fine-tuning-workshop"));
 const MasteryStudio = lazy(() => import("./mastery-studios"));
@@ -368,6 +369,8 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
         <p className={depth === "simple" ? "simple-definition" : "deep-definition"}><MathText>{depth === "simple" ? lesson.simple : lesson.deep}</MathText></p>
       </MotionReveal>
     </section>
+
+    <LessonConceptPlate courseId={course.id} lesson={lesson} />
 
     <ScrollStory
       className="lesson-motion-story"

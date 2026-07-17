@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-16",
-  "gradedAt": "2026-07-17T03:59:25Z",
-  "sourceFingerprint": "sha256:544eaa70fc57a71f34f7da0b3181250a208c9d63caa8d1553e8bba5b9fc714be",
+  "gradedAt": "2026-07-17T07:41:21Z",
+  "sourceFingerprint": "sha256:d5ba53732c3258a3e26393c5785ee46eab5897725a06c7701b98f6e425a5fe0b",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
+    "method": "Independent 17 July 2026 introduction regrade plus a complete static-visual compatibility regrade; compared every changed introduction objective and all 182 added plates with their exact labels, stage mechanisms, worked context, misconception boundary, accessible description, provenance, and whole-page beginner fit."
   },
   "courseId": "llm",
   "population": 45,

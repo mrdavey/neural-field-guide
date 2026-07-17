@@ -14,6 +14,7 @@ This directory contains the maintained documentation for the five-course, 182-le
 | [`OBJECTIVE_COVERAGE_REVIEW.md`](OBJECTIVE_COVERAGE_REVIEW.md) | Consolidated semantic review for all 408 exact lesson objectives | An objective or any teaching/assessment surface that fulfills it changes |
 | [`COURSE_PAGE_GRADING_RUBRIC.md`](COURSE_PAGE_GRADING_RUBRIC.md) | Independent grading dimensions, thresholds, blocker rules, and evidence protocol | The page-level grading contract changes |
 | [`INTERACTION_AUDIT.md`](INTERACTION_AUDIT.md) | Learning question, visual grammar, Change → Observe → Explain contract, and evidence boundary for instructional motion and labs | An interaction is added or materially changed |
+| [`LESSON_VISUAL_ATLAS.md`](LESSON_VISUAL_ATLAS.md) | Complete 182-lesson static visual inventory, representation rules, style contract, provenance, generation, and verification workflow | A lesson plate, visual kind, shared style, prompt, asset, or delivery contract changes |
 | [`GITHUB_PAGES.md`](GITHUB_PAGES.md) | Static-export publication, privacy, activation, verification, rollback, and domain runbook | Hosting, routing, public paths, build configuration, or workflow pins change |
 | [`../external-executions/README.md`](../external-executions/README.md) | Entry point for optional model-backed and accelerator-backed experiments | A runner, pin, evidence gate, or runbook changes |
 
@@ -26,6 +27,7 @@ This directory contains the maintained documentation for the five-course, 182-le
 | `CURRICULUM_INVENTORY.md` | Course registries, released research manifests, and curriculum graph | `node scripts/generate-curriculum-inventory.mjs` |
 | `COURSE_PAGE_GRADES.md` and `course-page-grades/*.json` | Reviewed independent grade records plus source fingerprints | `npm run generate:grades`; verify without writes with `npm run verify:grades` |
 | Public capstone and validation artifacts | Source contracts and deterministic generators under `app/` and `scripts/` | `npm run verify:artifacts` |
+| Lesson visual WebPs | `docs/lesson-visual-prompts.json` and the built-in generation outputs | Process with `node scripts/process-lesson-visual.mjs`; verify with `npm run verify:lesson-visuals` |
 | Public experiment runbooks | Corresponding optional runner and maintained external runbook | `node scripts/verify-experiment-contracts.mjs` |
 
 The internal export name `plannedCourseManifests` is retained for compatibility, but Generative Models, Reinforcement Learning & Control, and Embodied AI are released courses. Learner-visible status comes from `app/course-catalog.ts`, not from that legacy identifier.
