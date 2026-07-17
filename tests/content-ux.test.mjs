@@ -191,6 +191,7 @@ test("scroll storytelling remains progressive, controllable, and motion-safe", (
   assert.match(styles, /@property --story-progress/);
   assert.match(styles, /animation-timeline:--story-journey/);
   assert.match(styles, /animation-timeline:view\(block\)/);
+  assert.match(styles, /\.scroll-story-copy article\.active\{opacity:1!important;transform:translate3d\(0,0,0\)!important\}/);
   assert.match(styles, /linear\(0,.36 16%/);
   assert.match(styles, /@media\(prefers-reduced-motion:reduce\)[\s\S]*\.story-particles/);
   assert.match(styles, /@media\(max-width:780px\)[\s\S]*\.scroll-story-stage\{[^}]*position:relative/);

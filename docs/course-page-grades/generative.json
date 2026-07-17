@@ -502,8 +502,8 @@
   ],
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 16 July 2026 home-page semantic regrade after the marketing-first shared-shell revision; reviewed all five campaign promises, payoffs, arcs, CTAs, evidence boundaries, source cards, and responsive CSS, confirmed unchanged lesson rows remain valid, and verified every rubric floor."
+    "method": "Independent 17 July 2026 shared scroll-story regression regrade; verified full-opacity active intervals, retained inactive enter and exit fades, desktop sticky behavior, narrow stacked behavior, reduced-motion fallbacks, unchanged lesson semantics, and every interaction rubric floor."
   },
-  "gradedAt": "2026-07-16T12:08:26Z",
-  "sourceFingerprint": "sha256:ec55e48e208bfc07166497c704c0911fd605f0a52c0f08c01fad029c5b91fb61"
+  "gradedAt": "2026-07-17T03:18:55Z",
+  "sourceFingerprint": "sha256:d29bb45dadca38e087b4651c2810e37c811db77c172598fb56a870ee9fc905c4"
 }

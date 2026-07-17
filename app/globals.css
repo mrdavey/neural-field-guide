@@ -212,6 +212,7 @@ button:focus-visible,input:focus-visible { outline:3px solid var(--orange); outl
   .scroll-story-visual:before{animation:story-native-light 1ms linear both;animation-range:cover 0% cover 100%;animation-timeline:--story-journey}
   .story-particles i{animation:particle-scroll 1ms linear both;animation-range:cover 0% cover 100%;animation-timeline:--story-journey}
   .scroll-story-copy article{animation:story-step-native 1ms linear both;animation-range:entry 0% exit 100%;animation-timeline:view(block);transition:border-color .32s ease}
+  .scroll-story-copy article.active{opacity:1!important;transform:translate3d(0,0,0)!important}
   @keyframes story-native-light{from{opacity:.25;transform:translate3d(-4%,0,0)}to{opacity:.82;transform:translate3d(4%,0,0)}}
   @keyframes particle-scroll{0%{opacity:var(--particle-opacity-low);transform:translate3d(0,16px,0)}50%{opacity:var(--particle-opacity)}100%{opacity:var(--particle-opacity-end);transform:translate3d(var(--particle-dx),var(--particle-dy),0)}}
   @keyframes story-step-native{0%{opacity:.22;transform:translate3d(0,24px,0)}34%,64%{opacity:1;transform:translate3d(0,0,0)}100%{opacity:.3;transform:translate3d(0,-16px,0)}}

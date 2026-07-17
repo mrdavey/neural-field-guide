@@ -1,6 +1,6 @@
 # Instructional interaction audit
 
-Reviewed: 16 July 2026
+Reviewed: 17 July 2026
 
 This audit asks one question of every animated or manipulable surface: **what learner-visible mechanism becomes easier to reason about because this moves?** Motion that cannot answer that question is decorative and does not pass.
 
@@ -158,6 +158,7 @@ WebGL and motion remain progressive layers. Labels, values, task instructions, c
 - Reflowed live-trace headings and stage explanations into rows and kept the visual sticky at desktop widths.
 - Made all 182 lesson labs visible before their compact reflection, and removed the repeated **Do / Observe / Explain / Complete when** panel from the learner-facing flow.
 - Preserved reduced-motion behavior: the diagrams show the current state without continuous animation, and the instructional copy remains complete.
+- Made the midpoint-selected scroll-story step authoritative for opacity: the active explanation now stays fully visible for its complete scroll interval, while the view timeline only softens non-active steps entering or leaving the viewport.
 - Added World Models stories by reusing semantic grammars rather than track-themed motion, plus nine audited control modes and six preserved deterministic validation dossiers.
 - Added prediction-gated cross-course bridges at canonical and reinforcement joins so learners distinguish reusable mechanisms from invalid claim transfer before seeing later-course artifacts.
 - Added 32 RL decision labs whose case changes make backups, credit, support, planning budgets, constraints, and seed-level evidence observable without presenting fixtures as trained-agent results.
