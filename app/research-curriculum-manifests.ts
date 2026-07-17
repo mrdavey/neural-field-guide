@@ -43,14 +43,14 @@ const generativeTracks: PlannedTrack[] = [
 
 const generativeLessons: PlannedLesson[] = [
   ...lessons("gen-foundations", 1, [
-    ["generation-as-distribution", "Generation as Distribution Modeling", "Categorical sampler with visible probability mass", ["llm:introduction", "llm:probability-softmax"], "likelihood-cross-entropy"],
+    ["generation-as-distribution", "What Is a Generative Model?", "Input-to-variation story with visible choices", [], "likelihood-cross-entropy"],
     ["likelihood-cross-entropy", "Likelihood, Cross-Entropy & Units", "Sequence log-likelihood ledger", ["llm:probability-softmax", "llm:learning-to-predict"], "sampling-randomness"],
     ["sampling-randomness", "Sampling, Seeds & Random Variables", "Inverse-CDF and ancestral samplers", ["llm:decoding-sampling", "worldmodel:stochastic-futures"], "divergences-distance"],
     ["divergences-distance", "KL, Divergences & Distance", "Two-distribution divergence explorer", ["worldmodel:stochastic-latents-vaes", "llm:probability-softmax"], "distribution-workbench-capstone"],
-    ["distribution-workbench-capstone", "Build a Distribution Workbench", "Tested sampler/evaluator package", ["generation-as-distribution", "divergences-distance"], "autoregressive-generators", true],
+    ["distribution-workbench-capstone", "Build a Distribution Workbench", "Tested sampler/evaluator package", ["generation-as-distribution", "likelihood-cross-entropy", "sampling-randomness", "divergences-distance"], "autoregressive-generators", true],
   ]),
   ...lessons("gen-latents", 6, [
-    ["autoregressive-generators", "Autoregressive Generators Beyond Text", "Masked categorical image generator", ["llm:introduction", "llm:gpt2-from-scratch"], "latent-variable-models"],
+    ["autoregressive-generators", "Autoregressive Generators Beyond Text", "Masked categorical image generator", ["llm:learning-to-predict", "llm:gpt2-from-scratch"], "latent-variable-models"],
     ["latent-variable-models", "Latent-Variable Models", "Observed/latent joint-probability tracer", ["worldmodel:sequential-state"], "amortized-inference-elbo"],
     ["amortized-inference-elbo", "Amortized Inference & the ELBO", "ELBO term-by-term calculator", ["worldmodel:stochastic-latents-vaes"], "vae-posterior-collapse"],
     ["vae-posterior-collapse", "VAEs & Posterior Collapse", "Minimal VAE with KL/reconstruction probes", ["llm:gradients-backprop", "worldmodel:latent-prior-posterior"], "latent-models-capstone"],
@@ -98,7 +98,7 @@ const rlTracks: PlannedTrack[] = [
 
 const rlLessons: PlannedLesson[] = [
   ...lessons("rl-foundations", 1, [
-    ["sequential-decision-systems", "Agents, Environments & Returns", "Typed agent/environment loop", ["worldmodel:sequential-state", "llm:agent-loops"], "mdps-rewards"],
+    ["sequential-decision-systems", "What Is Reinforcement Learning?", "Inspectable learn-from-consequences loop", [], "mdps-rewards"],
     ["mdps-rewards", "MDPs, Rewards & Discounting", "Finite MDP ledger", ["worldmodel:mdps-bellman"], "partial-observation"],
     ["partial-observation", "Partial Observation & Belief", "Belief-state controller", ["worldmodel:sequential-state", "worldmodel:belief-states-filtering"], "policies-occupancy"],
     ["policies-occupancy", "Policies, Occupancy & Evaluation", "Policy occupancy calculator", ["rl:mdps-rewards", "generative:sampling-randomness"], "tabular-control-capstone"],
@@ -156,7 +156,7 @@ const embodiedTracks: PlannedTrack[] = [
 
 const embodiedLessons: PlannedLesson[] = [
   ...lessons("emb-foundations", 1, [
-    ["embodied-task-contracts", "Embodiment, Tasks & Success", "Typed task/success/failure specification", ["rl:sequential-decision-systems", "worldmodel:goal-conditioned-robotics"], "observation-action-spaces"],
+    ["embodied-task-contracts", "What Is Embodied AI?", "Inspectable sense-think-act task story", [], "observation-action-spaces"],
     ["observation-action-spaces", "Observation & Action Spaces", "Sensor/action schema inspector", ["worldmodel:sequential-state", "rl:mdps-rewards"], "coordinate-frames-time"],
     ["coordinate-frames-time", "Coordinate Frames, Time & Synchronization", "Frame-transform and timestamp workbench", ["llm:tensors-shapes", "worldmodel:geometry-physical-priors"], "embodied-partial-observation"],
     ["embodied-partial-observation", "Partial Observation in the Physical Loop", "History/belief estimator comparison", ["worldmodel:belief-states-filtering", "rl:partial-observation"], "task-contract-capstone"],

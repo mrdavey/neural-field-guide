@@ -32,7 +32,7 @@ const files = Object.fromEntries(await Promise.all(Object.entries({
 
 test("Anime.js is pinned and every animation family has an explicit semantic contract", () => {
   assert.equal(JSON.parse(files.pkg).dependencies.animejs, "4.5.0");
-  assert.equal(llmLabMotionIds.length, 34);
+  assert.equal(llmLabMotionIds.length, 35);
   assert.equal(worldModelLabMotionIds.length, 9);
   assert.deepEqual(Object.keys(llmLabMotionContracts).sort(), [...llmLabMotionIds].sort());
   assert.deepEqual(Object.keys(worldModelLabMotionContracts).sort(), [...worldModelLabMotionIds].sort());

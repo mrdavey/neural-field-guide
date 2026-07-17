@@ -31,10 +31,7 @@ test("Generative Models ships the reviewed 30-lesson build ladder", () => {
   for (const lesson of course.generativeLessons) for (const prerequisite of lesson.prerequisites ?? []) assert.ok(course.generativeLessonById[prerequisite].number < lesson.number, `${lesson.id} prerequisite ${prerequisite}`);
   assert.match(catalogSource, /courseIds = \["llm", "worldmodel", "generative", "rl", "embodied"\]/);
   assert.match(catalogSource, /generative: \{/);
-  assert.deepEqual(course.generativeLessonById["generation-as-distribution"].programPrerequisites, [
-    { courseId: "llm", lessonId: "introduction" },
-    { courseId: "llm", lessonId: "probability-softmax" },
-  ]);
+  assert.deepEqual(course.generativeLessonById["generation-as-distribution"].programPrerequisites, []);
   assert.match(courseAppSource, /course\.id !== "llm" && guide/);
   assert.match(courseAppSource, /program-prerequisite-list/);
   assert.match(courseAppSource, /showVocabulary=\{course\.id === "llm"\}/);

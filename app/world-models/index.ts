@@ -69,6 +69,30 @@ export const worldModelLessonById = Object.fromEntries(worldModelLessons.map((le
 export const worldModelCurriculumMinutes = worldModelLessons.reduce((total, lesson) => total + lesson.duration, 0);
 
 function guideFor(spec: WorldModelLessonSpec): LessonGuide {
+  if (spec.lesson.id === "world-models") {
+    return {
+      objectives: [...spec.objectives],
+      vocabulary: [...spec.vocabulary],
+      sections: [
+        { title: "Why imagine before acting?", paragraphs: [spec.lesson.deep, spec.lesson.mentalModel] },
+        { title: "What makes a prediction useful?", paragraphs: [spec.lesson.misconception, spec.coverage[1].mechanism, spec.coverage[1].boundary] },
+      ],
+      walkthrough: [...spec.walkthrough],
+      guidedExample: {
+        title: "One hallway decision",
+        setup: "A delivery robot reaches a hallway where a box blocks the direct route. It can continue straight or turn left.",
+        steps: [
+          "The real hallway supplies the starting evidence: a box blocks the route ahead.",
+          "The world model imagines straight ending at the box and left reaching an open passage.",
+          "A separate chooser selects left; the robot moves; its sensors check what actually happened.",
+        ],
+        result: "The prediction helped because it preserved the route difference that mattered to the choice. One correct hallway prediction still does not prove that every obstacle or new building will be handled correctly.",
+      },
+      practice: spec.practice,
+      resources: [...spec.resources],
+    };
+  }
+
   return {
     objectives: [...spec.objectives],
     vocabulary: [...spec.vocabulary],

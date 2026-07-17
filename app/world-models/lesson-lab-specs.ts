@@ -40,11 +40,11 @@ function numeric(copy: LabCopy, control: WorldModelLessonLabSpec["control"], eva
 
 export const worldModelLessonLabSpecs: Record<string, WorldModelLessonLabSpec> = {
   "world-models": discrete(
-    { title: "World-model contract sorter", question: "Which predictor has the action interface required for decision-making?", change: "Compare two systems that both produce plausible next frames.", observe: "Only one exposes how a proposed action changes a distribution of consequences.", explain: "A decision-useful world model conditions on state/history and candidate action; an uncontrolled generator predicts continuation without an intervention slot.", complete: "Classify both systems and name the input, transformation, output, and decision that consumes it.", boundary: "An action slot is necessary for this planning contract but does not prove that the learned consequences are accurate." },
-    "Candidate system",
+    { title: "Imagine-before-acting sorter", question: "Which prediction preserves the consequence that changes the decision?", change: "Compare a plain action-sensitive forecast with a vivid continuation that ignores the chosen route.", observe: "Only one distinguishes what happens after going straight from what happens after turning left.", explain: "A useful world model preserves the contrast the chooser needs, then lets reality test whether that contrast was right.", complete: "Inspect both systems, choose the one that supports the hallway decision, and name one new situation that could still break it.", boundary: "One correct hallway contrast does not prove accurate prediction for every route, obstacle, or environment." },
+    "Imagined system",
     [
-      { label: "Action-conditioned", resultLabel: "Contract", resultValue: "STATE + ACTION → CONSEQUENCES", meter: 92, detail: "The planner can compare interventions, subject to validation and support." },
-      { label: "Uncontrolled video", resultLabel: "Contract", resultValue: "HISTORY → PLAUSIBLE CONTINUATION", meter: 38, detail: "This may be a useful sequence model, but it cannot answer which candidate action caused a future." },
+      { label: "Route-sensitive map", resultLabel: "Decision evidence", resultValue: "STRAIGHT: BLOCKED · LEFT: OPEN", meter: 92, detail: "The chooser can compare alternatives, then check the selected route against the real hallway." },
+      { label: "Vivid hallway video", resultLabel: "Decision evidence", resultValue: "SAME FUTURE FOR BOTH ROUTES", meter: 38, detail: "The continuation looks plausible but loses the route difference needed for this choice." },
     ],
   ),
   "dynamics-tensors": discrete(

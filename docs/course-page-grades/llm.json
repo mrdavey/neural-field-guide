@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-16",
-  "gradedAt": "2026-07-17T03:18:55Z",
-  "sourceFingerprint": "sha256:4b5bc700a9f64660c2d85a938ac9c382323dee79cbbe58034afd07c88e31a56a",
+  "gradedAt": "2026-07-17T03:59:25Z",
+  "sourceFingerprint": "sha256:544eaa70fc57a71f34f7da0b3181250a208c9d63caa8d1553e8bba5b9fc714be",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 shared scroll-story regression regrade; verified full-opacity active intervals, retained inactive enter and exit fades, desktop sticky behavior, narrow stacked behavior, reduced-motion fallbacks, unchanged lesson semantics, and every interaction rubric floor."
+    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
   },
   "courseId": "llm",
   "population": 45,
@@ -39,7 +39,7 @@
       "total": 99,
       "pass": true,
       "blockingDefects": [],
-      "rationale": "The page gives a beginner-readable system definition, traces text through tokens, prediction, and generated continuation, and makes the limits of next-token prediction explicit before transfer and quiz checks. The only deduction is that its useful primary reading is page-level rather than pinned to the exact claims or revision discussed."
+      "rationale": "The page opens with familiar language jobs, traces a prompt and supplied meeting notes into a response without assuming human-like understanding, and teaches when current evidence, specialist judgment, or action authority is required. Its prediction-led trust-boundary explorer, changed restaurant case, objective checks, and quiz remain fully local and prerequisite-free. The only deduction is that its useful primary reading is page-level rather than pinned to the exact claims or revision discussed."
     },
     {
       "pageType": "lesson",

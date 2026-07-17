@@ -30,10 +30,10 @@ function motion(
 export const lessonMotionStories: Record<string, LessonMotionStory> = {
   introduction: motion(
     "pipeline",
-    "Language generation is one repeated prediction, not one finished answer.",
-    "The field uncoils into a left-to-right token path. Each scroll step adds the context, probability distribution, and selected continuation that make generation autoregressive.",
-    ["CONTEXT", "LOGITS", "NEXT TOKEN", "REPEAT"],
-    ["The prompt establishes what the next prediction may depend on.", "One forward pass scores every vocabulary token.", "A decoding rule turns scores into one new token.", "The chosen token returns as context for the next pass."],
+    "A useful LLM exchange begins with a job and ends with the right check.",
+    "The field follows one beginner-readable path: give the model a clear task, let it build a response, inspect what the response depends on, and add evidence or authority when the stakes demand it.",
+    ["ASK", "BUILD", "INSPECT", "CHECK"],
+    ["A prompt states the job and supplies relevant material.", "The model constructs a response from learned language patterns.", "The learner separates supplied content from new claims.", "Current facts, expert decisions, and consequential actions receive outside checks."],
   ),
   "tensors-shapes": motion(
     "coordinates",

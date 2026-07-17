@@ -49,8 +49,8 @@ export const crossCourseConcepts: CrossCourseConcept[] = [
     artifact: "A one-step parameter update trace with gradients, optimizer state and before/after loss.",
   },
   {
-    id: "autoregressive-modeling", title: "Autoregressive factorization", canonical: "llm:introduction",
-    reinforces: ["llm:learning-to-predict", "llm:gpt2-from-scratch", "generative:autoregressive-generators"],
+    id: "autoregressive-modeling", title: "Autoregressive factorization", canonical: "llm:learning-to-predict",
+    reinforces: ["llm:gpt2-from-scratch", "generative:autoregressive-generators"],
     futureUses: ["rl:sequence-policy-capstone", "embodied:transformer-action-policies"],
     boundary: "LLMs own causal token modeling; Generative Models generalizes the factorization to other domains; RL and Embodied AI use sequence policies without claiming every action policy is a language model.",
     artifact: "A causal factorization trace with shifted inputs, targets and sampling order.",
@@ -91,8 +91,8 @@ export const crossCourseConcepts: CrossCourseConcept[] = [
     artifact: "Prediction, evidence update, normalization and recovery trace.",
   },
   {
-    id: "generative-density", title: "Density modeling and sampling", canonical: "generative:generation-as-distribution",
-    reinforces: ["generative:normalizing-flows", "generative:energy-based-models", "generative:diffusion-model-capstone"],
+    id: "generative-density", title: "Density evaluation and sampling", canonical: "generative:likelihood-cross-entropy",
+    reinforces: ["generative:sampling-randomness", "generative:normalizing-flows", "generative:energy-based-models", "generative:diffusion-model-capstone"],
     futureUses: ["rl:policies-occupancy", "embodied:diffusion-policies"],
     boundary: "A model that samples plausible observations is not automatically calibrated, controllable or useful for decisions.",
     artifact: "Common sampler/evaluator interface with raw samples and probability or score metadata where available.",

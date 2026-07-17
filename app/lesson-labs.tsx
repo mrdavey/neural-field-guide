@@ -10,6 +10,7 @@ import type { LlmLabMotionId } from "./motion/semantic-motion";
 type LabType = Exclude<NonNullable<Lesson["lab"]>, `wm-${string}` | "research">;
 
 const meta: Record<LabType, { title: string; instruction: string; observe: string }> = {
+  orientation: { title: "Trust-boundary explorer", instruction: "Choose three language tasks, predict the needed check, then compare the evidence boundary.", observe: "The same fluent model needs different support for supplied-text work, live claims, and consequential actions." },
   tokens: { title: "Token microscope", instruction: "Edit the text and compare how a toy subword tokenizer cuts it up.", observe: "Token count—not word count—drives context use and compute." },
   vectors: { title: "Embedding atlas", instruction: "Select an anchor word to see relative similarity in a tiny learned space.", observe: "Related use patterns create neighborhoods; axes themselves need not have names." },
   positions: { title: "Order encoder", instruction: "Change a token’s position and watch its rotary coordinates turn.", observe: "The token stays the same while its position-dependent representation changes." },
@@ -76,6 +77,7 @@ export function LessonLab({ type, lesson }: { type: LabType; lesson: Lesson }) {
 
 function renderLab(type: LabType) {
   switch (type) {
+    case "orientation": return <OrientationLab />;
     case "tokens": return <TokenLab />;
     case "vectors": return <VectorLab />;
     case "positions": return <PositionLab />;
@@ -111,6 +113,16 @@ function renderLab(type: LabType) {
     case "multimodal": return <MultimodalLab />;
     case "interpretability": return <InterpretabilityLab />;
   }
+}
+
+function OrientationLab() {
+  const cases = [
+    { label: "Rewrite notes", source: "Attached meeting notes", check: "Compare every claim with the notes", status: "SUPPLIED TEXT" },
+    { label: "Report train delay", source: "Current operator status", check: "Use a dated live source", status: "CURRENT EVIDENCE" },
+    { label: "Buy a ticket", source: "Confirmed itinerary and price", check: "Require permission and a receipt", status: "AUTHORITY + RECORD" },
+  ] as const;
+  const [selected,setSelected]=useState(0);
+  return <div className="prediction-lab"><div className="objective-tabs" role="group" aria-label="Language task">{cases.map((item,index)=><button key={item.label} type="button" className={selected===index?"active":""} onClick={()=>setSelected(index)}>{item.label}</button>)}</div><div className="objective-grid" aria-live="polite"><div><span>TASK</span><strong>{cases[selected].label}</strong></div><div><span>NEEDED SOURCE</span><strong>{cases[selected].source}</strong></div><div><span>BEFORE RELYING</span><strong>{cases[selected].check}</strong></div></div><p className="lab-caption"><span className="toy-badge">{cases[selected].status}</span> Predict the required check before selecting the next task. A fluent response changes none of these evidence or authority requirements.</p></div>;
 }
 
 function TokenLab() {

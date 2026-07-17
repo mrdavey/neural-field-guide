@@ -16,7 +16,7 @@ export type StoryMotionContract = MotionContract & {
 };
 
 export const llmLabMotionIds = [
-  "tokens", "vectors", "positions", "attention", "prediction", "scaling", "optimizer", "preference", "lora", "moe", "distillation", "rl",
+  "orientation", "tokens", "vectors", "positions", "attention", "prediction", "scaling", "optimizer", "preference", "lora", "moe", "distillation", "rl",
   "block", "gpt", "pipeline", "objectives", "systems", "evaluation", "tensors", "softmax", "gradient", "decoding", "kvcache", "quantization",
   "serving", "testtime", "context", "rag", "agents", "evaldesign", "security", "observability", "multimodal", "interpretability",
 ] as const;
@@ -33,6 +33,7 @@ export type LabMotionId = LlmLabMotionId | WorldModelLabMotionId;
 const contract = (effect: MotionEffect, targets: string, question: string, represents: string, boundary: string): MotionContract => ({ effect, targets, question, represents, boundary });
 
 export const llmLabMotionContracts: Record<LlmLabMotionId, MotionContract> = {
+  orientation: contract("gate", ".objective-tabs button,.objective-grid>div,.toy-badge", "What check does this language task require before reliance?", "Supplied text, changing evidence, and consequential authority entering distinct verification paths.", "The cards teach responsibility boundaries; they do not verify a real source or execute an action."),
   tokens: contract("snap", ".token-output span", "Where does text become a discrete token sequence?", "Characters regrouping into bounded token spans and stable teaching IDs.", "The split is a toy tokenizer fixture, not a production vocabulary trace."),
   vectors: contract("field", ".vector-map button,.similarity-list div", "How does the selected anchor change every visible comparison?", "One anchor and its relative distances to the same fixed points.", "The two-dimensional points are a hand-authored projection."),
   positions: contract("orbit", ".rotation-ring,.position-sequence button,.rotation-readout", "What changes when identity stays fixed but position changes?", "A position-indexed rotation and the selected token marker.", "The plane is a small coordinate illustration, not a full model representation."),

@@ -4,10 +4,10 @@
   "population": 33,
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 shared scroll-story regression regrade; verified full-opacity active intervals, retained inactive enter and exit fades, desktop sticky behavior, narrow stacked behavior, reduced-motion fallbacks, unchanged lesson semantics, and every interaction rubric floor."
+    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
   },
-  "gradedAt": "2026-07-17T03:18:55Z",
-  "sourceFingerprint": "sha256:a9421f0de1f15076c87a1571728387e432c66c9f90c4ec77451d57dd15d1882a",
+  "gradedAt": "2026-07-17T03:59:25Z",
+  "sourceFingerprint": "sha256:3e93de7b7c8cd1e41e12b82bc7ec3abe5e8c653d1844926fca3df1685c351bcc",
   "pages": [
     {
       "pageType": "home",
@@ -39,7 +39,7 @@
       "total": 100,
       "pass": true,
       "blockingDefects": [],
-      "rationale": "The page correctly traces action-to-consequence timing, computes return 1.75, distinguishes termination from truncation, separates reward from success metrics and authority, and tests a changed cutoff through committed checks, executable code, diagnostic feedback, and reviewed primary or official sources."
+      "rationale": "The page makes reinforcement learning concrete as repeated choice, consequence, and improvement in a maze, while keeping optimized feedback separate from intended success and safety. The dead-end, exit, and spin-for-points lab gives explicit observation and completion instructions; committed checks, changed game transfer, deterministic experience code, and reviewed sources establish the beginner loop without later return or MDP notation."
     },
     {
       "pageType": "lesson",

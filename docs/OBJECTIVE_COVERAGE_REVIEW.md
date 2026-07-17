@@ -1,6 +1,6 @@
 # Lesson objective coverage review
 
-Reviewed: 15 July 2026
+Reviewed: 17 July 2026
 
 Scope: all five released courses — 182 lessons and 408 exact visible outcomes
 
@@ -72,6 +72,14 @@ The independent grader completed three full semantic passes over all 44 lessons 
 
 The remediation history below records the findings needed to understand the final decision; superseded row-by-row snapshots were removed so this file remains the canonical objective-review record. This result closes the current review; it is not a permanent score. Any future objective, guide, example, assessment, prerequisite, or coverage-record change reopens the affected rows and requires the author → independent grader → remediation loop in `AGENTS.md` before handoff. Structural checks remain required for joins and regressions, but only semantic review can decide whether learner-facing content fulfills the promise. The separate generated [`COURSE_PAGE_GRADES.md`](COURSE_PAGE_GRADES.md) records current whole-page grading evidence.
 
+## Introduction re-review — 17 July 2026
+
+The first lesson of every released course was rewritten as a prerequisite-free orientation. The affected set contains 11 exact objectives: three for Large Language Models and two each for World Models, Generative Models, Reinforcement Learning & Control, and Embodied AI. Each introduction now begins with a familiar use or decision, explains why the field is worth learning, defers later notation and machinery, and keeps a concrete activity, changed-case check, and honest trust boundary.
+
+The first independent pass found the World Models second objective partial because its guided example began with a hallway decision and concluded with an unrelated weather case. It also graded four whole introductions partial because shared research-guide and compact-lab copy exposed internal lesson IDs and authoring phrases. Remediation made the World Models trace one coherent hallway scenario, added orientation-specific learner language to the shared research guide and motion story, and gave the RL and Embodied labs concrete actions, observations, explanations, and completion conditions.
+
+The independent regrade reports **11 pass, 0 partial, and 0 fail**, with all five dimensions passing for every changed objective. Its whole-introduction result is **5 pass, 0 partial, and 0 fail**. `tests/course-introductions.test.mjs` protects prerequisite-free and notation-free openings, exact objective joins, motivating and bounded copy, coherent worked scenarios, concrete introductory interactions, and the absence of raw lesson IDs or internal authoring language.
+
 ## World Models extension and independent gate
 
 The World Models course adds 46 lessons with two exact outcomes per lesson. Its 92 explicit records are authored from the same five-dimensional contract and rendered through the same commit-before-reveal objective component. World Models content is not inferred from the LLM registry: `app/world-models/index.ts` joins every exact objective to a course-specific explanation, mechanism, worked trace, boundary, and check/retry record.
@@ -110,7 +118,7 @@ After defining that symbol and replacing the shared research helper's positional
 
 | Lesson ID | Exact visible objectives | Coverage records |
 |---|---|---:|
-| `introduction` | 1. Describe an LLM as a conditional next-token model<br>2. Separate training, inference, decoding, and post-training<br>3. Explain why fluent output can still be wrong | 3/3 |
+| `introduction` | 1. Explain in everyday language what an LLM can help with and why it is worth understanding<br>2. Trace how a prompt becomes a response without assuming human-like understanding<br>3. Choose when an LLM response can be used directly and when outside evidence or authority is required | 3/3 |
 | `tensors-shapes` | 1. Read common LLM tensor shapes without guessing<br>2. Predict the output of a matrix multiplication<br>3. Explain broadcasting and why silent shape errors are dangerous | 3/3 |
 | `probability-softmax` | 1. Convert logits into probabilities conceptually and numerically<br>2. Interpret cross-entropy as surprise assigned to the target<br>3. Distinguish entropy, cross-entropy, perplexity, and calibration | 3/3 |
 | `gradients-backprop` | 1. Trace a forward and backward computation graph<br>2. Apply the chain rule to a simple parameter<br>3. Explain why backpropagation and optimization are separate | 3/3 |

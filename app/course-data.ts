@@ -22,7 +22,7 @@ export type Lesson = {
   example: string;
   misconception: string;
   quiz: Quiz;
-  lab?: "tokens" | "vectors" | "positions" | "attention" | "prediction" | "scaling" | "optimizer" | "preference" | "lora" | "moe" | "distillation" | "rl" | "block" | "gpt" | "pipeline" | "objectives" | "systems" | "evaluation" | "tensors" | "softmax" | "gradient" | "decoding" | "kvcache" | "quantization" | "serving" | "testtime" | "context" | "rag" | "agents" | "evaldesign" | "security" | "observability" | "multimodal" | "interpretability" | "wm-state" | "wm-belief" | "wm-latent" | "wm-rollout" | "wm-planner" | "wm-video" | "wm-uncertainty" | "wm-safety" | "wm-evaluation" | "research";
+  lab?: "orientation" | "tokens" | "vectors" | "positions" | "attention" | "prediction" | "scaling" | "optimizer" | "preference" | "lora" | "moe" | "distillation" | "rl" | "block" | "gpt" | "pipeline" | "objectives" | "systems" | "evaluation" | "tensors" | "softmax" | "gradient" | "decoding" | "kvcache" | "quantization" | "serving" | "testtime" | "context" | "rag" | "agents" | "evaldesign" | "security" | "observability" | "multimodal" | "interpretability" | "wm-state" | "wm-belief" | "wm-latent" | "wm-rollout" | "wm-planner" | "wm-video" | "wm-uncertainty" | "wm-safety" | "wm-evaluation" | "research";
   prerequisites?: string[];
   programPrerequisites?: { courseId: string; lessonId: string }[];
   sources?: { label: string; url: string }[];
@@ -87,14 +87,14 @@ const lessonDefinitions: Lesson[] = [
   },
   {
     id: "introduction", track: "foundations", title: "Introduction", number: 1, duration: 8,
-    simple: "A large language model is a system that repeatedly predicts a likely next token under patterns learned from data. Decoding and post-training can then shape those predictions toward useful responses.",
-    deep: "An autoregressive LLM parameterizes a conditional probability distribution: $$p(x_1,\\ldots,x_n)=\\prod_{t=1}^{n}p(x_t\\mid x_{<t}).$$ A tokenizer turns text into discrete IDs; a Transformer maps the prior IDs to logits; softmax converts logits into probabilities; a decoding rule chooses the next token. Training adjusts billions of parameters to reduce prediction error. The model does not retrieve a stored sentence in the ordinary case—it computes a new probability distribution from the current context.",
-    mentalModel: "Picture an impossibly well-read autocomplete. It has compressed patterns from its reading into numerical knobs, then reconstructs an answer one token at a time.",
-    keyIdeas: ["LLMs model conditional token probabilities", "Training learns parameters; inference uses them", "Fluency is not a guarantee of truth or understanding"],
-    example: "Given “The capital of France is”, a trained model assigns far more probability to “ Paris” than to “ banana”. It then feeds the chosen token back in and predicts again.",
-    misconception: "An LLM is not a searchable database of exact passages. Memorization can occur, but generation is primarily a learned computation over context.",
-    quiz: { question: "What does a standard autoregressive LLM directly produce at each step?", options: ["A verified fact", "A probability distribution over the next token", "A complete paragraph", "A database query"], answer: 1, explanation: "The model outputs logits that become next-token probabilities. Decoding selects one token, and the cycle repeats." },
-    lab: "prediction"
+    simple: "A large language model is a program that can continue, transform, and discuss text by using patterns learned from many examples.",
+    deep: "Give an LLM some text—called a prompt—and it builds a response in small pieces, using patterns learned during training to decide what piece fits next. Repeating that step can produce explanations, drafts, summaries, translations, or code. This is a powerful way to work with language, but it is not the same as checking a claim against evidence, understanding a situation as a person does, or being authorized to act. Later lessons will open the mechanism one layer at a time; this introduction first establishes what the system can help with and what still needs human or tool-based checking.",
+    mentalModel: "Picture a brilliant improviser who has studied an enormous library. It can continue many kinds of patterns, but you still check the script before using it as fact or giving it real authority.",
+    keyIdeas: ["A prompt gives the model a task and context", "The model builds a response from learned language patterns", "Useful-sounding output still needs the right kind of checking"],
+    example: "Give the same meeting notes to an LLM with three prompts: ‘summarize these,’ ‘turn these into a friendly email,’ and ‘list unanswered questions.’ The source text is unchanged, but the requested job changes the response. If you instead ask for today’s train delay, the model needs a current source rather than language fluency alone.",
+    misconception: "An LLM is neither a person who understands everything it says nor a guaranteed database of facts. It can be genuinely useful while still producing confident mistakes, stale information, or unsuitable actions.",
+    quiz: { question: "Which task can an LLM complete from the supplied text alone with the clearest evidence boundary?", options: ["Rewrite these notes as a polite email", "State today’s live train delay with no data source", "Confirm a medicine is safe for this patient", "Send a refund without authorization"], answer: 0, explanation: "Rewriting supplied notes depends on the text you provided. Live facts, medical decisions, and consequential actions require current evidence, qualified judgment, or explicit authorization outside the model." },
+    lab: "orientation"
   },
   {
     id: "tokenization", track: "architecture", title: "Tokenization", number: 6, duration: 14,

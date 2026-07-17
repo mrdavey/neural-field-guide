@@ -99,7 +99,7 @@ test("all 182 released lessons expose a supported lab before reflection", () => 
     assert.ok(sources.labs.includes(`${lesson.lab}: { title:`), `${lesson.id} lab metadata`);
     assert.ok(sources.labs.includes(`case "${lesson.lab}":`), `${lesson.id} lab renderer`);
   }
-  assert.equal(llmLessons.find((lesson) => lesson.id === "introduction")?.lab, "prediction");
+  assert.equal(llmLessons.find((lesson) => lesson.id === "introduction")?.lab, "orientation");
   assert.match(sources.labs, /case "prediction": return <PredictionLab \/>/);
 
   for (const lesson of worldModelLessons) {

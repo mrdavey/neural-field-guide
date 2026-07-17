@@ -13,23 +13,24 @@ const lines = (...values: string[]) => values.join("\n");
 
 export const lessonCodeExamples: Record<string, LessonCodeExample> = {
   introduction: {
-    title: "See the autoregressive loop",
+    title: "Trace a prompt, response, and check",
     language: "Python-like pseudocode",
-    setup: "The model performs one operation repeatedly: score the next token, choose one, append it, and run again.",
-    predict: "Which line makes generation sequential even though training can process many positions together?",
+    setup: "This orientation trace keeps the model's language contribution separate from current evidence and real-world authority.",
+    predict: "Which two tasks can use supplied text alone, and which task needs a live source?",
     code: lines(
-      "tokens = tokenizer.encode(prompt)",
-      "for _ in range(max_new_tokens):",
-      "    logits = model(tokens)",
-      "    next_id = sample(logits[-1], temperature=0.8)",
-      "    tokens.append(next_id)",
-      "    if next_id == tokenizer.eos_id:",
-      "        break",
-      "print(tokenizer.decode(tokens))"
+      "tasks = [",
+      "    ('rewrite', attached_notes),",
+      "    ('find_open_questions', attached_notes),",
+      "    ('report_live_delay', current_train_source),",
+      "]",
+      "for job, evidence in tasks:",
+      "    response = language_model(prompt=job, context=evidence)",
+      "    show(response, evidence_used=evidence)",
+      "    require_human_review_before_action(response)"
     ),
-    observe: "Each new model call depends on the token selected by the previous call. The loop—not a hidden chat database—constructs the continuation.",
-    tryIt: "Replace sample with argmax. Predict how reproducibility and diversity change.",
-    caveat: "Interface names are illustrative; real tokenizers batch tensors and real models also manage positions and a KV cache.",
+    observe: "Rewriting and question-finding are grounded in the attached notes. A live delay claim needs a current train source, and displaying text never grants permission to act.",
+    tryIt: "Add a medical-advice task. Name the qualified evidence and human judgment it would require before use.",
+    caveat: "This is conceptual pseudocode, not a claim that one function can verify arbitrary evidence or safely authorize actions.",
   },
   "tensors-shapes": {
     title: "Make the shape contract executable",

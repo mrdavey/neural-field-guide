@@ -20,13 +20,13 @@ const evidence = (
 
 export const lessonEvidence: Record<string, LessonEvidence> = {
   introduction: evidence(
-    "The same model loop, two very different system claims",
-    ["Prediction task", "Continue ‘Water freezes at …’ from learned token patterns.", "The model can assign high probability to ‘0°C’; this is a prediction, not an external verification."],
-    ["Tool task", "Refund a duplicate charge for an authenticated customer.", "The model may propose a tool call, but identity, permission, execution, and receipt belong to the surrounding system."],
-    "A model produces conditional token distributions. Truth checking and consequential action require evidence and controls outside that distribution.",
-    "A fluent assistant answers a current weather question and then books a flight. Draw the boundary between next-token prediction, retrieved evidence, decoding, and authorized action.",
-    ["Names the model's prediction role", "Places changing facts in retrieval or a tool", "Places booking authority and confirmation in runtime controls"],
-    "The model predicts the answer and proposed call; a weather source supplies current evidence; decoding selects tokens; the runtime validates identity, scope, price, confirmation, and the booking receipt. Fluency alone owns none of those guarantees.",
+    "The same fluent response can rest on very different evidence",
+    ["Supplied-text task", "Turn the meeting notes on the page into a friendly update.", "The learner can compare every claim in the response with the supplied notes."],
+    ["Changing-world task", "State whether the 18:10 train is delayed tonight.", "The prompt alone cannot settle a live condition; a current trusted source is required."],
+    "The model can help in both cases, but the task determines what must be checked before the response is reliable.",
+    "An assistant summarizes an attached itinerary, reports the current weather, and then offers to buy a ticket. Name the evidence or authority needed at each step.",
+    ["Uses the attached itinerary for the summary", "Uses a dated live source for current weather", "Requires permission, confirmation, and a receipt for purchase"],
+    "The attached itinerary grounds the summary. A current weather service grounds the live claim. The purchase needs the user's permission, a confirmed price and itinerary, an authorized runtime, and a receipt. Fluent wording cannot replace any of those checks.",
   ),
   "tensors-shapes": evidence(
     "A valid projection and a silent broadcasting bug",
@@ -416,4 +416,3 @@ export const lessonEvidence: Record<string, LessonEvidence> = {
     "The evidence supports a brittle behavioral change on tested prompts, not a localized fact edit or unlearning. Test paraphrases, neighbors, sham edits, unrelated tasks, restarts, and rephrased contexts before escalating the claim.",
   ),
 };
-

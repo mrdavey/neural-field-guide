@@ -32,7 +32,7 @@
       "R": 5,
       "total": 100,
       "pass": true,
-      "rationale": "The page traces normalized categorical mass and u=0.73 sampling, distinguishes density/sampling/conditioning/evaluation, gates predictions before locally checked transfer, and bounds the fixture with a direct generative-model source.",
+      "rationale": "The page introduces generation through familiar text, image, audio, and sticker examples, then separates relevant variation from irrelevant difference, repetition, and copying. Multiple-output inspection, a concrete blue-robot lab, committed objective checks, changed music transfer, and a bounded deterministic audit make the subject inviting without assuming probability or sampling notation.",
       "blockingDefects": []
     },
     {
@@ -502,8 +502,8 @@
   ],
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 shared scroll-story regression regrade; verified full-opacity active intervals, retained inactive enter and exit fades, desktop sticky behavior, narrow stacked behavior, reduced-motion fallbacks, unchanged lesson semantics, and every interaction rubric floor."
+    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
   },
-  "gradedAt": "2026-07-17T03:18:55Z",
-  "sourceFingerprint": "sha256:d29bb45dadca38e087b4651c2810e37c811db77c172598fb56a870ee9fc905c4"
+  "gradedAt": "2026-07-17T03:59:25Z",
+  "sourceFingerprint": "sha256:04c842b5f52d337e1cb3b508b3410e899baf5fbc683279afe19f45937bb7b750"
 }

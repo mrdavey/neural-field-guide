@@ -44,10 +44,7 @@ test("Embodied AI ships the reviewed 30-lesson perception-language-action ladder
   for (const lesson of course.embodiedLessons) for (const prerequisite of lesson.prerequisites ?? []) assert.ok(course.embodiedLessonById[prerequisite].number < lesson.number, `${lesson.id} prerequisite ${prerequisite}`);
   assert.match(catalogSource, /courseIds = \["llm", "worldmodel", "generative", "rl", "embodied"\]/);
   assert.match(catalogSource, /embodied: \{/);
-  assert.deepEqual(course.embodiedLessonById["embodied-task-contracts"].programPrerequisites, [
-    { courseId: "rl", lessonId: "sequential-decision-systems" },
-    { courseId: "worldmodel", lessonId: "goal-conditioned-robotics" },
-  ]);
+  assert.deepEqual(course.embodiedLessonById["embodied-task-contracts"].programPrerequisites, []);
 });
 
 test("every Embodied AI objective has five authored teaching dimensions and a unique committed check", () => {

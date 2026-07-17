@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-16",
-  "gradedAt": "2026-07-17T03:18:55Z",
-  "sourceFingerprint": "sha256:1f2d1c300aafbc534e7d29e839ac764cca5b97741a4b772f0266fd79cd750d47",
+  "gradedAt": "2026-07-17T03:59:25Z",
+  "sourceFingerprint": "sha256:10394e0c5d9502680073b2429e1d397e23f4d234223f6d9ab331e181e75199b3",
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 shared scroll-story regression regrade; verified full-opacity active intervals, retained inactive enter and exit fades, desktop sticky behavior, narrow stacked behavior, reduced-motion fallbacks, unchanged lesson semantics, and every interaction rubric floor."
+    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
   },
   "courseId": "embodied",
   "population": 31,
@@ -39,7 +39,7 @@
       "total": 99,
       "pass": true,
       "blockingDefects": [],
-      "rationale": "The page correctly assigns policy, simulator, evaluator, and emergency-stop authority; computes a ten-tick dwell at 20 Hz as .5 s; makes the 25 N failure non-compensable; and traces o_t through the applied action to o_{t+1}. Both objective checks, executable fixture, three-case lab, changed-case transfer, and quiz diagnose ownership and timing. The official robotics source is useful but broad rather than pinned to the exact contract claims."
+      "rationale": "The page introduces embodied AI through a mug-picking sense–decide–act–check loop and explains how sensors, movement, timing, feedback, and physical hazards change the task. The located-mug, unconfirmed-grasp, and person-in-path lab makes continue, retry, and stop decisions concrete; committed checks, changed-case transfer, deterministic code, and quiz remain prerequisite-free. The official robotics source is useful but broad rather than pinned to the exact introductory claims."
     },
     {
       "pageType": "lesson",

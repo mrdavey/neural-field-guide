@@ -19,7 +19,17 @@ export type CompactSeedInput = {
   decision: ResearchLessonSeed["decision"];
   quiz: ResearchLessonSeed["quiz"];
   transfer: { prompt: string; correct: string; wrong: [string, string]; worked: string; retry: string };
-  lab: { title: string; question: string; controlLabel: string; cases: ResearchLessonSeed["lab"]["cases"]; boundary: string };
+  lab: {
+    title: string;
+    question: string;
+    controlLabel: string;
+    cases: ResearchLessonSeed["lab"]["cases"];
+    boundary: string;
+    change?: string;
+    observe?: string;
+    explain?: string;
+    complete?: string;
+  };
   motionConcept: ThreeStoryConcept;
   code: LessonCodeExample;
   codeGuidance?: CodeGuidance;
@@ -56,10 +66,10 @@ export function compactResearchSeed(input: CompactSeedInput): ResearchLessonSeed
     lab: {
       title: input.lab.title,
       question: input.lab.question,
-      change: `Select each ${input.lab.controlLabel.toLowerCase()} case while holding the displayed fixture contract fixed.`,
-      observe: "Compare the result label, value, meter, and diagnostic explanation across all three cases.",
-      explain: `Use the mechanism from ${input.lab.question} to identify the first causal step that changes the readout.`,
-      complete: "Commit a prediction, inspect all three deliberately contrasting cases, and explain why one case crosses the diagnostic boundary.",
+      change: input.lab.change ?? `Select each ${input.lab.controlLabel.toLowerCase()} case while holding the displayed fixture contract fixed.`,
+      observe: input.lab.observe ?? "Compare the result label, value, meter, and diagnostic explanation across all three cases.",
+      explain: input.lab.explain ?? `Use the mechanism from ${input.lab.question} to identify the first causal step that changes the readout.`,
+      complete: input.lab.complete ?? "Commit a prediction, inspect all three deliberately contrasting cases, and explain why one case crosses the diagnostic boundary.",
       boundary: input.lab.boundary,
       controlLabel: input.lab.controlLabel,
       cases: input.lab.cases,

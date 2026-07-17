@@ -56,10 +56,7 @@ test("RL & Control ships the reviewed 32-lesson agent-building ladder", () => {
   }
   assert.match(catalogSource, /courseIds = \["llm", "worldmodel", "generative", "rl", "embodied"\]/);
   assert.match(catalogSource, /rl: \{/);
-  assert.deepEqual(course.rlLessonById["sequential-decision-systems"].programPrerequisites, [
-    { courseId: "worldmodel", lessonId: "sequential-state" },
-    { courseId: "llm", lessonId: "agent-loops" },
-  ]);
+  assert.deepEqual(course.rlLessonById["sequential-decision-systems"].programPrerequisites, []);
 });
 
 test("every RL objective has five authored teaching dimensions and a unique committed check", () => {

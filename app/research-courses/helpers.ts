@@ -57,6 +57,40 @@ export function defineResearchLesson(manifest: PlannedCourseManifest, seed: Rese
 }
 
 export function researchGuide(spec: ResearchLessonSpec, build: string, nextUse: string): LessonGuide {
+  if (spec.lesson.number === 1) {
+    return {
+      objectives: [...spec.objectives],
+      vocabulary: [...spec.vocabulary],
+      sections: [
+        {
+          title: "Why this subject is worth learning",
+          paragraphs: [
+            spec.lesson.deep,
+            "This opening lesson uses familiar examples first. The next lessons introduce the formal tools and notation needed to explain the mechanism in detail.",
+          ],
+        },
+        { title: "What to trust—and what to test", paragraphs: [spec.lesson.misconception, spec.coverage[1].mechanism, spec.coverage[1].boundary] },
+      ],
+      walkthrough: spec.lesson.keyIdeas.map((body, index) => ({
+        title: ["Name the question", "Follow one example", "Check the result"][index],
+        body,
+        checkpoint: [spec.coverage[0].check.prompt, spec.coverage[1].check.retry, spec.transfer.retry][index],
+      })),
+      guidedExample: {
+        title: `Three ways to inspect the idea — ${spec.lesson.title}`,
+        setup: "These are three separate examples. Use the first to meet the idea, the second to see how it works, and the third to try it in a new situation.",
+        steps: [
+          `Familiar example: ${spec.lesson.example}`,
+          `How to compare: ${spec.coverage[0].mechanism}`,
+          `New situation: ${spec.transfer.worked}`,
+        ],
+        result: `Together, the examples show what the idea can help with and how to check it. Keep this limit in view: ${spec.coverage[1].boundary}`,
+      },
+      practice: { prompt: spec.transfer.prompt, hint: spec.transfer.retry, answer: spec.transfer.worked },
+      resources: [...spec.resources],
+    };
+  }
+
   return {
     objectives: [...spec.objectives],
     vocabulary: [...spec.vocabulary],
@@ -81,6 +115,20 @@ export function researchGuide(spec: ResearchLessonSpec, build: string, nextUse: 
 }
 
 export function researchMotion(spec: ResearchLessonSpec): LessonMotionStory {
+  if (spec.lesson.number === 1) {
+    return {
+      concept: spec.motionConcept,
+      headline: `${spec.lesson.title} begins with one question you can inspect.`,
+      intro: spec.lab.question,
+      stages: [
+        { label: "QUESTION", title: spec.lesson.keyIdeas[0] },
+        { label: "EXAMPLE", title: spec.lesson.keyIdeas[1] },
+        { label: "COMPARE", title: spec.lesson.keyIdeas[2] },
+        { label: "LIMIT", title: spec.lab.boundary },
+      ],
+    };
+  }
+
   return {
     concept: spec.motionConcept,
     headline: `${spec.lesson.title} becomes an inspectable build, not a black box.`,

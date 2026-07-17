@@ -9,9 +9,9 @@ const rule = (label: string, prompt: string, groups: string[][], correction: str
 
 export const lessonTransferChecks: Record<string, TransferRule[]> = {
   introduction: [
-    rule("Prediction boundary", "What does the model itself contribute?", [["model"], ["predict", "probab"]], "Name a conditional token prediction—not truth, retrieval, or execution."),
-    rule("Changing evidence", "Where does the current weather fact come from?", [["weather", "current"], ["retriev", "source", "tool"]], "Put the changing fact in a dated external source or retrieval/tool step."),
-    rule("Authorized effect", "What must surround the booking call?", [["runtime", "system"], ["author", "confirm"], ["receipt", "audit"]], "Name runtime authorization/confirmation and the execution receipt."),
+    rule("Supplied evidence", "What grounds the itinerary summary?", [["itinerary", "attachment", "attached"], ["supplied", "prompt", "source"]], "Point to the attached itinerary and compare the summary with it."),
+    rule("Changing evidence", "Where does the current weather fact come from?", [["weather", "current", "live"], ["source", "service", "tool"]], "Use a dated, current weather source rather than the model's fluency."),
+    rule("Authorized effect", "What must surround the ticket purchase?", [["permission", "author", "confirm"], ["price", "itinerary", "details"], ["receipt", "record"]], "Require user permission, confirmed purchase details, and an execution receipt."),
   ],
   "tensors-shapes": [
     rule("Head mapping", "How many query heads share each KV head?", [["4", "four"], ["query"], ["kv", "key"]], "State that each KV head serves a group of four query heads."),

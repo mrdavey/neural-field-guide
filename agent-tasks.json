@@ -1,115 +1,113 @@
 {
   "meta": {
-    "objective": "Turn every course home into an attractive marketing-style page that quickly explains why the learner should care and complete the course, with minimal instructional framing.",
-    "createdAt": "2026-07-16T09:33:39Z",
-    "updatedAt": "2026-07-16T09:57:18Z",
-    "runStatus": "complete"
+    "objective": "Rewrite the introduction lesson of each released course so it is beginner-safe, motivating, and does not rely on concepts taught later.",
+    "createdAt": "2026-07-17T03:27:45Z",
+    "updatedAt": "2026-07-17T04:03:00Z",
+    "runStatus": "completed"
   },
   "tasks": [
     {
       "taskId": "T001",
       "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Turn course homes into compelling landing pages",
-      "objective": "Make all five course homes attractive, concise, and motivation-led while preserving honest claims, navigation, and the course's editorial visual language.",
+      "title": "Rewrite all five course introductions",
+      "objective": "Make each first lesson motivation-led, beginner-safe, and self-contained while preserving stable IDs and cumulative prerequisites.",
       "dependsOn": [],
       "acceptanceCriteria": [
-        "Every course home leads with a course-specific reason to care and a clear start or continue action.",
-        "Readiness checks, prerequisite decisions, step-by-step orientation copy, inspectable traces, and audit-like source instructions are absent from the visible home flow.",
-        "Each home presents concise course-specific payoffs and an attractive preview of what learners will build.",
-        "Supporting provenance and evidence boundaries remain honest but visually secondary.",
-        "Desktop and narrow-screen browser QA, npm run lint, and npm test pass."
+        "The LLM, World Models, Generative Models, RL & Control, and Embodied AI first lessons open with a compelling plain-language question or scenario and explain why the field matters.",
+        "No first lesson relies on mathematics, notation, or technical mechanisms that are only taught in later lessons; any unavoidable term is defined before use.",
+        "Each introduction keeps an honest concrete example, limitation, prediction-led activity, deterministic changed-case check, and clear next-use statement.",
+        "Exact objectives, objective coverage, guides, assessments, motion, code guidance, manifests, and review documentation agree for every changed introduction.",
+        "Focused curriculum and objective-coverage checks pass."
       ],
-      "details": "Refactor the shared HomeView and course hero metadata, update the home-page visual system and regression tests, verify all five course routes, and refresh reviewed page-grade evidence as required.",
-      "status": "done",
+      "details": "Audit and rewrite the first canonical lesson in all five released courses. Preserve lesson IDs, routes, persistence keys, static hosting, and the Orient \u2192 Learn \u2192 Try \u2192 Test \u2192 Extend contract.",
+      "status": "completed",
       "attempt": 1,
-      "runMajorChecks": true,
+      "runMajorChecks": false,
       "priority": 10,
       "blockerReason": "",
       "nextTaskId": "",
       "changedFiles": [
-        "PLAN_LOG.md",
-        "agent-tasks.json",
-        "app/course-app.tsx",
-        "app/course-catalog.ts",
-        "app/globals.css",
-        "app/scroll-story.tsx",
-        "app/three-story-canvas.tsx",
-        "docs/COURSE_PAGE_GRADES.md",
-        "docs/COURSE_PAGE_GRADING_RUBRIC.md",
-        "docs/course-page-grades/embodied.json",
-        "docs/course-page-grades/generative.json",
-        "docs/course-page-grades/llm.json",
-        "docs/course-page-grades/rl.json",
-        "docs/course-page-grades/worldmodel.json",
-        "tests/content-ux.test.mjs",
-        "tests/course-page-grades.test.mjs",
-        "tests/curriculum-progression.test.mjs",
-        "tests/rendered-html.test.mjs"
+        "app/course-data.ts",
+        "app/lesson-guides/foundations-architecture.ts",
+        "app/lesson-objective-coverage.ts",
+        "app/world-models/sections/foundations.ts",
+        "app/generative/sections/foundations.ts",
+        "app/rl/sections/foundations.ts",
+        "app/embodied/sections/foundations.ts",
+        "app/research-courses/helpers.ts",
+        "app/research-courses/compact.ts",
+        "tests/course-introductions.test.mjs"
       ],
       "validationCommands": [
-        {
-          "command": "node --test tests/course-page-grades.test.mjs tests/content-ux.test.mjs tests/curriculum-progression.test.mjs",
-          "status": "pass",
-          "evidence": "29/29 focused tests passed before report regeneration."
-        },
-        {
-          "command": "browser QA on /llm/, /worldmodel/, /generative/, /rl/, /embodied/ at desktop and 390x844",
-          "status": "pass",
-          "evidence": "All five homes had three payoffs, two CTAs, no forbidden readiness copy, no horizontal overflow, and no browser errors."
-        },
-        {
-          "command": "npm run lint",
-          "status": "pass",
-          "evidence": "ESLint completed without findings."
-        },
-        {
-          "command": "npm test",
-          "status": "pass",
-          "evidence": "Static export and artifact/grade verification passed; 161/161 tests passed."
-        }
+        "node --test tests/course-introductions.test.mjs tests/objective-coverage.test.mjs tests/interactive-learning.test.mjs tests/anime-motion.test.mjs tests/curriculum-architecture.test.mjs"
       ],
       "acceptanceCheckResults": [
-        {
-          "criterion": "Every course home leads with a course-specific reason to care and a clear start or continue action.",
-          "status": "pass",
-          "details": "Five distinct campaign promises, reasons, finish lines, and two CTAs render through the shared home shell."
-        },
-        {
-          "criterion": "Readiness checks, prerequisite decisions, step-by-step orientation copy, inspectable traces, and audit-like source instructions are absent from the visible home flow.",
-          "status": "pass",
-          "details": "The obsolete renderer and CSS were removed; regressions forbid the prior home scaffolding and browser QA found none of its visible wording."
-        },
-        {
-          "criterion": "Each home presents concise course-specific payoffs and an attractive preview of what learners will build.",
-          "status": "pass",
-          "details": "Each course has three authored payoff cards, a marketing-led arc, course frontiers, stats, and a finish-line statement."
-        },
-        {
-          "criterion": "Supporting provenance and evidence boundaries remain honest but visually secondary.",
-          "status": "pass",
-          "details": "Generative and RL retain compact claim-linked source cards; every finale preserves the fixture, optional-run, and review-date boundary."
-        },
-        {
-          "criterion": "Desktop and narrow-screen browser QA, npm run lint, and npm test pass.",
-          "status": "pass",
-          "details": "Browser desktop/mobile audits passed, lint passed, and the full static-export regression suite passed."
-        }
+        "All five first lessons are prerequisite-free, notation-free, motivation-led orientations with exact objective joins.",
+        "Focused introduction, objective, interaction, motion, and curriculum tests pass."
       ],
-      "attemptedAt": "2026-07-16T09:57:18Z",
-      "completedAt": "2026-07-16T09:57:18Z",
+      "attemptedAt": "2026-07-17T03:27:45Z",
+      "completedAt": "2026-07-17T04:00:00Z",
       "evidence": [
-        "Independent home review passed with final scores LLM 98, World Models 98, Generative 99, RL 99, Embodied 98.",
-        "World Models phase-label mismatch was repaired with a six-label regression.",
-        "Commit f0fb090 contains the verified implementation."
+        "Independent remediation closed the World Models scenario mismatch and research-template language leaks.",
+        "Regression test protects coherent scenarios, concrete introductory interactions, and learner-facing language."
       ],
-      "ledgerRefs": [
-        "PLAN_LOG.md#Plan-1",
-        "PLAN_LOG.md#Verification"
-      ],
+      "ledgerRefs": [],
       "blockers": [],
       "commit": {
-        "sha": "f0fb090",
-        "message": "Task T001: market course homes"
+        "sha": "",
+        "message": "Rewrite course introductions for beginners"
+      }
+    },
+    {
+      "taskId": "T002",
+      "repo": "/Users/dt/Documents/LLMs from scratch",
+      "title": "Independently grade and verify introductions",
+      "objective": "Prove the rewritten introductions fulfill every objective and remain accessible, coherent, and regression-safe across the released course system.",
+      "dependsOn": [
+        "T001"
+      ],
+      "acceptanceCriteria": [
+        "An independent semantic grader passes every changed objective across explanation, mechanism, worked example, boundary, and committed check with no unresolved partials.",
+        "Representative browser QA confirms the five introductions orient and motivate learners without overflow or interaction regressions.",
+        "Page-grade provenance is refreshed only after the independent review passes.",
+        "npm run lint and npm test pass in full."
+      ],
+      "details": "Run independent objective/page review, repair any semantic gaps, update reviewed evidence, complete browser QA, and execute the full required verification suite.",
+      "status": "completed",
+      "attempt": 1,
+      "runMajorChecks": true,
+      "priority": 20,
+      "blockerReason": "",
+      "nextTaskId": "",
+      "changedFiles": [
+        "docs/OBJECTIVE_COVERAGE_REVIEW.md",
+        "docs/COURSE_PAGE_GRADES.md",
+        "docs/course-page-grades/*.json",
+        "docs/INTERACTION_AUDIT.md",
+        "tests/course-introductions.test.mjs"
+      ],
+      "validationCommands": [
+        "npm run lint",
+        "npm test"
+      ],
+      "acceptanceCheckResults": [
+        "Independent semantic regrade passes all 11 changed objectives and all five whole introductions with no partials.",
+        "Browser QA passes all five introductions, the LLM trust-boundary state change, and representative 390px and 1440px layouts.",
+        "Page-grade fingerprints match current source and the generated 187-page report verifies.",
+        "Lint, static export, artifact verification, and all 166 regression tests pass."
+      ],
+      "attemptedAt": "2026-07-17T04:00:00Z",
+      "completedAt": "2026-07-17T04:03:00Z",
+      "evidence": [
+        "Independent grader: 11/11 objective PASS and 5/5 whole-introduction PASS.",
+        "GitHub Pages static export verified 182 lesson routes plus 44 legacy forwards.",
+        "All preserved artifacts and 187 page-grade records verified."
+      ],
+      "ledgerRefs": [],
+      "blockers": [],
+      "commit": {
+        "sha": "",
+        "message": "Rewrite course introductions for beginners"
       }
     }
   ]

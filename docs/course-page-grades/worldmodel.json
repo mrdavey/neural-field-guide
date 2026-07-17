@@ -4,10 +4,10 @@
   "population": 47,
   "grader": {
     "role": "independent semantic grader",
-    "method": "Independent 17 July 2026 shared scroll-story regression regrade; verified full-opacity active intervals, retained inactive enter and exit fades, desktop sticky behavior, narrow stacked behavior, reduced-motion fallbacks, unchanged lesson semantics, and every interaction rubric floor."
+    "method": "Independent 17 July 2026 introduction regrade; compared every changed objective with its explanation, mechanism, worked example, boundary, committed check, expected reasoning, retry route, interaction, transfer task, and whole-page beginner fit."
   },
-  "gradedAt": "2026-07-17T03:18:55Z",
-  "sourceFingerprint": "sha256:c757882dcc2b980c6a40a735d5007d244038fa0fa77c446959c1cc612ebd00ff",
+  "gradedAt": "2026-07-17T03:59:25Z",
+  "sourceFingerprint": "sha256:17b7fbea03069d68afe7b14090eda973cbaa8ae63b87770d21413849376ff336",
   "pages": [
     {
       "pageType": "home",
@@ -31,7 +31,7 @@
       "route": "/worldmodel/world-models/",
       "blockingDefects": [],
       "A": 25, "C": 25, "E": 15, "I": 15, "D": 10, "S": 5, "R": 5, "total": 100, "pass": true,
-      "rationale": "The page defines the state/action/consequence distribution, separates environment evidence from model imagination and uncontrolled video, traces a 2x2 stochastic transition, and checks the distinction through prediction-led local practice and direct sources."
+      "rationale": "The page motivates world models through one blocked-hallway decision, keeps environment, imagined alternatives, and chooser distinct, and shows why a simple route-sensitive prediction can be more useful than vivid but decision-insensitive video. The coherent straight-versus-left trace, comparison lab, changed weather case, committed checks, and direct sources make the orientation concrete without relying on later notation."
     },
     {
       "pageType": "lesson",

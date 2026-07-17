@@ -2,34 +2,34 @@ import type { LessonGuide } from "./types";
 
 export const foundationsArchitectureGuides: Record<string, LessonGuide> = {
   introduction: {
-    objectives: ["Describe an LLM as a conditional next-token model", "Separate training, inference, decoding, and post-training", "Explain why fluent output can still be wrong"],
+    objectives: ["Explain in everyday language what an LLM can help with and why it is worth understanding", "Trace how a prompt becomes a response without assuming human-like understanding", "Choose when an LLM response can be used directly and when outside evidence or authority is required"],
     vocabulary: [
-      { term: "Language model", meaning: "A model that assigns probabilities to sequences or to the next token given prior context." },
-      { term: "Parameter", meaning: "A learned numerical value that influences the model’s computation." },
-      { term: "Inference", meaning: "Using fixed learned parameters to produce predictions or generated tokens." },
-      { term: "Context", meaning: "The tokens currently available to the model when it predicts what comes next." },
+      { term: "Large language model (LLM)", meaning: "A program that uses learned patterns to continue and transform language." },
+      { term: "Prompt", meaning: "The instruction and information a person or system gives the model." },
+      { term: "Response", meaning: "The text or other structured output the model produces from a prompt." },
+      { term: "Evidence", meaning: "Information that can be checked and that supports a claim, such as supplied records or a current trusted source." },
     ],
     sections: [
-      { title: "Start with the loop, not the mystique", paragraphs: [
-        "A chat response looks as though it appears all at once, but a standard decoder language model produces it through a repeated loop. The text is split into tokens, the model computes a score for every possible next token, a decoding rule chooses one, and that token is appended to the context. The enlarged context goes through the same process again. A paragraph is therefore the accumulated result of many small conditional predictions.",
-        "The word ‘large’ mainly refers to scale: many learned parameters, broad training data, and substantial computation. Scale allows the same prediction objective to absorb grammar, style, facts, code patterns, and task formats. It does not change the objective into a truth detector. The model is trained to predict text well, which often requires useful world patterns, but plausibility and factual verification remain different properties.",
+      { title: "Why this technology is worth opening up", paragraphs: [
+        "An LLM can turn rough notes into a clear email, explain an unfamiliar idea at several levels, compare two drafts, translate a paragraph, or help sketch code. One system appears across all of these tasks because language carries instructions, examples, questions, and many forms of knowledge. That range is exciting: instead of learning a separate interface for every text task, you can often describe the job in ordinary language.",
+        "The same flexibility makes the system easy to overestimate. A polished response may be based on the prompt, on patterns learned long ago, or on an incorrect but plausible continuation. The useful beginner question is therefore not ‘Is the model intelligent?’ It is ‘What did I give it, what did it produce, and what would I need to check before relying on that output?’",
       ] },
-      { title: "Four stages that beginners often mix together", paragraphs: [
-        "Pre-training changes parameters by learning from enormous amounts of text. Post-training changes behavior using demonstrations, preferences, rewards, or safety data. Inference uses the resulting frozen parameters on a particular prompt. Decoding sits inside inference and decides how to select from the probability distribution. If temperature changes an answer, the weights did not learn anything new; the selection policy changed.",
-        "A helpful mental boundary is: the model supplies conditional probabilities, while the surrounding system supplies instructions, retrieved evidence, tools, permissions, and verification. Many capabilities attributed to ‘the model’ are actually produced by this whole stack. Keeping those boundaries clear will make every later lesson—from attention to agents—much easier to reason about.",
+      { title: "A response is built, not looked up whole", paragraphs: [
+        "Start with a prompt such as ‘Turn these meeting notes into a friendly three-sentence update.’ The model reads the instruction together with the notes, uses learned language patterns to begin a fitting response, then extends that response piece by piece. The exact representation and mathematics are deliberately deferred: Lesson 6 shows how text is split into pieces, and the architecture lessons show how those pieces influence one another.",
+        "This mechanism can create a new response rather than retrieve one fixed answer, but it does not supply every guarantee a useful product needs. Supplied notes can ground a rewrite. A live train status needs a current source. A medical recommendation needs qualified evidence and judgment. Sending a refund needs permission and a confirmed action. The surrounding system and the human user decide which checks belong around the model.",
       ] },
     ],
     walkthrough: [
-      { title: "Encode the prompt", body: "A tokenizer converts visible text into token IDs. IDs are discrete labels, not meanings; embeddings turn them into vectors later.", checkpoint: "If one word becomes three tokens, how many prediction steps might be needed to reproduce it?" },
-      { title: "Compute possibilities", body: "The Transformer uses prior tokens to output one logit per vocabulary item. Softmax turns relative logit gaps into a probability distribution.", checkpoint: "The output is a distribution, not a verified fact or a complete sentence." },
-      { title: "Choose and repeat", body: "A decoding rule selects the next token, appends it, and invokes the model again until a stop condition is reached.", checkpoint: "Changing top-p affects selection now; training would be required to change the parameters." },
+      { title: "Name the job", body: "The prompt combines a request with any material the response should use: notes to rewrite, a passage to explain, or examples to follow.", checkpoint: "Could another reader tell what output you want and which supplied information it should use?" },
+      { title: "Build the response", body: "The model uses learned language patterns and the text available in the prompt to construct a continuation in small pieces.", checkpoint: "The response is newly assembled; that does not make every statement newly verified." },
+      { title: "Match the check to the stakes", body: "Inspect whether the task is a transformation of supplied text, a claim about the changing world, expert advice, or an action with consequences.", checkpoint: "The more the answer depends on current facts, specialist judgment, or authority, the stronger the outside check must be." },
     ],
-    guidedExample: { title: "Watch one tiny generation unfold", setup: "Suppose the prompt is ‘Water freezes at’ and the toy vocabulary contains 0°C, 100°C, night, and blue.", steps: [
-      "The model assigns conditional probabilities such as 0°C: 0.82, 100°C: 0.09, night: 0.05, blue: 0.04.",
-      "Greedy decoding chooses 0°C. Sampling usually chooses it but could select another token because the alternatives have non-zero probability.",
-      "The chosen token is appended. The next prediction now conditions on ‘Water freezes at 0°C’ and may assign high probability to punctuation.",
-    ], result: "Knowledge appears through a sequence of conditional choices. A high probability can reflect a learned pattern, but neither the distribution nor the decoder independently proves the claim." },
-    practice: { prompt: "A model gives two different answers after you raise temperature. Which stage changed, and what definitely did not happen?", hint: "Use the four-stage boundary: pre-training, post-training, inference, decoding.", answer: "Decoding changed how the fixed next-token distribution was sampled during inference. The model was not retrained, its parameters did not update, and no new knowledge was inserted." },
+    guidedExample: { title: "One set of notes, three useful jobs", setup: "The supplied note says: ‘Launch moved to Friday. Mira owns the checklist. The accessibility review is still open.’", steps: [
+      "Prompt A asks for a friendly team update. A fitting response preserves Friday, Mira, and the open review while changing the tone and structure.",
+      "Prompt B asks for unanswered questions. A fitting response asks who will complete the accessibility review and whether the changed launch date affects anything else.",
+      "Prompt C asks whether the launch has already happened. The note does not contain today’s date or a live project status, so the model should not pretend the supplied evidence settles that question.",
+    ], result: "The model can transform what it is given and expose missing information. Its usefulness grows when the prompt is clear and the required evidence boundary is explicit." },
+    practice: { prompt: "You have a two-month-old restaurant list. Which request is safer from the list alone: rewrite it as a compact table, or name which restaurants are open tonight? Explain the extra evidence the second request needs.", hint: "Separate transforming supplied text from making a claim about a changing condition.", answer: "Reformatting the old list can use the supplied text alone, while claiming a restaurant is open tonight requires a current, trustworthy source such as the restaurant’s live listing or direct confirmation. A fluent answer cannot make the old list current." },
     resources: [
       { title: "What are LLMs?", url: "https://huggingface.co/learn/agents-course/en/unit1/what-are-llms", kind: "Course", note: "A beginner-friendly explanation with an interactive decoding example." },
       { title: "But what is a GPT?", url: "https://www.3blue1brown.com/lessons/gpt", kind: "Video", note: "A visual account of tokens, embeddings, and repeated next-token prediction." },
