@@ -30,8 +30,25 @@ jobs:
           node-version: 22.13.0
           cache: npm
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            public/capstone-artifacts/generative/requirements-capstones.txt
+            public/capstone-artifacts/rl/requirements-capstones.txt
+            public/capstone-artifacts/embodied/requirements-capstones.txt
+
       - name: Install pinned dependencies
         run: npm ci
+
+      - name: Install capstone test dependencies
+        run: |
+          python -m pip install \
+            -r public/capstone-artifacts/generative/requirements-capstones.txt \
+            -r public/capstone-artifacts/rl/requirements-capstones.txt \
+            -r public/capstone-artifacts/embodied/requirements-capstones.txt
 
       - name: Verify course before publishing
         run: npm test

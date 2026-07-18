@@ -52,11 +52,15 @@ Use the exact locked dependency graph:
 
 ```bash
 npm ci
+python3 -m pip install \
+  -r public/capstone-artifacts/generative/requirements-capstones.txt \
+  -r public/capstone-artifacts/rl/requirements-capstones.txt \
+  -r public/capstone-artifacts/embodied/requirements-capstones.txt
 npm run lint
 npm test
 ```
 
-`npm test` builds the normal application, verifies all preserved learning artifacts, and runs the curriculum and UX regression suite. Do not publish from a failing commit.
+Run the Python installation inside your normal virtual environment if the system interpreter is externally managed. The three requirement files pin the CPU dependency used by the Generative, RL, and Embodied capstone execution tests. `npm test` builds the normal application, verifies all preserved learning artifacts, executes those capstone baselines, and runs the curriculum and UX regression suite. Do not publish from a failing commit.
 
 ## 4. Dry-run the static export
 
@@ -108,11 +112,12 @@ cp docs/github-pages/deploy-pages.yml .github/workflows/deploy-pages.yml
 Review the copied file before committing. It will:
 
 1. install the locked Node dependencies;
-2. run the full course test suite;
-3. ask GitHub Pages for the correct base path;
-4. create and verify a static export;
-5. upload only `out/`;
-6. deploy through the protected `github-pages` environment.
+2. set up Python 3.12 and install the pinned Generative, RL, and Embodied capstone test dependencies;
+3. run the full course test suite;
+4. ask GitHub Pages for the correct base path;
+5. create and verify a static export;
+6. upload only `out/`;
+7. deploy through the protected `github-pages` environment.
 
 Once committed, every push to `main` will attempt a deployment. The `workflow_dispatch` trigger also provides a manual **Run workflow** button.
 
@@ -175,6 +180,8 @@ Confirm **Settings → Pages → Source** is **GitHub Actions**, inspect the `de
 ### The deployment fails before upload
 
 Fix the first failed lint, test, artifact, build, or Pages-verification step locally. The workflow deliberately refuses to publish an unverified course.
+
+If a capstone execution test reports that NumPy is missing, confirm the workflow still runs `actions/setup-python@v6` and installs all three `requirements-capstones.txt` files before `npm test`. A machine with NumPy preinstalled can hide this workflow omission during local testing.
 
 ### A route or feature works locally but not on Pages
 

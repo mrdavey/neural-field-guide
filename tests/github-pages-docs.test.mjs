@@ -28,8 +28,19 @@ test("Pages deployment stays inert until the learner deliberately activates it",
 });
 
 test("Pages workflow tests, prefixes, verifies, and uploads only static output", async () => {
-  const workflow = await read("docs/github-pages/deploy-pages.yml");
+  const [workflow, activeWorkflow] = await Promise.all([
+    read("docs/github-pages/deploy-pages.yml"),
+    read(".github/workflows/deploy-pages.yml"),
+  ]);
+  assert.equal(activeWorkflow, workflow, "the active Pages workflow must stay synchronized with its reviewed template");
   for (const required of [
+    "actions/setup-python@v6",
+    'python-version: "3.12"',
+    "cache: pip",
+    "public/capstone-artifacts/generative/requirements-capstones.txt",
+    "public/capstone-artifacts/rl/requirements-capstones.txt",
+    "public/capstone-artifacts/embodied/requirements-capstones.txt",
+    "python -m pip install",
     "npm test",
     "actions/configure-pages@v6",
     "steps.pages.outputs.base_path",
