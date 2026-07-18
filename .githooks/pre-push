@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+repository_root="$(git rev-parse --show-toplevel)"
+cd "$repository_root"
+
+echo "Running the isolated direct-main verification contract before push..."
+npm run ci:verify

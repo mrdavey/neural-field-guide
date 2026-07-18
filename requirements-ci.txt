@@ -1,0 +1,5 @@
+# Python dependencies exercised by the repository-wide CI contract.
+# Keep each course-specific lock authoritative and include it here.
+-r public/capstone-artifacts/generative/requirements-capstones.txt
+-r public/capstone-artifacts/rl/requirements-capstones.txt
+-r public/capstone-artifacts/embodied/requirements-capstones.txt

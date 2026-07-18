@@ -48,19 +48,16 @@ The ignored `external-executions/runs/`, `.env*`, `node_modules/`, and build dir
 
 ## 3. Verify the normal course locally
 
-Use the exact locked dependency graph:
+`npm install` installs the repository hooks automatically. Confirm or repair that configuration, then run the same isolated release contract used by GitHub Actions:
 
 ```bash
-npm ci
-python3 -m pip install \
-  -r public/capstone-artifacts/generative/requirements-capstones.txt \
-  -r public/capstone-artifacts/rl/requirements-capstones.txt \
-  -r public/capstone-artifacts/embodied/requirements-capstones.txt
-npm run lint
-npm test
+npm run hooks:install
+npm run ci:verify
 ```
 
-Run the Python installation inside your normal virtual environment if the system interpreter is externally managed. The three requirement files pin the CPU dependency used by the Generative, RL, and Embodied capstone execution tests. `npm test` builds the normal application, verifies all preserved learning artifacts, executes those capstone baselines, and runs the curriculum and UX regression suite. Do not publish from a failing commit.
+`ci:verify` requires Python 3.12, installs the exact npm graph, creates a fresh temporary Python environment, installs every course lock referenced by `requirements-ci.txt`, records the OS/Node/Python/dependency fingerprint, runs lint and the full test suite, and verifies both root and `/neural-field-guide` Pages URL shapes. The temporary environment starts without NumPy, so a package installed globally cannot hide a missing dependency declaration. Do not publish from a failing command.
+
+The installed pre-push hook runs `ci:verify` before every normal push, including a direct push to `main`. `git push --no-verify` can bypass local hooks and is reserved for an explicitly understood emergency; it cannot make a failing GitHub verification deploy the site.
 
 ## 4. Dry-run the static export
 
@@ -111,13 +108,12 @@ cp docs/github-pages/deploy-pages.yml .github/workflows/deploy-pages.yml
 
 Review the copied file before committing. It will:
 
-1. install the locked Node dependencies;
-2. set up Python 3.12 and install the pinned Generative, RL, and Embodied capstone test dependencies;
-3. run the full course test suite;
-4. ask GitHub Pages for the correct base path;
-5. create and verify a static export;
-6. upload only `out/`;
-7. deploy through the protected `github-pages` environment.
+1. run on pinned Ubuntu 24.04 with Node 22.13.0 and Python 3.12;
+2. ask GitHub Pages for the correct base path on push and manual runs;
+3. run the shared `npm run ci:verify` contract in a clean environment;
+4. upload only the verified `out/` directory;
+5. deploy through the protected `github-pages` environment only after verification passes;
+6. run the same clean verification every Monday without uploading or deploying.
 
 Once committed, every push to `main` will attempt a deployment. The `workflow_dispatch` trigger also provides a manual **Run workflow** button.
 
@@ -181,7 +177,7 @@ Confirm **Settings → Pages → Source** is **GitHub Actions**, inspect the `de
 
 Fix the first failed lint, test, artifact, build, or Pages-verification step locally. The workflow deliberately refuses to publish an unverified course.
 
-If a capstone execution test reports that NumPy is missing, confirm the workflow still runs `actions/setup-python@v6` and installs all three `requirements-capstones.txt` files before `npm test`. A machine with NumPy preinstalled can hide this workflow omission during local testing.
+If a capstone execution test reports that NumPy is missing, confirm the workflow still runs `actions/setup-python@v6`, calls `npm run ci:verify`, and that `requirements-ci.txt` includes every `public/capstone-artifacts/*/requirements-capstones.txt` lock. The verifier deliberately rejects a fresh environment that already contains NumPy, then installs the aggregate lock before running tests.
 
 ### A route or feature works locally but not on Pages
 

@@ -16,7 +16,7 @@ The course selector sits beside the site identity and changes the complete curri
 
 ## Run locally
 
-Prerequisite: Node.js `>=22.13.0`.
+Prerequisite: Node.js `>=22.13.0`. Full release verification also requires Python 3.12; its course dependencies are installed into a fresh temporary environment rather than your global Python installation.
 
 ```bash
 npm install
@@ -28,11 +28,13 @@ Open `http://localhost:3000/`. Progress and project notes stay in browser storag
 ## Verify the program
 
 ```bash
-npm run lint
-npm test
+npm run hooks:install
+npm run ci:verify
 ```
 
-`npm test` creates and verifies the static export, checks preserved learning and experiment artifacts, confirms the current independent page-grade evidence, and runs the complete curriculum, accessibility, and UX regression suite. Documentation-specific invariants can be checked quickly with:
+`npm install` installs the reviewed `.githooks/` path automatically; `npm run hooks:install` repairs or confirms it explicitly. The pre-push hook runs the same `ci:verify` command as GitHub Actions. The verifier installs the exact npm graph, creates an isolated Python 3.12 environment from `requirements-ci.txt`, runs lint and the complete regression suite, and checks root-hosted plus `/neural-field-guide` Pages exports. A failed check blocks a normal direct push to `main`; `git push --no-verify` is an explicit emergency bypass, not the normal publishing path, and GitHub still refuses deployment when remote verification fails.
+
+`npm test` remains the focused repository suite when dependencies are already installed. It creates and verifies the root static export, checks preserved learning and experiment artifacts, confirms the current independent page-grade evidence, and runs the complete curriculum, accessibility, and UX regression suite. Documentation-specific invariants can be checked quickly with:
 
 ```bash
 node --test tests/documentation.test.mjs
