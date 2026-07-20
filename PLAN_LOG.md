@@ -18,3 +18,12 @@ Audit and repair continuity across World Models, Generative Models, RL & Control
 - Step 2: pass - Complete semantic audit accounted for 90 pass, 48 partial, and 0 fail; all 31 home/track/branch boundaries were independently classified, with World advanced lessons treated as parallel branches.
 - Step 3: pass - docs/CURRICULUM_ARCHITECTURE.md records evidence and scoped repairs for every partial seam; focused continuity, snapshot, architecture, and documentation tests passed (22/22), and git diff --check passed.
 ### Gaps -> Plan 2
+
+## Plan 2
+1. [ ] T002 build explicit, destination-specific continuity bridges for all 48 findings without changing lesson objectives or order - Done when each repaired page names the prior artifact, need, and new mechanism
+2. [ ] T002 correct misleading direct-reuse/new-thread labels and World Models advanced branch/capstone structure - Done when relationships match the actual conceptual dependency
+3. [ ] T002 add semantic regression assertions for the repaired learner-facing copy and relationship taxonomy - Done when focused continuity, reader, objective, course, and documentation checks pass
+
+### Verification
+
+### Gaps -> Plan 3
