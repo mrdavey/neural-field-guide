@@ -20,3 +20,13 @@ Repair the LLM course's Introduction to Lesson 02 transition and any equally dis
 - Step 2: pass - cmd: focused semantic/source inspection; result: Lesson 02 now starts from piece-by-piece response construction and maps prompts/positions/features through learned projections to attention, MLP, and output uses; proof: app/course-data.ts, app/lesson-guides/foundations-architecture.ts, app/lesson-objective-coverage.ts
 - Step 3: pass - cmd: 45 focused Node tests, visual verifier, 11 documentation/architecture tests, git diff --check; result: all pass; proof: tests/llm-curriculum-continuity.test.mjs and generated inventory
 ### Gaps -> Plan 2
+
+## Plan 2
+1. [ ] T002 Independently grade all three Lesson 02 objectives across explanation, mechanism, worked trace, boundary, committed check, expected reasoning, and retry; done when no partial or fail remains.
+2. [ ] T002 Independently review the complete Introduction and Lesson 02 pages plus all LLM track seams; done when page flow and every carry-forward relationship are coherent and honestly labeled.
+3. [ ] T002 Refresh only affected objective/page review evidence after the grade passes; done when fingerprints, reader hashes, grade report, and dated review prose match the independently reviewed source.
+4. [ ] T002 Run lint and the full repository test suite, back-verify prior work, and close the objective; done when all checks and completion gates pass without unrelated changes.
+
+### Verification
+
+### Gaps -> Plan 3

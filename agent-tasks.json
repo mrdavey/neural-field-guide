@@ -2,7 +2,7 @@
   "meta": {
     "objective": "Fix the disjointed transition from the LLM introduction to Lesson 02 by explaining why tensors, shapes, and matrix multiplication are useful for LLMs, then audit and repair equally disjointed section transitions.",
     "createdAt": "2026-07-20T06:12:55Z",
-    "updatedAt": "2026-07-20T06:39:24Z",
+    "updatedAt": "2026-07-20T06:39:51Z",
     "runStatus": "in_progress"
   },
   "tasks": [
@@ -125,19 +125,23 @@
         "npm run lint and npm test pass without including or overwriting unrelated worktree changes."
       ],
       "details": "Run the independent grader required by AGENTS.md after authoring, remediate any partials, refresh only affected review artifacts/provenance, and execute the full repository checks.",
-      "status": "todo",
-      "attempt": 0,
+      "status": "in_progress",
+      "attempt": 1,
       "runMajorChecks": true,
       "priority": 20,
       "blockerReason": "",
-      "nextTaskId": "",
+      "nextTaskId": "T002",
       "changedFiles": [],
       "validationCommands": [],
       "acceptanceCheckResults": [],
-      "attemptedAt": "",
+      "attemptedAt": "2026-07-20T06:31:00Z",
       "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "evidence": [
+        "PLAN_LOG.md#Plan-2"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-2"
+      ],
       "blockers": [],
       "commit": {
         "sha": "",
