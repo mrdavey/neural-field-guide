@@ -4,11 +4,7 @@
 }
 
 .popover[data-placement="above"] {
-  transform: translate(-50%, -100%);
-}
-
-.popover[data-placement="below"] {
-  transform: translateX(-50%);
+  transform: translateY(-100%);
 }
 
 .popover button {
@@ -20,14 +16,15 @@
   cursor: pointer;
   display: flex;
   font-family: var(--font-geist-mono);
-  font-size: .65rem;
+  font-size: .54rem;
   font-weight: 850;
   justify-content: center;
   letter-spacing: .045em;
   min-height: 44px;
-  padding: 11px 15px;
+  padding: 8px 7px;
   text-transform: uppercase;
   white-space: nowrap;
+  width: 98px;
 }
 
 .copied button {
@@ -55,9 +52,8 @@
 
 @media (max-width: 780px) {
   .popover button {
-    font-size: .6rem;
+    font-size: .54rem;
     max-width: calc(100vw - 28px);
-    white-space: normal;
   }
 }
 

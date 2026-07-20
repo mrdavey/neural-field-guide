@@ -14,13 +14,13 @@ const lesson = {
 };
 const lessonById = { tokens: prerequisite, attention: lesson };
 
-test("paragraph discussion prompt adds concise lesson context around the selected passage", () => {
-  const selectedText = "The softmax turns each row of scores into non-negative weights that sum to one.";
-  const prompt = buildParagraphDiscussionPrompt({ lessonTitle: lesson.title, selectedText, subject: "large language models" });
+test("paragraph discussion prompt adds concise lesson context around the hovered paragraph", () => {
+  const paragraphText = "The softmax turns each row of scores into non-negative weights that sum to one.";
+  const prompt = buildParagraphDiscussionPrompt({ lessonTitle: lesson.title, paragraphText, subject: "large language models" });
 
   assert.equal(prompt, [
     "I'm learning about “Attention” in a course about large language models.",
-    `Here is an excerpt:\n\n${selectedText}`,
+    `Here is an excerpt:\n\n${paragraphText}`,
     "Please help me understand this more.",
   ].join("\n\n"));
 });

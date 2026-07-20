@@ -6,18 +6,18 @@ import type { Lesson } from "./course-data";
 import { buildCourseDiscussionPrompt, buildParagraphDiscussionPrompt } from "./llm-discussion-prompts";
 import selectionStyles from "./llm-discussion-prompt.module.css";
 
-type ParagraphSelection = {
+type ParagraphTarget = {
   left: number;
-  placement: "above" | "below";
+  placement: "above" | "below" | "margin";
   text: string;
   top: number;
 };
 
-function selectionElement(node: Node | null) {
-  return node instanceof Element ? node : node?.parentElement ?? null;
+function eventElement(target: EventTarget | null) {
+  return target instanceof Element ? target : null;
 }
 
-function normalizeSelection(value: string) {
+function normalizeParagraphText(value: string) {
   return value.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
 }
 
@@ -58,11 +58,11 @@ export function CourseDiscussionPrompt({ lesson, lessonById, subject = "large la
     if (succeeded) resetTimer.current = window.setTimeout(() => setCopied(false), 2400);
   };
 
-  return <section ref={discussionRef} className="llm-discussion" data-llm-selection="disabled" aria-labelledby={`llm-discussion-${lesson.id}`}>
+  return <section ref={discussionRef} className="llm-discussion" data-paragraph-copy="disabled" aria-labelledby={`llm-discussion-${lesson.id}`}>
     <div className="llm-discussion-intro">
       <span className="eyebrow">Continue the conversation</span>
       <h2 id={`llm-discussion-${lesson.id}`}>Continue the inquiry with an optional AI tutor.</h2>
-      <p>The required lesson is complete without an external service. If you use one, copy this context, replace the final placeholder with your question, and check its answer against the lesson evidence. While reading, you can also select text within any paragraph and choose <strong>Copy for an LLM</strong> (keyboard: Alt+Shift+C) to copy that passage with a short lesson context.</p>
+      <p>The required lesson is complete without an external service. If you use one, copy this context, replace the final placeholder with your question, and check its answer against the lesson evidence. While reading, hover over any paragraph and choose <strong>Copy for LLM</strong> to copy the whole paragraph with a short lesson context. On touch, tap the paragraph first. Keyboard: Alt+Shift+C copies the visible paragraph nearest the middle of the screen.</p>
       <div className="prompt-context" aria-label="Prompt context included">
         <span>{prerequisiteTitles.length || 1} context layer{prerequisiteTitles.length === 1 ? "" : "s"}</span>
         <span>{lesson.keyIdeas.length} key distinctions</span>
@@ -82,88 +82,150 @@ export function CourseDiscussionPrompt({ lesson, lessonById, subject = "large la
 }
 
 export function ParagraphDiscussionPrompt({ discussionRef, lessonTitle, subject }: { discussionRef: RefObject<HTMLElement | null>; lessonTitle: string; subject: string }) {
-  const [paragraphSelection, setParagraphSelection] = useState<ParagraphSelection>();
+  const [paragraphTarget, setParagraphTarget] = useState<ParagraphTarget>();
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const activeParagraph = useRef<HTMLParagraphElement | null>(null);
+  const dismissTimer = useRef<number | undefined>(undefined);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const resetTimer = useRef<number | undefined>(undefined);
-  const selectedText = useRef("");
 
-  const clearSelectionPrompt = useCallback(() => {
-    selectedText.current = "";
-    setParagraphSelection(undefined);
-    setCopyState("idle");
+  const cancelDismiss = useCallback(() => {
+    if (dismissTimer.current) window.clearTimeout(dismissTimer.current);
   }, []);
 
-  const updateSelectionPrompt = useCallback(() => {
-    const selection = document.getSelection();
-    const scope = discussionRef.current?.closest<HTMLElement>(".lesson-view");
-    if (!selection || !scope || selection.isCollapsed || selection.rangeCount === 0) {
-      clearSelectionPrompt();
+  const clearParagraphPrompt = useCallback(() => {
+    cancelDismiss();
+    activeParagraph.current = null;
+    setParagraphTarget(undefined);
+    setCopyState("idle");
+  }, [cancelDismiss]);
+
+  const paragraphFromTarget = useCallback((target: EventTarget | null, scope: HTMLElement) => {
+    const paragraph = eventElement(target)?.closest<HTMLParagraphElement>("p");
+    if (!paragraph || !scope.contains(paragraph) || paragraph.closest('[data-paragraph-copy="disabled"]')) return null;
+    return normalizeParagraphText(paragraph.innerText).length > 1 ? paragraph : null;
+  }, []);
+
+  const showParagraphPrompt = useCallback((paragraph: HTMLParagraphElement) => {
+    const bounds = paragraph.getBoundingClientRect();
+    if (bounds.bottom < 68 || bounds.top > window.innerHeight || (!bounds.width && !bounds.height)) {
+      clearParagraphPrompt();
       return;
     }
 
-    const anchor = selectionElement(selection.anchorNode);
-    const focus = selectionElement(selection.focusNode);
-    const anchorParagraph = anchor?.closest("p");
-    const focusParagraph = focus?.closest("p");
-    const text = normalizeSelection(selection.toString());
-    if (!anchorParagraph || anchorParagraph !== focusParagraph || !scope.contains(anchorParagraph) || anchorParagraph.closest('[data-llm-selection="disabled"]') || text.length < 2) {
-      clearSelectionPrompt();
-      return;
-    }
+    cancelDismiss();
+    const text = normalizeParagraphText(paragraph.innerText);
+    const buttonWidth = 98;
+    const gap = 8;
+    const lessonBounds = paragraph.closest<HTMLElement>(".lesson-view")?.getBoundingClientRect();
+    const reachesOuterReadingEdge = !lessonBounds || lessonBounds.right - bounds.right <= 160;
+    const hasRightMargin = reachesOuterReadingEdge && bounds.right + gap + buttonWidth <= window.innerWidth - 2;
+    const placement: ParagraphTarget["placement"] = hasRightMargin ? "margin" : bounds.top >= 124 ? "above" : "below";
+    const left = hasRightMargin
+      ? bounds.right + gap
+      : Math.max(12, Math.min(bounds.right - buttonWidth, window.innerWidth - buttonWidth - 12));
+    const top = placement === "margin"
+      ? Math.max(76, Math.min(bounds.top, window.innerHeight - 48))
+      : placement === "above" ? bounds.top - 8 : bounds.bottom + 8;
+    if (activeParagraph.current !== paragraph) setCopyState("idle");
+    activeParagraph.current = paragraph;
+    setParagraphTarget({ left, placement, text, top });
+  }, [cancelDismiss, clearParagraphPrompt]);
 
-    const range = selection.getRangeAt(0);
-    const bounds = range.getBoundingClientRect();
-    if (!bounds.width && !bounds.height) {
-      clearSelectionPrompt();
-      return;
-    }
+  const scheduleDismiss = useCallback(() => {
+    cancelDismiss();
+    dismissTimer.current = window.setTimeout(() => {
+      if (!popoverRef.current?.contains(document.activeElement)) clearParagraphPrompt();
+    }, 180);
+  }, [cancelDismiss, clearParagraphPrompt]);
 
-    const placement = bounds.top < 132 ? "below" : "above";
-    const horizontalMargin = Math.min(132, Math.max(72, window.innerWidth / 2 - 12));
-    const left = Math.min(window.innerWidth - horizontalMargin, Math.max(horizontalMargin, bounds.left + bounds.width / 2));
-    const top = placement === "below" ? bounds.bottom + 10 : bounds.top - 10;
-    if (selectedText.current !== text) setCopyState("idle");
-    selectedText.current = text;
-    setParagraphSelection({ left, placement, text, top });
-  }, [clearSelectionPrompt, discussionRef]);
-
-  const copyParagraphPrompt = useCallback(async () => {
-    if (!paragraphSelection) return;
-    const prompt = buildParagraphDiscussionPrompt({ lessonTitle, selectedText: paragraphSelection.text, subject });
+  const copyParagraphText = useCallback(async (text: string) => {
+    const prompt = buildParagraphDiscussionPrompt({ lessonTitle, paragraphText: text, subject });
     const succeeded = await copyToClipboard(prompt);
     setCopyState(succeeded ? "copied" : "failed");
     if (resetTimer.current) window.clearTimeout(resetTimer.current);
     if (succeeded) resetTimer.current = window.setTimeout(() => setCopyState("idle"), 2400);
-  }, [lessonTitle, paragraphSelection, subject]);
+  }, [lessonTitle, subject]);
+
+  const copyParagraphPrompt = useCallback(() => {
+    if (paragraphTarget) void copyParagraphText(paragraphTarget.text);
+  }, [copyParagraphText, paragraphTarget]);
 
   useEffect(() => {
-    const dismissOnEscape = (event: KeyboardEvent) => {
+    const scope = discussionRef.current?.closest<HTMLElement>(".lesson-view");
+    if (!scope) return;
+
+    const nearestVisibleParagraph = () => [...scope.querySelectorAll<HTMLParagraphElement>("p")]
+      .filter((paragraph) => !paragraph.closest('[data-paragraph-copy="disabled"]') && normalizeParagraphText(paragraph.innerText).length > 1)
+      .map((paragraph) => ({ paragraph, bounds: paragraph.getBoundingClientRect() }))
+      .filter(({ bounds }) => bounds.bottom > 68 && bounds.top < window.innerHeight)
+      .sort((a, b) => Math.abs((a.bounds.top + a.bounds.bottom) / 2 - window.innerHeight / 2) - Math.abs((b.bounds.top + b.bounds.bottom) / 2 - window.innerHeight / 2))[0]?.paragraph;
+    const handleMouseOver = (event: MouseEvent) => {
+      const paragraph = paragraphFromTarget(event.target, scope);
+      if (paragraph) showParagraphPrompt(paragraph);
+    };
+    const handleMouseOut = (event: MouseEvent) => {
+      if (popoverRef.current?.contains(event.relatedTarget as Node)) return;
+      const fromParagraph = paragraphFromTarget(event.target, scope);
+      const toParagraph = paragraphFromTarget(event.relatedTarget, scope);
+      if (fromParagraph && fromParagraph !== toParagraph && activeParagraph.current === fromParagraph) scheduleDismiss();
+    };
+    const handlePointerUp = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") return;
+      const paragraph = paragraphFromTarget(event.target, scope);
+      if (paragraph) showParagraphPrompt(paragraph);
+    };
+    const handleFocusIn = (event: FocusEvent) => {
+      const paragraph = paragraphFromTarget(event.target, scope);
+      if (paragraph) showParagraphPrompt(paragraph);
+    };
+    const handleFocusOut = (event: FocusEvent) => {
+      const fromParagraph = paragraphFromTarget(event.target, scope);
+      const toParagraph = paragraphFromTarget(event.relatedTarget, scope);
+      if (fromParagraph && fromParagraph !== toParagraph) scheduleDismiss();
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        document.getSelection()?.removeAllRanges();
-        clearSelectionPrompt();
-      } else if (paragraphSelection && event.altKey && event.shiftKey && event.code === "KeyC") {
+        clearParagraphPrompt();
+      } else if (event.altKey && event.shiftKey && event.code === "KeyC") {
         event.preventDefault();
-        void copyParagraphPrompt();
+        const paragraph = activeParagraph.current ?? nearestVisibleParagraph();
+        if (paragraph) {
+          showParagraphPrompt(paragraph);
+          void copyParagraphText(normalizeParagraphText(paragraph.innerText));
+        }
       }
     };
-    document.addEventListener("selectionchange", updateSelectionPrompt);
-    document.addEventListener("keydown", dismissOnEscape);
-    window.addEventListener("resize", updateSelectionPrompt);
-    window.addEventListener("scroll", updateSelectionPrompt, true);
+    const reposition = () => {
+      if (activeParagraph.current) showParagraphPrompt(activeParagraph.current);
+    };
+    scope.addEventListener("mouseover", handleMouseOver);
+    scope.addEventListener("mouseout", handleMouseOut);
+    scope.addEventListener("pointerup", handlePointerUp);
+    scope.addEventListener("focusin", handleFocusIn);
+    scope.addEventListener("focusout", handleFocusOut);
+    document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", reposition);
+    window.addEventListener("scroll", reposition, true);
     return () => {
-      document.removeEventListener("selectionchange", updateSelectionPrompt);
-      document.removeEventListener("keydown", dismissOnEscape);
-      window.removeEventListener("resize", updateSelectionPrompt);
-      window.removeEventListener("scroll", updateSelectionPrompt, true);
+      scope.removeEventListener("mouseover", handleMouseOver);
+      scope.removeEventListener("mouseout", handleMouseOut);
+      scope.removeEventListener("pointerup", handlePointerUp);
+      scope.removeEventListener("focusin", handleFocusIn);
+      scope.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", reposition);
+      window.removeEventListener("scroll", reposition, true);
+      if (dismissTimer.current) window.clearTimeout(dismissTimer.current);
       if (resetTimer.current) window.clearTimeout(resetTimer.current);
     };
-  }, [clearSelectionPrompt, copyParagraphPrompt, paragraphSelection, updateSelectionPrompt]);
+  }, [clearParagraphPrompt, copyParagraphText, discussionRef, paragraphFromTarget, scheduleDismiss, showParagraphPrompt]);
 
-  if (!paragraphSelection || typeof document === "undefined") return null;
+  if (!paragraphTarget || typeof document === "undefined") return null;
 
-  return createPortal(<div className={`${selectionStyles.popover} ${selectionStyles[copyState]}`} data-placement={paragraphSelection.placement} style={{ left: paragraphSelection.left, top: paragraphSelection.top }} role="toolbar" aria-label="Actions for selected lesson text">
-      <button type="button" onPointerDown={(event) => event.preventDefault()} onClick={copyParagraphPrompt} aria-keyshortcuts="Alt+Shift+C" aria-label="Copy selected passage for an LLM">{copyState === "copied" ? "Copied ✓" : copyState === "failed" ? "Copy failed — try again" : "Copy for an LLM"}</button>
-      <span className="sr-only" role="status" aria-live="polite">{copyState === "copied" ? "Selected passage and lesson context copied. Paste it into an LLM." : copyState === "failed" ? "The selected passage could not be copied. Try again or use your browser copy command." : ""}</span>
+  return createPortal(<div ref={popoverRef} className={`${selectionStyles.popover} ${selectionStyles[copyState]}`} data-placement={paragraphTarget.placement} style={{ left: paragraphTarget.left, top: paragraphTarget.top }} role="toolbar" aria-label="Actions for this lesson paragraph" onPointerEnter={cancelDismiss} onPointerLeave={scheduleDismiss} onFocus={cancelDismiss} onBlur={scheduleDismiss}>
+      <button type="button" onClick={copyParagraphPrompt} aria-keyshortcuts="Alt+Shift+C" aria-label="Copy this paragraph for an LLM">{copyState === "copied" ? "Copied ✓" : copyState === "failed" ? "Try again" : "Copy for LLM"}</button>
+      <span className="sr-only" role="status" aria-live="polite">{copyState === "copied" ? "Paragraph and lesson context copied. Paste it into an LLM." : copyState === "failed" ? "The paragraph could not be copied. Try again or use your browser copy command." : ""}</span>
     </div>, document.body);
 }
 

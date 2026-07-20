@@ -237,16 +237,19 @@ test("every lesson ends with a copyable context-rich optional AI discussion prom
   assert.match(discussion, /aria-live="polite"/);
 });
 
-test("a paragraph selection copies the passage with concise lesson context", () => {
+test("hovering a paragraph exposes a whole-paragraph LLM copy action", () => {
   assert.match(discussion, /<ParagraphDiscussionPrompt discussionRef=\{discussionRef\} lessonTitle=\{lesson\.title\} subject=\{subject\}/);
   assert.match(discussion, /discussionRef\.current\?\.closest<HTMLElement>\("\.lesson-view"\)/);
-  for (const phrase of ["selectionchange", 'closest("p")', "getBoundingClientRect", "Copy for an LLM", "onPointerDown", "Escape", "event.altKey", "event.shiftKey", 'aria-keyshortcuts="Alt+Shift+C"', 'role="toolbar"']) assert.ok(discussion.includes(phrase), phrase);
-  assert.match(discussion, /buildParagraphDiscussionPrompt\(\{ lessonTitle, selectedText: paragraphSelection\.text, subject \}\)/);
+  for (const phrase of ["mouseover", "mouseout", "pointerup", "focusin", "focusout", 'closest<HTMLParagraphElement>("p")', "getBoundingClientRect", "Copy for LLM", "innerText", "Escape", "event.altKey", "event.shiftKey", 'aria-keyshortcuts="Alt+Shift+C"', 'role="toolbar"']) assert.ok(discussion.includes(phrase), phrase);
+  assert.doesNotMatch(discussion, /selectionchange|document\.getSelection/);
+  assert.match(discussion, /buildParagraphDiscussionPrompt\(\{ lessonTitle, paragraphText: text, subject \}\)/);
   assert.match(discussion, /createPortal\([^]*document\.body\)/);
   for (const phrase of ["I'm learning about", "Here is an excerpt", "Please help me understand this more."]) assert.ok(discussionPrompts.includes(phrase), phrase);
-  assert.match(discussion, /data-llm-selection="disabled"/);
+  assert.match(discussion, /data-paragraph-copy="disabled"/);
+  assert.match(discussion, /nearestVisibleParagraph/);
+  assert.match(discussion, /reachesOuterReadingEdge/);
   assert.match(discussionStyles, /\.popover \{[^}]*position: fixed;[^}]*z-index: 60;/);
-  assert.match(discussionStyles, /\.popover button \{[^}]*min-height: 44px;/);
+  assert.match(discussionStyles, /\.popover button \{[^}]*min-height: 44px;[^}]*width: 98px;/);
   assert.match(discussionStyles, /@media \(max-width: 780px\)[^]*\.popover button/);
   assert.match(discussionStyles, /@media \(prefers-reduced-motion: reduce\)[^]*\.popover button/);
 });

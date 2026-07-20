@@ -8,7 +8,7 @@ type DiscussionPromptInput = {
 
 type ParagraphDiscussionPromptInput = {
   lessonTitle: string;
-  selectedText: string;
+  paragraphText: string;
   subject?: string;
 };
 
@@ -32,10 +32,10 @@ export function buildCourseDiscussionPrompt({ lesson, lessonById, subject = "lar
   ].join("\n\n");
 }
 
-export function buildParagraphDiscussionPrompt({ lessonTitle, selectedText, subject = "large language models" }: ParagraphDiscussionPromptInput) {
+export function buildParagraphDiscussionPrompt({ lessonTitle, paragraphText, subject = "large language models" }: ParagraphDiscussionPromptInput) {
   return [
     `I'm learning about “${lessonTitle}” in a course about ${subject}.`,
-    `Here is an excerpt:\n\n${selectedText}`,
+    `Here is an excerpt:\n\n${paragraphText}`,
     "Please help me understand this more.",
   ].join("\n\n");
 }
