@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import "./globals.css";
+import "./brand.css";
 import "./learning-activities.css";
 import "./contrast.css";
 import { publicPath } from "./public-path";
@@ -20,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body style={{ "--brand-mark-image": `url("${publicPath("brand/neural-field-guide-mark.png")}")` } as CSSProperties}>{children}</body>
     </html>
   );
 }

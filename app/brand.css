@@ -1,0 +1,11 @@
+.brand-mark {
+  background: var(--brand-mark-image) center / contain no-repeat;
+  border-radius: 0;
+  color: transparent;
+  filter: drop-shadow(0 0 8px rgba(255, 107, 53, .14));
+  flex: 0 0 auto;
+  font-size: 0;
+  height: 40px;
+  transform: none;
+  width: 40px;
+}
