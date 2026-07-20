@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-17T00:00:00Z",
-  "sourceFingerprint": "sha256:0e01991e38fa8627469a7e24a0dc6a34a421a7f03e5dd8925743a0173e238f26",
+  "gradedAt": "2026-07-20T07:02:00Z",
+  "sourceFingerprint": "sha256:515e824e7b87448ebc1001006f4de863a05ab331da59bbe5c7124ec5e2403763",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "Fresh blind holistic review of every complete serialized page dossier in ascending block order, including all capstone and reference material.",
+    "method": "The original blind holistic review of every complete serialized page remains the scoring basis; the only changed current dossier received a blind full-page consistency recheck before its hash and fingerprint refresh.",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -218,7 +218,7 @@
       "pageType": "lesson",
       "id": "change-of-variables",
       "route": "/generative/change-of-variables/",
-      "readerSnapshotHash": "sha256:a5e01f2cd79e2fe9aa262bc63dfd71bae7208e42c1d43577a05130bd03fa219e",
+      "readerSnapshotHash": "sha256:c40b85bd0babce031e8818602d94edff0ddb90b724d669f6e9b02a9712cd7615",
       "accuracy": 99,
       "writtenNarrative": 97,
       "flow": 98,

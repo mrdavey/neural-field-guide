@@ -86,7 +86,15 @@ Learner feedback reopened the first `tensors-shapes` objective. The previous pro
 
 The authoring pass now begins from the Introduction's piece-by-piece response model; declares already-divided text as the input boundary; traces two prompts, three positions, and four features into $X[2,3,4]$; applies one learned projection at every position; and identifies attention, MLP, and vocabulary-output reuse. The boundary explicitly defers tokenizer choice to Lesson 6 and separates valid shape arithmetic from learned meaning or factuality. The objective record, guide narrative, deterministic trace, quiz, runnable NumPy example, browser lab, evidence transfer, visual record, curriculum inventory, and continuity regression test were updated together.
 
-Independent semantic and whole-page regrading is required after this authoring pass. Until that grader reports no partial or failed dimension, the affected objective and page remain reopened rather than inheriting the 17 July score.
+The independent grader then read the current learner dossier without prior grades. Its first passes reopened several details that structural tests did not catch: “position IDs” had to become text-piece IDs; the broadcasting check needed the concrete $[6]$ feature-bias versus $[3,1]$ position-offset contrast; the next lesson needed to receive $[B,T,V]$ logits explicitly; the OLMo handoff needed to distinguish a base continuation model from an assistant policy; and query, key, mask, Transformer, and bias terminology could not appear before it was taught or defined. Each issue was remediated and regraded from a fresh reader snapshot.
+
+The final semantic result is **3 pass, 0 partial, and 0 fail**. All five dimensions pass for each revised objective: beginner explanation, causal mechanism, concrete worked case, boundary or misconception, and committed check with expected reasoning plus a specific retry route. The independent continuity audit also passes Introduction → tensors, tensors → probability, and all seven reviewed LLM section seams with no exact discontinuity remaining.
+
+The full regression suite subsequently enforced the course-wide three-checkpoint walkthrough contract. The two Lesson 02 orientation steps were merged into one step that still starts from response construction, decodes every axis of $X[2,3,4]$, and preserves the tokenizer boundary. A fresh semantic and whole-page regrade again returned **3 pass, 0 partial, and 0 fail** with the same passing page judgment.
+
+Fresh blind whole-page grades pass Introduction at **97.50**, `tensors-shapes` at **97.75**, and the materially revised base-model-to-assistant bridge at **97.25**. Thirteen other changed dossier blocks were rechecked against their existing whole-page judgments and remain passing. The current hashes and review prose are recorded in `docs/course-page-grades/llm.json`; this dated result replaces, rather than inherits, the reopened 17 July evidence.
+
+Renaming Lesson 02 also changed its displayed prerequisite label on `generative:change-of-variables` and `embodied:coordinate-frames-time`. Both complete current dossiers received an additional blind consistency review; their existing whole-page judgments remain valid with no partial, failure, or blocker.
 
 ## World Models extension and independent gate
 

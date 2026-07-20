@@ -2,8 +2,8 @@
   "meta": {
     "objective": "Fix the disjointed transition from the LLM introduction to Lesson 02 by explaining why tensors, shapes, and matrix multiplication are useful for LLMs, then audit and repair equally disjointed section transitions.",
     "createdAt": "2026-07-20T06:12:55Z",
-    "updatedAt": "2026-07-20T06:39:51Z",
-    "runStatus": "in_progress"
+    "updatedAt": "2026-07-20T07:10:00Z",
+    "runStatus": "complete"
   },
   "tasks": [
     {
@@ -125,27 +125,87 @@
         "npm run lint and npm test pass without including or overwriting unrelated worktree changes."
       ],
       "details": "Run the independent grader required by AGENTS.md after authoring, remediate any partials, refresh only affected review artifacts/provenance, and execute the full repository checks.",
-      "status": "in_progress",
+      "status": "done",
       "attempt": 1,
       "runMajorChecks": true,
       "priority": 20,
       "blockerReason": "",
-      "nextTaskId": "T002",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
+      "nextTaskId": "",
+      "changedFiles": [
+        "app/course-data.ts",
+        "app/lesson-evidence.ts",
+        "app/lesson-guides/foundations-architecture.ts",
+        "app/lesson-guides/training.ts",
+        "app/lesson-narrative-handoffs.ts",
+        "app/lesson-objective-coverage.ts",
+        "docs/COURSE_PAGE_GRADES.md",
+        "docs/OBJECTIVE_COVERAGE_REVIEW.md",
+        "docs/course-page-grades/embodied.json",
+        "docs/course-page-grades/generative.json",
+        "docs/course-page-grades/llm.json",
+        "docs/course-page-grades/rl.json",
+        "docs/course-page-grades/worldmodel.json",
+        "tests/llm-curriculum-continuity.test.mjs"
+      ],
+      "validationCommands": [
+        {
+          "command": "independent blind semantic and whole-page regrade",
+          "status": "pass",
+          "evidence": "3/3 Lesson 02 objectives pass all five dimensions; all audited seams and affected current dossiers pass with zero partial/fail"
+        },
+        {
+          "command": "node --test tests/expanded-learning.test.mjs tests/llm-curriculum-continuity.test.mjs tests/objective-coverage.test.mjs",
+          "status": "pass",
+          "evidence": "10/10 focused contract tests passed"
+        },
+        {
+          "command": "npm run generate:grades && npm run verify:grades",
+          "status": "pass",
+          "evidence": "187/187 whole-page grade rows verified against current reader hashes and source fingerprints"
+        },
+        {
+          "command": "npm run lint && npm test",
+          "status": "pass",
+          "evidence": "lint clean; Pages export, artifacts, 182 visuals, grades, and 214/214 tests passed"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "Independent semantic grader passes every changed objective with no unresolved partials",
+          "status": "pass",
+          "details": "All three tensors objectives pass explanation, mechanism, worked case, boundary, and committed check with reasoning and retry."
+        },
+        {
+          "criterion": "Independent continuity review passes Lesson 01 → Lesson 02 and all LLM boundaries",
+          "status": "pass",
+          "details": "Introduction → tensors, tensors → probability, and all seven section seams pass; current affected cross-course prerequisite labels also pass."
+        },
+        {
+          "criterion": "Objective and whole-page evidence matches the independently graded source",
+          "status": "pass",
+          "details": "Dated review prose, page hashes, course fingerprints, and generated 187-page report are current."
+        },
+        {
+          "criterion": "Full repository checks pass without unrelated changes",
+          "status": "pass",
+          "details": "Isolated worktree lint and full npm test pass; the original shared worktree was not modified."
+        }
+      ],
       "attemptedAt": "2026-07-20T06:31:00Z",
-      "completedAt": "",
+      "completedAt": "2026-07-20T07:10:00Z",
       "evidence": [
-        "PLAN_LOG.md#Plan-2"
+        "PLAN_LOG.md#Plan-2",
+        "docs/OBJECTIVE_COVERAGE_REVIEW.md#lesson-02-continuity-revision--20-july-2026",
+        "docs/COURSE_PAGE_GRADES.md",
+        "tests/llm-curriculum-continuity.test.mjs"
       ],
       "ledgerRefs": [
-        "PLAN_LOG.md#Plan-2"
+        "PLAN_LOG.md#Plan-2:Verification"
       ],
       "blockers": [],
       "commit": {
         "sha": "",
-        "message": ""
+        "message": "Task T002: Verify LLM curriculum continuity"
       }
     }
   ]

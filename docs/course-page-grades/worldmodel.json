@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-17T00:00:00Z",
-  "sourceFingerprint": "sha256:27711262e0ebdf72b574ee2814ecf5f5221166f2169d5b4c0332a327cd70c06b",
+  "sourceFingerprint": "sha256:f1cc76dd2bbf336bb60420909657d46d45ffece16f7d39c5a71ae345079cda5c",
   "grader": {
     "role": "independent whole-page grader",
     "method": "read every complete reader dossier once from top to bottom in canonical order before freezing holistic page scores",

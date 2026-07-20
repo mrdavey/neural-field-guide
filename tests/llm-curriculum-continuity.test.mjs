@@ -4,9 +4,8 @@ import test from "node:test";
 
 import { buildCoursePageReaderSnapshot } from "../scripts/course-page-reader-snapshot.mjs";
 
-const [courseData, foundations, codeExamples, labs, handoffs, architecture] = await Promise.all([
+const [courseData, codeExamples, labs, handoffs, architecture] = await Promise.all([
   readFile(new URL("../app/course-data.ts", import.meta.url), "utf8"),
-  readFile(new URL("../app/lesson-guides/foundations-architecture.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/code-examples.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/lesson-labs.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/lesson-narrative-handoffs.ts", import.meta.url), "utf8"),
@@ -32,7 +31,8 @@ test("Lesson 02 starts from the introduction's response-building model before in
     "The introduction said that an LLM builds a response one piece at a time",
     "A tensor is the container",
     "two prompts have already been divided into three text positions",
-    "attention and MLP layers",
+    "attention later mixes information among positions",
+    "an MLP transforms features within each position",
     "output head",
     "not a detached mathematics detour",
   ]) assert.ok(opening.includes(phrase), phrase);
@@ -47,6 +47,12 @@ test("Lesson 02 starts from the introduction's response-building model before in
   assert.match(reveal.retry, /Why a language model needs tensors at all[\s\S]*\[prompt, position, feature\]/);
   assert.deepEqual(visual.initiallyVisible.labels, ["TEXT POSITIONS", "HIDDEN FEATURES", "LEARNED PROJECTION", "NEXT LLM STATE"]);
   assert.match(visual.disclosureContent.stageDescriptions.at(-1).description, /attention, an MLP, or the output head/);
+
+  const next = block(tensors, "lesson.next");
+  assert.match(next.reuse, /\$X\[B,T,d\]\$[\s\S]*\$W\[d,V\]\$[\s\S]*logits[\s\S]*final \$V\$ axis/);
+  const probability = buildCoursePageReaderSnapshot("llm", "probability-softmax");
+  assert.match(probability.context.prerequisites.internal[0].priorIdea, /hidden states[\s\S]*raw vocabulary scores/);
+  assert.match(block(probability, "lesson.openingExplanation").prose[0], /\$X\[B,T,d\]\$[\s\S]*\$W\[d,V\]\$[\s\S]*\$\[B,T,V\]\$[\s\S]*Softmax runs over the final \$V\$ axis/);
 });
 
 test("Lesson 02 practice and interaction keep the LLM application visible", () => {
@@ -89,6 +95,10 @@ test("all LLM track boundaries were reviewed and carry an honest relationship", 
       assert.match(block(to, "lesson.openingExplanation").prose.join("\n"), seam.opening, `${seam.to} opening context`);
     }
   }
+
+  const posttrainingBridge = buildCoursePageReaderSnapshot("llm", "instruction-tuning-rlhf");
+  assert.match(posttrainingBridge.context.prerequisites.internal[0].priorIdea, /auditable base continuation model[\s\S]*not yet a dependable assistant policy/);
+  assert.match(block(posttrainingBridge, "lesson.openingExplanation").prose[0], /base model that assigns probabilities to plausible continuations[\s\S]*does not say which continuation should answer a request directly/);
 
   for (const phrase of [
     "Introduction → numerical foundations",

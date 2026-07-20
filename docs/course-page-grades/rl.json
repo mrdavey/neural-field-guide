@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-17T00:00:00Z",
-  "sourceFingerprint": "sha256:1b756687bd79c4124f2721df3e6ebb9703e51d2daa4c00914a78e106e0dac469",
+  "sourceFingerprint": "sha256:c08349281cb3d30b79975a039a9335f16c7f0ebbecc84445561f39f33c23265e",
   "grader": {
     "role": "independent whole-page grader",
     "method": "Read every block of every current full reader dossier in canonical rendered order, then applied the four-dimension holistic rubric after completing each whole page.",

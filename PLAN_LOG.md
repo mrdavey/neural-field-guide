@@ -22,11 +22,21 @@ Repair the LLM course's Introduction to Lesson 02 transition and any equally dis
 ### Gaps -> Plan 2
 
 ## Plan 2
-1. [ ] T002 Independently grade all three Lesson 02 objectives across explanation, mechanism, worked trace, boundary, committed check, expected reasoning, and retry; done when no partial or fail remains.
-2. [ ] T002 Independently review the complete Introduction and Lesson 02 pages plus all LLM track seams; done when page flow and every carry-forward relationship are coherent and honestly labeled.
-3. [ ] T002 Refresh only affected objective/page review evidence after the grade passes; done when fingerprints, reader hashes, grade report, and dated review prose match the independently reviewed source.
-4. [ ] T002 Run lint and the full repository test suite, back-verify prior work, and close the objective; done when all checks and completion gates pass without unrelated changes.
+1. [x] T002 Independently grade all three Lesson 02 objectives across explanation, mechanism, worked trace, boundary, committed check, expected reasoning, and retry; done when no partial or fail remains.
+2. [x] T002 Independently review the complete Introduction and Lesson 02 pages plus all LLM track seams; done when page flow and every carry-forward relationship are coherent and honestly labeled.
+3. [x] T002 Refresh only affected objective/page review evidence after the grade passes; done when fingerprints, reader hashes, grade report, and dated review prose match the independently reviewed source.
+4. [x] T002 Run lint and the full repository test suite, back-verify prior work, and close the objective; done when all checks and completion gates pass without unrelated changes.
+
+### Clarifications
+- Back-Verification: yes; the prior 132-objective contract, three-checkpoint guide structure, cross-course prerequisite labels, all learner artifacts, and all 187 page-grade dossiers remain valid.
+- Objective Verification: yes; the independent grader returned 3 pass, 0 partial, and 0 fail for Lesson 02, with every explanation, mechanism, trace, boundary, committed check, expected reasoning, and retry passing.
+- Completion Re-check: yes; the Introduction → Lesson 02 transition, tensors → probability handoff, seven LLM section seams, and two affected cross-course prerequisite labels all pass current reader-dossier review.
 
 ### Verification
+- Step 1: pass - cmd: independent blind semantic regrade with remediation loop; result: 3/3 tensor objectives pass all five dimensions with zero partial or fail; proof: docs/OBJECTIVE_COVERAGE_REVIEW.md
+- Step 2: pass - cmd: independent current-dossier continuity and whole-page review; result: Introduction, tensors, and base-model-to-assistant bridge pass fresh whole-page grades; 13 other changed LLM blocks and 2 cross-course prerequisite dossiers remain passing; proof: docs/course-page-grades/*.json
+- Step 3: pass - cmd: npm run generate:grades && npm run verify:grades; result: all 187 whole-page rows match current hashes and source fingerprints; proof: docs/COURSE_PAGE_GRADES.md
+- Step 4: pass - cmd: npm run lint && npm test; result: lint clean, static export and artifact/visual/grade checks pass, 214/214 regression tests pass; proof: final repository verification output
 
 ### Gaps -> Plan 3
+- None. The first full-suite pass exposed one extra Lesson 02 walkthrough checkpoint; the two orientation steps were coherently merged, focused tests passed, the independent grader reconfirmed the page, and the complete suite then passed.

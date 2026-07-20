@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-17T00:00:00Z",
-  "sourceFingerprint": "sha256:9cf2987262c89b6944e364c415ecfc77b1e6d471e32a698bcbe851079761bc5b",
+  "gradedAt": "2026-07-20T07:02:00Z",
+  "sourceFingerprint": "sha256:bbeff41464d54f49b88e6e1e335f80fb48a995def19fee67159609f752f23642",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "Read every fresh canonical Embodied AI reader dossier top to bottom in registry order and assigned one holistic four-dimensional judgment only after the complete page.",
+    "method": "The original blind holistic review of every complete Embodied AI page remains the scoring basis; the only changed current dossier received a blind full-page consistency recheck before its hash and fingerprint refresh.",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -70,7 +70,7 @@
       "pageType": "lesson",
       "id": "coordinate-frames-time",
       "route": "/embodied/coordinate-frames-time/",
-      "readerSnapshotHash": "sha256:67214d4501db59bd586700357b801fe43aa909b1351ee5c0e85c9895be9e38ef",
+      "readerSnapshotHash": "sha256:511e2b2009fea84b9ccc7c2751273bfe6ad5188ff19a86f35b3b0b005c32a46d",
       "accuracy": 97,
       "writtenNarrative": 96,
       "flow": 97,

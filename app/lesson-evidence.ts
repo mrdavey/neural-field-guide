@@ -30,8 +30,8 @@ export const lessonEvidence: Record<string, LessonEvidence> = {
   ),
   "tensors-shapes": evidence(
     "An LLM projection can be shape-correct and still mean the wrong thing",
-    ["Named hidden-state contraction", "$X[2,3,4] @ W[4,6]$ contracts the input-feature axis at every prompt-position location.", "The output is $[2,3,6]$; the two prompts and three text positions survive."],
-    ["Compatible but wrong", "A mask shaped $[T,1]$ broadcasts across an attention score tensor where $[1,1,T,T]$ was intended.", "The program runs, but masks query rows rather than forbidden key positions."],
+    ["Feature bias", "Adding bias $[6]$ to $X[2,3,6]$ aligns one value with each output feature.", "The six feature offsets repeat across both prompts and all three text positions, as intended."],
+    ["Compatible but wrong meaning", "Offsets $[3,1]$ also broadcast to $X[2,3,6]$ when the intended operation is one independent offset per feature.", "The program runs, but supplies one scalar per text position and repeats it across all six features."],
     "An LLM layer needs both a valid shape contract and the intended prompt, position, and feature meanings; compatibility alone is not enough.",
     "Treat $X[2,3,4]$ as two prompts, three text positions per prompt, and four features per position. Project it with $W[4,6]$, then add position offsets $[3,1]$. Predict the output shape, name what is preserved and contracted, and contrast those offsets with a feature bias $[6]$.",
     ["Contracts the four-feature axis and produces $[2,3,6]$", "Explains that $[3,1]$ supplies one value per token position and repeats it over batch and output features", "Explains that $[6]$ supplies one value per output feature and repeats it over batch and token positions"],

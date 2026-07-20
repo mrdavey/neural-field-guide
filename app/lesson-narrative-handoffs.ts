@@ -5,6 +5,7 @@ type HandoffLesson = {
 
 const authoredResults: Record<string, string> = {
   "llm:introduction": "An LLM turns a prompt into a response one piece at a time; opening that process next requires a numerical representation for every current text position.",
+  "llm:tensors-shapes": "An LLM projects hidden states $X[B,T,d]$ through an output weight $W[d,V]$ to raw vocabulary scores $[B,T,V]$, called logits; the next lesson normalizes the final $V$ axis into next-piece probabilities at every prompt-position.",
   "llm:optimizers": "A gradient becomes a parameter update only through an optimizer rule, its state, and the learning-rate schedule.",
   "llm:gpt2-from-scratch": "The assembled decoder maps position IDs through hidden states to next-token scores; pre-training is the repeated process that turns those randomly initialized transformations into a base model.",
   "llm:layers-of-understanding": "Each block preserves the residual width while attention and MLP updates accumulate in the shared stream.",
