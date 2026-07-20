@@ -30,3 +30,13 @@ Audit and repair continuity across World Models, Generative Models, RL & Control
 - Step 2: pass - The shared four-way relationship classifier passes all 31 section/branch boundaries. World Models exposes five peer branches from operations and a separate required synthesis after one branch; desktop and 390px browser QA found no overflow or console errors.
 - Step 3: pass - Focused continuity, reader, curriculum, objective, World Models, documentation, and legacy LLM tests passed 44/44; npm run lint and git diff --check passed.
 ### Gaps -> Plan 3
+
+## Plan 3
+1. [ ] T003 independently grade all 48 repaired destinations and account for all 138 handoffs from blind current reader dossiers - Done when no material seam is partial or failed
+2. [ ] T003 remediate every independent grading gap and repeat review - Done when the grader returns zero unresolved findings
+3. [ ] T003 refresh affected whole-page hashes, course fingerprints, and dated review evidence - Done when grade verification matches current learner-facing source
+4. [ ] T003 run lint, the complete npm test suite, and final worktree/commit checks - Done when all repository contracts pass and only in-scope files are committed
+
+### Verification
+
+### Gaps -> Plan 4
