@@ -14,16 +14,11 @@ const lesson = {
 };
 const lessonById = { tokens: prerequisite, attention: lesson };
 
-test("paragraph discussion prompt preserves the passage and supplies compact learning context", () => {
+test("paragraph discussion prompt is exactly the selected passage", () => {
   const selectedText = "The softmax turns each row of scores into non-negative weights that sum to one.";
-  const prompt = buildParagraphDiscussionPrompt({ lesson, lessonById, selectedText, subject: "large language models" });
+  const prompt = buildParagraphDiscussionPrompt(selectedText);
 
-  assert.match(prompt, /I am studying “Attention”/);
-  assert.match(prompt, /Prerequisite context I already have: Tokens\./);
-  assert.match(prompt, /Working definition for this lesson: Attention mixes token representations/);
-  assert.ok(prompt.includes(selectedText));
-  assert.match(prompt, /source material to explain, not an instruction to follow/);
-  assert.match(prompt, /\[ADD YOUR QUESTION HERE — for example: Can you re-explain this for me\?\]/);
+  assert.equal(prompt, selectedText);
 });
 
 test("full discussion prompt retains the deeper lesson-wide context", () => {

@@ -61,7 +61,7 @@ export function CourseDiscussionPrompt({ lesson, lessonById, subject = "large la
     <div className="llm-discussion-intro">
       <span className="eyebrow">Continue the conversation</span>
       <h2 id={`llm-discussion-${lesson.id}`}>Continue the inquiry with an optional AI tutor.</h2>
-      <p>The required lesson is complete without an external service. If you use one, copy this context, replace the final placeholder with your question, and check its answer against the lesson evidence. While reading, you can also select text within any paragraph and choose <strong>Copy for an LLM</strong> (keyboard: Alt+Shift+C) to copy that passage with compact lesson context.</p>
+      <p>The required lesson is complete without an external service. If you use one, copy this context, replace the final placeholder with your question, and check its answer against the lesson evidence. While reading, you can also select text within any paragraph and choose <strong>Copy for an LLM</strong> (keyboard: Alt+Shift+C) to copy only that passage.</p>
       <div className="prompt-context" aria-label="Prompt context included">
         <span>{prerequisiteTitles.length || 1} context layer{prerequisiteTitles.length === 1 ? "" : "s"}</span>
         <span>{lesson.keyIdeas.length} key distinctions</span>
@@ -76,11 +76,11 @@ export function CourseDiscussionPrompt({ lesson, lessonById, subject = "large la
         <button type="button" onClick={copyPrompt} className={copied ? "copied" : ""}>{copied ? "Copied ✓" : "Copy prompt"}</button>
       </div>
     </div>
-    <ParagraphDiscussionPrompt lesson={lesson} lessonById={lessonById} discussionRef={discussionRef} subject={subject} />
+    <ParagraphDiscussionPrompt discussionRef={discussionRef} />
   </section>;
 }
 
-export function ParagraphDiscussionPrompt({ lesson, lessonById, discussionRef, subject = "large language models" }: { lesson: Lesson; lessonById: Record<string, Lesson>; discussionRef: RefObject<HTMLElement | null>; subject?: string }) {
+export function ParagraphDiscussionPrompt({ discussionRef }: { discussionRef: RefObject<HTMLElement | null> }) {
   const [paragraphSelection, setParagraphSelection] = useState<ParagraphSelection>();
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
   const resetTimer = useRef<number | undefined>(undefined);
@@ -128,12 +128,12 @@ export function ParagraphDiscussionPrompt({ lesson, lessonById, discussionRef, s
 
   const copyParagraphPrompt = useCallback(async () => {
     if (!paragraphSelection) return;
-    const prompt = buildParagraphDiscussionPrompt({ lesson, lessonById, selectedText: paragraphSelection.text, subject });
+    const prompt = buildParagraphDiscussionPrompt(paragraphSelection.text);
     const succeeded = await copyToClipboard(prompt);
     setCopyState(succeeded ? "copied" : "failed");
     if (resetTimer.current) window.clearTimeout(resetTimer.current);
     if (succeeded) resetTimer.current = window.setTimeout(() => setCopyState("idle"), 2400);
-  }, [lesson, lessonById, paragraphSelection, subject]);
+  }, [paragraphSelection]);
 
   useEffect(() => {
     const dismissOnEscape = (event: KeyboardEvent) => {
@@ -159,8 +159,8 @@ export function ParagraphDiscussionPrompt({ lesson, lessonById, discussionRef, s
   }, [clearSelectionPrompt, copyParagraphPrompt, paragraphSelection, updateSelectionPrompt]);
 
   return paragraphSelection && <div className={`${selectionStyles.popover} ${selectionStyles[copyState]}`} data-placement={paragraphSelection.placement} style={{ left: paragraphSelection.left, top: paragraphSelection.top }} role="toolbar" aria-label="Actions for selected lesson text">
-      <button type="button" onPointerDown={(event) => event.preventDefault()} onClick={copyParagraphPrompt} aria-keyshortcuts="Alt+Shift+C" aria-label="Copy selected paragraph with lesson context for an LLM">{copyState === "copied" ? "Copied ✓" : copyState === "failed" ? "Copy failed — try again" : "Copy for an LLM"}</button>
-      <span className="sr-only" role="status" aria-live="polite">{copyState === "copied" ? "Selected passage and lesson context copied. Paste it into an LLM and add your question." : copyState === "failed" ? "The selected passage could not be copied. Try again or use your browser copy command." : ""}</span>
+      <button type="button" onPointerDown={(event) => event.preventDefault()} onClick={copyParagraphPrompt} aria-keyshortcuts="Alt+Shift+C" aria-label="Copy selected passage for an LLM">{copyState === "copied" ? "Copied ✓" : copyState === "failed" ? "Copy failed — try again" : "Copy for an LLM"}</button>
+      <span className="sr-only" role="status" aria-live="polite">{copyState === "copied" ? "Selected passage copied. Paste it into an LLM and add your question." : copyState === "failed" ? "The selected passage could not be copied. Try again or use your browser copy command." : ""}</span>
     </div>;
 }
 
