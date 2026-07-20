@@ -237,13 +237,13 @@ test("every lesson ends with a copyable context-rich optional AI discussion prom
   assert.match(discussion, /aria-live="polite"/);
 });
 
-test("a paragraph selection copies only the selected passage", () => {
-  assert.match(discussion, /<ParagraphDiscussionPrompt discussionRef=\{discussionRef\}/);
+test("a paragraph selection copies the passage with concise lesson context", () => {
+  assert.match(discussion, /<ParagraphDiscussionPrompt discussionRef=\{discussionRef\} lessonTitle=\{lesson\.title\} subject=\{subject\}/);
   assert.match(discussion, /discussionRef\.current\?\.closest<HTMLElement>\("\.lesson-view"\)/);
   for (const phrase of ["selectionchange", 'closest("p")', "getBoundingClientRect", "Copy for an LLM", "onPointerDown", "Escape", "event.altKey", "event.shiftKey", 'aria-keyshortcuts="Alt+Shift+C"', 'role="toolbar"']) assert.ok(discussion.includes(phrase), phrase);
-  assert.match(discussion, /buildParagraphDiscussionPrompt\(paragraphSelection\.text\)/);
+  assert.match(discussion, /buildParagraphDiscussionPrompt\(\{ lessonTitle, selectedText: paragraphSelection\.text, subject \}\)/);
   assert.match(discussion, /createPortal\([^]*document\.body\)/);
-  assert.match(discussionPrompts, /buildParagraphDiscussionPrompt\(selectedText: string\)[^]*return selectedText;/);
+  for (const phrase of ["I'm learning about", "Here is an excerpt", "Please help me understand this more."]) assert.ok(discussionPrompts.includes(phrase), phrase);
   assert.match(discussion, /data-llm-selection="disabled"/);
   assert.match(discussionStyles, /\.popover \{[^}]*position: fixed;[^}]*z-index: 60;/);
   assert.match(discussionStyles, /\.popover button \{[^}]*min-height: 44px;/);
