@@ -369,6 +369,17 @@ test("World Models supplies deterministic transfer checks, semantic motion, labs
       count,
       `${id} diagnostic cases`,
     );
+  const beliefPhases = lessonLabs.worldModelLessonLabSpecs["belief-states-filtering"];
+  assert.equal(beliefPhases.evaluate(1).resultValue, "[0.56, 0.44]");
+  assert.match(
+    beliefPhases.evaluate(1).detail,
+    /P\(A'\|A\)=0\.8[\s\S]*0\.8\(0\.60\)\+0\.2\(0\.40\)=0\.56/,
+  );
+  assert.equal(beliefPhases.evaluate(2).resultValue, "[0.84, 0.16]");
+  assert.match(
+    beliefPhases.evaluate(2).detail,
+    /\[0\.448,0\.088\][\s\S]*0\.536[\s\S]*\[0\.84,0\.16\]/,
+  );
   assert.match(
     lessonLabs.worldModelLessonLabSpecs["latent-prior-posterior"].evaluate(2)
       .resultValue,

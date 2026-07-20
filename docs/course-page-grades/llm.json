@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-20T07:36:28Z",
-  "sourceFingerprint": "sha256:c4a058f8c6dc165ea7ea3ddc43a78d1f4c87c35b8511bbea18e883f39ecfc715",
+  "gradedAt": "2026-07-20T09:00:11Z",
+  "sourceFingerprint": "sha256:c88f37849736f87eef091f5438cf470f02bb92d83eab7290c54b85c1b947687d",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "Read every block of every fresh LLM page-reader dossier in canonical order; checked calculations, causal mechanisms, prerequisites, progression, interactions, evidence boundaries, and committed changed-case assessments without consulting source files, prior grades, diffs, or adjacent-course records.",
+    "method": "Blindly read each current home and lesson dossier in full reading order, evaluated the four rubric dimensions as one learner journey, and recorded only consolidated page judgments.",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -13,813 +13,408 @@
   "population": 45,
   "pages": [
     {
-      "pageType": "home",
-      "id": "home",
-      "route": "/llm/",
-      "readerSnapshotHash": "sha256:4aba249ee21d9c008368f272f5af6873b9ad6e37a826cf1d9f3b2711260ea0e0",
-      "accuracy": 96,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 97,
-      "overall": 96.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "home", "id": "home", "route": "/llm/", "readerSnapshotHash": "sha256:2d2b459a99e41bec2a0885bc4dabe0760a0d3f9b8b22443d4c489af03f27d60b",
+      "accuracy": 97, "writtenNarrative": 96, "flow": 95, "learningContent": 96, "overall": 96, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The course home presents a coherent beginner-to-advanced route, explains the learning contract, and makes the five-part lesson rhythm visible before entry.",
-        "feedback": "The scope, course counts, progress expectations, and evidence boundaries are mutually consistent. Its concise orientation and ordered path support entry well, although one visual-path description is slightly less direct than the catalog sequence; the page still gives learners clear choices and next actions.",
-        "revisionPriorities": ["Clarify the home visual's route wording so it mirrors the released lesson sequence exactly."]
+        "synopsis": "The home page frames a five-phase journey from next-token prediction through architecture, training, deployment, reliability, and advanced specialization.",
+        "feedback": "The page gives a motivated beginner a credible map of the full stack, clear evidence boundaries, and a strong cumulative reason to proceed. Phase and track descriptions make the learning destination concrete without presenting optional external work as required.",
+        "revisionPriorities": ["Reconcile the phase-five ‘lessons 40–44’ label with the later statement that lessons 41–44 are parallel specializations."]
       }
     },
     {
-      "pageType": "lesson",
-      "id": "introduction",
-      "route": "/llm/introduction/",
-      "readerSnapshotHash": "sha256:d56e35156460b69e50188ed28d570dc31feb61b3a39ab9be640b9d1d23eaee94",
-      "accuracy": 98,
-      "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 98,
-      "overall": 97,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "introduction", "route": "/llm/introduction/", "readerSnapshotHash": "sha256:20940fa806ca76af5b6911800f6ba4d2d2475e1f6167d7693033a8c4cced3afe",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The introduction defines language modeling as conditional next-token prediction and connects that mechanism to the course's full system view.",
-        "feedback": "The conceptual boundary between a model, a decoder, and a complete application is accurate and repeatedly tested through changed cases. The progression from orientation to mechanism, lab, transfer, and assessment is sound; only repeated objective disclosures make the page somewhat denser than its opening needs to be.",
+        "synopsis": "The opening lesson turns a familiar prompt-response interaction into a system-level account of predictions, evidence, authority, and appropriate trust.",
+        "feedback": "The meeting-notes, live-weather, and ticket-transfer contrasts steadily raise the stakes while preserving the central mechanism. Prediction gates and the changed case make learners distinguish model output from evidence and runtime authority rather than merely repeat a definition.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "tensors-shapes",
-      "route": "/llm/tensors-shapes/",
-      "readerSnapshotHash": "sha256:aaad4ace27d218e5c587a1f78b83daab8994cc1d66ec8c6d4d4b68913d889643",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "tensors-shapes", "route": "/llm/tensors-shapes/", "readerSnapshotHash": "sha256:06cbaf34db545f97653f7c89b4db3aa55abd445ee630d200d0e2ed172ebc1e04",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This page teaches tensor axes and matrix multiplication through named shapes, compatible dimensions, and explicit output calculations.",
-        "feedback": "Every shape trace and multiplication rule is internally consistent, and the page correctly treats axis naming as part of correctness rather than bookkeeping. Narrative, code prediction, visual manipulation, and transfer checks reinforce the same mechanism in a well-sequenced beginner progression.",
+        "synopsis": "This lesson builds the tensor-shape language needed to follow batched token representations and their projections through an LLM.",
+        "feedback": "Concrete dimensions, the manual red/fox projection, broadcasting boundaries, and shape-aware transfer checks make the abstractions inspectable. The arithmetic and notation agree across prose, code, lab, and assessment, so the learner can trace rather than memorize shapes.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "probability-softmax",
-      "route": "/llm/probability-softmax/",
-      "readerSnapshotHash": "sha256:20a7a31bf2333d58ca4bc043213fd8383d956c29ca2fa6817e77483168f34ced",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "probability-softmax", "route": "/llm/probability-softmax/", "readerSnapshotHash": "sha256:8f84d1abdbca7baf8b3d18c69c0b68ebb20e3d7fb58338483bd056ba3434d149",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson turns logits into probabilities, cross-entropy, and calibrated uncertainty with stable-softmax arithmetic and changed distributions.",
-        "feedback": "Definitions, numerical examples, and probability calculations agree, including the distinction between a high score, normalized probability, and calibrated confidence. The page moves cleanly from mechanism to runnable inspection and unfamiliar-case diagnosis, with strong retry feedback and no evidence overclaim.",
+        "synopsis": "The lesson follows logits through stable softmax and cross-entropy while separating probability normalization from calibration and correctness.",
+        "feedback": "The numerical losses, masked-token example, and changed distributions expose exactly what the objective rewards. Misconceptions about confidence and truth are handled explicitly, and the learner must calculate and diagnose before seeing the expected reasoning.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "gradients-backprop",
-      "route": "/llm/gradients-backprop/",
-      "readerSnapshotHash": "sha256:3fb739d0c54a35f0615079b6368c79ffaf2af6aa36fcdb2982dc46dd1ae6a754",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "gradients-backprop", "route": "/llm/gradients-backprop/", "readerSnapshotHash": "sha256:3fb739d0c54a35f0615079b6368c79ffaf2af6aa36fcdb2982dc46dd1ae6a754",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page explains gradients as local sensitivity and backpropagation as repeated chain-rule credit assignment through a computation graph.",
-        "feedback": "Derivative signs, chain-rule products, and update directions are technically consistent across prose, arithmetic, code, and assessment. The causal trace builds naturally from one scalar path to shared parameters and failure diagnosis, giving learners multiple committed opportunities to reconstruct the mechanism.",
+        "synopsis": "The page explains gradients as local sensitivities composed backward through a computation graph to assign parameter-level credit.",
+        "feedback": "The worked chain-rule value, autograd comparison, shape checks, and failure diagnoses form a coherent bridge from scalar derivatives to model training. Learners must identify the first incorrect transformation and transfer the mechanism to a changed graph.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "optimizers",
-      "route": "/llm/optimizers/",
-      "readerSnapshotHash": "sha256:032bdbe5443673fcb21d73e5b54e4bbec4cfbad1d0220b905f4374cdf8359502",
-      "accuracy": 98,
-      "writtenNarrative": 95,
-      "flow": 95,
-      "learningContent": 98,
-      "overall": 96.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "optimizers", "route": "/llm/optimizers/", "readerSnapshotHash": "sha256:e81145146fa6a95030d0b33543a0877a3ab473b44c9be81498c8a7a350d51692",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.25, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson develops optimizer behavior from learning-rate-scaled gradients through momentum, adaptive statistics, schedules, and a measured training capstone.",
-        "feedback": "Update arithmetic and distinctions among SGD, momentum, Adam-style state, clipping, and schedules are accurate and supported by concrete checks. The learning loop is comprehensive, but the opening frames the capstone before giving the clean optimizer definition, and the long project material makes the narrative less economical than the mechanism itself.",
-        "revisionPriorities": ["Open with a direct optimizer definition before introducing the capstone deliverable."]
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "tokenization",
-      "route": "/llm/tokenization/",
-      "readerSnapshotHash": "sha256:7e4e8654bad011a165cdfc27b59c5874601463b9e457b1e7e2c219d9b9543324",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "Tokenization is taught as a reversible text-to-ID contract whose vocabulary, boundaries, and special tokens shape every later model tensor.",
-        "feedback": "The lesson accurately separates characters, bytes, subwords, token IDs, and decoded text, while treating tokenizer identity as part of model compatibility. Its examples and lab expose boundary changes and misleading token counts, and the changed-case assessment verifies transfer rather than mere vocabulary recall.",
+        "synopsis": "The optimizer lesson connects gradients, state, learning-rate schedules, update rules, memory cost, and matched-quality comparisons.",
+        "feedback": "The page does more than name SGD and Adam: it traces how stored moments and schedules change updates, then makes learners inspect stability and resource trade-offs. The cumulative foundations project provides a meaningful synthesis rather than a click-through ending.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "embedding-layer",
-      "route": "/llm/embedding-layer/",
-      "readerSnapshotHash": "sha256:0b96c2069a199c8825d33931abfb6f547656556c4349aef75f6eed850a43bd2a",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "tokenization", "route": "/llm/tokenization/", "readerSnapshotHash": "sha256:06395823a2380824ff393818827e366abfa0aa71a311334ecf76daa40537e69d",
+      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 95, "overall": 96, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page presents embeddings as learned table lookups that turn discrete token IDs into trainable dense vectors with explicit shapes.",
-        "feedback": "Lookup equivalence, tensor dimensions, gradient locality, similarity limits, and tied-output distinctions are accurate. The narrative moves smoothly from a single row lookup to batch tensors and semantic caveats, with prediction-led code and transfer tasks that require shape reasoning.",
+        "synopsis": "The lesson explains tokenization as a reversible model-specific interface, covering subwords, bytes, vocabulary IDs, boundaries, and production compatibility.",
+        "feedback": "The byte and subword traces clearly separate text, token pieces, and integer identities, while the transfer task tests the tokenizer-model contract. One exact-ID retrieval prompt is harder than necessary because its arbitrary toy mapping is revealed only after commitment, but the surrounding mechanism and independent assessment remain complete.",
+        "revisionPriorities": ["Expose the toy vocabulary-to-ID mapping before asking learners to reproduce the exact numeric ID trace."]
+      }
+    },
+    {
+      "pageType": "lesson", "id": "embedding-layer", "route": "/llm/embedding-layer/", "readerSnapshotHash": "sha256:0b96c2069a199c8825d33931abfb6f547656556c4349aef75f6eed850a43bd2a",
+      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 97, "overall": 96.5, "pass": true, "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "This page presents embeddings as learned vocabulary-row lookups and distinguishes static input rows from later contextual hidden states.",
+        "feedback": "Shapes, lookup arithmetic, a pinned GPT-2 validation boundary, and the decision studio reinforce the same causal story. The lesson anticipates the common claim that one vector permanently contains a word's meaning and gives learners multiple ways to correct it.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "positional-encoding",
-      "route": "/llm/positional-encoding/",
-      "readerSnapshotHash": "sha256:cca3fe356e7beb111feba14b80f86c8dc50e836cd087aeb37541d3dd982c11ea",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "positional-encoding", "route": "/llm/positional-encoding/", "readerSnapshotHash": "sha256:cca3fe356e7beb111feba14b80f86c8dc50e836cd087aeb37541d3dd982c11ea",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson shows why attention needs order information and compares absolute, sinusoidal, rotary, and relative position mechanisms at their proper boundaries.",
-        "feedback": "It correctly distinguishes permutation symmetry, causal masking, position signals, and extrapolation limits without implying that any method makes long context free. Worked permutations, notation, and changed-case tests align, and the explanation-to-lab flow makes an otherwise invisible invariance observable.",
+        "synopsis": "The lesson separates permutation symmetry, causal direction, absolute position, and relative distance before introducing positional methods such as RoPE.",
+        "feedback": "Controlled reorderings and long-context falsifiers make the invisible role of position observable. The page carefully avoids implying that a causal mask alone supplies full position geometry, and every objective receives a concrete mechanism, boundary, and changed-case check.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "attention",
-      "route": "/llm/attention/",
-      "readerSnapshotHash": "sha256:258c6aa60ae6205d847068a7afd8f0b152623f3fc902c09d61f21510d4b4d4ff",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "attention", "route": "/llm/attention/", "readerSnapshotHash": "sha256:258c6aa60ae6205d847068a7afd8f0b152623f3fc902c09d61f21510d4b4d4ff",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "Attention is derived as query-key matching followed by normalized value mixing, with masks, heads, and shapes kept explicit.",
-        "feedback": "The score scaling, softmax, masking, weighted sum, and multi-head shape logic are consistent throughout. A compact worked trace, mechanism visual, code prediction, and boundary transfer collectively support both beginner intuition and exact tensor reasoning.",
+        "synopsis": "The attention page traces queries, keys, values, scaled scores, masks, normalized weights, and value mixing with explicit tensor shapes.",
+        "feedback": "The worked calculation, code trace, and assessed transfer maintain one precise mechanism from token states to contextual outputs. It also places an important interpretability limit on attention weights, preventing a visually compelling matrix from being mistaken for a full causal explanation.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "layers-of-understanding",
-      "route": "/llm/layers-of-understanding/",
-      "readerSnapshotHash": "sha256:127719dba7d204942f5d9a9b931d4d8d0f8894d39fb74596861d98f6c2d6acbd",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "layers-of-understanding", "route": "/llm/layers-of-understanding/", "readerSnapshotHash": "sha256:127719dba7d204942f5d9a9b931d4d8d0f8894d39fb74596861d98f6c2d6acbd",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page assembles attention, MLPs, residual streams, normalization, and depth into one causal account of Transformer blocks.",
-        "feedback": "Component roles and pre-normalized residual updates are presented accurately without assigning human-like meanings to individual layers. The page's staged residual trace and transfer checks preserve the distinction between communication and transformation, though its repeated summaries add modest density.",
+        "synopsis": "The page assembles attention, MLPs, residual streams, and normalization into a shape-preserving Transformer block and cumulative depth story.",
+        "feedback": "Pre-norm and post-norm contrasts are causal rather than merely architectural labels, and the page states where analogies about layered understanding break. Worked shapes, residual updates, and a changed-case assessment support transfer without claiming clean one-layer concepts.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "learning-to-predict",
-      "route": "/llm/learning-to-predict/",
-      "readerSnapshotHash": "sha256:4a8ba5ee37a01112915f695f24fa5a1b15776d2188baeb39c71f26f9c319dc10",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "learning-to-predict", "route": "/llm/learning-to-predict/", "readerSnapshotHash": "sha256:4a8ba5ee37a01112915f695f24fa5a1b15776d2188baeb39c71f26f9c319dc10",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson turns raw token streams into shifted next-token targets and connects cross-entropy to teacher forcing and autoregressive generation.",
-        "feedback": "Input-target alignment, segment-boundary choices, masking, and loss interpretation are technically coherent and explicitly labeled as data contracts. The worked shift, code trace, and unfamiliar changed sequence make the off-by-one mechanism visible and objectively checkable.",
+        "synopsis": "The lesson turns text into shifted next-token training pairs and explains masking, packing boundaries, teacher forcing, and autoregressive generation.",
+        "feedback": "Token-level traces expose exactly which inputs predict which targets and why packed examples need segment-aware masks. The comparison between parallel training and sequential generation is precise, and changed cases test leakage and boundary handling rather than definition recall.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "gpt2-from-scratch",
-      "route": "/llm/gpt2-from-scratch/",
-      "readerSnapshotHash": "sha256:a48658921556e99406159358bb87888077ae469ea856e755291a993a324a9ae8",
-      "accuracy": 98,
-      "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 99,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "gpt2-from-scratch", "route": "/llm/gpt2-from-scratch/", "readerSnapshotHash": "sha256:816def2218183f55a9c2e3179d9de6fae9fc240b1e51e6934c53d45df1d9249c",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This synthesis page guides learners through building, tracing, training, and validating a small GPT-2-style model with preserved artifacts.",
-        "feedback": "Architecture, shape contracts, causal masking, target shifting, initialization, and validation boundaries are accurate and appropriately scoped. The extensive capstone scaffolding is unusually dense but remains ordered, self-contained, prediction-led, and clear about what a course-scale run cannot establish.",
+        "synopsis": "This synthesis page carries one batch through embeddings, repeated Transformer blocks, vocabulary logits, shifted loss, optimization, checkpointing, and generation.",
+        "feedback": "The complete shape spine and leakage/resume checks turn prior lessons into an implementable mental model. Pinned external evidence is clearly optional, while the required capstone includes scaffolding, local correctness checks, failure evidence, rubric, and a gated worked reference.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "pretraining-overview",
-      "route": "/llm/pretraining-overview/",
-      "readerSnapshotHash": "sha256:cafb40ad32c9f1bf101c19bf94b0aae1393452c7ebe02c1d71e30be76dcb4dbc",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "pretraining-overview", "route": "/llm/pretraining-overview/", "readerSnapshotHash": "sha256:cafb40ad32c9f1bf101c19bf94b0aae1393452c7ebe02c1d71e30be76dcb4dbc",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The overview frames pretraining as a linked system of data, objective, scale, optimization, evaluation, and checkpoint decisions.",
-        "feedback": "It accurately prevents the common reduction of pretraining to one long training command and distinguishes training telemetry from capability evidence. The chapter map and changed-case assessment orient later specialist lessons well, with only mild repetition between roadmap and objective disclosures.",
+        "synopsis": "The pre-training overview connects data, token accounting, objective, optimization, checkpoints, evaluation, and evidence into one reproducible pipeline.",
+        "feedback": "The page orients the learner to the whole lifecycle before later chapters deepen individual stages. Token-budget arithmetic, decision practice, and the OLMo validation boundary consistently distinguish deterministic teaching fixtures from claims about an actual training run.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "objectives-details",
-      "route": "/llm/objectives-details/",
-      "readerSnapshotHash": "sha256:0d1d6ddfc3258e61bb6754bfe88dcfb08d9e830c0bfe24f83001c29de5b3530b",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "objectives-details", "route": "/llm/objectives-details/", "readerSnapshotHash": "sha256:0d1d6ddfc3258e61bb6754bfe88dcfb08d9e830c0bfe24f83001c29de5b3530b",
+      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 97, "overall": 96.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson compares causal, masked, span-corruption, and mixture objectives by the prediction target and information each example exposes.",
-        "feedback": "Objective definitions, masking implications, and denominator choices are accurate and avoid treating loss numbers from different contracts as directly comparable. Concrete token records and transfer decisions make the design trade-offs observable while preserving a coherent narrative from target construction to evaluation.",
+        "synopsis": "The page treats an objective as a complete target, mask, serialization, and stage contract rather than a loss-function name alone.",
+        "feedback": "Causal LM, role masking, tool-call serialization, and architectural normalization contrasts are tied to concrete records and failure modes. The checks ask learners to decide which tokens bear loss and why, preserving the distinction between syntactic formatting and the behavior being trained.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "scaling-laws",
-      "route": "/llm/scaling-laws/",
-      "readerSnapshotHash": "sha256:cbfcf3cd629fa170f60d4fa8583152877cd8a992830bb5f2620369540c37ec70",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "scaling-laws", "route": "/llm/scaling-laws/", "readerSnapshotHash": "sha256:cbfcf3cd629fa170f60d4fa8583152877cd8a992830bb5f2620369540c37ec70",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "Scaling laws are presented as empirical planning relationships among parameters, tokens, compute, loss, and uncertainty rather than universal guarantees.",
-        "feedback": "The $6ND$ arithmetic, log-log interpretation, budget trade-offs, and confounding warnings are consistent and appropriately qualified. The page sequences estimation, fixture manipulation, and changed-budget transfer effectively, with checks that require calculations before conclusions.",
+        "synopsis": "The lesson explains empirical scaling curves and compute allocation while keeping extrapolation, data quality, and deployment objectives in view.",
+        "feedback": "The matched $6ND$ calculation makes parameter-token trade-offs concrete, and the page repeatedly labels scaling relationships as empirical rather than physical laws. Transfer questions require selecting evidence under fixed constraints instead of treating bigger models as automatically better.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "data-engineering",
-      "route": "/llm/data-engineering/",
-      "readerSnapshotHash": "sha256:27f8e5f64aaba3c429204880e0197944b18e18ef290cd70d2c714fbc6bacf423",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "data-engineering", "route": "/llm/data-engineering/", "readerSnapshotHash": "sha256:27f8e5f64aaba3c429204880e0197944b18e18ef290cd70d2c714fbc6bacf423",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.25, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page follows data from rights-aware acquisition through parsing, filtering, deduplication, mixing, decontamination, and versioned shards.",
-        "feedback": "It accurately treats provenance, privacy, contamination, and distribution choice as model behavior inputs rather than peripheral cleanup. The worked duplicate and leakage cases, pipeline lab, and transfer audit form a coherent evidence chain with practical retry routes.",
+        "synopsis": "The data-engineering lesson follows sources through rights, parsing, filtering, deduplication, mixtures, splits, provenance, and governance decisions.",
+        "feedback": "The lesson treats data quality as a causal systems problem rather than a cleaning checklist. Concrete filtering and language cases, contamination boundaries, and the decision studio make learners weigh coverage, harm, leakage, and reversibility with inspectable evidence.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "infrastructure",
-      "route": "/llm/infrastructure/",
-      "readerSnapshotHash": "sha256:d5057f0fc6af00369b83da6a07ddf976bf3477960bc92ca623e02bc8f49bf4e6",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "infrastructure", "route": "/llm/infrastructure/", "readerSnapshotHash": "sha256:d5057f0fc6af00369b83da6a07ddf976bf3477960bc92ca623e02bc8f49bf4e6",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson explains distributed training as a coordination problem across memory, parallelism, communication, checkpoints, and failure recovery.",
-        "feedback": "Parallelism roles, accumulation, precision, throughput, and checkpoint contracts are accurately separated, with no suggestion that device count alone predicts scaling. The flow from bottleneck diagnosis to deterministic planning and failure transfer gives learners strong systems reasoning practice.",
+        "synopsis": "This lesson maps data, tensor, pipeline, and sequence parallelism to ownership, communication, topology, memory, and restart behavior.",
+        "feedback": "Each parallel method is explained by what is partitioned, what is replicated, which collective is required, and where it helps. The learner must trace failures and checkpoints across ranks, so the page teaches distributed correctness rather than presenting a collection of acronyms.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "advanced-objectives",
-      "route": "/llm/advanced-objectives/",
-      "readerSnapshotHash": "sha256:4fcbbb289a87274e34e049cb0c69e1f5c5c7c47c2a078a9976ed65dec2f0c437",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "advanced-objectives", "route": "/llm/advanced-objectives/", "readerSnapshotHash": "sha256:4fcbbb289a87274e34e049cb0c69e1f5c5c7c47c2a078a9976ed65dec2f0c437",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "Advanced pretraining objectives are compared by corruption process, supervision density, information availability, and downstream use.",
-        "feedback": "Span corruption, fill-in-the-middle, denoising, and mixed-objective boundaries are accurately explained without implying universal superiority. The optional external exercise is clearly separated from required browser work, and objective checks demand explicit record construction and denominator reasoning.",
+        "synopsis": "The page compares causal, masked, span-corruption, and fill-in-the-middle objectives through their serialization, visibility, targets, and task fit.",
+        "feedback": "The objective families are not reduced to names: learners inspect what context each target may see and what the loss trains. Equal-token comparison and the pinned optional reproduction preserve a strong evidence boundary while the required changed cases remain local and deterministic.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "pretraining-evaluation",
-      "route": "/llm/pretraining-evaluation/",
-      "readerSnapshotHash": "sha256:3c5c9dd4598f26d27638c2d696407bfb0c97a019149877cf02409ceac49972d4",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "pretraining-evaluation", "route": "/llm/pretraining-evaluation/", "readerSnapshotHash": "sha256:3c5c9dd4598f26d27638c2d696407bfb0c97a019149877cf02409ceac49972d4",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page builds an evaluation portfolio that separates training loss, held-out prediction, downstream tasks, contamination, uncertainty, and severe slices.",
-        "feedback": "Metric scope and comparison requirements are technically careful, particularly around tokenizer-dependent perplexity and non-compensable regressions. The narrative proceeds from construct definition to paired evidence and release decisions, with transfer tasks that prevent one headline score from substituting for diagnosis.",
+        "synopsis": "The lesson builds a multi-axis pre-training evaluation contract spanning loss, capability, contamination, safety, systems health, and uncertainty.",
+        "feedback": "Perplexity is accurately bounded by tokenizer and data assumptions, while capability and contamination checks are separated from training telemetry. The release decisions use predeclared gates and paired slices, preventing a single favorable curve from standing in for model quality.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "olmo3-case-study",
-      "route": "/llm/olmo3-case-study/",
-      "readerSnapshotHash": "sha256:60d79216cb09a3cb3718a9dd483d5a7a5349eea7258c5c33a88b75a0c3f8a8e5",
-      "accuracy": 98,
-      "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 99,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "olmo3-case-study", "route": "/llm/olmo3-case-study/", "readerSnapshotHash": "sha256:32e04bd3f415470358aa4a53c5603970b2ccd707c3aa65793fde764cf5dc19a6",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The OLMo 3 case study traces a pinned open pretraining recipe from data and stages through evaluation, provenance, and reproducibility limits.",
-        "feedback": "Reported details are explicitly source-bounded and separated from course inference, while stage comparisons avoid crediting the final checkpoint without controls. The large synthesis and capstone are dense, but their ordering, artifacts, evidence gates, and failure logs maintain a coherent whole-page learning path.",
+        "synopsis": "The OLMo 3 case study synthesizes staged data mixtures, long-context continuation, infrastructure evidence, controls, artifacts, and bounded conclusions.",
+        "feedback": "Pinned revisions and explicit stage handoffs make the real system inspectable without generalizing one recipe into a universal rule. The extensive capstone asks for matched controls, failure logs, reproducibility evidence, and a decision memo, completing the pre-training arc at the right level of rigor.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "instruction-tuning-rlhf",
-      "route": "/llm/instruction-tuning-rlhf/",
-      "readerSnapshotHash": "sha256:158390a35cea712cea40d36fbe808e9665547f4b48dbeceb24bf5629df99a593",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "instruction-tuning-rlhf", "route": "/llm/instruction-tuning-rlhf/", "readerSnapshotHash": "sha256:669a1fef81db1449432c2393a685d2f410ea4e0a6e1abb74c73a1ff656d1c12d",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This bridge page distinguishes next-token pretraining from demonstrations, preferences, rewards, and safety constraints before the post-training sequence.",
-        "feedback": "The supervision ladder is accurate and avoids collapsing SFT, DPO, reward modeling, and online RL into one method. Its concise comparison, misconception repair, and changed-case decision establish the prerequisites for the next lessons without introducing unsupported implementation claims.",
+        "synopsis": "This bridge lesson separates what post-training can change in weights from the evidence and runtime controls required for dependable behavior.",
+        "feedback": "The page reactivates pre-training concepts and establishes demonstrations, preferences, and runtime authority as distinct levers. Its scenarios and local checks prepare the learner for later SFT, preference, RL, and safety lessons without prematurely collapsing them into one alignment method.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "posttraining-overview",
-      "route": "/llm/posttraining-overview/",
-      "readerSnapshotHash": "sha256:a7d8d4f5e256ddf92640012579b71be4dd7c633a837c8bb83364bdc1a2bd3103",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "posttraining-overview", "route": "/llm/posttraining-overview/", "readerSnapshotHash": "sha256:a7d8d4f5e256ddf92640012579b71be4dd7c633a837c8bb83364bdc1a2bd3103",
+      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The overview maps post-training into demonstrations, comparisons, outcome feedback, tool behavior, safety, and independent evaluation.",
-        "feedback": "Each stage's artifact and failure mode is correctly differentiated, with explicit reminders that a falling proxy loss is not deployment evidence. The page gives a clean conceptual route into SFT and later RL lessons, reinforced by a local router exercise and changed supervision case.",
+        "synopsis": "The overview organizes post-training by the supervision available: demonstrations, comparisons, outcome checks, and deployment constraints.",
+        "feedback": "Stage boundaries and multidimensional regression gates prevent the learner from treating post-training as a guaranteed monotonic ladder. The Tülu evidence and decision practice are clearly scoped, while the required path remains understandable without external tools or accounts.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "sft",
-      "route": "/llm/sft/",
-      "readerSnapshotHash": "sha256:6018c731199a764650e367071526a054f74be07eab2b064f004adfb2da818f23",
-      "accuracy": 98,
-      "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 99,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "sft", "route": "/llm/sft/", "readerSnapshotHash": "sha256:6018c731199a764650e367071526a054f74be07eab2b064f004adfb2da818f23",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 97, "learningContent": 98, "overall": 97.75, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The SFT page connects demonstration quality, chat serialization, assistant-only labels, regression gates, and a pinned optional QLoRA workshop.",
-        "feedback": "The crucial separation between attention visibility and loss contribution is accurate, and the training template, truncation, evaluation, and licensing boundaries are unusually explicit. The required lesson is complete and strongly assessed, while the extensive optional workshop adds repetition and length but remains clearly labeled and operationally careful.",
-        "revisionPriorities": ["Trim repeated execution-boundary wording in the optional workshop while preserving its setup and safety constraints."]
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "preference-optimization",
-      "route": "/llm/preference-optimization/",
-      "readerSnapshotHash": "sha256:34a6274a3c35a37f9e8cdc91e0f83147de266a55024f78e5908c32b8f6c7f309",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "Preference optimization is explained through paired labels, policy/reference log-probability gaps, beta conventions, label shortcuts, and drift controls.",
-        "feedback": "The page handles the often-confused beta interpretations with explicit fixed-quantity conventions and correct numerical margins. Its verbosity-bias example, DPO trace, and unfamiliar rubric transfer form a coherent progression from relative supervision to proxy-failure diagnosis.",
+        "synopsis": "The SFT page teaches demonstrations as serialized, masked training records and extends the mechanism into a carefully bounded fine-tuning workshop.",
+        "feedback": "Role templates, assistant-only loss, packing boundaries, truncation, and evaluation are aligned across prose and exercises. The optional QLoRA workshop names its inputs and external boundary, while the required transfer task and readiness gates remain deterministic and self-contained.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "rl-fundamentals",
-      "route": "/llm/rl-fundamentals/",
-      "readerSnapshotHash": "sha256:eabfb5a2e1f4a965e59b225e48b0e78216f6aba9187998c620eb840393bedacf",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "preference-optimization", "route": "/llm/preference-optimization/", "readerSnapshotHash": "sha256:34a6274a3c35a37f9e8cdc91e0f83147de266a55024f78e5908c32b8f6c7f309",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson models generation as states, actions, delayed rewards, returns, baselines, advantages, and conservative policy updates.",
-        "feedback": "The mean-baseline example and policy-loss direction are correct, and the page clearly separates trajectory evidence from supervised token labels. The narrative moves effectively from episode definition to variance and drift control, then verifies transfer with delayed tool outcomes and negative advantages.",
+        "synopsis": "The lesson explains pairwise preference learning through relative policy-reference log-probability gaps, data quality, and shortcut risks.",
+        "feedback": "The DPO mechanism, beta convention, chosen/rejected records, and verbosity shortcut are treated with appropriate precision. Learners calculate relative changes and diagnose label quality before transfer, so the page does not imply that any preference pair constitutes ground truth.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "rlhf",
-      "route": "/llm/rlhf/",
-      "readerSnapshotHash": "sha256:5ee013f792fc9c14125ee8681d915cf7c73a44fe0ea04e3af3dc9156edc9a97c",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "rl-fundamentals", "route": "/llm/rl-fundamentals/", "readerSnapshotHash": "sha256:eabfb5a2e1f4a965e59b225e48b0e78216f6aba9187998c620eb840393bedacf",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "RLHF is traced from SFT and human comparisons through reward modeling, on-policy rollouts, PPO-style updates, KL control, and reward-hacking audits.",
-        "feedback": "Component responsibilities and proxy risks are accurate, and the sampled log-ratio pseudocode is explicitly bounded from full PPO mechanics. The page's reward-exploit narrative and non-compensable health-support transfer provide strong causal and decision practice beyond pipeline memorization.",
+        "synopsis": "The page introduces policies, trajectories, rewards, returns, baselines, and advantages as the credit-assignment language needed for RL post-training.",
+        "feedback": "The worked batch advantage and delayed-credit cases make policy updates observable without hiding uncertainty behind jargon. The page defines its symbols before use, distinguishes reward from value, and verifies transfer on a changed trajectory with specific retry feedback.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "tools-safety",
-      "route": "/llm/tools-safety/",
-      "readerSnapshotHash": "sha256:6e9b26f56e1f66633c096938dc7453cd094755674ff8e4a80f246b4286b9835c",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "rlhf", "route": "/llm/rlhf/", "readerSnapshotHash": "sha256:5ee013f792fc9c14125ee8681d915cf7c73a44fe0ea04e3af3dc9156edc9a97c",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page treats tool calls as untrusted proposals whose schemas, authorization, confirmation, effects, and recovery are owned by runtime code.",
-        "feedback": "The distinctions among learned behavior, authority, prompt injection, least privilege, and over-refusal are technically and operationally sound. A rich decision studio, deterministic action pseudocode, and transferred financial case provide a particularly strong change-observe-explain learning sequence.",
+        "synopsis": "The RLHF lesson traces demonstrations, comparison data, reward-model fitting, on-policy sampling, PPO-style updates, and KL control.",
+        "feedback": "The page accurately presents the reward model as a fallible proxy and makes reward exploitation, reference drift, and independent evaluation central to the mechanism. Its numerical and decision checks separate training telemetry from real outcome evidence.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "tulu3-case-study",
-      "route": "/llm/tulu3-case-study/",
-      "readerSnapshotHash": "sha256:52ba71af5784c08c093e8f87a87753dfa75c1dd03043aba85b69675ffadf94c1",
-      "accuracy": 98,
-      "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 99,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "tools-safety", "route": "/llm/tools-safety/", "readerSnapshotHash": "sha256:6e9b26f56e1f66633c096938dc7453cd094755674ff8e4a80f246b4286b9835c",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The case study joins Tülu 3's curation, SFT, length-normalized DPO, and RLVR with DR Tulu's tool trajectories and evolving research rubrics.",
-        "feedback": "Stage claims are source-bounded, the exact-verifier versus open-rubric distinction is clear, and runtime authority stays separate from learned research behavior. The capstone is long and repeats some stage allocation across disclosures and ledgers, but every section contributes inspectable evidence, controls, or transfer.",
-        "revisionPriorities": ["Reduce repetition between objective disclosures and the capstone stage ledger while preserving their distinct checks."]
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "decoding-sampling",
-      "route": "/llm/decoding-sampling/",
-      "readerSnapshotHash": "sha256:f12e7b32ef1e30ae9b8b302e60774a1e739a8a2b69344349742984009f76bf23",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson turns logits into selected tokens through temperature, top-k, top-p, sampling, constraints, and task-specific decoding policies.",
-        "feedback": "Softmax probabilities, temperature effects, inclusive nucleus cutoffs, and renormalization examples are correct. The page cleanly separates model knowledge from selection policy and tests transfer across creative, structured, code, and high-risk extraction contracts.",
+        "synopsis": "The lesson treats tool calls as constrained action proposals and places schema, authorization, confirmation, execution, recovery, and audit in runtime code.",
+        "feedback": "The injected calendar trace, idempotent email action, safety/usefulness slices, trust-boundary lab, and decision studio all reinforce defense in depth. Learners must allow legitimate capabilities while blocking unauthorized effects, avoiding both magical autonomy and universal refusal.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "generation-kv-cache",
-      "route": "/llm/generation-kv-cache/",
-      "readerSnapshotHash": "sha256:0617713de2ca4c3e9f8e68398c365e303a1657506f0ee6fa6a50d3baece5e1a2",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "tulu3-case-study", "route": "/llm/tulu3-case-study/", "readerSnapshotHash": "sha256:3f282ffebb123d6df57bf9433965cc9499ecdbeb15b0268912ef50782a175a96",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page separates prefill from sequential decode and derives how cached keys and values trade growing memory for avoided recomputation.",
-        "feedback": "Cache formulas, projection counts, attention-work comparisons, and the 537 MB worked estimate are consistent. Narrative, calculator, and transfer checks connect single-request mechanics to GQA, prefix sharing, tenant isolation, and serving capacity without losing the core causal thread.",
+        "synopsis": "This capstone traces Tülu 3 through curation, SFT, length-normalized DPO, and RLVR, then contrasts DR Tulu's tool-mediated evolving-rubric research loop.",
+        "feedback": "Exact verification and open-ended rubric evaluation are matched to their answer structures, with verifier spoofing, evaluator drift, tool cost, and runtime authority kept visible. The staged project, artifacts, controls, and launch memo make the post-training synthesis complete and inspectable.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "quantization-memory",
-      "route": "/llm/quantization-memory/",
-      "readerSnapshotHash": "sha256:4286020cf8a1e4a8b0d38bee0fe3f81f60598ffe273525688a11bb04278059f4",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "decoding-sampling", "route": "/llm/decoding-sampling/", "readerSnapshotHash": "sha256:f12e7b32ef1e30ae9b8b302e60774a1e739a8a2b69344349742984009f76bf23",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "Quantization is developed from scale, integer grid, rounding, and reconstruction error through full inference-memory and hardware-kernel decisions.",
-        "feedback": "The signed three-bit example, ideal weight-memory calculations, outlier behavior, and fixture gates are arithmetically correct and carefully labeled. The page's narrative and assessments prevent bit width from standing in for accuracy or speed, while the medical-slice transfer enforces a meaningful deployment boundary.",
+        "synopsis": "The decoding lesson turns vocabulary logits into token choices through temperature, top-k, top-p, greedy selection, sampling, constraints, and stopping.",
+        "feedback": "Stable-softmax and nucleus calculations are correct, inclusive cutoff conventions are explicit, and the lesson distinguishes selection policy from learned knowledge. Task-specific policy choices for extraction, creativity, and tested code make the transfer check genuinely unfamiliar.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "serving-systems",
-      "route": "/llm/serving-systems/",
-      "readerSnapshotHash": "sha256:c3fcffe23f1b096f5b2397147cac00e7c60d3058c62202658cc8979ad402f5bb",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "generation-kv-cache", "route": "/llm/generation-kv-cache/", "readerSnapshotHash": "sha256:0617713de2ca4c3e9f8e68398c365e303a1657506f0ee6fa6a50d3baece5e1a2",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson frames serving as queue and scheduler design across latency, throughput, utilization, goodput, batching, SLOs, and overload control.",
-        "feedback": "Goodput arithmetic, request-window code, tail-latency distinctions, and static-slot calculations are correct and properly qualified. The progression from user metrics to scheduling and numeric admission policies is especially coherent, culminating in a changed traffic mix with class-specific gates.",
+        "synopsis": "The page separates prompt prefill from sequential decode and accounts for how cached keys and values trade memory for avoided recomputation.",
+        "feedback": "The prefix-work comparison, cache-size formula, grouped-query boundary, and serving examples are arithmetically and conceptually aligned. Learners distinguish what is newly computed, what is reused, and why prefix sharing still requires exact identity and tenant-safe invalidation.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "test-time-compute",
-      "route": "/llm/test-time-compute/",
-      "readerSnapshotHash": "sha256:41319c7c29d60880568afad854a0e0aba32cfb3482fc34adcf056fc12ecfb320",
-      "accuracy": 98,
-      "writtenNarrative": 95,
-      "flow": 95,
-      "learningContent": 99,
-      "overall": 96.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "quantization-memory", "route": "/llm/quantization-memory/", "readerSnapshotHash": "sha256:4286020cf8a1e4a8b0d38bee0fe3f81f60598ffe273525688a11bb04278059f4",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page explains test-time compute through diverse candidates, search, critique, verifiers, adaptive budgets, and an SLO-aware inference-service capstone.",
-        "feedback": "Candidate generation, oracle pass@k, deployable selection, correlated errors, and value-of-compute boundaries are accurate and unusually well tested. The opening defines the capstone deliverable before directly defining the concept, and the extensive service project slightly interrupts the otherwise strong mechanism progression.",
-        "revisionPriorities": ["State the test-time-compute concept definition before the capstone deliverable in the opening block."]
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "context-engineering",
-      "route": "/llm/context-engineering/",
-      "readerSnapshotHash": "sha256:6d84bd5cc97ed567e30d8bcea108de1f235d12a7a7be894f71ae1b5c772f1dd8",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "Context engineering is taught as an ordered, budgeted interface among authority, evidence, examples, state, and output contracts.",
-        "feedback": "The page accurately limits what delimiters and natural-language priority can guarantee, while connecting long context to latency, cache, distraction, and injection risk. Its exact 4,000-token allocation and legal-summary transfer turn prompt advice into measurable design and perturbation tests.",
+        "synopsis": "This lesson explains low-bit grids, scales, granularity, calibration, outliers, kernels, and the full inference-memory budget beyond model weights.",
+        "feedback": "The symmetric 3-bit reconstruction and 7B memory examples are transparent fixtures, not performance claims. Quality slices, kernel support, cache-dominated workloads, and a gated deployment choice prevent bit width from being mistaken for guaranteed speed or acceptable accuracy.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "rag",
-      "route": "/llm/rag/",
-      "readerSnapshotHash": "sha256:2bf203e89df80a927b0d3f6eee211c091a348d5265b2a5bea0055342266e4297",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "serving-systems", "route": "/llm/serving-systems/", "readerSnapshotHash": "sha256:c3fcffe23f1b096f5b2397147cac00e7c60d3058c62202658cc8979ad402f5bb",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 98, "learningContent": 98, "overall": 97.75, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The RAG lesson traces versioned ingestion, chunking, dense and lexical retrieval, reranking, context assembly, citation validation, and abstention.",
-        "feedback": "It correctly treats embedding similarity as neither truth nor permission and cleanly separates retrieval recall from grounded-generation failure. The oracle-context example, pipeline lab, and multilingual transfer supply a strong diagnostic flow with independently checkable stage metrics.",
+        "synopsis": "The serving lesson treats queues, batching, prefill/decode scheduling, overload, latency tails, throughput, utilization, and goodput as one product system.",
+        "feedback": "The 2,000-versus-1,700 token example clearly demonstrates why SLO-satisfying goodput can reverse a throughput ranking. Static, dynamic, and continuous batching are compared on uneven traffic, and numeric per-tier overload rules turn the objectives into testable operational decisions.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "agent-loops",
-      "route": "/llm/agent-loops/",
-      "readerSnapshotHash": "sha256:56dcb9a4de8774254c4862c16b16f410dd82cd40ff740a4b54d0c1e4577e5258",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "test-time-compute", "route": "/llm/test-time-compute/", "readerSnapshotHash": "sha256:47f8a26a3767d2288115e52adc5f7d2c67bc4e2ff4131d26ed2c2c555c884be1",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page distinguishes fixed workflows from bounded agent loops and assigns state, authority, retries, idempotency, budgets, and termination to the orchestrator.",
-        "feedback": "The observe-decide-act model and failure-recovery guidance are technically sound, including the ambiguous non-idempotent timeout case. The narrative proceeds from least autonomy to one validated transition and whole-trajectory evaluation, with a strong transfer that chooses a workflow plus one bounded branch.",
+        "synopsis": "The page explains test-time compute through candidate diversity, search, critique, verification, adaptive budgets, early stopping, and deployable selection.",
+        "feedback": "The self-consistency example and pass@N versus best-of-N diagnosis correctly separate candidate generation from selection. The service capstone integrates decoding, cache, precision, batching, reasoning, latency, memory, quality, and cost into an evidence-bearing SLO decision.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "evaluation-design",
-      "route": "/llm/evaluation-design/",
-      "readerSnapshotHash": "sha256:962240537b114ba6366272acfe395c8d846043b8e9851cd6e7645b126728847a",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "context-engineering", "route": "/llm/context-engineering/", "readerSnapshotHash": "sha256:6d84bd5cc97ed567e30d8bcea108de1f235d12a7a7be894f71ae1b5c772f1dd8",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "Evaluation is built from a release decision through representative cases, mixed graders, judge calibration, paired uncertainty, slices, and severe-failure gates.",
-        "feedback": "Construct validity, position bias, deterministic versus human versus model grading, and regression analysis are accurately distinguished. The 65/64 percent judge audit and regulated-slice transfer create an exceptionally coherent path from measurement error to a changed ship decision.",
+        "synopsis": "The lesson presents context engineering as a finite interface for authority, task state, evidence, examples, constraints, and output contracts.",
+        "feedback": "The 4,000-token ledger, underspecified summarizer repair, injection boundary, and perturbation matrix make prioritization and robustness observable. Delimiters are correctly described as interpretive aids rather than security enforcement, and required work is locally checkable.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "security-privacy",
-      "route": "/llm/security-privacy/",
-      "readerSnapshotHash": "sha256:79911176806eb9a5c872c352bf19fb0529074b25bd62e867f65290fd67843e82",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "rag", "route": "/llm/rag/", "readerSnapshotHash": "sha256:2bf203e89df80a927b0d3f6eee211c091a348d5265b2a5bea0055342266e4297",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson threat-models LLM systems across data, users, retrieval, models, tools, output handling, privacy, and incident response.",
-        "feedback": "It accurately explains why token labels cannot create an internal privilege boundary and puts cross-tenant filtering before model exposure. The staged controls, authorization pseudocode, and hiring transfer connect injection, data minimization, fairness, and appeal without relying on prompt-only security.",
+        "synopsis": "The RAG lesson traces versioned, authorized chunks through hybrid retrieval, reranking, context assembly, grounded generation, citation validation, and abstention.",
+        "feedback": "Retrieval failure is cleanly separated from evidence-use failure through oracle-context reasoning and distinct metrics. Chunking, filters, source versions, citation entailment, multilingual transfer, and the toy lab all preserve the rule that similarity is neither truth nor permission.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "observability-governance",
-      "route": "/llm/observability-governance/",
-      "readerSnapshotHash": "sha256:8fa178a6866e0b6ee91cd3ee993d51a01baf4704164cc27ab9c83c8f08a3beb6",
-      "accuracy": 98,
-      "writtenNarrative": 95,
-      "flow": 95,
-      "learningContent": 99,
-      "overall": 96.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "agent-loops", "route": "/llm/agent-loops/", "readerSnapshotHash": "sha256:56dcb9a4de8774254c4862c16b16f410dd82cd40ff740a4b54d0c1e4577e5258",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page links privacy-aware traces, stage metrics, cost attribution, SLOs, owners, release gates, canaries, rollback, and incident learning.",
-        "feedback": "Tracing fields, proxy boundaries, cost-per-success reasoning, and governance controls are accurate and tied to reproducible decisions. The opening foregrounds the capstone artifact rather than the core observability definition, and the large operations project adds density, but its learning evidence and incident transfer remain exemplary.",
-        "revisionPriorities": ["Introduce the core observability-and-governance definition before describing the capstone package."]
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "distillation",
-      "route": "/llm/distillation/",
-      "readerSnapshotHash": "sha256:4c7e3de24406fb8393d7158666dd2b72fd8b831e5741278de8ef88f63b1932e1",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "Distillation is compared across response, logit, feature, sequence, and on-policy supervision with capacity, calibration, provenance, and total-cost limits.",
-        "feedback": "Soft-target temperature, KL loss scaling, teacher-error inheritance, and response-only API constraints are accurately handled. The narrative flows from richer supervision to coverage and cost, with a support-model transfer that forces method choice from actually available teacher signals.",
+        "synopsis": "This lesson distinguishes deterministic workflows from bounded agent loops and assigns state, authorization, retries, idempotency, cost, and termination to the orchestrator.",
+        "feedback": "The sold-out booking and ambiguous-timeout traces expose how errors compound when state or operation IDs are missing. Learners choose the least autonomy required, design typed transitions, and handle non-idempotent side effects under numeric limits and explicit human escalation.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "lora",
-      "route": "/llm/lora/",
-      "readerSnapshotHash": "sha256:8eaf4ec94e294e1650371acff165222050fffeaf701c48944f409ba5524a5667",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "evaluation-design", "route": "/llm/evaluation-design/", "readerSnapshotHash": "sha256:962240537b114ba6366272acfe395c8d846043b8e9851cd6e7645b126728847a",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "LoRA is derived as a scaled low-rank additive update with explicit shapes, parameter counts, initialization, target modules, QLoRA, and deployment choices.",
-        "feedback": "The $BA$ dimensions, 131,072-parameter calculation, 128-times reduction, and zero-delta gradient explanation are correct. Runnable code, rank fixtures, and tenant-routing transfer produce a clean progression from matrix mechanism to operational compatibility and rollback.",
+        "synopsis": "The evaluation lesson begins with a shipping decision and builds a portfolio of exact, human, and calibrated model-based measurements with slices and uncertainty.",
+        "feedback": "The position-biased judge example demonstrates instrument failure rather than merely warning about it. Numeric release gates, paired comparisons, severe non-compensable slices, evaluator versions, and adjudication make the lesson a complete decision-design journey.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "moe",
-      "route": "/llm/moe/",
-      "readerSnapshotHash": "sha256:9e70ea8476738af0b5dc7cb5974add300d05b7364c5078294a65951c64b83fe7",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "security-privacy", "route": "/llm/security-privacy/", "readerSnapshotHash": "sha256:79911176806eb9a5c872c352bf19fb0529074b25bd62e867f65290fd67843e82",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The MoE lesson separates total parameter capacity from per-token active compute through top-k routing, expert capacity, balancing, dispatch, and communication.",
-        "feedback": "Router probabilities, selected-weight renormalization, capacity arithmetic, and overflow counts are correct. The page's sequence from one token route to all-to-all bottlenecks and a matched production diagnosis keeps sparse-FLOP claims proportional to real memory and network costs.",
+        "synopsis": "The page threat-models assets, actors, data paths, models, retrieval, tools, users, and downstream systems under prompt injection and privacy risk.",
+        "feedback": "Cross-tenant retrieval and injected-content cases correctly enforce authorization before data exposure and treat generated output as untrusted downstream input. Least privilege, minimization, retention, monitoring, incident response, fairness, and appeals are integrated without suggesting a prompt can create a security boundary.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "multimodal-models",
-      "route": "/llm/multimodal-models/",
-      "readerSnapshotHash": "sha256:ee5fa674967a887dbee7796981c9b9738ed6392c9c45dcadfd5afd253c991f15",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "observability-governance", "route": "/llm/observability-governance/", "readerSnapshotHash": "sha256:8fa178a6866e0b6ee91cd3ee993d51a01baf4704164cc27ab9c83c8f08a3beb6",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page traces images, audio, and video through modality encoders, positioned features, connectors, fusion designs, decoding, and grounding evaluation.",
-        "feedback": "Patch counts, tensor reshaping, projection/cross-attention/unified-token distinctions, and resolution-cost trade-offs are accurate. The gray-noise diagnosis and audio transfer separate perception from language-prior reasoning, giving the page strong causal flow and modality-specific learning checks.",
+        "synopsis": "This synthesis page links request traces, stage metrics, cost attribution, privacy, release governance, canaries, rollback, incidents, and ownership.",
+        "feedback": "The hidden cost-regression trace shows how versions and spans localize a pipeline change without indiscriminate secret retention. The safe research-agent capstone joins context, RAG, tools, evaluation, security, operations, artifacts, and rehearsed recovery into a rigorous final applications project.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson",
-      "id": "interpretability-editing",
-      "route": "/llm/interpretability-editing/",
-      "readerSnapshotHash": "sha256:0a680ca6f02a66637808853af2d5ac011032c56db0abccc36c9328afd1b97f54",
-      "accuracy": 98,
-      "writtenNarrative": 95,
-      "flow": 95,
-      "learningContent": 99,
-      "overall": 96.75,
-      "pass": true,
-      "blockingDefects": [],
+      "pageType": "lesson", "id": "distillation", "route": "/llm/distillation/", "readerSnapshotHash": "sha256:f80877269d4c455de39707b0a609b2fb8b592e26e3254454351a68129e4ec729",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The final page distinguishes behavior, attribution, probes, causal interventions, and model edits, then builds a controlled intervention capstone around bounded claims.",
-        "feedback": "Decodability versus causal use, activation patching, sham controls, locality, persistence, and unlearning boundaries are accurate and consistently conservative. The capstone-first opening and extensive project material make the narrative heavier than the core explanation, but the page's learning content and claim discipline are exceptionally strong.",
-        "revisionPriorities": ["Lead with the behavioral-attribution-probe-causality distinction before introducing the capstone investigation."]
+        "synopsis": "The lesson compares response, logit, feature, sequence-level, and on-policy distillation while accounting for teacher quality, student capacity, and total cost.",
+        "feedback": "Soft-target probabilities and temperature-scaled KL make the extra supervision concrete, while calibration and minority-slice failures expose inherited error. The response-only API transfer case correctly limits the available method and requires verified ground truth and held-out gates.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson", "id": "lora", "route": "/llm/lora/", "readerSnapshotHash": "sha256:eb385da80e5d49cbff25277d91ef10733a44e4b1fd6c7e3760051af2362609ca",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The LoRA page derives a low-rank additive update, counts trainable parameters, explains initialization, and compares rank, targets, QLoRA, merging, and routing.",
+        "feedback": "The $4096\times4096$ rank-16 example and runnable first-gradient check make both savings and the zero-initialization pitfall visible. The deployment transfer preserves base-adapter provenance, tenant isolation, quality gates, and the fact that frozen-base compute and activations remain.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson", "id": "moe", "route": "/llm/moe/", "readerSnapshotHash": "sha256:620b3741c00c99cbeb709bc13f4969bb5e3792481765210a8d423d645527b197",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The MoE lesson traces per-token router scores through top-k dispatch, expert capacity, weighted combination, load balancing, communication, and serving cost.",
+        "feedback": "Router arithmetic and the 1,024-token capacity example are correct and transparently linked to overflow choices. The page explicitly rejects human-readable expert mythology and the claim that sparse active FLOPs erase full-weight memory, all-to-all, imbalance, or small-batch inefficiency.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson", "id": "multimodal-models", "route": "/llm/multimodal-models/", "readerSnapshotHash": "sha256:904f1bbf8138bb5907513f929e328dead0c6f070791c335f3a5e4216536906e3",
+      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The multimodal lesson follows patches or frames through modality encoders, connectors, positional information, decoder interfaces, grounding, and modality-specific evaluation.",
+        "feedback": "Patch-count arithmetic exposes the resolution-token-cost trade-off, while projection, cross-attention, and unified-stream designs are compared by mechanism. Noise ablations and the audio transfer case separate processor, perception, localization, reasoning, and language-prior failures.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson", "id": "interpretability-editing", "route": "/llm/interpretability-editing/", "readerSnapshotHash": "sha256:bb5cf8a824d5ce08c10e2e3d8924b96f4be5bc2755aa936a1bed6931c93f9b3d",
+      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The final page distinguishes behavioral, attribution, probing, and causal evidence, then evaluates interventions and model edits by efficacy, locality, generalization, and persistence.",
+        "feedback": "The Paris/Rome patching trace, sham-control boundaries, and edit fixture consistently constrain claim strength. The capstone asks learners to choose the least invasive remedy, explicitly rejects unlearning claims without a threat model, and requires reproducible controls, artifacts, side-effect evidence, and rollback.",
+        "revisionPriorities": []
       }
     }
   ]

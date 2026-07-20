@@ -340,18 +340,18 @@ export const worldModelLessonLabSpecs: Record<string, WorldModelLessonLabSpec> =
         {
           label: "After action prediction",
           resultLabel: "Predicted belief [A,B]",
-          resultValue: "[0.46, 0.54]",
-          meter: 46,
+          resultValue: "[0.56, 0.44]",
+          meter: 56,
           detail:
-            "The declared transition table moves mass before seeing the sensor.",
+            "With P(A'|A)=0.8 and P(A'|B)=0.2, predicted A is 0.8(0.60)+0.2(0.40)=0.56; predicted B is 0.44.",
         },
         {
           label: "After observation",
           resultLabel: "Posterior [A,B]",
-          resultValue: "[0.77, 0.23]",
-          meter: 77,
+          resultValue: "[0.84, 0.16]",
+          meter: 84,
           detail:
-            "Likelihood [0.8,0.2] reweights the predicted belief and normalization restores total mass 1.",
+            "Likelihood [0.8,0.2] gives weights [0.448,0.088]; dividing by their 0.536 total yields approximately [0.84,0.16].",
         },
       ],
     ),
