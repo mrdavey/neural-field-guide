@@ -33,10 +33,10 @@ export const lessonCodeExamples: Record<string, LessonCodeExample> = {
     caveat: "This is conceptual pseudocode, not a claim that one function can verify arbitrary evidence or safely authorize actions.",
   },
   "tensors-shapes": {
-    title: "Make the shape contract executable",
+    title: "Project an LLM hidden-state batch",
     language: "Python · NumPy",
-    setup: "A projection changes feature width while preserving batch and token axes.",
-    predict: "What shape will Y have, and which axis disappears during multiplication?",
+    setup: "After text has been divided into positions and embedded, an LLM carries one feature vector per prompt position. A learned projection changes feature width while preserving prompt and position axes.",
+    predict: "What shape will Y have, which axis contracts, and what LLM structure do B and T preserve?",
     code: lines(
       "import numpy as np",
       "",
@@ -48,8 +48,8 @@ export const lessonCodeExamples: Record<string, LessonCodeExample> = {
       "print(X.shape, W.shape, Y.shape)",
       "assert Y.shape == (B, T, out)"
     ),
-    observe: "NumPy contracts the shared d axis independently at every B,T position, returning [2,3,6].",
-    tryIt: "Transpose W and read the error. Explain it using named axes before fixing it.",
+    observe: "NumPy contracts the shared feature axis d independently at every prompt-position location, returning [2,3,6]. Attention, MLP, and output projections reuse this pattern with different weights.",
+    tryIt: "Transpose W and read the error. Explain it using [prompt, position, feature] axis names before fixing it.",
   },
   "probability-softmax": {
     title: "Implement stable softmax and target loss",

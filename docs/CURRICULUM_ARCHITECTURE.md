@@ -96,6 +96,25 @@ These remain embedded in every course. The LLM lessons provide canonical pattern
 
 Any objective text change triggers the full exact-coverage update and independent semantic review required by `AGENTS.md`. No objective is changed merely to add a link.
 
+## LLM section continuity audit — 20 July 2026
+
+The learner-reported discontinuity at Lesson 02 was genuine. The introduction ended with evidence and authority boundaries, while the next page opened with array notation and described the transition as a direct reuse without explaining the hidden numerical step. The repair now carries forward the introduction's piece-by-piece response model, treats already-divided text as an explicit input, and shows the recurring LLM path from prompt positions to hidden features, learned projection, and the next layer. Tokenization remains owned by Lesson 6 rather than being taught out of order.
+
+The same review inspected every remaining Foundations transition and the first page of each later LLM track. No other boundary had an equally severe missing rationale. Four direct or high-value seams had weaker carry-forward wording even though their destination lessons were coherent; those handoffs now name the actual artifact passed forward.
+
+| Audited seam | Knowledge carried forward | Continuity decision |
+| --- | --- | --- |
+| Introduction → numerical foundations | A prompt becomes a response piece by piece; the implementation therefore needs a numerical state for every current text position. | High-severity gap repaired in the Lesson 02 title, opening, vocabulary, worked trace, objective check, quiz, code trace, lab, and concept story. |
+| Foundations internal sequence | Numerical states → vocabulary scores and probabilities → loss sensitivity → optimizer update. | The five-lesson chain is cumulative; exact prerequisites and next-use cues remain direct. |
+| Numerical foundations → decoder architecture | The completed learning-step toolkit is available, while Tokenization starts a deliberately new thread by asking how text first becomes IDs. | Existing `new chapter thread` relationship is honest; Tokenization already opens from the fact that neural networks operate on numbers. |
+| Decoder architecture → pre-training | The assembled decoder maps position IDs through hidden states to next-token scores; pre-training turns random transformations into learned parameters through repetition. | Carry-forward result strengthened; destination opening already starts from decoder next-token prediction. |
+| Pre-training → post-training | The audited pre-training recipe produces a base model that continues text but is not yet a dependable assistant policy. | Carry-forward result strengthened; the bridge lesson's lede defines the behavior change before introducing method names. |
+| Post-training → inference and serving | Post-training shapes the policy; runtime decoding still decides which next-token scores become visible text. | Boundary remains an honest new thread, with a stronger reason for why decoding follows. |
+| Inference and serving → applications and reliability | Inference-time compute determines how much processing occurs; context engineering determines which instructions and evidence enter that processing. | Direct-reuse handoff strengthened; the Applications opening already defines the prompt/context control surface. |
+| Applications and reliability → advanced branches | The dependable-system spine is complete; distillation, LoRA, MoE, multimodality, and interpretability are optional goal-driven specializations. | Existing `new chapter thread` plus branch chooser is honest; no artificial prerequisite chain was added. |
+
+`tests/llm-curriculum-continuity.test.mjs` protects the repaired Lesson 01 → 02 explanation, LLM-specific practice and interaction copy, all seven audited section seams, and the distinction between direct reuse, a new thread, and an advanced branch.
+
 ## Released research-course manifests
 
 ### Generative Models — 30 lessons

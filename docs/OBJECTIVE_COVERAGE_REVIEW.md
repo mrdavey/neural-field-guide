@@ -80,6 +80,14 @@ The first independent pass found the World Models second objective partial becau
 
 The independent regrade reports **11 pass, 0 partial, and 0 fail**, with all five dimensions passing for every changed objective. Its whole-introduction result is **5 pass, 0 partial, and 0 fail**. `tests/course-introductions.test.mjs` protects prerequisite-free and notation-free openings, exact objective joins, motivating and bounded copy, coherent worked scenarios, concrete introductory interactions, and the absence of raw lesson IDs or internal authoring language.
 
+## Lesson 02 continuity revision — 20 July 2026
+
+Learner feedback reopened the first `tensors-shapes` objective. The previous promise, “Read common LLM tensor shapes without guessing,” taught axis arithmetic but did not require the page to explain why an LLM needs those arrays or how matrix multiplication participates in response generation. The revised exact promise is “Explain why LLMs represent many text positions with tensors and read their common shapes.”
+
+The authoring pass now begins from the Introduction's piece-by-piece response model; declares already-divided text as the input boundary; traces two prompts, three positions, and four features into $X[2,3,4]$; applies one learned projection at every position; and identifies attention, MLP, and vocabulary-output reuse. The boundary explicitly defers tokenizer choice to Lesson 6 and separates valid shape arithmetic from learned meaning or factuality. The objective record, guide narrative, deterministic trace, quiz, runnable NumPy example, browser lab, evidence transfer, visual record, curriculum inventory, and continuity regression test were updated together.
+
+Independent semantic and whole-page regrading is required after this authoring pass. Until that grader reports no partial or failed dimension, the affected objective and page remain reopened rather than inheriting the 17 July score.
+
 ## World Models extension and independent gate
 
 The World Models course adds 46 lessons with two exact outcomes per lesson. Its 92 explicit records are authored from the same five-dimensional contract and rendered through the same commit-before-reveal objective component. World Models content is not inferred from the LLM registry: `app/world-models/index.ts` joins every exact objective to a course-specific explanation, mechanism, worked trace, boundary, and check/retry record.
@@ -119,7 +127,7 @@ After defining that symbol and replacing the shared research helper's positional
 | Lesson ID | Exact visible objectives | Coverage records |
 |---|---|---:|
 | `introduction` | 1. Explain in everyday language what an LLM can help with and why it is worth understanding<br>2. Trace how a prompt becomes a response without assuming human-like understanding<br>3. Choose when an LLM response can be used directly and when outside evidence or authority is required | 3/3 |
-| `tensors-shapes` | 1. Read common LLM tensor shapes without guessing<br>2. Predict the output of a matrix multiplication<br>3. Explain broadcasting and why silent shape errors are dangerous | 3/3 |
+| `tensors-shapes` | 1. Explain why LLMs represent many text positions with tensors and read their common shapes<br>2. Predict the output of a matrix multiplication<br>3. Explain broadcasting and why silent shape errors are dangerous | 3/3 |
 | `probability-softmax` | 1. Convert logits into probabilities conceptually and numerically<br>2. Interpret cross-entropy as surprise assigned to the target<br>3. Distinguish entropy, cross-entropy, perplexity, and calibration | 3/3 |
 | `gradients-backprop` | 1. Trace a forward and backward computation graph<br>2. Apply the chain rule to a simple parameter<br>3. Explain why backpropagation and optimization are separate | 3/3 |
 | `optimizers` | 1. Turn a gradient into an explicit parameter update<br>2. Compare SGD, momentum, Adam, and AdamW conceptually<br>3. Diagnose learning-rate and optimizer-state problems | 3/3 |

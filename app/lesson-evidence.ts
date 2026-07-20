@@ -29,13 +29,13 @@ export const lessonEvidence: Record<string, LessonEvidence> = {
     "The attached itinerary grounds the summary. A current weather service grounds the live claim. The purchase needs the user's permission, a confirmed price and itinerary, an authorized runtime, and a receipt. Fluent wording cannot replace any of those checks.",
   ),
   "tensors-shapes": evidence(
-    "A valid projection and a silent broadcasting bug",
-    ["Named contraction", "$X[2,3,4] @ W[4,6]$ contracts the feature axis.", "The output is $[2,3,6]$; batch and time survive."],
+    "An LLM projection can be shape-correct and still mean the wrong thing",
+    ["Named hidden-state contraction", "$X[2,3,4] @ W[4,6]$ contracts the input-feature axis at every prompt-position location.", "The output is $[2,3,6]$; the two prompts and three text positions survive."],
     ["Compatible but wrong", "A mask shaped $[T,1]$ broadcasts across an attention score tensor where $[1,1,T,T]$ was intended.", "The program runs, but masks query rows rather than forbidden key positions."],
-    "Shape compatibility is necessary, not sufficient: every axis needs a semantic name and an invariant test.",
-    "Project $X[2,3,4]$ with $W[4,6]$, then add token offsets $[3,1]$. Predict the output shape, name the contracted axis, and contrast those offsets with a feature bias $[6]$.",
+    "An LLM layer needs both a valid shape contract and the intended prompt, position, and feature meanings; compatibility alone is not enough.",
+    "Treat $X[2,3,4]$ as two prompts, three text positions per prompt, and four features per position. Project it with $W[4,6]$, then add position offsets $[3,1]$. Predict the output shape, name what is preserved and contracted, and contrast those offsets with a feature bias $[6]$.",
     ["Contracts the four-feature axis and produces $[2,3,6]$", "Explains that $[3,1]$ supplies one value per token position and repeats it over batch and output features", "Explains that $[6]$ supplies one value per output feature and repeats it over batch and token positions"],
-    "$XW$ contracts the input-feature axis of length 4, so the projection is $[2,3,6]$. Offsets $[3,1]$ broadcast as one position-specific scalar across all six output features and both batches. Bias $[6]$ instead broadcasts one value per output feature across every batch-token location. Both additions run and preserve $[2,3,6]$, but they encode different semantics.",
+    "$XW$ contracts the input-feature axis of length 4, so the projection is $[2,3,6]$. The two prompt rows and three text positions remain distinct for later LLM layers. Offsets $[3,1]$ broadcast as one position-specific scalar across all six output features and both prompts. Bias $[6]$ instead broadcasts one value per output feature across every prompt-position location. Both additions run and preserve $[2,3,6]$, but they encode different semantics.",
   ),
   "probability-softmax": evidence(
     "Stable probabilities are not the same as calibrated probabilities",

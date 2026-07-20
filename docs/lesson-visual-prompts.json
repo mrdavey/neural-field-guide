@@ -45,34 +45,34 @@
     "courseTitle": "Large Language Models",
     "lessonId": "tensors-shapes",
     "lessonNumber": 2,
-    "title": "Tensors, Shapes & Matrix Multiplication",
+    "title": "From Text to Tensors: Shapes & Matrix Multiplication",
     "trackId": "foundations",
     "trackColor": "#f59eaf",
     "kind": "deterministic",
     "concept": "coordinates",
-    "learningQuestion": "What must happen between “AXES” and “OUTPUT SHAPE” in Tensors, Shapes & Matrix Multiplication?",
-    "depiction": "Shapes are type signatures for numerical programs. If the labels on two pipe ends do not match, the computation cannot connect. The composition follows AXES → VALUES → MULTIPLY → OUTPUT SHAPE and keeps the learner's attention on the causal change between stages.",
-    "alt": "Visual explanation of Tensors, Shapes & Matrix Multiplication: A tensor is a rectangular container of numbers. Its shape tells you how those numbers are organized; matrix multiplication is the main operation that mixes them into new features.",
-    "longDescription": "Shapes are type signatures for numerical programs. If the labels on two pipe ends do not match, the computation cannot connect. The composition follows AXES → VALUES → MULTIPLY → OUTPUT SHAPE and keeps the learner's attention on the causal change between stages. Worked reference: For $B=2$ sequences, $T=3$ tokens, and $d=4$ features, $X$ has shape $[2,3,4]$. Multiplying by $W[4,6]$ applies the same learned projection to all six token positions and returns $Y[2,3,6]$. That is $2 \\times 3 \\times 6$ output values, each a four-term dot product plus bias.",
-    "boundary": "A tensor dimension is not automatically a semantic feature. Axes such as batch, time, heads, and channels have roles defined by the program; individual hidden coordinates usually do not have simple human names.",
+    "learningQuestion": "What must happen between “TEXT POSITIONS” and “NEXT LLM STATE” in From Text to Tensors: Shapes & Matrix Multiplication?",
+    "depiction": "A prompt becomes a response piece by piece, while the LLM carries every current text position as numerical hidden features. The composition follows TEXT POSITIONS → HIDDEN FEATURES → LEARNED PROJECTION → NEXT LLM STATE and preserves prompt and position axes while changing feature width.",
+    "alt": "Visual explanation of From Text to Tensors: prompt positions receive hidden feature vectors, one learned matrix transforms every position, and the resulting feature width feeds the next LLM layer.",
+    "longDescription": "A prompt becomes a response piece by piece, while the LLM carries every current text position as numerical hidden features. The composition follows TEXT POSITIONS → HIDDEN FEATURES → LEARNED PROJECTION → NEXT LLM STATE and preserves prompt and position axes while changing feature width. Worked reference: two already-divided prompts with three positions and four features produce $X[2,3,4]$. Multiplying by $W[4,6]$ applies one learned projection to all six positions and returns $Y[2,3,6]$ for use by a later attention, MLP, or output layer.",
+    "boundary": "This deterministic diagram validates the role and survival of tensor axes, not learned feature meaning, language understanding, factuality, or the behavior of a trained model.",
     "labels": [
-      "AXES",
-      "VALUES",
-      "MULTIPLY",
-      "OUTPUT SHAPE"
+      "TEXT POSITIONS",
+      "HIDDEN FEATURES",
+      "LEARNED PROJECTION",
+      "NEXT LLM STATE"
     ],
     "stageDescriptions": [
-      "Name batch, position, and feature axes before calculating.",
-      "A coordinate stores a number; its axis gives that number a role.",
-      "Matrix multiplication mixes the shared inner dimension.",
-      "The untouched axes and new output width determine the result."
+      "Arrange the visible text positions for every prompt along named batch and position axes.",
+      "Each position carries a vector of numerical features rather than a word-sized fact record.",
+      "Matrix multiplication applies the same learned feature transformation at every position.",
+      "Prompt and position axes survive while the new feature width feeds attention, an MLP, or the output head."
     ],
     "assetBase": null,
-    "prompt": "Render a deterministic four-stage SVG/HTML concept plate using the coordinates grammar. Stages: AXES: Name batch, position, and feature axes before calculating. | VALUES: A coordinate stores a number; its axis gives that number a role. | MULTIPLY: Matrix multiplication mixes the shared inner dimension. | OUTPUT SHAPE: The untouched axes and new output width determine the result.. Exact worked trace: For $B=2$ sequences, $T=3$ tokens, and $d=4$ features, $X$ has shape $[2,3,4]$. Multiplying by $W[4,6]$ applies the same learned projection to all six token positions and returns $Y[2,3,6]$. That is $2 \\times 3 \\times 6$ output values, each a four-term dot product plus bias.",
+    "prompt": "Render a deterministic four-stage SVG/HTML concept plate using the coordinates grammar. Stages: TEXT POSITIONS: arrange two prompts with three visible positions each. | HIDDEN FEATURES: show one feature vector per position. | LEARNED PROJECTION: apply the same matrix across every position. | NEXT LLM STATE: preserve prompt and position axes while changing feature width for the next LLM component. Exact worked trace: $X[2,3,4] \\times W[4,6] \\to Y[2,3,6]$.",
     "provenance": {
       "generator": "deterministic SVG/HTML",
       "status": "code-native",
-      "promptRevision": 1
+      "promptRevision": 2
     }
   },
   {

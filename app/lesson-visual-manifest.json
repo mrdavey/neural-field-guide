@@ -24,16 +24,16 @@
     "kind": "deterministic",
     "concept": "coordinates",
     "labels": [
-      "AXES",
-      "VALUES",
-      "MULTIPLY",
-      "OUTPUT SHAPE"
+      "TEXT POSITIONS",
+      "HIDDEN FEATURES",
+      "LEARNED PROJECTION",
+      "NEXT LLM STATE"
     ],
     "stageDescriptions": [
-      "Name batch, position, and feature axes before calculating.",
-      "A coordinate stores a number; its axis gives that number a role.",
-      "Matrix multiplication mixes the shared inner dimension.",
-      "The untouched axes and new output width determine the result."
+      "Arrange the visible text positions for every prompt along named batch and position axes.",
+      "Each position carries a vector of numerical features rather than a word-sized fact record.",
+      "Matrix multiplication applies the same learned feature transformation at every position.",
+      "Prompt and position axes survive while the new feature width feeds attention, an MLP, or the output head."
     ],
     "assetBase": null
   },
