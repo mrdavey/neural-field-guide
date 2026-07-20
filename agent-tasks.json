@@ -204,7 +204,7 @@
       ],
       "blockers": [],
       "commit": {
-        "sha": "",
+        "sha": "e593f41",
         "message": "Task T002: Verify LLM curriculum continuity"
       }
     }
