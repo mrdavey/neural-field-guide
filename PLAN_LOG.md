@@ -32,11 +32,18 @@ Audit and repair continuity across World Models, Generative Models, RL & Control
 ### Gaps -> Plan 3
 
 ## Plan 3
-1. [ ] T003 independently grade all 48 repaired destinations and account for all 138 handoffs from blind current reader dossiers - Done when no material seam is partial or failed
-2. [ ] T003 remediate every independent grading gap and repeat review - Done when the grader returns zero unresolved findings
-3. [ ] T003 refresh affected whole-page hashes, course fingerprints, and dated review evidence - Done when grade verification matches current learner-facing source
-4. [ ] T003 run lint, the complete npm test suite, and final worktree/commit checks - Done when all repository contracts pass and only in-scope files are committed
+1. [x] T003 independently grade all 48 repaired destinations and account for all 138 handoffs from blind current reader dossiers - Done when no material seam is partial or failed
+2. [x] T003 remediate every independent grading gap and repeat review - Done when the grader returns zero unresolved findings
+3. [x] T003 refresh affected whole-page hashes, course fingerprints, and dated review evidence - Done when grade verification matches current learner-facing source
+4. [x] T003 run lint, the complete npm test suite, and final worktree/commit checks - Done when all repository contracts pass and only in-scope files are committed
 
 ### Verification
 
+- Step 1: pass - A blind independent grader reconstructed all 138 canonical handoffs from current reader dossiers. Its first current-state pass returned 135 pass, 3 partial, and 0 fail and found no internally contradictory affected destination page.
+- Step 2: pass - The three residual Generative Models seams received explicit artifact-to-mechanism bridges. A fresh blind regrade returned 3/3 pass, closing the complete population at 138 pass, 0 partial, and 0 fail.
+- Step 3: pass - Current reader hashes and source fingerprints were refreshed for all affected records; the LLM dossiers remained byte-for-byte unchanged. `npm run verify:grades` and 42 focused continuity, reader, objective, architecture, and documentation tests passed.
+- Step 4: pass - `npm run lint`, the complete `npm test` workflow, and `git diff --check` passed. The static export verified 182 canonical routes plus 44 legacy forwards, all artifacts and visuals verified, and all 219 tests passed.
+
 ### Gaps -> Plan 4
+
+None.

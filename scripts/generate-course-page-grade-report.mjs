@@ -148,7 +148,7 @@ assert.equal(finalPassing, finalPopulation, "report generation is blocked until 
 const lines = [
   "# Course page grades",
   "",
-  "Reviewed: 17 July 2026",
+  "Reviewed: 20 July 2026",
   "",
   "This report applies `docs/COURSE_PAGE_GRADING_RUBRIC.md` to each complete page as one reading journey. Independent graders read a blind top-to-bottom dossier before assigning four whole-page scores. Repository tests validate population, hashes, schema, arithmetic, and thresholds; they do not award semantic grades.",
   "",
@@ -168,7 +168,17 @@ for (const courseId of courseIds) {
 lines.push("", "### Historical diagnoses and remedies", "", "| Course | Page ID | Historical diagnosis | Implemented remedy |", "| --- | --- | --- | --- |");
 for (const failure of initialRecord.failures) lines.push(`| ${failure.courseId} | ${escapeCell(failure.id)} | ${escapeCell(failure.issue)} | ${escapeCell(failure.remedy)} |`);
 
-lines.push("", "## Blind whole-page regrade", "", `Final status: **${finalPassing}/${finalPopulation} pages pass** all four 95-point floors, the 95-point overall mean, and the no-blocker gate.`, "", "| Course | Pages | Passing | Lowest dimension | Mean overall |", "| --- | ---: | ---: | ---: | ---: |");
+lines.push(
+  "",
+  "## Blind whole-page regrade",
+  "",
+  `Final status: **${finalPassing}/${finalPopulation} pages pass** all four 95-point floors, the 95-point overall mean, and the no-blocker gate.`,
+  "",
+  "On 20 July 2026, a separate continuity review reconstructed all 138 non-LLM course handoffs from current blind reader dossiers. After 48 initial repairs and three further Generative Models remediations surfaced by the independent pass, the fresh regrade closed at 138 pass, 0 partial, and 0 fail; no affected destination page was internally contradictory.",
+  "",
+  "| Course | Pages | Passing | Lowest dimension | Mean overall |",
+  "| --- | ---: | ---: | ---: | ---: |",
+);
 for (const record of records) {
   const passing = record.pages.filter((page) => page.pass).length;
   const lowest = Math.min(...record.pages.flatMap((page) => dimensions.map((dimension) => page[dimension])));

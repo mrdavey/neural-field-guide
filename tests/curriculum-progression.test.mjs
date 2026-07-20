@@ -80,7 +80,7 @@ test("audited section seams carry the mechanism that actually prepares the next 
 });
 
 test("advanced lessons branch by goal instead of inventing a linear dependency", () => {
-  assert.match(source.courseView, /const showSpecializationChooser = isSpecializationEntry \|\| isSpecializationBranch/);
+  assert.match(source.courseView, /const showSpecializationChooser = isSpecializationEntry \|\| isWorldModelSpecializationBranch \|\| isLlmSpecializationBranch/);
   assert.match(source.courseView, /worldModelAdvancedBranchIds[\s\S]*\.filter\(\(id\) => id !== lesson\.id\)/);
   assert.match(source.courseView, /Advanced is a branch, not a ladder/);
   assert.match(source.courseView, /Choose the specialization that serves your goal\./);

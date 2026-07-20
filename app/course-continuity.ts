@@ -206,6 +206,15 @@ export const courseContinuityRecords: readonly CourseContinuityRecord[] = [
   },
   {
     courseId: "generative",
+    fromLessonId: "autoregressive-generators",
+    toLessonId: "latent-variable-models",
+    severity: "medium",
+    relationship: "extension",
+    bridge:
+      "The autoregressive generator represented $p(x)$ as an ordered product and compared exact log-likelihood with order-sensitive sampling. Latent-variable models keep the same score-and-sample questions but add an unobserved cause $z$, so $p(x)$ is obtained by combining $p(z)$ with $p(x\\mid z)$ and summing or integrating over possible latent values. This extends the model structure; it does not claim that the latent variable is merely the previous autoregressive history.",
+  },
+  {
+    courseId: "generative",
     fromLessonId: "latent-variable-models",
     toLessonId: "amortized-inference-elbo",
     severity: "high",
@@ -233,6 +242,15 @@ export const courseContinuityRecords: readonly CourseContinuityRecord[] = [
   },
   {
     courseId: "generative",
+    fromLessonId: "normalizing-flows",
+    toLessonId: "energy-based-models",
+    severity: "medium",
+    relationship: "extension",
+    bridge:
+      "A normalizing flow delivered exact normalized density and direct sampling through an invertible transform, with the Jacobian accounting for local volume change. Energy-based models relax that invertibility contract: they assign an unnormalized score $e^{-E_\\theta(x)}$, then require a partition function for normalized probability and often a Markov-chain sampler for the negative phase. Holding the scored examples fixed makes the trade visible—more flexible energy functions replace the flow's tractable density-and-sampling interface.",
+  },
+  {
+    courseId: "generative",
     fromLessonId: "diffusion-model-capstone",
     toLessonId: "conditional-generation",
     severity: "medium",
@@ -248,6 +266,15 @@ export const courseContinuityRecords: readonly CourseContinuityRecord[] = [
     relationship: "extension",
     bridge:
       "Classifier-free guidance was one way to strengthen a learned condition. Inverse problems begin from a broader evidence contract, $y=A(x)+n$: the observation operator and noise model define which candidate outputs remain consistent with measured data. Guidance can help a solver, but it is one optional mechanism inside this conditioning problem, not the definition of it.",
+  },
+  {
+    courseId: "generative",
+    fromLessonId: "inverse-problems-editing",
+    toLessonId: "compositional-control",
+    severity: "medium",
+    relationship: "extension",
+    bridge:
+      "An inverse problem kept candidate outputs consistent with one measured observation $y=A(x)+n$ and exposed why insufficient measurements can leave several valid reconstructions. Compositional control reuses measurement consistency as one condition, adds other conditions or constraints, and asks whether they can be satisfied jointly rather than optimized one at a time. Product-style combination supplies the new mechanism, while conflict tests reveal when individually plausible conditions have no reliable joint solution.",
   },
   {
     courseId: "generative",
@@ -513,15 +540,17 @@ export function continuityRelationshipFor({
   sameTrack: boolean;
   directDependency: boolean;
 }): ContinuityRelationship {
-  return (
-    continuityRecordForTransition(courseId, fromLessonId, toLessonId)
-      ?.relationship ??
-    (directDependency
-      ? "direct reuse"
-      : sameTrack
-        ? "extension"
-        : "new chapter thread")
+  const authored = continuityRecordForTransition(
+    courseId,
+    fromLessonId,
+    toLessonId,
+  )?.relationship;
+  if (authored) return authored;
+  if (directDependency) return "direct reuse";
+  const auditedCourse = ["worldmodel", "generative", "rl", "embodied"].includes(
+    courseId,
   );
+  return auditedCourse && sameTrack ? "extension" : "new chapter thread";
 }
 
 export function isWorldModelAdvancedBranch(lessonId: string) {

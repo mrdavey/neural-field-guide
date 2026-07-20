@@ -191,19 +191,93 @@
         "npm run lint and npm test pass in the isolated worktree with no unrelated files included."
       ],
       "details": "Run blind semantic grading after authoring, remediate until no partial or fail remains, refresh only affected evidence records, then run the required full repository checks and commit the verified result.",
-      "status": "in_progress",
+      "status": "done",
       "attempt": 1,
       "runMajorChecks": true,
       "priority": 30,
       "blockerReason": "",
       "nextTaskId": "",
-      "changedFiles": [],
-      "validationCommands": [],
-      "acceptanceCheckResults": [],
+      "changedFiles": [
+        "PLAN_LOG.md",
+        "agent-tasks.json",
+        "app/course-app.tsx",
+        "app/course-continuity.ts",
+        "docs/COURSE_PAGE_GRADES.md",
+        "docs/CURRICULUM_ARCHITECTURE.md",
+        "docs/OBJECTIVE_COVERAGE_REVIEW.md",
+        "docs/course-page-grades/embodied.json",
+        "docs/course-page-grades/generative.json",
+        "docs/course-page-grades/llm.json",
+        "docs/course-page-grades/rl.json",
+        "docs/course-page-grades/worldmodel.json",
+        "scripts/course-grade-fingerprint.mjs",
+        "scripts/course-page-reader-snapshot.mjs",
+        "scripts/generate-course-page-grade-report.mjs",
+        "tests/course-page-grades.test.mjs",
+        "tests/cross-course-continuity.test.mjs",
+        "tests/curriculum-progression.test.mjs"
+      ],
+      "validationCommands": [
+        {
+          "command": "blind semantic review of all 138 current handoffs plus fresh regrade of three remediations",
+          "status": "pass",
+          "evidence": "Final result 138 pass, 0 partial, 0 fail; no affected destination page was internally contradictory"
+        },
+        {
+          "command": "npm run verify:grades and focused continuity/reader/objective/architecture/documentation tests",
+          "status": "pass",
+          "evidence": "All 187 grade rows verified and 42/42 focused tests passed"
+        },
+        {
+          "command": "npm run lint",
+          "status": "pass",
+          "evidence": "ESLint completed with no findings"
+        },
+        {
+          "command": "npm test",
+          "status": "pass",
+          "evidence": "Static export, Pages URLs, artifacts, visuals, grade evidence, and all 219 tests passed"
+        },
+        {
+          "command": "git diff --check",
+          "status": "pass",
+          "evidence": "No whitespace errors"
+        }
+      ],
+      "acceptanceCheckResults": [
+        {
+          "criterion": "Independent graders pass every changed objective and complete affected page",
+          "status": "pass",
+          "details": "No visible objective changed; the grader found no internal contradiction in affected destination pages and the existing 408/408 objective gate remains closed."
+        },
+        {
+          "criterion": "Independent continuity review accounts for all 138 transitions",
+          "status": "pass",
+          "details": "The blind grader independently reconstructed all 138 handoffs, surfaced three residual seams, and passed all three after remediation for a final 138/138 result."
+        },
+        {
+          "criterion": "Reader hashes, source fingerprints, grades, and dated review evidence match current source",
+          "status": "pass",
+          "details": "All 187 grade rows verify against current dossiers and fingerprints; the new continuity registry is included in future fingerprint invalidation."
+        },
+        {
+          "criterion": "Required full repository checks pass in the isolated worktree",
+          "status": "pass",
+          "details": "Lint, the complete static-export and artifact workflow, all 219 regression tests, and whitespace checks passed."
+        }
+      ],
       "attemptedAt": "2026-07-20T07:59:19Z",
-      "completedAt": "",
-      "evidence": [],
-      "ledgerRefs": [],
+      "completedAt": "2026-07-20T08:18:06Z",
+      "evidence": [
+        "PLAN_LOG.md#Plan-3",
+        "docs/CURRICULUM_ARCHITECTURE.md#repair-disposition",
+        "docs/OBJECTIVE_COVERAGE_REVIEW.md#cross-course-continuity-revision--20-july-2026",
+        "docs/COURSE_PAGE_GRADES.md#blind-whole-page-regrade",
+        "tests/cross-course-continuity.test.mjs"
+      ],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-3:Verification"
+      ],
       "blockers": [],
       "commit": {
         "sha": "",

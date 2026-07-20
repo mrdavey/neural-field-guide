@@ -118,6 +118,19 @@ const findings = [
   ["embodied", "robustness-generalization", "latency-safety-operations", "low"],
 ].map(([courseId, from, to, severity]) => ({ courseId, from, to, severity, key: `${from}->${to}` }));
 
+const independentReviewGaps = [
+  ["generative", "autoregressive-generators", "latent-variable-models", "medium", "extension"],
+  ["generative", "normalizing-flows", "energy-based-models", "medium", "extension"],
+  ["generative", "inverse-problems-editing", "compositional-control", "medium", "extension"],
+].map(([courseId, from, to, severity, relationship]) => ({
+  courseId,
+  from,
+  to,
+  severity,
+  relationship,
+  key: `${from}->${to}`,
+}));
+
 const sectionBoundaries = [
   ["worldmodel", "home", "world-models", "extension"],
   ["worldmodel", "belief-states-filtering", "sensor-representations", "direct reuse"],
@@ -190,6 +203,20 @@ test("all 48 findings now have an authored bridge and an honest relationship", (
   }
 });
 
+test("the independent blind review's three additional gaps have explicit repaired handoffs", () => {
+  assert.equal(independentReviewGaps.length, 3);
+  for (const gap of independentReviewGaps) {
+    const handoff = handoffsFor(gap.courseId).get(gap.key);
+    assert.ok(handoff, `${gap.courseId}:${gap.key}`);
+    assert.equal(handoff.relationship, gap.relationship, `${gap.courseId}:${gap.key} relationship`);
+    const destination = snapshots.find((snapshot) => snapshot.courseId === gap.courseId && snapshot.id === gap.to);
+    const bridge = destination.blocks.find((block) => block.surface === "lesson.narrativeOpening").prerequisiteContext.prose[0];
+    assert.ok(bridge.length >= 170, `${gap.courseId}:${gap.to} bridge is substantial`);
+    assert.ok((bridge.match(/[.!?](?:\s|$)/g) ?? []).length >= 2, `${gap.courseId}:${gap.to} bridge connects multiple causal claims`);
+    assert.doesNotMatch(bridge, /This chapter starts a new branch/, `${gap.courseId}:${gap.to} does not fall back to generic copy`);
+  }
+});
+
 test("all home, track, and advanced-branch entry boundaries are explicitly classified", () => {
   assert.equal(sectionBoundaries.length, 31);
   for (const boundary of sectionBoundaries) {
@@ -202,4 +229,7 @@ test("all home, track, and advanced-branch entry boundaries are explicitly class
     assert.match(architecture.toLowerCase(), new RegExp(phrase.toLowerCase()), phrase);
   }
   assert.match(architecture, /48 repaired/);
+  assert.match(architecture, /three additional gaps/);
+  assert.match(architecture, /138 pass, 0 partial, and 0 fail/);
+  assert.match(architecture, /51 authored bridges/);
 });

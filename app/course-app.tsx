@@ -315,15 +315,18 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
   const nextTrack = next ? trackFor(course, next.track) : undefined;
   const nextUsesThisLesson = Boolean(next?.prerequisites?.includes(lesson.id));
   const continuity = continuityRecordForLesson(course.id, lesson.id);
-  const isSpecializationBranch = course.id === "worldmodel" && isWorldModelAdvancedBranch(lesson.id);
+  const isWorldModelSpecializationBranch = course.id === "worldmodel" && isWorldModelAdvancedBranch(lesson.id);
+  const isLlmSpecializationBranch = course.id === "llm" && lesson.track === course.specializationTrackId;
   const isSpecializationEntry = course.id === "worldmodel" && lesson.id === course.sharedCoreLessonId;
   const isSpecializationCapstone = course.id === "worldmodel" && lesson.id === worldModelResearchCapstoneId;
-  const showSpecializationChooser = isSpecializationEntry || isSpecializationBranch;
+  const showSpecializationChooser = isSpecializationEntry || isWorldModelSpecializationBranch || isLlmSpecializationBranch;
   const specializationChoices = showSpecializationChooser
-    ? worldModelAdvancedBranchIds
-        .filter((id) => id !== lesson.id)
-        .map((id) => lessonById[id])
-        .filter(Boolean)
+    ? course.id === "worldmodel"
+      ? worldModelAdvancedBranchIds
+          .filter((id) => id !== lesson.id)
+          .map((id) => lessonById[id])
+          .filter(Boolean)
+      : lessons.filter((candidate) => candidate.track === course.specializationTrackId && candidate.id !== lesson.id)
     : [];
   const specializationCapstone = course.id === "worldmodel" ? lessonById[worldModelResearchCapstoneId] : undefined;
   const externalExperiment = Object.values(externalExperiments).find((contract) => contract.courseId === course.id && contract.lessonId === lesson.id);
@@ -348,7 +351,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
   }) : undefined;
   const nextUseCopy = isSpecializationCapstone
     ? "This completed protocol is the evidence-bearing conclusion of the course: preserve the result, null result, failures, and reproduction boundary together."
-    : isSpecializationBranch
+    : isWorldModelSpecializationBranch || isLlmSpecializationBranch
       ? "This mechanism can become the chosen branch in the final research study. The other advanced branches remain optional; continue to the capstone after completing one branch."
       : isSpecializationEntry
         ? "The shared spine is complete. Choose one advanced branch below, then carry that mechanism into the final research capstone."
@@ -441,7 +444,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
     </section> : !isSpecializationCapstone && next ? <section className="next-connection">
       <div><span className="eyebrow">{nextRelationship === "direct reuse" ? "Why the next lesson follows" : nextRelationship === "extension" ? "How the next lesson extends this" : nextRelationship === "synthesis" ? "What the next lesson combines" : "A new chapter thread"}</span><h2>Next: {next.title}</h2></div>
       <div className="next-connection-copy">
-        <span>{nextRelationship === "new chapter thread" ? "This chapter leaves you with" : "You will carry forward"}</span><p><MathText>{currentResult}</MathText></p>
+        <span>{nextRelationship === "new chapter thread" ? "This chapter leaves you with" : course.id === "llm" && nextRelationship === "direct reuse" ? "You will reuse" : "You will carry forward"}</span><p><MathText>{currentResult}</MathText></p>
         <span>{nextRelationship === "new chapter thread" ? "The next question" : nextRelationship === "synthesis" ? "To combine" : "To learn"}</span><p><MathText>{nextGoalSentence}</MathText></p>
       </div>
     </section> : null}

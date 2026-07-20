@@ -52,6 +52,7 @@ test("the page-grade population covers five homes and all 182 released lessons",
 test("course fingerprints ignore generated caches and transient files", async () => {
   for (const sharedSource of [
     "app/contrast.css",
+    "app/course-continuity.ts",
     "app/lesson-concept-plate.tsx",
     "app/lesson-narrative-handoffs.ts",
     "app/lesson-visual-manifest.json",

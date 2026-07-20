@@ -1,6 +1,6 @@
 # Lesson objective coverage review
 
-Reviewed: 17 July 2026
+Reviewed: 20 July 2026
 
 Scope: all five released courses — 182 lessons and 408 exact visible outcomes
 
@@ -95,6 +95,14 @@ The full regression suite subsequently enforced the course-wide three-checkpoint
 Fresh blind whole-page grades pass Introduction at **97.50**, `tensors-shapes` at **97.75**, and the materially revised base-model-to-assistant bridge at **97.25**. Thirteen other changed dossier blocks were rechecked against their existing whole-page judgments and remain passing. The current hashes and review prose are recorded in `docs/course-page-grades/llm.json`; this dated result replaces, rather than inherits, the reopened 17 July evidence.
 
 Renaming Lesson 02 also changed its displayed prerequisite label on `generative:change-of-variables` and `embodied:coordinate-frames-time`. Both complete current dossiers received an additional blind consistency review; their existing whole-page judgments remain valid with no partial, failure, or blocker.
+
+## Cross-course continuity revision — 20 July 2026
+
+The continuity review then expanded from the LLM course to every canonical handoff in World Models, Generative Models, Reinforcement Learning & Control, and Embodied AI. The population contains 138 handoffs: four course-home entries, 128 ordinary next-lesson edges, five parallel World Models advanced-branch choices, and its separate research-capstone synthesis. The first complete semantic audit found **90 pass, 48 partial, and 0 fail**. Each partial destination received an authored Orient bridge that reactivates the prior artifact, names the limitation or changed question, and previews the mechanism being added; the shared renderer now labels each relationship as direct reuse, extension, synthesis, or a new chapter thread.
+
+A blind grader independently reconstructed and read all 138 current handoffs. Its first pass returned **135 pass, 3 partial, and 0 fail**, surfacing three Generative Models seams outside the initial finding set: autoregressive generators to latent-variable models, normalizing flows to energy-based models, and inverse-problem editing to compositional control. Those bridges now carry ordered likelihood and sampling into latent marginalization, contrast invertible exact-density flows with unnormalized energy and negative-phase sampling, and carry measurement consistency plus multiple valid reconstructions into joint-condition conflict testing.
+
+The fresh blind regrade returned **3 pass, 0 partial, and 0 fail** for those remediations, closing the complete handoff population at **138 pass, 0 partial, and 0 fail**. The grader also found no internal contradiction in any affected destination page. No visible objective changed, so the 408 objective-coverage records and their semantic grades were not reopened; this pass changed prerequisite activation, relationship labels, next-use context, and World Models branch navigation. Current whole-page reader hashes and source fingerprints record the independently reviewed state in `docs/course-page-grades/`.
 
 ## World Models extension and independent gate
 

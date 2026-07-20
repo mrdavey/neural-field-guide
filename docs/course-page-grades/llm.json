@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-20T07:08:00Z",
-  "sourceFingerprint": "sha256:287443d8685c320e698547948ad4f02d01f345d8d119d1bff1121b1e18c01601",
+  "sourceFingerprint": "sha256:23816f6e9156f74205ca466a1d0765247c0bd5fe6500fd9514fcf53548e61c5b",
   "grader": {
     "role": "independent whole-page grader",
     "method": "Fresh blind whole-page review of the three materially changed lessons and blind continuity review of every other changed dossier block; unaffected whole-page judgments were retained only after current hash and seam validation, before structural and fingerprint checks.",
