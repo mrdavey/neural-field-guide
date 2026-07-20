@@ -1,113 +1,147 @@
 {
   "meta": {
-    "objective": "Rewrite the introduction lesson of each released course so it is beginner-safe, motivating, and does not rely on concepts taught later.",
-    "createdAt": "2026-07-17T03:27:45Z",
-    "updatedAt": "2026-07-17T04:03:00Z",
-    "runStatus": "completed"
+    "objective": "Fix the disjointed transition from the LLM introduction to Lesson 02 by explaining why tensors, shapes, and matrix multiplication are useful for LLMs, then audit and repair equally disjointed section transitions.",
+    "createdAt": "2026-07-20T06:12:55Z",
+    "updatedAt": "2026-07-20T06:39:24Z",
+    "runStatus": "in_progress"
   },
   "tasks": [
     {
       "taskId": "T001",
-      "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Rewrite all five course introductions",
-      "objective": "Make each first lesson motivation-led, beginner-safe, and self-contained while preserving stable IDs and cumulative prerequisites.",
+      "repo": "/Users/dt/Documents/LLMs from scratch-worktrees/llm-curriculum-continuity",
+      "title": "Repair LLM curriculum continuity",
+      "objective": "Make Lesson 02 explain why tensors, shapes, and matrix multiplication are the numerical language of LLMs, then repair any similarly abrupt LLM section transitions found by a complete boundary audit.",
       "dependsOn": [],
       "acceptanceCriteria": [
-        "The LLM, World Models, Generative Models, RL & Control, and Embodied AI first lessons open with a compelling plain-language question or scenario and explain why the field matters.",
-        "No first lesson relies on mathematics, notation, or technical mechanisms that are only taught in later lessons; any unavoidable term is defined before use.",
-        "Each introduction keeps an honest concrete example, limitation, prediction-led activity, deterministic changed-case check, and clear next-use statement.",
-        "Exact objectives, objective coverage, guides, assessments, motion, code guidance, manifests, and review documentation agree for every changed introduction.",
-        "Focused curriculum and objective-coverage checks pass."
+        "Lesson 02 begins from the prompt-to-response model established in Lesson 01 and explains what tensors, named axes, and learned matrix multiplication do inside an LLM before relying on notation.",
+        "Lesson 02 includes an LLM-specific worked trace, future-use map, misconception boundary, objective check, local assessment, and retry path that agree with its exact visible outcomes.",
+        "Every Foundations lesson transition and every LLM track boundary is audited for prerequisite activation, motivation, and next-use continuity; any comparable high-severity discontinuity is repaired.",
+        "Stable lesson IDs, order, routes, persistence keys, and the Orient \u2192 Learn \u2192 Try \u2192 Test \u2192 Extend contract are preserved.",
+        "Focused curriculum, objective-coverage, reader-snapshot, and lesson-specific regression tests pass."
       ],
-      "details": "Audit and rewrite the first canonical lesson in all five released courses. Preserve lesson IDs, routes, persistence keys, static hosting, and the Orient \u2192 Learn \u2192 Try \u2192 Test \u2192 Extend contract.",
-      "status": "completed",
+      "details": "Inspect the complete LLM sequence with special attention to Introduction \u2192 Tensors, all Foundations transitions, and the first lesson of every later track. Change only the smallest coherent lesson, coverage, assessment, interaction, and review records needed to remove genuine discontinuities.",
+      "status": "done",
       "attempt": 1,
       "runMajorChecks": false,
       "priority": 10,
       "blockerReason": "",
-      "nextTaskId": "",
+      "nextTaskId": "T002",
       "changedFiles": [
+        "app/code-examples.ts",
         "app/course-data.ts",
+        "app/lesson-evidence.ts",
         "app/lesson-guides/foundations-architecture.ts",
+        "app/lesson-labs.tsx",
+        "app/lesson-motion.ts",
+        "app/lesson-narrative-handoffs.ts",
         "app/lesson-objective-coverage.ts",
-        "app/world-models/sections/foundations.ts",
-        "app/generative/sections/foundations.ts",
-        "app/rl/sections/foundations.ts",
-        "app/embodied/sections/foundations.ts",
-        "app/research-courses/helpers.ts",
-        "app/research-courses/compact.ts",
-        "tests/course-introductions.test.mjs"
+        "app/lesson-visual-manifest.json",
+        "docs/CURRICULUM_ARCHITECTURE.md",
+        "docs/CURRICULUM_INVENTORY.md",
+        "docs/INTERACTION_AUDIT.md",
+        "docs/OBJECTIVE_COVERAGE_REVIEW.md",
+        "docs/lesson-visual-prompts.json",
+        "tests/course-data.test.mjs",
+        "tests/llm-audit-repairs.test.mjs",
+        "tests/llm-curriculum-continuity.test.mjs"
       ],
       "validationCommands": [
-        "node --test tests/course-introductions.test.mjs tests/objective-coverage.test.mjs tests/interactive-learning.test.mjs tests/anime-motion.test.mjs tests/curriculum-architecture.test.mjs"
+        {
+          "command": "node --test focused curriculum/objective/reader/visual suites",
+          "status": "pass",
+          "evidence": "45/45 tests passed"
+        },
+        {
+          "command": "npm run verify:lesson-visuals",
+          "status": "pass",
+          "evidence": "182 lesson visuals verified"
+        },
+        {
+          "command": "node --test tests/curriculum-architecture.test.mjs tests/documentation.test.mjs",
+          "status": "pass",
+          "evidence": "11/11 tests passed"
+        },
+        {
+          "command": "git diff --check",
+          "status": "pass",
+          "evidence": "no whitespace errors"
+        }
       ],
       "acceptanceCheckResults": [
-        "All five first lessons are prerequisite-free, notation-free, motivation-led orientations with exact objective joins.",
-        "Focused introduction, objective, interaction, motion, and curriculum tests pass."
+        {
+          "criterion": "Lesson 02 starts from Lesson 01 and explains tensors/matrix multiplication inside an LLM before notation",
+          "status": "pass",
+          "details": "Opening begins with piece-by-piece response construction and maps prompt positions through hidden features and learned projections."
+        },
+        {
+          "criterion": "Lesson 02 teaching, trace, assessment, and retry agree",
+          "status": "pass",
+          "details": "Exact objective, narrative, worked trace, quiz, objective check, NumPy example, lab, evidence transfer, and visual use the same [prompt, position, feature] contract."
+        },
+        {
+          "criterion": "All Foundations transitions and LLM track boundaries audited",
+          "status": "pass",
+          "details": "Seven seams recorded; only Lesson 01\u219202 was equally severe, with four weaker handoff statements strengthened."
+        },
+        {
+          "criterion": "Stable curriculum and teaching contracts preserved",
+          "status": "pass",
+          "details": "Lesson ID/order/routes/persistence unchanged; reader snapshots retain the complete learning sequence."
+        },
+        {
+          "criterion": "Focused checks pass",
+          "status": "pass",
+          "details": "45 focused tests, 11 documentation checks, visual verifier, and diff hygiene passed."
+        }
       ],
-      "attemptedAt": "2026-07-17T03:27:45Z",
-      "completedAt": "2026-07-17T04:00:00Z",
+      "attemptedAt": "2026-07-20T06:12:55Z",
+      "completedAt": "2026-07-20T06:30:00Z",
       "evidence": [
-        "Independent remediation closed the World Models scenario mismatch and research-template language leaks.",
-        "Regression test protects coherent scenarios, concrete introductory interactions, and learner-facing language."
+        "PLAN_LOG.md#Plan-1",
+        "docs/CURRICULUM_ARCHITECTURE.md#llm-section-continuity-audit--20-july-2026",
+        "tests/llm-curriculum-continuity.test.mjs"
       ],
-      "ledgerRefs": [],
+      "ledgerRefs": [
+        "PLAN_LOG.md#Plan-1:Verification"
+      ],
       "blockers": [],
       "commit": {
-        "sha": "",
-        "message": "Rewrite course introductions for beginners"
+        "sha": "beebf961d092",
+        "message": "Task T001: Repair LLM curriculum continuity"
       }
     },
     {
       "taskId": "T002",
-      "repo": "/Users/dt/Documents/LLMs from scratch",
-      "title": "Independently grade and verify introductions",
-      "objective": "Prove the rewritten introductions fulfill every objective and remain accessible, coherent, and regression-safe across the released course system.",
+      "repo": "/Users/dt/Documents/LLMs from scratch-worktrees/llm-curriculum-continuity",
+      "title": "Independently grade and verify continuity repairs",
+      "objective": "Prove the repaired pages fulfill every changed objective, read as a coherent beginner-first sequence, and preserve the complete course regression contract.",
       "dependsOn": [
         "T001"
       ],
       "acceptanceCriteria": [
-        "An independent semantic grader passes every changed objective across explanation, mechanism, worked example, boundary, and committed check with no unresolved partials.",
-        "Representative browser QA confirms the five introductions orient and motivate learners without overflow or interaction regressions.",
-        "Page-grade provenance is refreshed only after the independent review passes.",
-        "npm run lint and npm test pass in full."
+        "An independent semantic grader passes every changed objective across explanation, causal mechanism, concrete trace, boundary, observable check, and specific retry route with no unresolved partials.",
+        "An independent continuity review confirms Lesson 01 \u2192 Lesson 02 and all LLM track boundaries clearly state why the next topic follows and where it will be reused.",
+        "Objective-coverage and whole-page review documentation is updated with honest dated evidence after grading passes.",
+        "npm run lint and npm test pass without including or overwriting unrelated worktree changes."
       ],
-      "details": "Run independent objective/page review, repair any semantic gaps, update reviewed evidence, complete browser QA, and execute the full required verification suite.",
-      "status": "completed",
-      "attempt": 1,
+      "details": "Run the independent grader required by AGENTS.md after authoring, remediate any partials, refresh only affected review artifacts/provenance, and execute the full repository checks.",
+      "status": "todo",
+      "attempt": 0,
       "runMajorChecks": true,
       "priority": 20,
       "blockerReason": "",
       "nextTaskId": "",
-      "changedFiles": [
-        "docs/OBJECTIVE_COVERAGE_REVIEW.md",
-        "docs/COURSE_PAGE_GRADES.md",
-        "docs/course-page-grades/*.json",
-        "docs/INTERACTION_AUDIT.md",
-        "tests/course-introductions.test.mjs"
-      ],
-      "validationCommands": [
-        "npm run lint",
-        "npm test"
-      ],
-      "acceptanceCheckResults": [
-        "Independent semantic regrade passes all 11 changed objectives and all five whole introductions with no partials.",
-        "Browser QA passes all five introductions, the LLM trust-boundary state change, and representative 390px and 1440px layouts.",
-        "Page-grade fingerprints match current source and the generated 187-page report verifies.",
-        "Lint, static export, artifact verification, and all 166 regression tests pass."
-      ],
-      "attemptedAt": "2026-07-17T04:00:00Z",
-      "completedAt": "2026-07-17T04:03:00Z",
-      "evidence": [
-        "Independent grader: 11/11 objective PASS and 5/5 whole-introduction PASS.",
-        "GitHub Pages static export verified 182 lesson routes plus 44 legacy forwards.",
-        "All preserved artifacts and 187 page-grade records verified."
-      ],
+      "changedFiles": [],
+      "validationCommands": [],
+      "acceptanceCheckResults": [],
+      "attemptedAt": "",
+      "completedAt": "",
+      "evidence": [],
       "ledgerRefs": [],
       "blockers": [],
       "commit": {
         "sha": "",
-        "message": "Rewrite course introductions for beginners"
+        "message": ""
       }
     }
   ]
