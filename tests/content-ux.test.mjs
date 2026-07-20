@@ -242,6 +242,7 @@ test("a paragraph selection copies only the selected passage", () => {
   assert.match(discussion, /discussionRef\.current\?\.closest<HTMLElement>\("\.lesson-view"\)/);
   for (const phrase of ["selectionchange", 'closest("p")', "getBoundingClientRect", "Copy for an LLM", "onPointerDown", "Escape", "event.altKey", "event.shiftKey", 'aria-keyshortcuts="Alt+Shift+C"', 'role="toolbar"']) assert.ok(discussion.includes(phrase), phrase);
   assert.match(discussion, /buildParagraphDiscussionPrompt\(paragraphSelection\.text\)/);
+  assert.match(discussion, /createPortal\([^]*document\.body\)/);
   assert.match(discussionPrompts, /buildParagraphDiscussionPrompt\(selectedText: string\)[^]*return selectedText;/);
   assert.match(discussion, /data-llm-selection="disabled"/);
   assert.match(discussionStyles, /\.popover \{[^}]*position: fixed;[^}]*z-index: 60;/);

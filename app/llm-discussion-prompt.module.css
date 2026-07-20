@@ -14,8 +14,8 @@
 .popover button {
   align-items: center;
   background: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--track) 72%, white);
-  box-shadow: 4px 4px 0 var(--track);
+  border: 1px solid color-mix(in srgb, var(--track, var(--orange)) 72%, white);
+  box-shadow: 4px 4px 0 var(--track, var(--orange));
   color: white;
   cursor: pointer;
   display: flex;
@@ -43,12 +43,12 @@
 }
 
 .popover button:focus-visible {
-  outline-color: var(--track);
+  outline-color: var(--track, var(--orange));
 }
 
 @media (hover: hover) {
   .popover button:hover {
-    box-shadow: 2px 2px 0 var(--track);
+    box-shadow: 2px 2px 0 var(--track, var(--orange));
     transform: translate(2px, 2px);
   }
 }

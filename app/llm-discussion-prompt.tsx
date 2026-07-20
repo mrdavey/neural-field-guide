@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import type { Lesson } from "./course-data";
 import { buildCourseDiscussionPrompt, buildParagraphDiscussionPrompt } from "./llm-discussion-prompts";
 import selectionStyles from "./llm-discussion-prompt.module.css";
@@ -158,10 +159,12 @@ export function ParagraphDiscussionPrompt({ discussionRef }: { discussionRef: Re
     };
   }, [clearSelectionPrompt, copyParagraphPrompt, paragraphSelection, updateSelectionPrompt]);
 
-  return paragraphSelection && <div className={`${selectionStyles.popover} ${selectionStyles[copyState]}`} data-placement={paragraphSelection.placement} style={{ left: paragraphSelection.left, top: paragraphSelection.top }} role="toolbar" aria-label="Actions for selected lesson text">
+  if (!paragraphSelection || typeof document === "undefined") return null;
+
+  return createPortal(<div className={`${selectionStyles.popover} ${selectionStyles[copyState]}`} data-placement={paragraphSelection.placement} style={{ left: paragraphSelection.left, top: paragraphSelection.top }} role="toolbar" aria-label="Actions for selected lesson text">
       <button type="button" onPointerDown={(event) => event.preventDefault()} onClick={copyParagraphPrompt} aria-keyshortcuts="Alt+Shift+C" aria-label="Copy selected passage for an LLM">{copyState === "copied" ? "Copied ✓" : copyState === "failed" ? "Copy failed — try again" : "Copy for an LLM"}</button>
       <span className="sr-only" role="status" aria-live="polite">{copyState === "copied" ? "Selected passage copied. Paste it into an LLM and add your question." : copyState === "failed" ? "The selected passage could not be copied. Try again or use your browser copy command." : ""}</span>
-    </div>;
+    </div>, document.body);
 }
 
 export const LlmDiscussionPrompt = CourseDiscussionPrompt;
