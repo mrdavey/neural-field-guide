@@ -4,6 +4,10 @@
   "lessonId": "tabular-control-capstone",
   "evidenceKind": "deterministic_reference_fixture",
   "manifest": {
+    "environmentId": "five-state-chain-v1",
+    "stateCount": 5,
+    "startState": 2,
+    "terminalStates": [0, 4],
     "factor": "slipProbability",
     "arms": [
       "slip_0.1",

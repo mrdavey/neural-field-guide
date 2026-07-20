@@ -111,14 +111,29 @@ test("World Models has 46 stable, prerequisite-respecting lessons across seven t
     }
   }
 
-  for (const branch of world.worldModelLessons.filter(
-    (lesson) => lesson.number >= 41,
+  const specializationPrerequisites = {
+    "object-centric-dynamics": ["action-conditioned-transitions"],
+    "hierarchical-multiscale": ["imagined-rollouts"],
+    "geometry-physical-priors": ["system-identification-sim-to-real"],
+    "causal-counterfactual-models": ["action-conditioned-transitions"],
+    "language-multimodal-world-models": [
+      "video-tokenization",
+      "goal-conditioned-robotics",
+    ],
+  };
+  for (const [lessonId, prerequisites] of Object.entries(
+    specializationPrerequisites,
   ))
     assert.deepEqual(
-      branch.prerequisites,
-      ["world-model-operations-case-study"],
-      `${branch.id} should branch from shared core`,
+      world.worldModelLessonById[lessonId].prerequisites,
+      prerequisites,
+      `${lessonId} should reactivate the mechanism its specialization reuses`,
     );
+  assert.deepEqual(
+    world.worldModelLessonById["world-model-research-capstone"].prerequisites,
+    ["world-model-operations-case-study"],
+    "the final study still requires the shared operations core before one chosen branch",
+  );
 });
 
 test("every World Models objective has explicit five-dimensional teaching coverage", async () => {

@@ -93,6 +93,18 @@ test("audited sampling, flow, and DDPM mechanisms keep their exact causal contra
   assert.match(course.generativeCodeExamples["ddpm-objective"].code, /x0_hats/);
 });
 
+test("the Generative GPU smoke manifest declares only the artifact its runner emits", () => {
+  const lesson = course.generativeLessonById["reproducible-gpu-experiments"];
+  const manifestCode = course.generativeCodeExamples["reproducible-gpu-experiments"].code;
+  const runner = readFileSync(join(root, "external-executions/generative_diffusion_ablation.py"), "utf8");
+
+  assert.match(lesson.example, /does not create a checkpoint/);
+  assert.match(manifestCode, /'artifacts':\['run\.json'\]/);
+  assert.doesNotMatch(manifestCode, /checkpoint\.pt/);
+  assert.match(runner, /"checkpoint_created": False/);
+  assert.equal((runner.match(/\.write_text\(/g) ?? []).length, 1, "the bounded runner emits only its JSON dossier");
+});
+
 test("the three Generative model capstones expose complete local CPU build paths", () => {
   const starter = readFileSync(join(root, "public/capstone-artifacts/generative/generative_capstone_starter.py"), "utf8");
   for (const implementation of ["train_vae", "fit_triangular_flow", "mixture_energy_and_gradient", "solve_diffusion_coefficients", "reverse_diffusion"]) {

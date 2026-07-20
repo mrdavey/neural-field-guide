@@ -132,7 +132,7 @@ def tabular_control(profile: str, _output: Path):
         "changed_dynamics_alter_exact_value": not math.isclose(rows[0]["exactStartValue"], rows[1]["exactStartValue"]),
         "collision_gate_can_reject_a_policy": unsafe["collisionRate"] > 0.1,
     }
-    return {"states": 5, "actions": ["left", "right"], "gamma": 0.95, "rolloutEpisodes": episodes, "collisionGate": 0.1, "independentUnit": "seeded rollout"}, rows, checks
+    return {"environmentId": "five-state-chain-v1", "states": 5, "startState": 2, "terminalStates": [0, 4], "actions": ["left", "right"], "gamma": 0.95, "rolloutEpisodes": episodes, "collisionGate": 0.1, "independentUnit": "seeded rollout"}, rows, checks
 
 
 def fixed_right_value(slip: float, gamma: float = 0.95) -> np.ndarray:

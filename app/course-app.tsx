@@ -32,6 +32,7 @@ import {
   worldModelAdvancedBranchIds,
   worldModelResearchCapstoneId,
 } from "./course-continuity";
+import { LessonPhaseRail } from "./lesson-phase-rail";
 
 const FineTuningWorkshop = lazy(() => import("./fine-tuning-workshop"));
 const MasteryStudio = lazy(() => import("./mastery-studios"));
@@ -152,7 +153,17 @@ export function CourseApp({ courseId = "llm", initialLessonId }: { courseId?: Co
   const nextLesson = lessons.find((lesson) => !progress.completed.includes(lesson.id)) ?? lessons[0];
 
   return (
-    <div className="app-shell">
+    <div
+      className="app-shell"
+      data-course={course.id}
+      data-course-motif={course.theme.motif}
+      data-view={view.kind}
+      style={{
+        "--course-accent": course.theme.accent,
+        "--course-secondary": course.theme.secondary,
+        "--course-paper-tint": course.theme.paperTint,
+      } as React.CSSProperties}
+    >
       <CourseMotionOrchestrator routeKey={current ? `${course.id}:${current.id}` : `${course.id}:home`} completed={completed} />
       <header className="topbar">
         <div className="topbar-primary">
@@ -371,7 +382,9 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
 
   return <article className="lesson-view" style={{ "--track": track.color } as React.CSSProperties}>
     <div className="reading-progress" aria-hidden="true"><i /></div>
+    <div className="lesson-phase-marker" id="lesson-phase-orient" data-lesson-phase="orient" aria-hidden="true" />
     <div className="lesson-breadcrumb"><button onClick={() => openLesson(lessons.find((item) => item.track === lesson.track)!.id)}>{track.title}</button><span>/</span><span>Lesson {String(lesson.number).padStart(2, "0")}</span><span className="lesson-time">{lesson.duration} min</span></div>
+    <LessonPhaseRail lessonId={lesson.id} />
     <header className="lesson-header">
       <span className="lesson-index">{String(lesson.number).padStart(2, "0")}</span>
       <div><span className="eyebrow">{track.short}</span><h1>{lesson.title}</h1></div>
@@ -402,6 +415,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
 
     {lesson.lab && (lesson.lab === "research" && course.researchLabs?.[lesson.id] ? <ResearchCourseLab lessonTitle={lesson.title} spec={course.researchLabs[lesson.id]} /> : lesson.lab.startsWith("wm-") ? <WorldModelLab type={lesson.lab as WorldModelLabType} lesson={lesson} /> : <LessonLab type={lesson.lab as Exclude<NonNullable<Lesson["lab"]>, `wm-${string}` | "research">} lesson={lesson} />)}
 
+    <div className="lesson-phase-marker" id="lesson-phase-test" data-lesson-phase="test" aria-hidden="true" />
     {guide && (course.transfers?.[lesson.id] ? <WorldModelTransferView lessonId={lesson.id} transfer={course.transfers[lesson.id]} /> : <LessonEvidenceView lesson={lesson} />)}
 
     {course.id === "llm" ? <TechnicalValidation lessonId={lesson.id} /> : course.id === "worldmodel" ? <WorldModelTechnicalValidation lessonId={lesson.id} /> : null}
@@ -426,6 +440,7 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       <button disabled={!isComplete && !quizPassed} className={isComplete ? "completed-button" : "primary-button"} onClick={toggleComplete}>{isComplete ? <><Icon name="check" /> Mastered</> : quizPassed ? <>Record mastery <span>✓</span></> : <>Mastery locked <span>○</span></>}</button>
     </section>
 
+    <div className="lesson-phase-marker" id="lesson-phase-extend" data-lesson-phase="extend" aria-hidden="true" />
     {guide && <LessonFurtherReading guide={guide} lessonId={lesson.id} reviewedDate={course.reviewedDate} />}
 
     {externalExperiment && <ExternalExperimentView contract={externalExperiment} />}

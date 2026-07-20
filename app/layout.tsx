@@ -1,6 +1,10 @@
 /* eslint-disable @next/next/next-script-for-ga -- Keep the official Google tag snippet directly inside the shared head. */
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
+import "@fontsource-variable/fraunces/wght.css";
+import "@fontsource-variable/fraunces/wght-italic.css";
+import "@fontsource-variable/source-sans-3/wght.css";
+import "@fontsource-variable/source-sans-3/wght-italic.css";
 import "./globals.css";
 import "./brand.css";
 import "./learning-activities.css";

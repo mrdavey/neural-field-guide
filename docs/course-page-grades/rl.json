@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-20T08:14:53Z",
-  "sourceFingerprint": "sha256:e783b68b5322f21d68e77a0471ef2409ee0b47dd8aa5f803fc120b6e464a19d3",
+  "gradedAt": "2026-07-20T08:06:43Z",
+  "sourceFingerprint": "sha256:52ff7a36c9b16f91161e3a4da6942b15d86fd4d223da159fe9f32446ec5e4982",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "The original blind holistic whole-page scores remain the scoring basis; an independent grader reconstructed all 138 current handoffs, inspected every changed block and affected destination, and repeated a blind regrade after three remediations.",
+    "method": "fresh blind semantic read of every complete page dossier in canonical order, with independent rubric scoring and blocker review",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -17,24 +17,26 @@
       "id": "home",
       "route": "/rl/",
       "readerSnapshotHash": "sha256:86280a26bf06ff7d3328f8aa489403e8f4cd2d59637227318b00084fe436aa6e",
-      "accuracy": 97,
+      "accuracy": 98,
       "writtenNarrative": 97,
       "flow": 98,
-      "learningContent": 96,
-      "overall": 97,
+      "learningContent": 97,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A clear seven-stage map of the full reinforcement-learning learning path.",
-        "feedback": "The home page gives a coherent cumulative route, honest simulation boundaries, useful prerequisite framing, and an actionable first step without overstating what the course evidence proves.",
-        "revisionPriorities": []
+        "synopsis": "The course home gives a coherent map from decision foundations through value, policy, model-based, imitation, safety, reproducibility, and research practice.",
+        "feedback": "The staged path, prerequisites, outcome language, and milestone projects accurately frame the released RL curriculum without overclaiming what browser exercises establish.",
+        "revisionPriorities": [
+          "Keep the route-level summary synchronized if lesson prerequisites or capstone evidence contracts change."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "sequential-decision-systems",
       "route": "/rl/sequential-decision-systems/",
-      "readerSnapshotHash": "sha256:82db18ec7b6220bd7b87ee3a572975e8dbe0f7f93bfbbb67f7c679c25d45f18a",
+      "readerSnapshotHash": "sha256:f39e9e80a68693b1d60de4cb10eff823651c630992bbef7d9f589580afe2759f",
       "accuracy": 98,
       "writtenNarrative": 97,
       "flow": 97,
@@ -43,82 +45,90 @@
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "An effective first-principles introduction to sequential decisions and feedback.",
-        "feedback": "The page cleanly distinguishes supervised prediction from action-dependent data, traces the state-action-reward loop, and closes with a meaningful changed-case assessment and specific retry path.",
-        "revisionPriorities": []
+        "synopsis": "This lesson distinguishes sequential decisions from isolated prediction by tracing how actions change later states, rewards, and options.",
+        "feedback": "The state-action-reward trajectory and return examples make delayed consequences observable, while the prediction and transfer checks require causal reasoning rather than definition recall.",
+        "revisionPriorities": [
+          "Retain the explicit contrast between immediate reward and long-horizon return when examples are revised."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "mdps-rewards",
       "route": "/rl/mdps-rewards/",
-      "readerSnapshotHash": "sha256:fbe8ab89e6e30f8acf4097ea049c2a49b107d79f5f283394c04d56f36f67066a",
+      "readerSnapshotHash": "sha256:424fa76fd27cb9e6bf77251419bf1be274fe4ff0100fa2d63f6173e27a808f94",
       "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
+      "writtenNarrative": 96,
+      "flow": 96,
       "learningContent": 98,
-      "overall": 97.5,
+      "overall": 97,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A precise bridge from transition uncertainty and rewards to discounted return.",
-        "feedback": "The probability and return arithmetic is correct, symbols are grounded in concrete transitions, and the prediction-led practice exposes both expectation and discounting rather than testing vocabulary alone.",
-        "revisionPriorities": []
+        "synopsis": "This lesson builds an MDP from states, actions, transitions, rewards, and discounting, then applies the model to concrete trajectories.",
+        "feedback": "Definitions, notation, and worked reward calculations agree; the treatment also separates the Markov modeling assumption from a claim that real observations are always sufficient.",
+        "revisionPriorities": [
+          "Preserve the state-sufficiency caveat alongside any future MDP diagrams."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "partial-observation",
       "route": "/rl/partial-observation/",
-      "readerSnapshotHash": "sha256:27a444fc0302a0342f326e6263a27aa6dd8d61b9f7f65bd77b641978d2dd396b",
+      "readerSnapshotHash": "sha256:2f26650c9f9cc4218fae7b6661e2a2f4e86088c3e9c7fa2a7f1f961993c231ed",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 97,
       "learningContent": 98,
-      "overall": 97.5,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A concrete explanation of observations, hidden state, memory, and belief updates.",
-        "feedback": "The Bayesian belief trace is numerically correct and beginner-readable, while the lab and transfer check make the consequence of identical observations with different histories directly observable.",
-        "revisionPriorities": []
+        "synopsis": "This lesson explains why observations can omit decision-relevant state and how histories or beliefs support action under partial observability.",
+        "feedback": "The hidden-state examples and changed-case checks expose perceptual aliasing cleanly, and the lesson is careful not to equate a belief state with direct access to the world state.",
+        "revisionPriorities": [
+          "Keep uncertainty over hidden state visible whenever the belief-update example changes."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "policies-occupancy",
       "route": "/rl/policies-occupancy/",
-      "readerSnapshotHash": "sha256:cddc87d7b143f9907a76b44442d268fa4a0218344873ac68d18574de62aa8820",
-      "accuracy": 97,
+      "readerSnapshotHash": "sha256:3334a89bb8572c2cbeb00f07a31484c3df879d26848cd45b733f28c8ab998307",
+      "accuracy": 98,
       "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 97,
-      "overall": 96.5,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A sound account of policies and the distributions their repeated choices induce.",
-        "feedback": "The occupancy calculation, rollout interpretation, and changed-policy contrast form a coherent causal chain; the page also keeps finite sampled frequencies distinct from exact long-run occupancy.",
-        "revisionPriorities": []
+        "synopsis": "This lesson connects policies to the state-action frequencies they induce and shows why occupancy, not action labels alone, determines collected experience.",
+        "feedback": "The probability and visitation examples support the causal link from policy to data distribution, with appropriate boundaries around finite samples and environment dynamics.",
+        "revisionPriorities": [
+          "Maintain the distinction between expected occupancy and one sampled trajectory."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "tabular-control-capstone",
       "route": "/rl/tabular-control-capstone/",
-      "readerSnapshotHash": "sha256:14a505cef158bad784f7a34bf9fb9621a88c01ab25897972fdcbff317e05f827",
-      "accuracy": 96,
+      "readerSnapshotHash": "sha256:a459ce43f0fc66b3ccb65d1bee96d1be7d2aedd605e7ac2a51c304ebdae75997",
+      "accuracy": 98,
       "writtenNarrative": 96,
-      "flow": 95,
-      "learningContent": 97,
-      "overall": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A complete tabular-agent build with explicit contracts, gates, and evidence packaging.",
-        "feedback": "The staged project is runnable, locally checkable, and honest about fixture versus execution evidence. The planned three-state case and executed five-state reference are distinguished, though that distinction requires attentive reading.",
+        "synopsis": "The capstone integrates MDP specification, policy evaluation, control, and evidence reporting in a small tabular workbench.",
+        "feedback": "Its staged artifact, exact-versus-sampled comparisons, local checks, and rubric form a credible cumulative task while labeling deterministic fixtures and sampling evidence honestly.",
         "revisionPriorities": [
-          "Make the planned three-state fixture versus executed five-state reference distinction explicit at the first capstone overview."
+          "Keep exact dynamic-programming results visually separated from sampled estimates in future revisions."
         ]
       }
     },
@@ -126,91 +136,99 @@
       "pageType": "lesson",
       "id": "dynamic-programming",
       "route": "/rl/dynamic-programming/",
-      "readerSnapshotHash": "sha256:2f5ff742a704614caf03ca2dc8a62e73bf1d40afa3a13ac79118a256443a78d0",
+      "readerSnapshotHash": "sha256:02c1ff8d71e7377a0bbf09fcc0e9833526acc2d6a9f09f1448f571cab0499ab4",
       "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
+      "writtenNarrative": 96,
+      "flow": 96,
       "learningContent": 98,
-      "overall": 97.5,
+      "overall": 97,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A mathematically correct and inspectable treatment of Bellman planning backups.",
-        "feedback": "The expected backup values, synchronous update semantics, convergence fixture, and model-availability boundary agree across prose, code, interaction, and deterministic transfer assessment.",
-        "revisionPriorities": []
+        "synopsis": "This lesson derives Bellman backups for known tabular dynamics and uses them to explain iterative policy evaluation and improvement.",
+        "feedback": "Inputs, backup transformation, and value outputs are explicit, the arithmetic trace is internally consistent, and the lesson states the known-model limitation.",
+        "revisionPriorities": [
+          "Preserve the known-transition-model prerequisite near every runnable or simulated backup."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "monte-carlo-estimation",
       "route": "/rl/monte-carlo-estimation/",
-      "readerSnapshotHash": "sha256:a6aad744a2ad61ac97588d59e69cb68dd29f6a51b5c8a6170f496639d1c341c7",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:2e3487a673bbf010cd0aa57d1f2b180866a2f7c32b5e57cf645b2b60398eb309",
+      "accuracy": 99,
       "writtenNarrative": 97,
       "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
+      "learningContent": 99,
+      "overall": 98,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A clear episode-based account of return estimation and sampling variance.",
-        "feedback": "The backward return trace is correct, first-visit versus every-visit reasoning is explicit, and the learner must interpret a changed episode before receiving diagnostic feedback.",
-        "revisionPriorities": []
+        "synopsis": "This lesson estimates values from complete sampled returns and distinguishes first-visit from every-visit Monte Carlo updates.",
+        "feedback": "The return traces, visit accounting, and unbiasedness discussion are technically careful: the guarantee is tied to the estimator and sampling assumptions rather than generalized to every finite dataset.",
+        "revisionPriorities": [
+          "Keep the first-visit/every-visit sampling assumptions explicit if the estimator examples expand."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "temporal-difference-learning",
       "route": "/rl/temporal-difference-learning/",
-      "readerSnapshotHash": "sha256:d18385e75796208724b792c129f367c182f280e3beaf6735f914d10fd9ae61ba",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:aee1a12e0e7820a2992904c1c0c766b98dd61f2d0b574358316af61f96488614",
+      "accuracy": 99,
       "writtenNarrative": 97,
       "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A tightly sequenced explanation of one-step bootstrapping and TD error.",
-        "feedback": "Target, error, and value-update arithmetic remain consistent across narrative and executable fixture, with terminal handling and the bias-variance boundary tested on a genuine changed case.",
-        "revisionPriorities": []
+        "synopsis": "This lesson shows temporal-difference learning as a one-step bootstrap from observed reward and the next-state estimate.",
+        "feedback": "The target, error, and update are traced numerically, and termination is correctly distinguished from time-limit truncation so bootstrapping behavior remains causal and implementation-relevant.",
+        "revisionPriorities": [
+          "Preserve the separate terminated and truncated flags in all future code variants."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "sarsa-q-learning",
       "route": "/rl/sarsa-q-learning/",
-      "readerSnapshotHash": "sha256:94ce5c9e2a750fa630f24b19737bbc6039c1bc925a0b48b025c421638afd0916",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:e89f2d4b7b5b5622bfb747d7fded4b3f6791bccfa75c086cec77f76281c468a4",
+      "accuracy": 99,
       "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A precise comparison of on-policy SARSA and off-policy Q-learning targets.",
-        "feedback": "The sampled-action versus greedy-action distinction is causally explained, the two numeric targets are correct, and the transfer task diagnoses which policy each update is evaluating.",
-        "revisionPriorities": []
+        "synopsis": "This lesson contrasts on-policy SARSA with off-policy Q-learning through their different bootstrap actions and resulting risk sensitivity.",
+        "feedback": "Matched transitions make the target difference observable, while terminal masking, behavior-policy dependence, and exploration boundaries are handled accurately.",
+        "revisionPriorities": [
+          "Keep both algorithms on the same transition when revising the comparison."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "value-methods-capstone",
       "route": "/rl/value-methods-capstone/",
-      "readerSnapshotHash": "sha256:8e6bb6e07fb2272d3123f3649dc67642af523a16c99970658f0106959cfc31d5",
-      "accuracy": 95,
+      "readerSnapshotHash": "sha256:8c761d9ea5a44a67e73d7a0624b8da34b26f76d340a10a5e05e2123e0d659fda",
+      "accuracy": 98,
       "writtenNarrative": 96,
-      "flow": 95,
-      "learningContent": 97,
-      "overall": 95.75,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A rigorous matched comparison project for dynamic programming, Monte Carlo, and TD control.",
-        "feedback": "The project preserves shared environments, budgets, endings, seed rows, and failure evidence. Terminal semantics are emphasized, but the SARSA and Q-learning pseudocode targets leave their zero-bootstrap convention implicit.",
+        "synopsis": "The capstone asks learners to compare Monte Carlo, TD, SARSA, and Q-learning under a controlled tabular protocol.",
+        "feedback": "The project stages, diagnostics, required evidence, and deterministic checks align with the value-method lessons and avoid treating a single run as a general performance conclusion.",
         "revisionPriorities": [
-          "State the terminal-state zero-value convention explicitly or include a termination mask in the SARSA and Q-learning pseudocode targets."
+          "Retain matched seeds and budgets as required comparison evidence."
         ]
       }
     },
@@ -218,72 +236,80 @@
       "pageType": "lesson",
       "id": "function-approximation",
       "route": "/rl/function-approximation/",
-      "readerSnapshotHash": "sha256:e952e51d9fa64009305379daa3175dc0dee72ac0749439ed71505ed6160fe125",
+      "readerSnapshotHash": "sha256:02a35ce8c0bf0ca088735ba32ac38e3b15e8752ae0923c2c1b67fb33dec2c8bd",
       "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "A concrete transition from tables to shared parameterized value functions.",
-        "feedback": "The feature-vector shapes, linear value calculation, gradient update, generalization effect, and representation boundary are mutually consistent and tested through a changed feature case.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "replay-target-networks",
-      "route": "/rl/replay-target-networks/",
-      "readerSnapshotHash": "sha256:f4752fc3b8aa0cb95f49a27eb87a3572b944d46eda9ef50a460413024b198540",
-      "accuracy": 97,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 97,
       "learningContent": 98,
       "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "An accurate mechanism-level explanation of replay sampling and target stabilization.",
-        "feedback": "The page connects correlated online data, frozen targets, hard and soft copies, ending flags, and update-to-data ratio through correct arithmetic and an inspectable replay-row exercise.",
-        "revisionPriorities": []
+        "synopsis": "This lesson replaces a value table with parameterized predictions and explains generalization, correlated updates, and instability.",
+        "feedback": "The feature-to-prediction-to-update mechanism is concrete and the worked gradient step is consistent; limitations of approximation are presented as consequences rather than vague warnings.",
+        "revisionPriorities": [
+          "Keep the parameter-sharing consequence explicit in every worked update."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "replay-target-networks",
+      "route": "/rl/replay-target-networks/",
+      "readerSnapshotHash": "sha256:42493fd098341a84d1c4a88c032f17c409712130eb49445d37740f69519f973b",
+      "accuracy": 99,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "This lesson explains how replay buffers alter sample correlations and how delayed target networks stabilize bootstrap targets.",
+        "feedback": "The continuing, terminal, and time-limit targets are numerically consistent, and the delayed-versus-online target comparison accurately isolates the moving-target mechanism.",
+        "revisionPriorities": [
+          "Preserve the 5.05, 1.0, and 5.05 mask contrast when refactoring the fixture."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "dqn",
       "route": "/rl/dqn/",
-      "readerSnapshotHash": "sha256:2c6a7d5fc94679d7be3af66476121d2533629e4e435e71a2d1f6c254bbd08da5",
+      "readerSnapshotHash": "sha256:ffd5c304d4deb758844781d6a1154fa6b12806496be1b623434b747dbf9b6ece",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 97,
       "learningContent": 98,
-      "overall": 97.5,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A complete small-batch trace of DQN action selection, targets, and loss.",
-        "feedback": "Tensor shapes, gather semantics, detached target construction, terminal masking, and the optimization step align exactly, while the lab exposes the common wrong-action and moving-target failures.",
-        "revisionPriorities": []
+        "synopsis": "This lesson assembles function approximation, replay, target networks, exploration, and clipped optimization into the DQN learning loop.",
+        "feedback": "The end-to-end data flow and tensor responsibilities are inspectable, while the evidence boundary correctly treats the browser experience as mechanism teaching rather than benchmark reproduction.",
+        "revisionPriorities": [
+          "Keep tensor shapes and target detachment visible in code-facing explanations."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "exploration-deep-rl",
       "route": "/rl/exploration-deep-rl/",
-      "readerSnapshotHash": "sha256:8d850e6ea24117e68bdc15b91482b302aa4be0550d7681b112546a18a316401b",
+      "readerSnapshotHash": "sha256:449575dd5ed7a21503956d389bef7fa7e65c77a4d75c15adde3e036dd021842f",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 97,
       "learningContent": 98,
-      "overall": 97.5,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A decision-focused treatment of exploration schedules, uncertainty, and coverage.",
-        "feedback": "The lesson separates action randomness from evidence quality, uses concrete visitation counts and schedule changes, and requires the learner to diagnose coverage rather than equate noise with exploration.",
-        "revisionPriorities": []
+        "synopsis": "This lesson compares exploration choices in deep value learning and explains how coverage and uncertainty affect what can be learned.",
+        "feedback": "Controlled cases distinguish action randomness from useful state coverage and acknowledge that exploration bonuses or schedules do not guarantee discovery.",
+        "revisionPriorities": [
+          "Retain a failure case where nominal exploration still misses important states."
+        ]
       }
     },
     {
@@ -291,71 +317,79 @@
       "id": "deep-value-capstone",
       "route": "/rl/deep-value-capstone/",
       "readerSnapshotHash": "sha256:0e78fa58f2d05d7ba4a563a6fdf62ca0bc916842b82b1153835eb54b2ea2f274",
-      "accuracy": 97,
+      "accuracy": 98,
       "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 98,
-      "overall": 96.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "A well-scaffolded DQN debugging study with reproducible evidence gates.",
-        "feedback": "The build order, shape and target assertions, matched ablation, seed-level artifacts, failure log, rubric, and attempt-gated reference make the capstone executable and educationally self-contained.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "policy-gradients",
-      "route": "/rl/policy-gradients/",
-      "readerSnapshotHash": "sha256:5b7124d50d3162c4a1ba1ecc6e9af8ec838092cdf7fdbbb1631b88c0f3a6df7d",
-      "accuracy": 97,
-      "writtenNarrative": 97,
       "flow": 97,
       "learningContent": 98,
       "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A correct derivation-by-trace of likelihood-ratio policy-gradient updates.",
-        "feedback": "Probability, log-probability, return weighting, loss sign, and on-policy data ownership are explained with real values; the changed-batch check also surfaces stale-policy evidence risk.",
-        "revisionPriorities": []
+        "synopsis": "The capstone integrates a DQN-style pipeline with explicit replay, target, exploration, evaluation, and failure-analysis artifacts.",
+        "feedback": "The scaffold and checkpoints demand inspectable evidence at each mechanism boundary, and the rubric avoids rewarding a high return without reproducibility or diagnostics.",
+        "revisionPriorities": [
+          "Keep learning curves paired with replay and target-network diagnostics."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "policy-gradients",
+      "route": "/rl/policy-gradients/",
+      "readerSnapshotHash": "sha256:dbcccae630f926e2937b0861d7963d26af723d48bc4e009027551c8f37c901e8",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "This lesson derives the likelihood-ratio policy-gradient estimator and connects sampled returns to increases or decreases in action log-probability.",
+        "feedback": "The sign and weighting of the gradient contribution are explained through concrete action probabilities, with sampling variance and on-policy data requirements stated clearly.",
+        "revisionPriorities": [
+          "Preserve the explicit gradient-ascent sign convention beside the numerical trace."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "baselines-advantages",
       "route": "/rl/baselines-advantages/",
-      "readerSnapshotHash": "sha256:3c51c2859c611f1e2c4d482e85b0fdb852c261e92896fa9cd6dde517016f7bbd",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:7a2b153762b9f6d3d0cb35217fec74129ef2b032fce8f011b103a64fe2e109c2",
+      "accuracy": 99,
       "writtenNarrative": 97,
       "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A strong causal explanation of baselines, advantages, and GAE trade-offs.",
-        "feedback": "The page shows why action-independent baselines preserve the expected gradient, computes the GAE trace correctly, and lets learners manipulate bias, variance, endings, and normalization.",
-        "revisionPriorities": []
+        "synopsis": "This lesson uses baselines and generalized advantage estimation to trade variance against bias in policy-gradient updates.",
+        "feedback": "The delta recursion and advantage trace are numerically coherent, and the lesson distinguishes variance reduction from a change to the ideal expected policy gradient under valid baselines.",
+        "revisionPriorities": [
+          "Keep the GAE boundary cases for lambda visible with the recursive calculation."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "actor-critic",
       "route": "/rl/actor-critic/",
-      "readerSnapshotHash": "sha256:12847eb5513f760e3860b293021bd24ad801b0cf07253ba8a81dd0d7e6bec9d2",
-      "accuracy": 97,
+      "readerSnapshotHash": "sha256:932abc9455d6d9bc473dbf36174a86cbe53557678c64efe47c079060a1c1aa48",
+      "accuracy": 99,
       "writtenNarrative": 97,
-      "flow": 96,
-      "learningContent": 98,
-      "overall": 97,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A coherent integration of actor loss, critic loss, entropy, and PPO clipping.",
-        "feedback": "The shared-rollout contract, ratio and clipped-surrogate arithmetic, entropy term, diagnostics, and deterministic transfer case align; clipping is appropriately treated as a scoped stabilizer rather than a safety proof.",
-        "revisionPriorities": []
+        "synopsis": "This lesson couples an actor update to a learned critic and traces how critic error shapes the policy signal.",
+        "feedback": "Actor and critic objectives, stop-gradient boundaries, and bootstrapped targets are separated precisely, including correct treatment of terminal versus truncated transitions.",
+        "revisionPriorities": [
+          "Preserve distinct actor and critic loss labels in every implementation view."
+        ]
       }
     },
     {
@@ -363,89 +397,99 @@
       "id": "on-policy-capstone",
       "route": "/rl/on-policy-capstone/",
       "readerSnapshotHash": "sha256:73ccfb5ee52ce18f2041ec54b8b500cced0fb0957d3024ca40df57a8fe5113dd",
-      "accuracy": 97,
-      "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 98,
-      "overall": 96.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "A complete on-policy implementation and matched variance-ablation capstone.",
-        "feedback": "Rollout ownership, GAE, policy/value/entropy losses, stopping diagnostics, checkpoint evidence, primitive budgets, seed rows, rubric, and bounded exemplar form one reproducible learning workflow.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "learned-dynamics-control",
-      "route": "/rl/learned-dynamics-control/",
-      "readerSnapshotHash": "sha256:4fd9d3d7ca8cd27cefee46adc379207284ba9d68a403503fb0b1c3cbf07c15ad",
       "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "A concrete introduction to fitting dynamics and using them for control decisions.",
-        "feedback": "The supervised transition model, residual interpretation, rollout use, validation slices, and compounding-error boundary are connected through an executable deterministic fitting example.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "shooting-mpc",
-      "route": "/rl/shooting-mpc/",
-      "readerSnapshotHash": "sha256:a95fbcb847ce74205e773a4763eca035ffccfd0d3a7cafbc9a08646475a36046",
-      "accuracy": 97,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 97,
       "learningContent": 98,
       "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "An inspectable account of shooting-based MPC and iterative CEM planning.",
-        "feedback": "The candidate-sequence scoring, elite refit, receding-horizon action choice, transition-prediction budget, and terminal-value boundary agree across the worked trace and planner lab.",
-        "revisionPriorities": []
+        "synopsis": "The capstone integrates rollout collection, advantage estimation, actor-critic updates, and evaluation into an auditable on-policy experiment.",
+        "feedback": "It requires seed-aware evidence, diagnostics, and failure interpretation rather than a single score, and its local checks align with the preceding policy-gradient mechanisms.",
+        "revisionPriorities": [
+          "Keep rollout freshness and policy-version provenance in the required artifact."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "learned-dynamics-control",
+      "route": "/rl/learned-dynamics-control/",
+      "readerSnapshotHash": "sha256:78043b2f32c5c8044ab0944dceb896235db3fd3b46ead81e7b68017574a36e6a",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "This lesson explains how a learned transition model can support control while introducing compounding prediction error and objective mismatch.",
+        "feedback": "The observation-action-to-next-state mechanism is worked concretely, and the lesson avoids assuming one-step prediction quality guarantees useful long-horizon plans.",
+        "revisionPriorities": [
+          "Retain separate one-step and rollout-error diagnostics."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "shooting-mpc",
+      "route": "/rl/shooting-mpc/",
+      "readerSnapshotHash": "sha256:52b5c1db48a100aefff9c73de95b4fbca2816dcd6e78b6fda0a45d5a9bc8ceb9",
+      "accuracy": 99,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "This lesson plans by sampling action sequences, predicting their returns, executing only the first action, and replanning.",
+        "feedback": "The shooting and receding-horizon trace is internally consistent and clearly shows why feedback from replanning can limit but not eliminate model error.",
+        "revisionPriorities": [
+          "Keep the execute-one-action-then-replan step explicit in the worked trace."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "dyna-imagination",
       "route": "/rl/dyna-imagination/",
-      "readerSnapshotHash": "sha256:1780b447a560ded8aa37c7ab747bdc01dff9ab03f774b711c56c8520773bd2fc",
+      "readerSnapshotHash": "sha256:2265c9e5241b71bc20facf41cb88a9f64cbf003fb14cb15054c4ab086462d307",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 97,
       "learningContent": 98,
-      "overall": 97.5,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A clear explanation of mixing real experience with model-generated planning updates.",
-        "feedback": "The Dyna loop distinguishes data collection, model fitting, and imagined backups, while the changed-case assessment correctly makes model error and rollout budget part of the decision.",
-        "revisionPriorities": []
+        "synopsis": "This lesson combines real transitions with model-generated updates and examines how imagination changes sample use and error propagation.",
+        "feedback": "The real-versus-imagined update paths are distinguishable, and model bias is treated as a measurable risk rather than free extra data.",
+        "revisionPriorities": [
+          "Preserve provenance labels for real and imagined transitions."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "model-uncertainty-exploitation",
       "route": "/rl/model-uncertainty-exploitation/",
-      "readerSnapshotHash": "sha256:0779ba7f1d4eb42219c3e2e6300d16ffa9e6f5664adbe222a2ffa1874621a4f4",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:e03f1d440d66daf2121ad3e7183116e31294f4d0c3cdcff0f62720ce4445a535",
+      "accuracy": 99,
       "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A decision-centered treatment of ensemble disagreement and model exploitation.",
-        "feedback": "The uncertainty-penalized score is computed correctly, epistemic disagreement is not confused with guaranteed error, and the lab forces a support-aware choice under changed values.",
-        "revisionPriorities": []
+        "synopsis": "This lesson shows how a planner can exploit learned-model errors and how uncertainty-aware penalties or ensembles expose that failure.",
+        "feedback": "The matched candidate plans make exploitation causal, while the lesson correctly frames uncertainty as a warning signal rather than proof that a prediction is wrong.",
+        "revisionPriorities": [
+          "Keep disagreement and true error conceptually separate in future ensemble examples."
+        ]
       }
     },
     {
@@ -453,71 +497,79 @@
       "id": "model-based-capstone",
       "route": "/rl/model-based-capstone/",
       "readerSnapshotHash": "sha256:de7212acf39949283fe308a2679efe3a5c674b57592fdabe24d05e7cef9bbcb0",
-      "accuracy": 97,
+      "accuracy": 98,
       "writtenNarrative": 96,
-      "flow": 96,
+      "flow": 97,
       "learningContent": 98,
-      "overall": 96.75,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A full learned-model controller study with matched planning and uncertainty gates.",
-        "feedback": "The capstone sequences model verification, planner budgets, ensemble penalties, trusted rollouts, failures, decision gates, reproducible artifacts, and an attempt-gated reference without inflating fixture evidence.",
-        "revisionPriorities": []
+        "synopsis": "The capstone integrates model learning, rollout validation, planning, uncertainty checks, and model-exploitation analysis.",
+        "feedback": "Its artifact contract and stop criteria require learners to inspect both task return and model failure, matching the evidence limits of model-based control.",
+        "revisionPriorities": [
+          "Retain explicit plan-ranking reversals as a required exploitation diagnostic."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "behavior-cloning",
       "route": "/rl/behavior-cloning/",
-      "readerSnapshotHash": "sha256:fb0ce4ffcc7a95c207c59e46645c8d1b4374964c16a766f12c465fa40af586af",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:85ae3521b104609f0c0ae44984245570b9f4c2268b14da429b211c7aebb03e6e",
+      "accuracy": 99,
       "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A precise supervised-learning entry point to imitation policy training.",
-        "feedback": "Cross-entropy, logits, gradient direction, dataset splitting, action units, class imbalance, and closed-loop limits are consistently taught and tested on a shifted observation.",
-        "revisionPriorities": []
+        "synopsis": "This lesson casts behavior cloning as supervised prediction on expert state-action pairs and explains its deployment distribution limit.",
+        "feedback": "The loss and probability update are traced correctly, and the changed-state example makes clear why low held-out imitation loss does not guarantee closed-loop control.",
+        "revisionPriorities": [
+          "Keep offline imitation accuracy separate from rollout success."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "covariate-shift-dagger",
       "route": "/rl/covariate-shift-dagger/",
-      "readerSnapshotHash": "sha256:b7d2864673deb47c11c3d505fe5f873df51d600750c8e80713f9742446514970",
+      "readerSnapshotHash": "sha256:c54da6f51a00899872fc63061c36157b46412f9143639cc25c4f87369724715c",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 97,
       "learningContent": 98,
-      "overall": 97.5,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A strong causal account of covariate shift and dataset aggregation.",
-        "feedback": "The page shows how learner-induced states compound error, explains expert relabeling and aggregation, and preserves intervention cost and safety authority in its changed-case decision.",
-        "revisionPriorities": []
+        "synopsis": "This lesson explains covariate shift in sequential imitation and uses DAgger to query corrective actions on learner-visited states.",
+        "feedback": "The distribution feedback loop and aggregation cycle are concrete, with expert-query cost and safety limits included rather than hidden behind the algorithm.",
+        "revisionPriorities": [
+          "Preserve the learner-state data provenance in each DAgger round."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "offline-rl-coverage",
       "route": "/rl/offline-rl-coverage/",
-      "readerSnapshotHash": "sha256:50e2d1c9178a9435a923c282fcbc565ffe495115963a8bb4a128a9de528998f3",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:e418d86170d327de76164d0d0fbf0cc0210817b709d2d9aac8716d12fb10db57",
+      "accuracy": 99,
       "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A disciplined treatment of fixed-data support, extrapolation, and conservatism.",
-        "feedback": "The zero-count high-Q example makes unsupported optimism observable, and the support mask, tribunal, evaluator warning, abstention rule, and transfer check all reinforce one bounded claim.",
-        "revisionPriorities": []
+        "synopsis": "This lesson explains why offline RL is constrained by dataset support and how out-of-distribution actions can receive unreliable values.",
+        "feedback": "The support and extrapolation examples are technically sound, and conservative action selection is framed as a response to evidence gaps rather than a universal optimality guarantee.",
+        "revisionPriorities": [
+          "Keep action support visible beside every offline value estimate."
+        ]
       }
     },
     {
@@ -525,71 +577,79 @@
       "id": "sequence-policy-capstone",
       "route": "/rl/sequence-policy-capstone/",
       "readerSnapshotHash": "sha256:bfbb429276195a37affe59aecb75741a44f83bb5c1d40c537c44fccf4894e9b5",
-      "accuracy": 98,
+      "accuracy": 99,
       "writtenNarrative": 97,
-      "flow": 96,
-      "learningContent": 98,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "A rigorous causal-sequence-policy build with leakage and support release gates.",
-        "feedback": "Episode-level splitting, target ownership, causal and padding masks, tensor shapes, future-token invariance, cloning comparison, support abstention, and trusted rollout evidence are all explicitly inspectable.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "rl-evaluation-seeds",
-      "route": "/rl/rl-evaluation-seeds/",
-      "readerSnapshotHash": "sha256:f520e84842b187eaeb6ea2bac90969fe53517b85cc3fdf9d871c6f4a76f98b71",
-      "accuracy": 98,
-      "writtenNarrative": 98,
       "flow": 98,
       "learningContent": 99,
       "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "An exemplary introduction to independent seed units and uncertainty reporting.",
-        "feedback": "The page preserves the failed run, computes the declared paired percentile interval exactly, distinguishes training seeds from evaluation episodes, and tests aggregation choices without post hoc deletion.",
-        "revisionPriorities": []
+        "synopsis": "The capstone trains and audits a sequence-conditioned policy using shifted action targets, masks, context limits, and rollout evaluation.",
+        "feedback": "Token alignment and padding masks are causally explained, while required artifacts distinguish teacher-forced prediction from closed-loop policy evidence.",
+        "revisionPriorities": [
+          "Retain the explicit input-target shift and masked-loss checks."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "rl-evaluation-seeds",
+      "route": "/rl/rl-evaluation-seeds/",
+      "readerSnapshotHash": "sha256:d9819c70b6fd16771d9303c62b84d5e7b437390c527c2c7bbf45c6b3a783ec98",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "This lesson treats evaluation as estimation across seeds and episodes, using intervals and paired protocols to express uncertainty.",
+        "feedback": "The bootstrap fixture is reproducible and the reported interval of [-31.0, 4.6] matches the code contract; the narrative correctly resists conclusions unsupported by that interval.",
+        "revisionPriorities": [
+          "Keep seed-level observations as the resampling unit when the fixture changes."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "safe-constrained-rl",
       "route": "/rl/safe-constrained-rl/",
-      "readerSnapshotHash": "sha256:5202e2c54e9c5fbd89ecbdb06644e184f99721af3e90360c25666333665f4f6b",
-      "accuracy": 98,
-      "writtenNarrative": 98,
+      "readerSnapshotHash": "sha256:ba745f87b03ae15f12b77531cad70261857e29a4fe57c655fc8a63d711fe2cc0",
+      "accuracy": 99,
+      "writtenNarrative": 97,
       "flow": 98,
-      "learningContent": 98,
-      "overall": 98,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A clear feasibility-first account of constraints, shields, and intervention authority.",
-        "feedback": "Reward, expected cost, non-compensable permissions, shield error, fallback, residual risk, and decision ownership remain separate, with correct gating arithmetic and a meaningful scenario transfer.",
-        "revisionPriorities": []
+        "synopsis": "This lesson separates reward optimization from cost constraints and traces feasibility, trade-offs, and dual updates.",
+        "feedback": "The constrained objective and numerical cases are consistent, and the text makes clear that observed budget compliance does not by itself establish safety under distribution shift.",
+        "revisionPriorities": [
+          "Preserve separate reward, cost, and constraint-violation reporting."
+        ]
       }
     },
     {
       "pageType": "lesson",
       "id": "reproducible-rl-gpu",
       "route": "/rl/reproducible-rl-gpu/",
-      "readerSnapshotHash": "sha256:b19bdd19302656a082d62495e5757e00497a0a326839b52ec0f43c5ec8fb0e04",
-      "accuracy": 98,
-      "writtenNarrative": 98,
+      "readerSnapshotHash": "sha256:75c81cd580232720030c4967a9c2f38fe2b695c44398d182cef9655461767969",
+      "accuracy": 99,
+      "writtenNarrative": 97,
       "flow": 98,
-      "learningContent": 98,
-      "overall": 98,
+      "learningContent": 99,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A highly specific portable smoke/full protocol with honest evidence classes.",
-        "feedback": "The exact shapes, steps, update counts, target-copy checks, seed budgets, runtime manifest, stop rules, provider fallbacks, and reference boundaries agree across required and optional execution paths.",
-        "revisionPriorities": []
+        "synopsis": "This lesson specifies reproducible RL runs through pinned configurations, seed control, logging, checkpoints, and budget-aware GPU execution.",
+        "feedback": "The short-run and full-run budgets are internally consistent at 200/137 and 20,000/19,937, and external execution is optional with explicit stop and evidence criteria.",
+        "revisionPriorities": [
+          "Keep environment-step and update-count budgets recorded separately."
+        ]
       }
     },
     {
@@ -597,17 +657,19 @@
       "id": "rl-research-capstone",
       "route": "/rl/rl-research-capstone/",
       "readerSnapshotHash": "sha256:dea707124e04b1639e8163a05259945d90fdfac447b96422bbf07a08ccfeb15d",
-      "accuracy": 98,
-      "writtenNarrative": 98,
-      "flow": 97,
+      "accuracy": 99,
+      "writtenNarrative": 97,
+      "flow": 98,
       "learningContent": 99,
-      "overall": 98,
+      "overall": 98.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "A complete closing study from accepted baseline to bounded intervention claim.",
-        "feedback": "Baseline acceptance, one-factor intervention, matched primitive budgets, paired seed analysis, hard gates, null and failed outcomes, artifact packaging, rubric, and attempt-gated reference form a credible final synthesis.",
-        "revisionPriorities": []
+        "synopsis": "The final capstone asks learners to formulate, implement, evaluate, and report an RL research claim with reproducible evidence and limitations.",
+        "feedback": "Its staged protocol, local checks, failure logs, rubric, and machine-readable artifact integrate the full course while preventing a single favorable run from becoming a broad claim.",
+        "revisionPriorities": [
+          "Retain the claim-to-evidence table and falsification criterion as required deliverables."
+        ]
       }
     }
   ]

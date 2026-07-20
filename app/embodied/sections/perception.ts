@@ -254,14 +254,14 @@ export const embodiedPerceptionSpecs = [
       },
       transfer: {
         prompt:
-          "Calibration residual doubles after a camera bump. What should occur?",
+          "Held-out calibration RMSE is .004 m before a camera bump and .008 m afterward; the predeclared release gate is .006 m. What should occur?",
         correct:
           "Invalidate the revision, stop dependent actions, and recalibrate or verify",
         wrong: ["Keep using the old transform silently", "Increase reward"],
         worked:
-          "The drift monitor crosses its threshold, so the transform loses validity until reviewed evidence restores it.",
+          "The post-bump .008 m RMSE exceeds the .006 m gate by .002 m, so the transform revision loses validity and dependent actions remain stopped until recalibration or a fresh held-out verification passes.",
         retry:
-          "Treat calibration revision as part of every dependent observation.",
+          "Compare the post-bump .008 m held-out RMSE directly with the .006 m gate, then bind that pass/fail result to the revision used by every dependent observation.",
       },
       lab: {
         title: "Calibration release gate",

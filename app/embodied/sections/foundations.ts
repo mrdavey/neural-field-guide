@@ -11,7 +11,7 @@ export const embodiedFoundationSpecs = [
       plain:
         "Embodied AI gives an intelligent system a body—or a simulated body—so its choices must work through sensors, movement, timing, and the physical world.",
       precise:
-        "An embodied system repeatedly senses part of its surroundings, decides what to do, acts through a body, and senses again to learn whether the action worked. The body's cameras, joints, grippers, wheels, reach, speed, and limits all change what intelligence can accomplish. A text answer can be revised before anyone relies on it; a physical action can spill a cup, collide with a person, or become impossible to undo. Later lessons define the exact observation, action, timing, and safety interfaces. This introduction first makes the sense–decide–act–check loop concrete.",
+        "An embodied system repeatedly senses part of its surroundings, decides what to do, acts through a body, and gathers new evidence about what actually changed. The body's cameras, joints, grippers, wheels, reach, speed, and limits determine which plans are possible and which consequences can be observed. A text answer can be revised before anyone relies on it; a physical action can spill a cup, collide with a person, or become impossible to undo. That makes every command a claim about the current world: the named observation must be fresh enough, the action must fit the body's interface, the intended physical effect must be measurable, and an independent stop path must remain available. Later lessons formalize those observation, action, timing, and safety interfaces; this opening follows one mug placement far enough to show why all four belong to a single task contract.",
       mentalModel:
         "Think of intelligence moving from a notebook into a pair of eyes and hands: every idea now has to survive contact with the world.",
       ideas: [
@@ -20,7 +20,7 @@ export const embodiedFoundationSpecs = [
         "Check the result through new evidence and keep a separate stop path when the world becomes unsafe.",
       ],
       worked:
-        "A robot is asked to place a mug on a tray. It sees the mug, moves its gripper toward the handle, closes gently, lifts, and looks again. If the mug slipped, the new camera and force evidence should trigger a retry or stop rather than pretending the planned movement succeeded.",
+        "A robot is asked to place a mug on a tray. At the first decision, a current camera frame locates the handle, the gripper reports open, and the tray region is clear; those observations justify only a bounded approach, not the claim that the mug is already grasped. After the gripper closes, force should enter a declared band and a new image should show the mug moving with the gripper before any lift is authorized. If force remains near zero or the mug stays on the table, the observed world disagrees with the plan, so the controller holds position and requests another view. If the second view is stale or a person enters the clearance zone, the correct branch is stop rather than retry. The task contract therefore joins the observation used, the action actually applied, the physical effect required for progress, and the evidence that selects continue, retry, or stop.",
       boundary:
         "A successful simulated pick does not prove that real cameras, friction, timing, contact forces, or people will behave like the simulation.",
       objectives: {
@@ -65,7 +65,7 @@ export const embodiedFoundationSpecs = [
         mechanism:
           "Sense the current situation, choose one bounded action, let the body and environment interact, compare new sensor evidence with the intended change, then continue, retry, or stop according to the observed result.",
         workedExample:
-          "The robot closes its gripper around the mug handle, but the force reading stays near zero and the next image shows the mug unmoved. The check fails, so the system retries from a new view instead of lifting an empty gripper.",
+          "On a second attempt, the camera timestamp is current, the handle remains reachable, force rises into the declared grasp band, and the next image shows the mug displaced with the gripper. Those independent observations authorize a low lift toward the tray. If force and vision disagree, or the clearance monitor becomes invalid, the same contract withholds the lift and routes to re-observe or stop rather than treating the command itself as success.",
         boundary:
           "A visible mug movement can still hide excessive force, a poor grip, an unsafe person nearby, or a camera error; one sensor and one success do not establish safety.",
         check: {
