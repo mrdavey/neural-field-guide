@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [app, activity, guide, objectiveCoverage, labs, evidence, validations, studios, workshop, capstone, discussion, scrollStory, motion, code, styles] = await Promise.all([
+const [app, activity, guide, objectiveCoverage, labs, evidence, validations, studios, workshop, capstone, discussion, discussionPrompts, discussionStyles, scrollStory, motion, code, styles] = await Promise.all([
   readFile(new URL("../app/course-app.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/activity-info.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/lesson-guide-view.tsx", import.meta.url), "utf8"),
@@ -14,6 +14,8 @@ const [app, activity, guide, objectiveCoverage, labs, evidence, validations, stu
   readFile(new URL("../app/fine-tuning-workshop.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/capstone-project-view.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/llm-discussion-prompt.tsx", import.meta.url), "utf8"),
+  readFile(new URL("../app/llm-discussion-prompts.ts", import.meta.url), "utf8"),
+  readFile(new URL("../app/llm-discussion-prompt.module.css", import.meta.url), "utf8"),
   readFile(new URL("../app/scroll-story.tsx", import.meta.url), "utf8"),
   readFile(new URL("../app/lesson-motion.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/code-examples.ts", import.meta.url), "utf8"),
@@ -230,8 +232,21 @@ test("every lesson ends with a copyable context-rich optional AI discussion prom
   const lessonView = app.slice(app.indexOf("function LessonView"), app.indexOf("function SynthesisMap"));
   assert.match(lessonView, /<CourseDiscussionPrompt lesson=\{lesson\} lessonById=\{lessonById\}/);
   assert.ok(lessonView.indexOf("<CourseDiscussionPrompt") > lessonView.indexOf("<LessonFurtherReading"));
-  for (const phrase of ["Working definition", "Important mechanisms and distinctions", "Misconception to avoid", "[ADD YOUR QUESTION HERE]", "navigator.clipboard.writeText", "Copy prompt"]) assert.ok(discussion.includes(phrase), phrase);
+  for (const phrase of ["Working definition", "Important mechanisms and distinctions", "Misconception to avoid", "[ADD YOUR QUESTION HERE]"]) assert.ok(discussionPrompts.includes(phrase), phrase);
+  for (const phrase of ["navigator.clipboard", "Copy prompt"]) assert.ok(discussion.includes(phrase), phrase);
   assert.match(discussion, /aria-live="polite"/);
+});
+
+test("a paragraph selection can be copied with compact lesson context", () => {
+  assert.match(discussion, /<ParagraphDiscussionPrompt lesson=\{lesson\} lessonById=\{lessonById\} discussionRef=\{discussionRef\}/);
+  assert.match(discussion, /discussionRef\.current\?\.closest<HTMLElement>\("\.lesson-view"\)/);
+  for (const phrase of ["selectionchange", 'closest("p")', "getBoundingClientRect", "Copy for an LLM", "onPointerDown", "Escape", "event.altKey", "event.shiftKey", 'aria-keyshortcuts="Alt+Shift+C"', 'role="toolbar"']) assert.ok(discussion.includes(phrase), phrase);
+  for (const phrase of ["Selected lesson passage", "source material to explain", "Working definition for this lesson", "Can you re-explain this for me?"]) assert.ok(discussionPrompts.includes(phrase), phrase);
+  assert.match(discussion, /data-llm-selection="disabled"/);
+  assert.match(discussionStyles, /\.popover \{[^}]*position: fixed;[^}]*z-index: 60;/);
+  assert.match(discussionStyles, /\.popover button \{[^}]*min-height: 44px;/);
+  assert.match(discussionStyles, /@media \(max-width: 780px\)[^]*\.popover button/);
+  assert.match(discussionStyles, /@media \(prefers-reduced-motion: reduce\)[^]*\.popover button/);
 });
 
 test("all grading and project feedback is self-contained", () => {
