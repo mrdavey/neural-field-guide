@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-20T09:11:25Z",
-  "sourceFingerprint": "sha256:5ee00b206ad504e7fb7f487ff26fa0e4ad28e196bdb0ac37677d52270609e2da",
+  "sourceFingerprint": "sha256:ff60a7350a9bbd6df4c8927ff2e17709d0bc8832abadb73de8db2240970b423e",
   "grader": {
     "role": "independent whole-page grader",
     "method": "Read every learner-facing block in ascending order from a freshly generated RL reader snapshot, recalculated worked arithmetic, executed every runnable Python fixture, and judged each complete page against the four whole-page dimensions without consulting prior grades.",

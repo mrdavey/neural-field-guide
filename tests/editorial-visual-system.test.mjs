@@ -63,8 +63,11 @@ test("shared lesson renderers expose editorial tiers and meaning-labeled content
     assert.ok(`${guideView}\n${evidenceView}`.includes(`data-content-role="${role}"`), `missing ${role} content role`);
     assert.ok(styles.includes(`[data-content-role="${role}"]`), `missing ${role} visual grammar`);
   }
-  assert.match(styles, /--measure-prose:72ch/);
+  assert.match(styles, /--measure-prose:82ch/);
   assert.match(styles, /--measure-narrow:62ch/);
+  assert.match(styles, /\.lesson-extension\[data-surface-tier="metadata"\]\{max-width:none\}/);
+  assert.ok(guideView.includes('className="further-reading-intro"'));
+  assert.match(styles, /\.further-reading h2\{/);
 });
 
 test("every shared lesson exposes ordered, accessible phase navigation", () => {

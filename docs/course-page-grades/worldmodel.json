@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-20T09:11:07Z",
-  "sourceFingerprint": "sha256:e0328c220aa00e9d6e9125d1e1ac5fd484d774ae4f24c9d38acfcbd08c4cba73",
+  "sourceFingerprint": "sha256:07fb29502f2c3e429c554bcb2d989e7d2ec230f811135f13b0f7c4db6293cb85",
   "grader": {
     "role": "independent whole-page grader",
     "method": "Read every learner-facing block in canonical order from a freshly generated blind reader snapshot; independently recalculated worked arithmetic, traced prerequisite and next-use coherence, inspected commit-before-reveal interactions, changed-case transfer, feedback and retry paths, capstone references, and evidence boundaries before assigning whole-page scores.",

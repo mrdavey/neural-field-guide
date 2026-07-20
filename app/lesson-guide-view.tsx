@@ -154,7 +154,10 @@ export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, exampl
 
 export function LessonFurtherReading({ guide, lessonId, reviewedDate = "13 Jul 2026" }: { guide: LessonGuide; lessonId: string; reviewedDate?: string }) {
   return <section className="further-reading lesson-extension" data-surface-tier="metadata" aria-labelledby={`${lessonId}-further-reading-title`}>
-    <div className="further-reading-heading"><span className="eyebrow">Optional extension</span><h2 id={`${lessonId}-further-reading-title`}>Verify the claims in primary and official sources.</h2><p>The lesson and its assessments are complete without these links. Open one only when a second explanation, implementation, or primary source would help.</p><ActivityInfo mode="optional" /></div>
+    <div className="further-reading-heading">
+      <div><span className="eyebrow">Optional extension</span><h2 id={`${lessonId}-further-reading-title`}>Verify the claims in primary and official sources.</h2></div>
+      <div className="further-reading-intro"><p>The lesson and its assessments are complete without these links. Open one only when a second explanation, implementation, or primary source would help.</p><ActivityInfo mode="optional" /></div>
+    </div>
     <div className="resource-grid">{guide.resources.map((resource) => <a href={resource.url} target="_blank" rel="noreferrer" key={resource.url}>
       <span>{resource.kind === "Paper" ? "Primary / foundational source" : resource.kind === "Documentation" ? "Current practice documentation" : `Explanatory ${resource.kind.toLowerCase()}`}</span><strong><MathText>{resource.title}</MathText></strong><p><MathText>{resource.note}</MathText></p><div className="resource-reading-question"><b>Read for</b><MathText>{`Find the exact section, result, or example that supports this lesson use: ${resource.note} Then note one limit on applying it elsewhere.`}</MathText></div><small>{resource.kind === "Documentation" ? `Reviewed ${reviewedDate} · verify current version ↗` : `Source checked ${reviewedDate} · open resource ↗`}</small>
     </a>)}</div>
