@@ -37,10 +37,10 @@ export const lessonMotionStories: Record<string, LessonMotionStory> = {
   ),
   "tensors-shapes": motion(
     "coordinates",
-    "A tensor operation is valid only when every axis has a job.",
-    "The points begin on a rectangular index grid, then move into the transformed coordinates produced by matrix multiplication. Rows, columns, and output width remain visibly distinct.",
-    ["AXES", "VALUES", "MULTIPLY", "OUTPUT SHAPE"],
-    ["Name batch, position, and feature axes before calculating.", "A coordinate stores a number; its axis gives that number a role.", "Matrix multiplication mixes the shared inner dimension.", "The untouched axes and new output width determine the result."],
+    "An LLM carries every current text position through learned numerical transformations.",
+    "Begin with prompts divided into text positions, give every position a hidden feature vector, then apply one learned matrix at every position. Prompt and position axes persist while the feature description changes.",
+    ["TEXT POSITIONS", "HIDDEN FEATURES", "LEARNED PROJECTION", "NEXT LLM STATE"],
+    ["Arrange the visible text positions for every prompt along named batch and position axes.", "Each position carries a vector of numerical features rather than a word-sized fact record.", "Matrix multiplication applies the same learned feature transformation at every position.", "Prompt and position axes survive while the new feature width feeds attention, an MLP, or the output head."],
   ),
   "probability-softmax": motion(
     "distribution",

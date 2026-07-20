@@ -5,7 +5,7 @@ import test from "node:test";
 const source = await readFile(new URL("../app/course-data.ts", import.meta.url), "utf8");
 
 const expectedTopics = [
-  "Tensors, Shapes & Matrix Multiplication", "Probability, Softmax & Cross-Entropy", "Neural Networks, Gradients & Backpropagation",
+  "From Text to Tensors: Shapes & Matrix Multiplication", "Probability, Softmax & Cross-Entropy", "Neural Networks, Gradients & Backpropagation",
   "Introduction", "Tokenization", "The Embedding Layer", "Positional Encoding", "Attention",
   "Layers of Understanding", "Learning to Predict", "Bridge: From Base Model to Assistant", "GPT-2 → nanochat: Build the Stack",
   "Overview", "Training Objectives and Architectural Details", "Scaling Laws and Optimization",

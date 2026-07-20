@@ -65,7 +65,7 @@ The course has 35 lab types. Repeated lab types are deliberate when two lessons 
 | Lab | Learner-controlled variable | Representation and decision exposed | Evidence boundary | Audit verdict |
 | --- | --- | --- | --- | --- |
 | `orientation` | Supplied-text, changing-fact, or consequential-action task | Task type routing to source comparison, current evidence, or permission and receipt checks | Responsibility-boundary cards; no source is verified and no action executes | Keep |
-| `tensors` | Batch, token, and feature dimensions | Matrix contraction and surviving tensor axes | Shape arithmetic fixture, not a measured kernel | Keep |
+| `tensors` | Prompts per batch, text positions per prompt, and features per position | One LLM hidden-state projection: the feature axis contracts while prompt and position axes survive for later attention, MLP, or output layers | Deterministic shape-arithmetic fixture, not a trained model or measured kernel | Keep · continuity context revised 20 Jul 2026 |
 | `softmax` | Target logit | Logits, normalized probabilities, entropy, target loss, and gradient sign | Three-class deterministic fixture | Keep |
 | `gradient` | Weight and learning rate | Forward value, loss, chain-rule gradient, and optimizer step | One scalar quadratic, not a neural training run | Keep |
 | `prediction` | Temperature and repeated samples | Distribution reshaping and stochastic token selection | Fixed toy logits; no model is queried | Keep |

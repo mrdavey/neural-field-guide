@@ -25,7 +25,7 @@ const courseApp = read("app/course-app.tsx");
 const readerSnapshot = read("scripts/course-page-reader-snapshot.mjs");
 
 test("repair preserves the exact objective promises for the four blocker lessons", () => {
-  assert.match(foundations, /objectives: \["Read common LLM tensor shapes without guessing", "Predict the output of a matrix multiplication", "Explain broadcasting and why silent shape errors are dangerous"\]/);
+  assert.match(foundations, /objectives: \["Explain why LLMs represent many text positions with tensors and read their common shapes", "Predict the output of a matrix multiplication", "Explain broadcasting and why silent shape errors are dangerous"\]/);
   assert.match(foundations, /objectives: \["Explain why content-only attention cannot determine order", "Compare absolute, relative, and rotary position signals", "Describe how position design affects long-context behavior"\]/);
   assert.match(foundations, /objectives: \["Trace query-key-value attention from shapes to weighted output", "Explain causal masking and multi-head specialization", "Avoid treating attention weights as complete explanations"\]/);
   assert.match(foundations, /objectives: \["Construct shifted input-target pairs for causal language modeling", "Explain teacher forcing and parallel token loss", "Connect token loss to gradients without confusing prediction with truth"\]/);
@@ -34,7 +34,7 @@ test("repair preserves the exact objective promises for the four blocker lessons
 test("tensor worked and transfer cases stay inside taught contraction and broadcasting", () => {
   const tensorEvidence = between(evidence, '"tensors-shapes": evidence(', '"probability-softmax": evidence(');
   const tensorChecks = between(checks, '"tensors-shapes": [', '"probability-softmax": [');
-  assert.match(foundations, /displayed shape is \[T,d\]=\[2,2\].*\[B,T,d\]=\[1,2,2\]/s);
+  assert.match(foundations, /displayed shape is \$\[T,d\]=\[2,2\]\$.*gives \$\[B,T,d\]=\[1,2,2\]\$/s);
   assert.match(tensorEvidence, /X\[2,3,4\].*W\[4,6\].*offsets.*\[3,1\]/s);
   assert.match(tensorEvidence, /output feature.*batch and token positions/s);
   assert.doesNotMatch(tensorEvidence, /grouped-query|h_q|h_\{kv\}/i);
@@ -131,5 +131,6 @@ test("shared renderer gives honest next-page handoffs and keeps optional runs af
   assert.match(courseApp, /The next chapter, \$\{next\.title\}, begins/);
   assert.ok(courseApp.indexOf('<section className="knowledge-check">') < courseApp.indexOf("<ExternalExperimentView"));
   assert.ok(courseApp.indexOf("<LessonFurtherReading") < courseApp.indexOf("<ExternalExperimentView"));
-  assert.match(readerSnapshot, /relationship: directDependency \? "direct reuse" : "new chapter thread"/);
+  assert.match(readerSnapshot, /continuityRelationshipFor\(\{ courseId: course\.id, fromLessonId: lesson\.id, toLessonId: next\.id, sameTrack: lesson\.track === next\.track, directDependency \}\)/);
+  assert.match(readerSnapshot, /relationship === "synthesis" \? "To combine" : "To learn"/);
 });

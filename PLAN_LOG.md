@@ -1,25 +1,49 @@
 # PLAN_LOG.md
 
 ## Objective
-Harden the direct-to-main workflow so local pushes run the same isolated, pinned verification contract as GitHub Actions; keep deployment gated, add weekly clean verification, and document/test the complete path.
+Audit and repair continuity across World Models, Generative Models, RL & Control, and Embodied AI
 
 ## Plan 1
-1. [x] Create the shared isolated CI verifier and environment receipt - Done when one repository command installs the locked Node graph, creates a clean Python 3.12 environment, installs every capstone requirement, runs lint/full tests/root and project-prefix Pages checks, and leaves tracked build metadata unchanged.
-2. [x] Wire direct pushes and GitHub Actions to the shared verifier - Done when a repository-managed executable pre-push hook blocks failed verification, the hook is installed locally through a documented command, the pinned Ubuntu workflow calls the same verifier, scheduled runs verify without deploying, and push/manual runs deploy only after success.
-3. [x] Add regression contracts and operator documentation - Done when executable tests validate hook installation/content, workflow order/pins/schedule/deployment conditions, dependency coverage, shared command wiring, and the direct-main runbook explains normal use and the intentional bypass boundary.
-4. [x] Verify, back-check, and commit - Done when clean-environment focused tests, action/YAML validation, npm run ci:verify, both Pages URL shapes, lint/full tests, exact plan/objective completion gates, diff hygiene, and a guarded scoped commit all pass.
+1. [x] T001 enumerate all 138 home and adjacent-lesson transitions from canonical reader dossiers - Done when population and course counts are exact
+2. [x] T001 semantically classify prerequisite activation, motivation, next-use, and new-term leakage at every seam - Done when every seam has evidence and severity
+3. [x] T001 add a durable audit record and exhaustive regression contract - Done when the audit is reproducible and focused checks pass
 
 ### Clarifications
-- Constraints: Keep direct pushes to main; do not introduce PR or candidate-branch requirements; preserve GitHub Pages as the only deployment target; production deployment must remain gated behind verification.
-- Checks/Tests: node --test tests/github-pages-docs.test.mjs; npm run ci:verify; npm run lint; npm test; root and /neural-field-guide Pages verification; workflow YAML validation; git diff --check
+- Constraints: Use the isolated worktree; preserve all lesson IDs, order, routes, persistence keys, and unrelated work
+- Checks/Tests: focused reader-snapshot, manifest, documentation, and continuity checks
 
-- Back-Verification: yes; repeated focused tests, automatic prepare hook installation, shellcheck, actionlint, aggregate-lock coverage, workflow/template equality, and diff hygiene show no regression or remaining implementation gap.
-- Objective Verification: yes; direct-to-main remains the workflow, local pushes run the shared isolated verifier, GitHub repeats it before upload/deploy, and weekly runs verify without deploying.
-- Completion Re-check: yes; re-opened the original objective and all four steps after the final full ci:verify pass; all implementation and wiring requirements are satisfied, with only the guarded commit as the next mechanical gate.
 ### Verification
 
-- Step 1: pass - cmd: npm run ci:verify plus pre/post shasum; result: fresh Python 3.12 venv began without NumPy, aggregate lock installed NumPy 2.4.4, npm ci/lint/211 tests/root and /neural-field-guide exports passed, tsconfig.tsbuildinfo hash stayed 8cf54180; proof: scripts/ci-verify.mjs, requirements-ci.txt, tsconfig.pages.json
-- Step 2: pass - cmd: npm run hooks:install; git config --get core.hooksPath; node --test tests/github-pages-docs.test.mjs; result: .githooks installed, failing verifier exits 73 through pre-push, workflow pins ubuntu-24.04/Node 22.13.0/Python 3.12, weekly schedule skips configure/upload/deploy, push/manual deployment remains gated; proof: .githooks/pre-push, scripts/install-git-hooks.mjs, .github/workflows/deploy-pages.yml
-- Step 3: pass - cmd: node --test tests/github-pages-docs.test.mjs; actionlint active and template workflows; result: 9/9 focused contracts and both actionlint checks pass, aggregate lock exhaustively covers all capstone Python locks, direct-main bypass boundary documented; proof: tests/github-pages-docs.test.mjs, README.md, docs/GITHUB_PAGES.md, docs/github-pages/deploy-pages.yml
-- Step 4: pass - cmd: final npm run ci:verify; node --test tests/github-pages-docs.test.mjs; shellcheck; actionlint; git diff --check; guarded commit; result: isolated Python 3.12/NumPy 2.4.4, automatic prepare hook installation, lint, 211/211 tests, root and /neural-field-guide exports, workflow semantics, unchanged tsconfig.tsbuildinfo, and scoped implementation commit 625870d all pass; proof: full verification logs and commit 625870d
+- Step 1: pass - Canonical snapshot enumeration returned 46 World Models, 30 Generative, 32 RL, and 30 Embodied handoffs (138 total); tests/cross-course-continuity.test.mjs asserts the exact population.
+- Step 2: pass - Complete semantic audit accounted for 90 pass, 48 partial, and 0 fail; all 31 home/track/branch boundaries were independently classified, with World advanced lessons treated as parallel branches.
+- Step 3: pass - docs/CURRICULUM_ARCHITECTURE.md records evidence and scoped repairs for every partial seam; focused continuity, snapshot, architecture, and documentation tests passed (22/22), and git diff --check passed.
 ### Gaps -> Plan 2
+
+## Plan 2
+1. [x] T002 build explicit, destination-specific continuity bridges for all 48 findings without changing lesson objectives or order - Done when each repaired page names the prior artifact, need, and new mechanism
+2. [x] T002 correct misleading direct-reuse/new-thread labels and World Models advanced branch/capstone structure - Done when relationships match the actual conceptual dependency
+3. [x] T002 add semantic regression assertions for the repaired learner-facing copy and relationship taxonomy - Done when focused continuity, reader, objective, course, and documentation checks pass
+
+### Verification
+
+- Step 1: pass - All 48 audited destinations now render an authored bridge naming the prior artifact, the reason the new topic is needed, and its added mechanism; tests reject generic fallback copy and require a substantial causal bridge.
+- Step 2: pass - The shared four-way relationship classifier passes all 31 section/branch boundaries. World Models exposes five peer branches from operations and a separate required synthesis after one branch; desktop and 390px browser QA found no overflow or console errors.
+- Step 3: pass - Focused continuity, reader, curriculum, objective, World Models, documentation, and legacy LLM tests passed 44/44; npm run lint and git diff --check passed.
+### Gaps -> Plan 3
+
+## Plan 3
+1. [x] T003 independently grade all 48 repaired destinations and account for all 138 handoffs from blind current reader dossiers - Done when no material seam is partial or failed
+2. [x] T003 remediate every independent grading gap and repeat review - Done when the grader returns zero unresolved findings
+3. [x] T003 refresh affected whole-page hashes, course fingerprints, and dated review evidence - Done when grade verification matches current learner-facing source
+4. [x] T003 run lint, the complete npm test suite, and final worktree/commit checks - Done when all repository contracts pass and only in-scope files are committed
+
+### Verification
+
+- Step 1: pass - A blind independent grader reconstructed all 138 canonical handoffs from current reader dossiers. Its first current-state pass returned 135 pass, 3 partial, and 0 fail and found no internally contradictory affected destination page.
+- Step 2: pass - The three residual Generative Models seams received explicit artifact-to-mechanism bridges. A fresh blind regrade returned 3/3 pass, closing the complete population at 138 pass, 0 partial, and 0 fail.
+- Step 3: pass - Current reader hashes and source fingerprints were refreshed for all affected records; the LLM dossiers remained byte-for-byte unchanged. `npm run verify:grades` and 42 focused continuity, reader, objective, architecture, and documentation tests passed.
+- Step 4: pass - `npm run lint`, the complete `npm test` workflow, and `git diff --check` passed. The static export verified 182 canonical routes plus 44 legacy forwards, all artifacts and visuals verified, and all 219 tests passed.
+
+### Gaps -> Plan 4
+
+None.

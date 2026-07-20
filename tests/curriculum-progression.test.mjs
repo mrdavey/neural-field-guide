@@ -5,6 +5,7 @@ import test from "node:test";
 const files = {
   course: "../app/course-data.ts",
   courseView: "../app/course-app.tsx",
+  continuity: "../app/course-continuity.ts",
   guideView: "../app/lesson-guide-view.tsx",
   handoffs: "../app/lesson-narrative-handoffs.ts",
   codeExamples: "../app/code-examples.ts",
@@ -48,10 +49,12 @@ test("lesson pages make prior knowledge and the next reuse explicit", () => {
     "priorKnowledge",
     "nextUse",
     "next-connection",
-    "You will reuse",
+    "You will carry forward",
     "To learn",
+    "To combine",
     "This chapter leaves you with",
     "The next question",
+    "How the next lesson extends this",
   ]) {
     assert.ok(source.courseView.includes(phrase), `missing progression cue: ${phrase}`);
   }
@@ -77,11 +80,17 @@ test("audited section seams carry the mechanism that actually prepares the next 
 });
 
 test("advanced lessons branch by goal instead of inventing a linear dependency", () => {
-  assert.match(source.courseView, /const specializationChoices = lesson\.track === course\.specializationTrackId/);
+  assert.match(source.courseView, /const showSpecializationChooser = isSpecializationEntry \|\| isWorldModelSpecializationBranch \|\| isLlmSpecializationBranch/);
+  assert.match(source.courseView, /worldModelAdvancedBranchIds[\s\S]*\.filter\(\(id\) => id !== lesson\.id\)/);
   assert.match(source.courseView, /Advanced is a branch, not a ladder/);
   assert.match(source.courseView, /Choose the specialization that serves your goal\./);
+  assert.match(source.courseView, /Synthesize after one branch/);
+  assert.match(source.courseView, /Open the research capstone/);
   assert.match(source.courseView, /aria-label="Advanced specialization navigation"/);
   assert.match(source.courseView, /openLesson\(course\.sharedCoreLessonId\)/);
+  const branchArray = source.continuity.slice(source.continuity.indexOf("export const worldModelAdvancedBranchIds"), source.continuity.indexOf("] as const;"));
+  assert.equal((branchArray.match(/^  "[^"]+",$/gm) ?? []).length, 5);
+  assert.doesNotMatch(branchArray, /world-model-research-capstone/);
   assert.match(source.styles, /\.specialization-chooser\{/);
 });
 

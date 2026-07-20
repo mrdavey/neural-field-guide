@@ -143,6 +143,13 @@ function extractLlmLabMeta() {
 
 const { courseIds, courses } = loadTypeScriptModule(join(root, "app/course-catalog.ts"));
 const { lessonNarrativeResult } = loadTypeScriptModule(join(root, "app/lesson-narrative-handoffs.ts"));
+const {
+  continuityRecordForLesson,
+  continuityRelationshipFor,
+  isWorldModelAdvancedBranch,
+  worldModelAdvancedBranchIds,
+  worldModelResearchCapstoneId,
+} = loadTypeScriptModule(join(root, "app/course-continuity.ts"));
 const { externalExperiments } = loadTypeScriptModule(join(root, "app/external-experiments.ts"));
 const { lessonEvidence } = loadTypeScriptModule(join(root, "app/lesson-evidence.ts"));
 const { lessonTransferChecks } = loadTypeScriptModule(join(root, "app/lesson-transfer-checks.ts"));
@@ -208,10 +215,21 @@ function trackFor(course, lesson) {
 
 function nextUseText(course, lesson, next) {
   const nextGuide = next ? course.guides[next.id] : undefined;
-  if (lesson.id === "world-model-research-capstone") return "This protocol becomes the structure for the final changed-case study, null result, and reproduction boundary.";
-  if (lesson.track === course.specializationTrackId) return "This mechanism can become the chosen branch in the final research study; the other advanced branches remain optional.";
-  if (next?.prerequisites?.includes(lesson.id)) return `The next chapter, ${next.title}, directly reuses this chapter's mechanism for a new goal: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
+  if (course.id === "worldmodel" && lesson.id === worldModelResearchCapstoneId) return "This completed protocol is the evidence-bearing conclusion of the course: preserve the result, null result, failures, and reproduction boundary together.";
+  if (course.id === "worldmodel" && isWorldModelAdvancedBranch(lesson.id)) return "This mechanism can become the chosen branch in the final research study. The other advanced branches remain optional; continue to the capstone after completing one branch.";
+  if (course.id === "worldmodel" && lesson.id === course.sharedCoreLessonId) return "The shared spine is complete. Choose one advanced branch, then carry that mechanism into the final research capstone.";
+  if (course.id === "llm" && lesson.track === course.specializationTrackId) return "This mechanism can become the chosen branch in the final research study; the other advanced branches remain optional.";
   if (next) {
+    const relationship = continuityRelationshipFor({
+      courseId: course.id,
+      fromLessonId: lesson.id,
+      toLessonId: next.id,
+      sameTrack: lesson.track === next.track,
+      directDependency: Boolean(next.prerequisites?.includes(lesson.id)),
+    });
+    if (relationship === "direct reuse") return `The next chapter, ${next.title}, directly reuses this chapter's mechanism for a new goal: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
+    if (relationship === "extension") return `The next chapter, ${next.title}, extends this result with one new mechanism: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
+    if (relationship === "synthesis") return `The next chapter, ${next.title}, combines this result with earlier interfaces to pursue a larger goal: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
     const nextTrack = trackFor(course, next);
     return `This chapter closes its present thread with this result: ${sentence(lessonNarrativeResult(course.id, lesson))} The next chapter, ${next.title}, begins ${nextTrack.title} with a different goal: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
   }
@@ -232,11 +250,13 @@ function prerequisiteRecords(course, lesson) {
 }
 
 function prerequisiteContext(course, lesson, prerequisites) {
+  const continuity = continuityRecordForLesson(course.id, lesson.id);
   const prose = [];
-  if (!lesson.prerequisites?.length && !lesson.programPrerequisites?.length) prose.push(lesson.number === 1
+  if (continuity) prose.push(continuity.bridge);
+  else if (!lesson.prerequisites?.length && !lesson.programPrerequisites?.length) prose.push(lesson.number === 1
     ? "No earlier lesson is required. Begin with the familiar situation in the opening paragraph and use it as the thread for the whole chapter."
     : "This chapter starts a new branch. Bring the shared core ideas and trace each new term from its definition.");
-  if (lesson.prerequisites?.length) prose.push(`The chapter reuses ${lesson.prerequisites.map((id) => course.lessonById[id].title).join(" and ")}. In particular, keep this earlier idea available: ${course.lessonById[lesson.prerequisites.at(-1)].keyIdeas[0]}`);
+  if (!continuity && lesson.prerequisites?.length) prose.push(`The chapter reuses ${lesson.prerequisites.map((id) => course.lessonById[id].title).join(" and ")}. In particular, keep this earlier idea available: ${course.lessonById[lesson.prerequisites.at(-1)].keyIdeas[0]}`);
   return { prose, internalLessons: prerequisites.internal, programLessons: prerequisites.program };
 }
 
@@ -641,12 +661,23 @@ function lessonSnapshot(course, lesson) {
     ],
   }));
   blocks.push(block("lesson.discussion", "optionalExtension", "Continue the inquiry with an optional AI tutor.", ["The required lesson is complete without an external service. Check any answer against the lesson evidence."], { prompt: discussionPrompt(course, lesson) }));
-  if (lesson.track === course.specializationTrackId) {
+  const isLlmSpecializationBranch = course.id === "llm" && lesson.track === course.specializationTrackId;
+  const showWorldModelSpecializationChooser = course.id === "worldmodel" && (lesson.id === course.sharedCoreLessonId || isWorldModelAdvancedBranch(lesson.id));
+  if (isLlmSpecializationBranch) {
     const choices = course.lessons.filter((candidate) => candidate.track === course.specializationTrackId && candidate.id !== lesson.id);
     blocks.push(block("lesson.next", "nextUse", "Choose the specialization that serves your goal.", ["Advanced is a branch, not a ladder.", "These topics share the core curriculum, but none is a prerequisite for the others. Continue where the trade-off or research question is useful to you."], { choices: choices.map((choice) => ({ lessonId: choice.id, title: choice.title, buildsOn: choice.prerequisites?.map((id) => course.lessonById[id].title).join(" + ") ?? "the shared core", objective: course.guides[choice.id]?.objectives[0] ?? choice.keyIdeas[0] })) }));
+  } else if (showWorldModelSpecializationChooser) {
+    const choices = worldModelAdvancedBranchIds.filter((id) => id !== lesson.id).map((id) => course.lessonById[id]);
+    const synthesis = course.lessonById[worldModelResearchCapstoneId];
+    blocks.push(block("lesson.next", "nextUse", "Choose the specialization that serves your goal.", ["Advanced is a branch, not a ladder.", "These topics share the core curriculum, but none is a prerequisite for the others. Complete one useful branch before the final synthesis."], {
+      entryLessonId: course.sharedCoreLessonId,
+      choices: choices.map((choice) => ({ lessonId: choice.id, title: choice.title, relationship: "extension", buildsOn: choice.prerequisites?.map((id) => course.lessonById[id].title).join(" + ") ?? "the shared core", objective: course.guides[choice.id]?.objectives[0] ?? choice.keyIdeas[0] })),
+      synthesis: { lessonId: synthesis.id, title: synthesis.title, relationship: "synthesis", requirement: "Complete the shared operations spine and one advanced branch of your choice before combining the branch mechanism with evaluation, provenance, failures, and claim boundaries." },
+    }));
   } else if (next) {
     const directDependency = Boolean(next.prerequisites?.includes(lesson.id));
-    blocks.push(block("lesson.next", "nextUse", `Next: ${next.title}`, [], { relationship: directDependency ? "direct reuse" : "new chapter thread", reuseLabel: directDependency ? "You will reuse" : "This chapter leaves you with", reuse: sentence(lessonNarrativeResult(course.id, lesson)), nextLabel: directDependency ? "To learn" : "The next question", toLearn: sentence(course.guides[next.id]?.objectives[0] ?? next.keyIdeas[0]), previous: previous ? { lessonId: previous.id, title: previous.title } : null, next: { lessonId: next.id, title: next.title } }));
+    const relationship = continuityRelationshipFor({ courseId: course.id, fromLessonId: lesson.id, toLessonId: next.id, sameTrack: lesson.track === next.track, directDependency });
+    blocks.push(block("lesson.next", "nextUse", `Next: ${next.title}`, [], { relationship, reuseLabel: relationship === "new chapter thread" ? "This chapter leaves you with" : course.id === "llm" && relationship === "direct reuse" ? "You will reuse" : "You will carry forward", reuse: sentence(lessonNarrativeResult(course.id, lesson)), nextLabel: relationship === "new chapter thread" ? "The next question" : relationship === "synthesis" ? "To combine" : "To learn", toLearn: sentence(course.guides[next.id]?.objectives[0] ?? next.keyIdeas[0]), previous: previous ? { lessonId: previous.id, title: previous.title } : null, next: { lessonId: next.id, title: next.title } }));
   } else {
     blocks.push(block("lesson.next", "nextUse", "Course complete", ["Return to the top."], { previous: previous ? { lessonId: previous.id, title: previous.title } : null }));
   }

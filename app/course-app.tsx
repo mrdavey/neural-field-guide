@@ -25,6 +25,13 @@ import { externalExperiments } from "./external-experiments";
 import { LessonConceptPlate } from "./lesson-concept-plate";
 import { lessonNarrativeResult } from "./lesson-narrative-handoffs";
 import { lessonVisualFor } from "./lesson-visuals";
+import {
+  continuityRecordForLesson,
+  continuityRelationshipFor,
+  isWorldModelAdvancedBranch,
+  worldModelAdvancedBranchIds,
+  worldModelResearchCapstoneId,
+} from "./course-continuity";
 
 const FineTuningWorkshop = lazy(() => import("./fine-tuning-workshop"));
 const MasteryStudio = lazy(() => import("./mastery-studios"));
@@ -307,13 +314,25 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
   const nextGuide = next ? course.guides[next.id] : undefined;
   const nextTrack = next ? trackFor(course, next.track) : undefined;
   const nextUsesThisLesson = Boolean(next?.prerequisites?.includes(lesson.id));
-  const specializationChoices = lesson.track === course.specializationTrackId
-    ? lessons.filter((candidate) => candidate.track === course.specializationTrackId && candidate.id !== lesson.id)
+  const continuity = continuityRecordForLesson(course.id, lesson.id);
+  const isWorldModelSpecializationBranch = course.id === "worldmodel" && isWorldModelAdvancedBranch(lesson.id);
+  const isLlmSpecializationBranch = course.id === "llm" && lesson.track === course.specializationTrackId;
+  const isSpecializationEntry = course.id === "worldmodel" && lesson.id === course.sharedCoreLessonId;
+  const isSpecializationCapstone = course.id === "worldmodel" && lesson.id === worldModelResearchCapstoneId;
+  const showSpecializationChooser = isSpecializationEntry || isWorldModelSpecializationBranch || isLlmSpecializationBranch;
+  const specializationChoices = showSpecializationChooser
+    ? course.id === "worldmodel"
+      ? worldModelAdvancedBranchIds
+          .filter((id) => id !== lesson.id)
+          .map((id) => lessonById[id])
+          .filter(Boolean)
+      : lessons.filter((candidate) => candidate.track === course.specializationTrackId && candidate.id !== lesson.id)
     : [];
+  const specializationCapstone = course.id === "worldmodel" ? lessonById[worldModelResearchCapstoneId] : undefined;
   const externalExperiment = Object.values(externalExperiments).find((contract) => contract.courseId === course.id && contract.lessonId === lesson.id);
   const priorKnowledge = <>
-    {!lesson.prerequisites?.length && !lesson.programPrerequisites?.length ? <p>{lesson.number === 1 ? "No earlier lesson is required. Begin with the familiar situation in the opening paragraph and use it as the thread for the whole chapter." : "This chapter starts a new branch. Bring the shared core ideas and trace each new term from its definition."}</p> : null}
-    {lesson.prerequisites?.length ? <p><MathText>{`The chapter reuses ${lesson.prerequisites.map((id) => lessonById[id].title).join(" and ")}. In particular, keep this earlier idea available: ${lessonById[lesson.prerequisites.at(-1)!].keyIdeas[0]}`}</MathText></p> : null}
+    {continuity ? <p><MathText>{continuity.bridge}</MathText></p> : !lesson.prerequisites?.length && !lesson.programPrerequisites?.length ? <p>{lesson.number === 1 ? "No earlier lesson is required. Begin with the familiar situation in the opening paragraph and use it as the thread for the whole chapter." : "This chapter starts a new branch. Bring the shared core ideas and trace each new term from its definition."}</p> : null}
+    {!continuity && lesson.prerequisites?.length ? <p><MathText>{`The chapter reuses ${lesson.prerequisites.map((id) => lessonById[id].title).join(" and ")}. In particular, keep this earlier idea available: ${lessonById[lesson.prerequisites.at(-1)!].keyIdeas[0]}`}</MathText></p> : null}
     {lesson.programPrerequisites?.length ? <ul className="program-prerequisite-list">{lesson.programPrerequisites.map((reference) => {
       const prerequisiteCourse = courses[reference.courseId as CourseId];
       const prerequisite = prerequisiteCourse?.lessonById[reference.lessonId];
@@ -323,7 +342,29 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
   const nextGoal = next ? nextGuide?.objectives[0] ?? next.keyIdeas[0] : "";
   const currentResult = asSentence(lessonNarrativeResult(course.id, lesson));
   const nextGoalSentence = nextGoal ? asSentence(nextGoal) : "";
-  const nextUse = <p><MathText>{lesson.id === "world-model-research-capstone" ? "This protocol becomes the structure for the final changed-case study, null result, and reproduction boundary." : lesson.track === course.specializationTrackId ? "This mechanism can become the chosen branch in the final research study; the other advanced branches remain optional." : next && nextUsesThisLesson ? `The next chapter, ${next.title}, directly reuses this chapter's mechanism for a new goal: ${nextGoalSentence}` : next ? `This chapter closes its present thread with this result: ${currentResult} The next chapter, ${next.title}, begins ${nextTrack?.title ?? "a new section"} with a different goal: ${nextGoalSentence}` : `Use this evidence contract when you evaluate a new ${course.subject} design.`}</MathText></p>;
+  const nextRelationship = next ? continuityRelationshipFor({
+    courseId: course.id,
+    fromLessonId: lesson.id,
+    toLessonId: next.id,
+    sameTrack: lesson.track === next.track,
+    directDependency: nextUsesThisLesson,
+  }) : undefined;
+  const nextUseCopy = isSpecializationCapstone
+    ? "This completed protocol is the evidence-bearing conclusion of the course: preserve the result, null result, failures, and reproduction boundary together."
+    : isWorldModelSpecializationBranch || isLlmSpecializationBranch
+      ? "This mechanism can become the chosen branch in the final research study. The other advanced branches remain optional; continue to the capstone after completing one branch."
+      : isSpecializationEntry
+        ? "The shared spine is complete. Choose one advanced branch below, then carry that mechanism into the final research capstone."
+        : next && nextRelationship === "direct reuse"
+          ? `The next chapter, ${next.title}, directly reuses this chapter's mechanism for a new goal: ${nextGoalSentence}`
+          : next && nextRelationship === "extension"
+            ? `The next chapter, ${next.title}, extends this result with one new mechanism: ${nextGoalSentence}`
+            : next && nextRelationship === "synthesis"
+              ? `The next chapter, ${next.title}, combines this result with earlier interfaces to pursue a larger goal: ${nextGoalSentence}`
+              : next
+                ? `This chapter closes its present thread with this result: ${currentResult} The next chapter, ${next.title}, begins ${nextTrack?.title ?? "a new section"} with a different goal: ${nextGoalSentence}`
+                : `Use this evidence contract when you evaluate a new ${course.subject} design.`;
+  const nextUse = <p><MathText>{nextUseCopy}</MathText></p>;
 
   const answerQuiz = (answer: number) => setProgress((current) => ({ ...current, quizAnswers: { ...current.quizAnswers, [lesson.id]: answer } }));
   const toggleComplete = () => setProgress((current) => ({ ...current, completed: current.completed.includes(lesson.id) ? current.completed.filter((id) => id !== lesson.id) : [...current.completed, lesson.id] }));
@@ -392,23 +433,27 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
     {lesson.id === "sft" && <Suspense fallback={<section className="workshop-loading" role="status">Preparing the practical fine-tuning workshop…</section>}><FineTuningWorkshop /></Suspense>}
 
     <CourseDiscussionPrompt lesson={lesson} lessonById={lessonById} subject={course.subject} />
-    {lesson.track === course.specializationTrackId ? <section className="specialization-chooser" aria-labelledby={`specialization-chooser-${lesson.id}`}>
+    {showSpecializationChooser ? <section className="specialization-chooser" aria-labelledby={`specialization-chooser-${lesson.id}`}>
       <header><span className="eyebrow">Advanced is a branch, not a ladder</span><h2 id={`specialization-chooser-${lesson.id}`}>Choose the specialization that serves your goal.</h2><p>These topics share the core curriculum, but none is a prerequisite for the others. Continue where the trade-off or research question is useful to you.</p></header>
       <div>{specializationChoices.map((choice) => <button key={choice.id} onClick={() => openLesson(choice.id)}>
         <span>Lesson {String(choice.number).padStart(2, "0")}</span><strong>{choice.title}</strong>
         <small>Builds on {choice.prerequisites?.map((id) => lessonById[id].title).join(" + ") ?? "the shared core"}</small>
         <p><MathText>{course.guides[choice.id]?.objectives[0] ?? choice.keyIdeas[0]}</MathText></p>
       </button>)}</div>
-    </section> : next ? <section className="next-connection">
-      <div><span className="eyebrow">{nextUsesThisLesson ? "Why the next lesson follows" : "A new chapter thread"}</span><h2>Next: {next.title}</h2></div>
+      {specializationCapstone && <footer><div><span className="eyebrow">Synthesize after one branch</span><h3>{specializationCapstone.title}</h3><p>Complete one specialization above, then combine it with the shared operations and evidence contracts in the required final study.</p></div><button onClick={() => openLesson(specializationCapstone.id)}><span>Final synthesis →</span><strong>Open the research capstone</strong></button></footer>}
+    </section> : !isSpecializationCapstone && next ? <section className="next-connection">
+      <div><span className="eyebrow">{nextRelationship === "direct reuse" ? "Why the next lesson follows" : nextRelationship === "extension" ? "How the next lesson extends this" : nextRelationship === "synthesis" ? "What the next lesson combines" : "A new chapter thread"}</span><h2>Next: {next.title}</h2></div>
       <div className="next-connection-copy">
-        <span>{nextUsesThisLesson ? "You will reuse" : "This chapter leaves you with"}</span><p><MathText>{currentResult}</MathText></p>
-        <span>{nextUsesThisLesson ? "To learn" : "The next question"}</span><p><MathText>{nextGoalSentence}</MathText></p>
+        <span>{nextRelationship === "new chapter thread" ? "This chapter leaves you with" : course.id === "llm" && nextRelationship === "direct reuse" ? "You will reuse" : "You will carry forward"}</span><p><MathText>{currentResult}</MathText></p>
+        <span>{nextRelationship === "new chapter thread" ? "The next question" : nextRelationship === "synthesis" ? "To combine" : "To learn"}</span><p><MathText>{nextGoalSentence}</MathText></p>
       </div>
     </section> : null}
-    {lesson.track === course.specializationTrackId ? <nav className="lesson-pagination specialization-pagination" aria-label="Advanced specialization navigation">
-      <button onClick={() => openLesson(course.sharedCoreLessonId)}><span>← Shared core</span><strong>{lessonById[course.sharedCoreLessonId].title}</strong></button>
+    {showSpecializationChooser ? <nav className="lesson-pagination specialization-pagination" aria-label="Advanced specialization navigation">
+      {isSpecializationEntry && previous ? <button onClick={() => openLesson(previous.id)}><span>← Previous</span><strong>{previous.title}</strong></button> : <button onClick={() => openLesson(course.sharedCoreLessonId)}><span>← Shared core</span><strong>{lessonById[course.sharedCoreLessonId].title}</strong></button>}
       <button className="next" onClick={() => document.querySelector(".specialization-chooser")?.scrollIntoView({ behavior: "smooth" })}><span>Advanced branches</span><strong>Choose above ↑</strong></button>
+    </nav> : isSpecializationCapstone ? <nav className="lesson-pagination specialization-pagination" aria-label="Research capstone navigation">
+      <button onClick={() => openLesson(course.sharedCoreLessonId)}><span>← Review shared core</span><strong>{lessonById[course.sharedCoreLessonId].title}</strong></button>
+      <button className="next" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}><span>Course complete</span><strong>Return to the top ↑</strong></button>
     </nav> : <nav className="lesson-pagination" aria-label="Lesson pagination">
       {previous ? <button onClick={() => openLesson(previous.id)}><span>← Previous</span><strong>{previous.title}</strong></button> : <span />}
       {next ? <button className="next" onClick={() => openLesson(next.id)}><span>Next →</span><strong>{next.title}</strong></button> : <button className="next" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}><span>Course complete</span><strong>Return to the top ↑</strong></button>}

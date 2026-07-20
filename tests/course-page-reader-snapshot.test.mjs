@@ -142,7 +142,7 @@ test("lesson dossiers preserve the rendered narrative and learning sequence", ()
     if (workshop) assert.ok(workshop.order > blockFor(snapshot, "lesson.furtherReading").order, `${key} optional workshop follows the required assessment and sources`);
     const next = blockFor(snapshot, "lesson.next");
     if (next.relationship) {
-      assert.ok(["direct reuse", "new chapter thread"].includes(next.relationship), `${key} names the next-page relationship honestly`);
+      assert.ok(["direct reuse", "extension", "synthesis", "new chapter thread"].includes(next.relationship), `${key} names the next-page relationship honestly`);
       assert.ok(next.reuse && next.toLearn && next.reuseLabel && next.nextLabel, `${key} next-page handoff carries the current result and next goal`);
     }
   }

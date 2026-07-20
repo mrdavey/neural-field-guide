@@ -335,7 +335,7 @@ export const trainingGuides: Record<string, LessonGuide> = {
     ],
     sections: [
       { title: "A map before the detailed methods", paragraphs: [
-        "SFT, RLHF, DPO, safety tuning, and tool training are related but not synonyms. SFT imitates target responses. Preference optimization increases the likelihood of chosen outputs relative to rejected ones. RL optimizes expected reward through sampled behavior. Tool tuning teaches schemas and action trajectories. Safety data teaches decision boundaries and response strategies.",
+        "The pre-training section ended with an auditable base model that assigns probabilities to plausible continuations. That objective does not say which continuation should answer a request directly, follow a conversation contract, use an approved tool, or respect a safety boundary. Post-training supplies behavior-focused evidence for those choices. SFT, RLHF, DPO, safety tuning, and tool training are related but not synonyms: SFT imitates target responses; preference optimization increases the likelihood of chosen outputs relative to rejected ones; RL optimizes expected reward through sampled behavior; tool tuning teaches schemas and action trajectories; and safety data teaches decision boundaries and response strategies.",
         "A pipeline may use all, some, or repeated combinations of these. The right method depends on the available supervision. If you can write an ideal response, SFT is direct. If you can compare two answers more reliably than author one, preferences help. If an environment supplies delayed but verifiable success, RL may explore beyond demonstrations.",
       ] },
       { title: "Post-training spends a behavior budget", paragraphs: [

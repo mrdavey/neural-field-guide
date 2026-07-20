@@ -24,6 +24,7 @@ const common = [
   "app/capstone-project-view.tsx",
   "app/course-app.tsx",
   "app/course-catalog.ts",
+  "app/course-continuity.ts",
   "app/contrast.css",
   "app/external-experiment-view.tsx",
   "app/external-experiments.ts",
