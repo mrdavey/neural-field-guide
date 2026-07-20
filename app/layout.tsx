@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/next-script-for-ga -- Keep the official Google tag snippet directly inside the shared head. */
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import "./globals.css";
@@ -22,6 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZLJDBH230K" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-ZLJDBH230K');
+        ` }} />
+      </head>
       <body style={{ "--brand-mark-image": `url("${publicPath("brand/neural-field-guide-mark.png")}")` } as CSSProperties}>{children}</body>
     </html>
   );
