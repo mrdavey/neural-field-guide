@@ -131,7 +131,7 @@ Each handoff was graded on four questions: does the destination reactivate the r
 
 ### Section and branch boundaries
 
-All 31 course-home, track, and advanced-branch entry boundaries were classified independently of lesson numbering. World Models' Foundations → Representation → Learning → Planning joins are direct reuse; Planning → Video is an honest new chapter thread; Foundation Models → Evaluation is an extension. Its five specialization entries are parallel extensions, while the research capstone is a synthesis after a chosen specialization, not a sixth peer choice. Generative Models has deliberate new threads at Autoregressive/Latent, Flows, Diffusion, and Research; Diffusion → Conditional is an extension. RL's first two territory changes directly reuse their capstones, while Policy Gradients, Model-Based RL, Imitation/Offline RL, and Reliable Research begin new method or evidence threads. Embodied AI deliberately opens new threads at Perception, Demonstrations, Language-Conditioned Policies, Planning/Control, and Evaluation. The partial boundary rows below need better bridges, but none requires reordering the curriculum.
+All 31 course-home, track, and advanced-branch entry boundaries were classified independently of lesson numbering. World Models' Foundations → Representation → Learning → Planning and Foundation Models → Evaluation joins are direct reuse; Planning → Video is an honest new chapter thread. Its five specialization entries are parallel extensions, while the research capstone is a synthesis after a chosen specialization, not a sixth peer choice. Generative Models has deliberate new threads at Autoregressive/Latent, Flows, Diffusion, and Research; Diffusion → Conditional is an extension. RL's first two territory changes directly reuse their capstones, while Policy Gradients, Model-Based RL, Imitation/Offline RL, and Reliable Research begin new method or evidence threads. Embodied AI deliberately opens new threads at Perception, Demonstrations, Language-Conditioned Policies, Planning/Control, and Evaluation. The partial boundary rows below need better bridges, but none requires reordering the curriculum.
 
 ### World Models findings
 
@@ -202,6 +202,12 @@ All 31 course-home, track, and advanced-branch entry boundaries were classified 
 | `robustness-generalization` → `latency-safety-operations` | Low | Offline shift failures do not become runtime timing and authority requirements. | Turn each failure mode into a latency budget, constraint, provenance field, watchdog, or rollback condition. |
 
 `tests/cross-course-continuity.test.mjs` fixes the audit population, verifies that every finding is a real canonical seam, and protects the explicit boundary classifications. The findings are an implementation backlog, not a claim that lengthier prose alone will repair continuity: each destination must make the carried artifact and new mechanism observable.
+
+### Repair disposition
+
+All 48 partial handoffs were repaired without changing a lesson ID, number, route, visible objective, or persistence key. Each affected destination now begins with an authored bridge that names the earlier artifact, the limitation or new question that makes the destination necessary, and the mechanism being added. The renderer and reader dossier share a four-way relationship classifier—direct reuse, extension, synthesis, or new chapter thread—so same-track continuations no longer claim to “begin” the track and conceptually distinct chapters no longer claim direct reuse.
+
+World Models now exposes its five advanced specializations from the shared operations entry. The research capstone is excluded from the peer branch list and rendered as a separate final synthesis after one chosen branch. The canonical audit remains above as dated before-state evidence; the maintained test requires all **48 repaired** destinations to carry substantial non-generic bridge text and the relationship recorded by the repair.
 
 ## Released research-course manifests
 

@@ -131,5 +131,6 @@ test("shared renderer gives honest next-page handoffs and keeps optional runs af
   assert.match(courseApp, /The next chapter, \$\{next\.title\}, begins/);
   assert.ok(courseApp.indexOf('<section className="knowledge-check">') < courseApp.indexOf("<ExternalExperimentView"));
   assert.ok(courseApp.indexOf("<LessonFurtherReading") < courseApp.indexOf("<ExternalExperimentView"));
-  assert.match(readerSnapshot, /relationship: directDependency \? "direct reuse" : "new chapter thread"/);
+  assert.match(readerSnapshot, /continuityRelationshipFor\(\{ courseId: course\.id, fromLessonId: lesson\.id, toLessonId: next\.id, sameTrack: lesson\.track === next\.track, directDependency \}\)/);
+  assert.match(readerSnapshot, /relationship === "synthesis" \? "To combine" : "To learn"/);
 });

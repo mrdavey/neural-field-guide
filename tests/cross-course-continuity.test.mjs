@@ -12,17 +12,56 @@ function handoffsFor(courseId) {
   const pages = snapshots.filter((snapshot) => snapshot.courseId === courseId);
   const lessons = pages.filter((snapshot) => snapshot.pageType === "lesson");
   const handoffs = new Map();
-  const add = (from, to) => handoffs.set(`${from}->${to}`, { from, to });
+  const add = (from, to, relationship) => handoffs.set(`${from}->${to}`, { from, to, relationship });
 
-  add("home", lessons[0].id);
+  add("home", lessons[0].id, "extension");
   for (const lesson of lessons) {
     const next = lesson.blocks.find((block) => block.surface === "lesson.next");
-    if (next?.relationship) add(lesson.id, next.next.lessonId);
+    if (next?.relationship && next.next) add(lesson.id, next.next.lessonId, next.relationship);
     if (next?.choices) {
-      for (const prerequisite of lesson.context.prerequisites.internal) add(prerequisite.lessonId, lesson.id);
+      for (const choice of next.choices) add(next.entryLessonId, choice.lessonId, choice.relationship);
+      if (next.synthesis) add(next.entryLessonId, next.synthesis.lessonId, next.synthesis.relationship);
     }
   }
   return handoffs;
+}
+
+const directReuseFindings = new Set([
+  "worldmodel:world-models->dynamics-tensors",
+  "worldmodel:dynamics-tensors->stochastic-futures",
+  "worldmodel:stochastic-futures->learning-dynamics",
+  "worldmodel:system-identification-sim-to-real->safe-constrained-planning",
+  "generative:generation-as-distribution->likelihood-cross-entropy",
+  "generative:likelihood-cross-entropy->sampling-randomness",
+  "generative:latent-variable-models->amortized-inference-elbo",
+  "generative:amortized-inference-elbo->vae-posterior-collapse",
+  "rl:sequential-decision-systems->mdps-rewards",
+  "rl:learned-dynamics-control->shooting-mpc",
+  "rl:dyna-imagination->model-uncertainty-exploitation",
+  "rl:safe-constrained-rl->reproducible-rl-gpu",
+  "embodied:embodied-task-contracts->observation-action-spaces",
+  "embodied:cameras-proprioception->calibration-transforms",
+]);
+
+const newThreadFindings = new Set([
+  "worldmodel:dyna-tdmpc-case-study->video-tokenization",
+  "worldmodel:latent-actions-passive-video->jepa-vjepa",
+  "generative:latent-models-capstone->change-of-variables",
+  "embodied:state-estimator-capstone->teleoperation-demonstrations",
+  "embodied:behavior-cloning-capstone->language-grounding",
+]);
+
+const synthesisFindings = new Set([
+  "worldmodel:jepa-vjepa->genie-interactive-worlds",
+  "worldmodel:world-model-operations-case-study->world-model-research-capstone",
+]);
+
+function expectedFindingRelationship(finding) {
+  const key = `${finding.courseId}:${finding.key}`;
+  if (directReuseFindings.has(key)) return "direct reuse";
+  if (newThreadFindings.has(key)) return "new chapter thread";
+  if (synthesisFindings.has(key)) return "synthesis";
+  return "extension";
 }
 
 const findings = [
@@ -85,7 +124,7 @@ const sectionBoundaries = [
   ["worldmodel", "rssm-planet-case-study", "prediction-targets", "direct reuse"],
   ["worldmodel", "uncertainty-ensembles", "imagined-rollouts", "direct reuse"],
   ["worldmodel", "dyna-tdmpc-case-study", "video-tokenization", "new chapter thread"],
-  ["worldmodel", "foundation-world-models-case-study", "world-model-evaluation", "extension"],
+  ["worldmodel", "foundation-world-models-case-study", "world-model-evaluation", "direct reuse"],
   ["worldmodel", "world-model-operations-case-study", "object-centric-dynamics", "extension"],
   ["worldmodel", "world-model-operations-case-study", "hierarchical-multiscale", "extension"],
   ["worldmodel", "world-model-operations-case-study", "geometry-physical-priors", "extension"],
@@ -139,13 +178,28 @@ test("every initial finding identifies a real unique seam with severity and main
   }
 });
 
+test("all 48 findings now have an authored bridge and an honest relationship", () => {
+  for (const finding of findings) {
+    const handoff = handoffsFor(finding.courseId).get(finding.key);
+    assert.equal(handoff.relationship, expectedFindingRelationship(finding), `${finding.courseId}:${finding.key} relationship`);
+    const destination = snapshots.find((snapshot) => snapshot.courseId === finding.courseId && snapshot.id === finding.to);
+    const bridge = destination.blocks.find((block) => block.surface === "lesson.narrativeOpening").prerequisiteContext.prose[0];
+    assert.ok(bridge.length >= 170, `${finding.courseId}:${finding.to} bridge is substantial`);
+    assert.ok((bridge.match(/[.!?](?:\s|$)/g) ?? []).length >= 2, `${finding.courseId}:${finding.to} bridge connects multiple causal claims`);
+    assert.doesNotMatch(bridge, /This chapter starts a new branch/, `${finding.courseId}:${finding.to} does not fall back to generic copy`);
+  }
+});
+
 test("all home, track, and advanced-branch entry boundaries are explicitly classified", () => {
   assert.equal(sectionBoundaries.length, 31);
   for (const boundary of sectionBoundaries) {
-    assert.equal(handoffsFor(boundary.courseId).has(boundary.key), true, `${boundary.courseId}:${boundary.key}`);
+    const handoff = handoffsFor(boundary.courseId).get(boundary.key);
+    assert.ok(handoff, `${boundary.courseId}:${boundary.key}`);
+    assert.equal(handoff.relationship, boundary.relationship, `${boundary.courseId}:${boundary.key} classification`);
     assert.ok(["direct reuse", "extension", "synthesis", "new chapter thread"].includes(boundary.relationship));
   }
   for (const phrase of ["138 canonical handoffs", "90 pass", "48 partial", "0 fail", "parallel advanced branches are counted from their shared entry prerequisite"]) {
     assert.match(architecture.toLowerCase(), new RegExp(phrase.toLowerCase()), phrase);
   }
+  assert.match(architecture, /48 repaired/);
 });
