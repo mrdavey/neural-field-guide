@@ -115,6 +115,22 @@ test("Embodied AI ships the reviewed 30-lesson perception-language-action ladder
   );
 });
 
+test("the Embodied opening sustains its physical case and calibration transfer is numerically determined", () => {
+  const opening = course.embodiedLessonById["embodied-task-contracts"];
+  assert.match(opening.deep, /every command a claim about the current world/);
+  assert.match(opening.example, /current camera frame[\s\S]*force[\s\S]*continue, retry, or stop/);
+  assert.match(
+    course.embodiedObjectiveCoverage["embodied-task-contracts"][1].workedExample,
+    /second attempt[\s\S]*authorize a low lift[\s\S]*re-observe or stop/,
+  );
+
+  const calibrationTransfer = course.embodiedTransferChecks["calibration-transforms"];
+  assert.match(calibrationTransfer.prompt, /\.004 m[\s\S]*\.008 m[\s\S]*\.006 m/);
+  assert.match(calibrationTransfer.options[0].feedback, /\.008 m[\s\S]*exceeds[\s\S]*\.006 m/);
+  assert.match(calibrationTransfer.worked, /exceeds the \.006 m gate by \.002 m/);
+  assert.match(calibrationTransfer.retry, /Compare the post-bump \.008 m[\s\S]*\.006 m gate/);
+});
+
 test("every Embodied AI objective has five authored teaching dimensions and a unique committed check", () => {
   assert.equal(Object.keys(course.embodiedLessonGuides).length, 30);
   assert.deepEqual(

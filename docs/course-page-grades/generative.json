@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-17T00:00:00Z",
-  "sourceFingerprint": "sha256:0e01991e38fa8627469a7e24a0dc6a34a421a7f03e5dd8925743a0173e238f26",
+  "gradedAt": "2026-07-20T07:52:47Z",
+  "sourceFingerprint": "sha256:950bbdc951a66ba9805412bdb28fb8d01cd6d1c67e8bc35ad493afbfe748bcc0",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "Fresh blind holistic review of every complete serialized page dossier in ascending block order, including all capstone and reference material.",
+    "method": "Read the current 31-page reader snapshot in canonical order, top to bottom, before assigning any page judgment; scored each complete learner journey against the four rubric dimensions without consulting prior grades.",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -13,576 +13,159 @@
   "population": 31,
   "pages": [
     {
-      "pageType": "home",
-      "id": "home",
-      "route": "/generative/",
-      "readerSnapshotHash": "sha256:72852a1f1563052e44032ed13873b26009f3733c104754406229c90cbac2af47",
-      "accuracy": 96,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 97,
-      "overall": 97,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The home page orients learners to a five-stage path from distribution foundations through a reproducible matched-family study, with prerequisites, workload, progress, and evidence boundaries visible.",
-        "feedback": "The route sequence is technically coherent and cumulative, and the stage descriptions accurately distinguish browser fixtures, local builds, and optional accelerator evidence. Navigation and planning support are strong, although the headline reading-time estimate could more explicitly distinguish lesson minutes from the much longer capstone project estimates.",
-        "revisionPriorities": [
-          "Clarify whether the approximate 13-hour course estimate excludes the separately stated capstone build hours."
-        ]
-      }
+      "pageType": "home", "id": "home", "route": "/generative/", "readerSnapshotHash": "sha256:72852a1f1563052e44032ed13873b26009f3733c104754406229c90cbac2af47",
+      "accuracy": 96, "writtenNarrative": 96, "flow": 97, "learningContent": 96, "overall": 96.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The course home orients beginners to a six-part progression from probability foundations through a controlled research study.", "feedback": "The page presents a coherent cumulative route, makes prerequisites and evidence boundaries visible, and gives each track a concrete learner-facing purpose. Its sequencing supports informed entry into the course without overstating what completion proves.", "revisionPriorities": ["Trim repeated course-contract language where the same promise is already expressed by the track map."]}
     },
     {
-      "pageType": "lesson",
-      "id": "generation-as-distribution",
-      "route": "/generative/generation-as-distribution/",
-      "readerSnapshotHash": "sha256:6929e416932d73a3542638c7b840ed02b7c869d6c9245e0558863f2085c8089c",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 97,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page introduces generation as learning a distribution, then expands judgment from one sample to relevance, variety, missing cases, and suspicious copying.",
-        "feedback": "Definitions, familiar examples, the finite sampling trace, and the changed-case audit agree on the distinction between drawing from learned probabilities and merely retrieving an item. The learning journey is beginner-readable, prediction-led, and honest that a small deterministic fixture demonstrates mechanism rather than broad model quality.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "generation-as-distribution", "route": "/generative/generation-as-distribution/", "readerSnapshotHash": "sha256:6929e416932d73a3542638c7b840ed02b7c869d6c9245e0558863f2085c8089c",
+      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson establishes generation as sampling from a learned distribution and separates probability mass, support, and sample quality.", "feedback": "Definitions, finite examples, prediction gates, and changed-case checks form a strong first-principles learning loop. The page consistently distinguishes a deterministic browser fixture from evidence about a trained model.", "revisionPriorities": ["Make the transition from the finite table to high-dimensional model distributions one sentence more explicit."]}
     },
     {
-      "pageType": "lesson",
-      "id": "likelihood-cross-entropy",
-      "route": "/generative/likelihood-cross-entropy/",
-      "readerSnapshotHash": "sha256:7f9c66c96336a1be0095a76ce04727a858048a02e29fad5d1c21475bfcc8a338",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 98.25,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson builds sequence likelihood from conditional factors, converts it to negative log-likelihood and cross-entropy, and then audits whether reported values share comparable units and normalization.",
-        "feedback": "The core arithmetic is exact: the worked product 0.8 × 0.5 × 0.25 is 0.1 and its natural-log NLL is about 2.303, while the changed product 0.5 × 0.25 gives 0.125 and about 2.079. Units, averaging denominators, tokenization, and support assumptions remain attached to every comparison, and the assessment requires transfer rather than definition recall.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "likelihood-cross-entropy", "route": "/generative/likelihood-cross-entropy/", "readerSnapshotHash": "sha256:7f9c66c96336a1be0095a76ce04727a858048a02e29fad5d1c21475bfcc8a338",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson derives sequence likelihood, negative log-likelihood, and cross-entropy from token probabilities.", "feedback": "The arithmetic is correct, the additive log-space mechanism is inspectable, and the assessments test the effect of a changed token probability rather than recall alone. Boundaries around calibration and sample quality prevent likelihood from becoming an all-purpose quality claim.", "revisionPriorities": ["State the logarithm base beside the first numerical NLL calculation to remove the last implicit convention."]}
     },
     {
-      "pageType": "lesson",
-      "id": "sampling-randomness",
-      "route": "/generative/sampling-randomness/",
-      "readerSnapshotHash": "sha256:7e9ce81dd42ca2c352e1af827dbdb8a03e4ac276345732d08574eebb5bc77306",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson traces seeded inverse-CDF and ancestral sampling, then turns seeds into an experimental-design policy rather than a promise that randomness has disappeared.",
-        "feedback": "The probability intervals, fixed-uniform traces, rerun logic, and debugging-versus-evidence distinction are consistent throughout the explanation, code, lab, and changed case. Learners must predict before reveal and leave with a practical multi-seed policy and a clear boundary on what a seed can establish.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "sampling-randomness", "route": "/generative/sampling-randomness/", "readerSnapshotHash": "sha256:7e9ce81dd42ca2c352e1af827dbdb8a03e4ac276345732d08574eebb5bc77306",
+      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson connects random draws, seeds, temperature, and truncation to observable changes in a categorical sampler.", "feedback": "Learners predict before sampling, inspect empirical counts, and transfer the mechanism to a changed distribution. The page correctly treats seeds as replay controls rather than guarantees across implementations and keeps finite-sample fluctuation distinct from probability.", "revisionPriorities": ["Add a compact side-by-side reminder that temperature reshapes probabilities while top-k changes support."]}
     },
     {
-      "pageType": "lesson",
-      "id": "divergences-distance",
-      "route": "/generative/divergences-distance/",
-      "readerSnapshotHash": "sha256:fd0958871affb7dd83210a112de1710f90e1d031d4261b60231aa37120677702",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page derives forward and reverse KL on finite distributions and uses their asymmetric weighting to choose a comparison from its failure emphasis and support assumptions.",
-        "feedback": "The displayed finite examples recompute correctly, including the approximately 0.511 and 0.368 directional KL values, and the narrative does not confuse a divergence with a geometric distance. Support mismatch, zero-probability behavior, mode-covering versus mode-seeking pressure, and metric choice are carried into a deterministic changed case with specific retry guidance.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "divergences-distance", "route": "/generative/divergences-distance/", "readerSnapshotHash": "sha256:fd0958871affb7dd83210a112de1710f90e1d031d4261b60231aa37120677702",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson compares directional KL divergence with symmetric distance-style summaries using finite distributions.", "feedback": "The worked values and support-mismatch cases accurately expose directionality, asymmetry, and infinite penalties. Prediction-led comparisons and transfer questions require learners to choose a measure from the decision rather than from familiarity.", "revisionPriorities": ["Surface the support requirement immediately beside the first KL formula as well as in the later boundary."]}
     },
     {
-      "pageType": "lesson",
-      "id": "distribution-workbench-capstone",
-      "route": "/generative/distribution-workbench-capstone/",
-      "readerSnapshotHash": "sha256:53d6b98312176ece4b1def95026259a17b3ce0a306d009235b7b725b01e0bef5",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This synthesis page turns categorical normalization, sampling, likelihood, and divergence into a reusable finite-distribution workbench and an original changed-case experiment.",
-        "feedback": "The project stages form a complete evidence chain from specification through local assertions, empirical-frequency checks, rare-event reasoning, and bounded conclusions. The rare-miss calculation is correct—0.99 to the 100th power is about 0.366—and the page consistently labels deterministic arithmetic, empirical fixtures, and model-quality claims at their proper evidence levels.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "distribution-workbench-capstone", "route": "/generative/distribution-workbench-capstone/", "readerSnapshotHash": "sha256:53d6b98312176ece4b1def95026259a17b3ce0a306d009235b7b725b01e0bef5",
+      "accuracy": 98, "writtenNarrative": 95, "flow": 95, "learningContent": 99, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The capstone integrates distribution specification, likelihood, sampling, and divergence into a reproducible finite workbench.", "feedback": "The staged build, runnable CPU starter, local gates, worked evidence contract, and bounded claims make the project unusually complete and self-contained. Some requirements recur across overview, stages, exemplar, and reference, increasing reading load without changing the decision.", "revisionPriorities": ["Compress duplicated manifest and evidence-boundary instructions while retaining the attempt gate and machine-readable contract."]}
     },
     {
-      "pageType": "lesson",
-      "id": "autoregressive-generators",
-      "route": "/generative/autoregressive-generators/",
-      "readerSnapshotHash": "sha256:ba91de730f6c653d442466829a51428c91277a5ddc9ae7e0d1a4fb3074b6b4b8",
-      "accuracy": 96,
-      "writtenNarrative": 96,
-      "flow": 97,
-      "learningContent": 95,
-      "overall": 96,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson transfers autoregressive factorization from sequences to a tiny image, exposing ordering, causal context, target shifting, and leakage risks.",
-        "feedback": "The factorization, raster-order trace, and prefix-only generation story are correct and cumulative, and learners receive a changed ordering case plus explicit causal-mask boundaries. The current target-invariance check is useful but one-directional, so it is less diagnostic of every possible leakage implementation than the surrounding prose suggests.",
-        "revisionPriorities": [
-          "Strengthen the causal-leakage practice with a deliberately leaky model or a perturbation that must change only positions allowed by the declared mask."
-        ]
-      }
+      "pageType": "lesson", "id": "autoregressive-generators", "route": "/generative/autoregressive-generators/", "readerSnapshotHash": "sha256:ba91de730f6c653d442466829a51428c91277a5ddc9ae7e0d1a4fb3074b6b4b8",
+      "accuracy": 98, "writtenNarrative": 95, "flow": 96, "learningContent": 98, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson traces factorized sequence probability, teacher-forced training, and left-to-right sampling.", "feedback": "Inputs, conditional factors, target shifts, and exposure differences are explained with concrete tokens and locally checked code. The learning journey correctly distinguishes parallel training evaluation from sequential generation and tests a changed prefix.", "revisionPriorities": ["Reduce repeated restatements of the train-versus-generate distinction after the worked trace."]}
     },
     {
-      "pageType": "lesson",
-      "id": "latent-variable-models",
-      "route": "/generative/latent-variable-models/",
-      "readerSnapshotHash": "sha256:828d3fb26a9848a147a954d683a7c089de9d41566c80ea3f573df929acb9fde7",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson follows a finite latent model from prior and likelihood through marginalization and posterior inference, then asks what evidence shows that a learned latent is actually used.",
-        "feedback": "The Bayes trace is internally consistent, including the posterior value 0.45/0.70 ≈ 0.643, and the page carefully separates interpretable latent geometry from claims unsupported by the objective. Worked values, intervention evidence, changed-case assessment, and analogy limits form a coherent bridge to amortized inference.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "latent-variable-models", "route": "/generative/latent-variable-models/", "readerSnapshotHash": "sha256:828d3fb26a9848a147a954d683a7c089de9d41566c80ea3f573df929acb9fde7",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson introduces latent variables as hidden causes that are marginalized to produce observed-data probabilities.", "feedback": "The mixture calculation makes posterior responsibility and marginalization observable without assuming prior jargon. Later practice cleanly separates a useful representation from proof that a latent coordinate has a human-assigned meaning.", "revisionPriorities": ["Add the normalization denominator beside the first posterior-responsibility prose trace for faster visual checking."]}
     },
     {
-      "pageType": "lesson",
-      "id": "amortized-inference-elbo",
-      "route": "/generative/amortized-inference-elbo/",
-      "readerSnapshotHash": "sha256:eb1c1ee44e07a523cf373023425f71da5ac5ed3aa4453827779a2cda40e67b3a",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page decomposes the ELBO, makes amortized inference and reparameterized gradients observable, and distinguishes objective weighting from genuine probabilistic inference.",
-        "feedback": "The reconstruction/KL bookkeeping, sign conventions, and reparameterized gradient trace are mathematically consistent; the concrete epsilon cases and the 85-versus-90 weighted-objective comparison recompute correctly. The lesson moves cleanly from mechanism to inference-gap and weighting diagnosis, with commitment, boundary, and retry evidence for both objectives.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "amortized-inference-elbo", "route": "/generative/amortized-inference-elbo/", "readerSnapshotHash": "sha256:eb1c1ee44e07a523cf373023425f71da5ac5ed3aa4453827779a2cda40e67b3a",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson builds the ELBO from an amortized approximate posterior and explains reparameterized gradients.", "feedback": "The page balances plain-language motivation with the precise reconstruction and KL terms, then traces how noise is externalized for differentiation. Objective checks and transfer cases diagnose sign mistakes and unsupported interpretations rather than rewarding formula recognition.", "revisionPriorities": ["Keep the ELBO and negative-loss sign conventions visible together in the code section to further reduce sign confusion."]}
     },
     {
-      "pageType": "lesson",
-      "id": "vae-posterior-collapse",
-      "route": "/generative/vae-posterior-collapse/",
-      "readerSnapshotHash": "sha256:f47183c1f6c29a9239d30388c18808650faaf567bacc0d2cf4d364ff274eb859",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson defines posterior collapse as unused latent information, diagnoses it with term and intervention evidence, and evaluates mitigations under matched conditions.",
-        "feedback": "The narrative resists diagnosing collapse from a single low KL number and instead joins per-dimension statistics, reconstruction behavior, decoder strength, and causal latent interventions. The worked posterior-variance classification, matched mitigation protocol, failure boundaries, and transfer case jointly support both promised objectives without overclaiming.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "vae-posterior-collapse", "route": "/generative/vae-posterior-collapse/", "readerSnapshotHash": "sha256:f47183c1f6c29a9239d30388c18808650faaf567bacc0d2cf4d364ff274eb859",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson diagnoses posterior collapse by combining KL behavior, latent sensitivity, and reconstruction evidence.", "feedback": "It correctly rejects low KL as a sufficient diagnosis and uses an active-unit variance fixture to expose the mechanism. The changed cases preserve alternative explanations and route learners toward a multi-signal diagnosis and targeted retry.", "revisionPriorities": ["Name decoder capacity as an alternative cause at the first diagnostic table, not only in the later boundary discussion."]}
     },
     {
-      "pageType": "lesson",
-      "id": "latent-models-capstone",
-      "route": "/generative/latent-models-capstone/",
-      "readerSnapshotHash": "sha256:0459c775f81ca6f91a30b22f33165d6679e3323e06d588482004d6631748125d",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This capstone guides learners through a complete minimal VAE, its local correctness gates, and a matched posterior-collapse intervention with preserved evidence.",
-        "feedback": "The staged build, starter contract, checkpoint and failure requirements, rubric, exemplar, and machine-readable artifact constitute a full build-and-learn project rather than a prose exercise. Reconstruction, KL, latent-use, intervention, and evidence-boundary claims remain aligned, and null or negative mitigation results are explicitly acceptable.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "latent-models-capstone", "route": "/generative/latent-models-capstone/", "readerSnapshotHash": "sha256:0459c775f81ca6f91a30b22f33165d6679e3323e06d588482004d6631748125d",
+      "accuracy": 98, "writtenNarrative": 95, "flow": 95, "learningContent": 99, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The capstone asks learners to build and audit a latent-variable generator with reconstruction, prior-sample, and collapse evidence.", "feedback": "The project provides an executable baseline, staged checkpoints, failure preservation, deterministic completeness checks, and an attempt-gated reference. It makes clear which results are local execution, reviewed fixtures, or planned interventions, though the repeated contract language makes the page dense.", "revisionPriorities": ["Consolidate recurring starter, manifest, and evidence-label instructions into one persistent project checklist."]}
     },
     {
-      "pageType": "lesson",
-      "id": "change-of-variables",
-      "route": "/generative/change-of-variables/",
-      "readerSnapshotHash": "sha256:a5e01f2cd79e2fe9aa262bc63dfd71bae7208e42c1d43577a05130bd03fa219e",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson derives one-dimensional density transformation from probability-mass preservation and uses the Jacobian to diagnose support and invertibility failures.",
-        "feedback": "The forward/inverse mappings, absolute derivative correction, support tracking, and singular or many-to-one boundaries are accurate across the worked examples and changed case. The page defines every symbol before use and couples the numerical trace to a deterministic transfer check, preparing the exact mechanism needed for flows.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "change-of-variables", "route": "/generative/change-of-variables/", "readerSnapshotHash": "sha256:a5e01f2cd79e2fe9aa262bc63dfd71bae7208e42c1d43577a05130bd03fa219e",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson derives density correction under an invertible transformation from conservation of probability mass.", "feedback": "The interval-width example, inverse mapping, Jacobian factor, and support boundary agree mathematically and narratively. Learners predict a changed scaling case and must distinguish point motion from density change.", "revisionPriorities": ["Place the one-dimensional absolute-derivative form immediately before the multidimensional determinant notation."]}
     },
     {
-      "pageType": "lesson",
-      "id": "normalizing-flows",
-      "route": "/generative/normalizing-flows/",
-      "readerSnapshotHash": "sha256:b0aa375a7caf9cbb212fea58b130d9e5e86958afe3c222a47ff5a8db18fe0b0a",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page turns change of variables into a composable normalizing-flow pipeline and verifies an invertible coupling layer through forward, inverse, and log-determinant evidence.",
-        "feedback": "Shape, triangular-Jacobian, round-trip, and likelihood reasoning stay consistent, while topology and conditioning limits prevent invertibility from being mistaken for unlimited expressivity. Prediction-led code and a changed architecture case require learners to connect implementation details to density semantics rather than merely run a block.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "normalizing-flows", "route": "/generative/normalizing-flows/", "readerSnapshotHash": "sha256:b0aa375a7caf9cbb212fea58b130d9e5e86958afe3c222a47ff5a8db18fe0b0a",
+      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson composes invertible transforms and tractable log-determinants into a normalizing-flow likelihood.", "feedback": "A coupling-layer trace makes inversion and triangular Jacobians concrete, while the assessments distinguish expressivity from tractability. The evidence stays within deterministic arithmetic and avoids implying trained density quality.", "revisionPriorities": ["Clarify that each composed log-determinant is evaluated at the intermediate state produced by the preceding transforms."]}
     },
     {
-      "pageType": "lesson",
-      "id": "energy-based-models",
-      "route": "/generative/energy-based-models/",
-      "readerSnapshotHash": "sha256:36091c19b669bc091e857d0391b17967466b647fcdc2ecf9f3ce5a7529836b2d",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson converts a finite energy table into normalized probabilities and then exposes why learning requires both data-side and model-side expectations.",
-        "feedback": "Exponentiation, normalization, energy-shift invariance, and the finite hidden-state example are correct; the low-energy state with energy −4 receives about 0.973 mass as stated. The narrative then connects the tractable fixture to partition-function and negative-sampling difficulties without presenting it as production evidence.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "energy-based-models", "route": "/generative/energy-based-models/", "readerSnapshotHash": "sha256:36091c19b669bc091e857d0391b17967466b647fcdc2ecf9f3ce5a7529836b2d",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson turns energy values into relative probability mass and explains the partition-function obstacle.", "feedback": "The finite-state normalization is numerically correct and shows why lowering one energy changes every normalized probability. Practice and transfer cleanly separate relative scoring, normalization, and sampling evidence.", "revisionPriorities": ["Introduce the additive-energy invariance explicitly beside the first normalized example."]}
     },
     {
-      "pageType": "lesson",
-      "id": "mcmc-langevin-sampling",
-      "route": "/generative/mcmc-langevin-sampling/",
-      "readerSnapshotHash": "sha256:4d79b9d552aa92092ff6f69422aae9afc0578403c92ee3c43664726089e3fd47",
-      "accuracy": 96,
-      "writtenNarrative": 96,
-      "flow": 97,
-      "learningContent": 96,
-      "overall": 96.25,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson traces Langevin drift plus noise, adds Metropolis correction, and diagnoses step-size, autocorrelation, and mode-mixing failures.",
-        "feedback": "The proposal and MALA correction arithmetic is sound: the forward and reverse log-proposal terms lead to log ratio −0.25 and acceptance about 0.779. The page correctly warns that many correlated steps are not many independent samples, though qualitative stable/unstable step-size labels in a teaching fixture remain target-dependent rather than universal.",
-        "revisionPriorities": [
-          "Tie every qualitative step-size label explicitly to the displayed target and diagnostic, so learners cannot reuse the threshold as a general sampler rule."
-        ]
-      }
+      "pageType": "lesson", "id": "mcmc-langevin-sampling", "route": "/generative/mcmc-langevin-sampling/", "readerSnapshotHash": "sha256:4d79b9d552aa92092ff6f69422aae9afc0578403c92ee3c43664726089e3fd47",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson traces Langevin proposals and Metropolis-adjusted acceptance for an energy target.", "feedback": "Proposal drift, noise, reverse-density correction, and acceptance arithmetic are all inspectable and consistent. Learners commit before the accept/reject reveal and then diagnose step-size and finite-chain limitations on a changed case.", "revisionPriorities": ["Keep the proposal variance convention adjacent to the Langevin update so implementations cannot silently change the acceptance ratio."]}
     },
     {
-      "pageType": "lesson",
-      "id": "flow-energy-capstone",
-      "route": "/generative/flow-energy-capstone/",
-      "readerSnapshotHash": "sha256:35680cede2e254297aab920f190a4986264091d3cff0db100af5c924aeef7179",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The capstone builds verified two-dimensional flow and energy pipelines, then compares them on a matched target using shared and family-specific evidence.",
-        "feedback": "The page preserves invertibility and likelihood checks for the flow, chain and mixing diagnostics for the energy model, and a declared shared evaluation budget instead of forcing false equivalence. Its stages, local checks, failure logs, rubric, exemplar, and artifact make the comparison reproducible and keep family-specific limitations visible.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "flow-energy-capstone", "route": "/generative/flow-energy-capstone/", "readerSnapshotHash": "sha256:35680cede2e254297aab920f190a4986264091d3cff0db100af5c924aeef7179",
+      "accuracy": 98, "writtenNarrative": 95, "flow": 95, "learningContent": 99, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The capstone integrates invertible density evaluation with energy-based sampling and matched diagnostics.", "feedback": "Learners receive a runnable CPU baseline, explicit round-trip and sampler checks, a controlled intervention, failure logging, and a bounded reference artifact. The end-to-end evidence chain is excellent, but repeated project-contract statements slow the transition from instruction to action.", "revisionPriorities": ["Collapse duplicated overview and exemplar requirements into a single stage-indexed evidence checklist."]}
     },
     {
-      "pageType": "lesson",
-      "id": "corruption-denoising",
-      "route": "/generative/corruption-denoising/",
-      "readerSnapshotHash": "sha256:af4c131049fd184b9226ad756d9d80a0aa51765540f0ce63587147f0e29d61a5",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson makes the forward corruption process observable from a clean value, schedule coefficient, and fixed noise draw, then uses signal-to-noise evidence to audit schedules.",
-        "feedback": "The closed-form sample arithmetic recomputes correctly, including the worked corrupted value near 3.232, and the notation consistently separates cumulative from per-step quantities. The schedule comparison, boundary cases, prediction gate, and changed case prepare the exact state variables reused by score matching and DDPM training.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "corruption-denoising", "route": "/generative/corruption-denoising/", "readerSnapshotHash": "sha256:af4c131049fd184b9226ad756d9d80a0aa51765540f0ce63587147f0e29d61a5",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson introduces Gaussian corruption as a controlled mixture of signal and noise that supports denoising learning.", "feedback": "The numeric trace correctly applies square-root coefficients and shows how signal-to-noise changes with time. Prediction, code, and transfer tasks consistently distinguish a browser fixture from a learned reverse process.", "revisionPriorities": ["Add a one-line check that the signal and noise variance coefficients sum to one under the chosen parameterization."]}
     },
     {
-      "pageType": "lesson",
-      "id": "score-matching",
-      "route": "/generative/score-matching/",
-      "readerSnapshotHash": "sha256:4738532840d6a300049c48b0de62d12a95b34ad55d52109cd33f81e6ff2c8669",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page defines a score as a log-density gradient, computes analytic vectors, and connects denoising score matching errors at each noise level to sampling consequences.",
-        "feedback": "The target sign, residual, weighting, and noise-conditional interpretation are mathematically aligned across prose, values, and assessment. Learners see why score direction is local rather than a normalized density and must diagnose changed noise-level errors before moving to the DDPM objective.",
-        "revisionPriorities": [
-          "Carry the noise-level input explicitly into the changed-case score-function interface so the implementation prompt mirrors the narrative contract."
-        ]
-      }
+      "pageType": "lesson", "id": "score-matching", "route": "/generative/score-matching/", "readerSnapshotHash": "sha256:4738532840d6a300049c48b0de62d12a95b34ad55d52109cd33f81e6ff2c8669",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson interprets the score as a log-density gradient and derives the conditional Gaussian denoising target.", "feedback": "Signs, scaling by noise variance, and weighting are handled accurately in the worked values. The changed cases force learners to reason about direction and magnitude while explicit boundaries prevent a local score fixture from becoming a global sampling claim.", "revisionPriorities": ["Repeat the sign sanity check at the first code reveal because it is the highest-risk beginner error."]}
     },
     {
-      "pageType": "lesson",
-      "id": "ddpm-objective",
-      "route": "/generative/ddpm-objective/",
-      "readerSnapshotHash": "sha256:966d8ff8c427eeddda62b16d241de8f456d3af548a887d559ce54508bb77531c",
-      "accuracy": 99,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson constructs one complete DDPM noise-prediction training example and then compares epsilon, clean-sample, and velocity parameterizations in their proper coordinates.",
-        "feedback": "The forward sample, target conversions, tensor roles, and squared-error comparisons are exact; the reconstructed-value errors for the parameterization cases also recompute as presented. The page avoids treating target names as interchangeable metrics and uses a changed case to test conversions rather than recognition.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "ddpm-objective", "route": "/generative/ddpm-objective/", "readerSnapshotHash": "sha256:966d8ff8c427eeddda62b16d241de8f456d3af548a887d559ce54508bb77531c",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson connects DDPM corruption, noise prediction, clean-sample reconstruction, and equivalent prediction parameterizations.", "feedback": "The formulas and concrete conversion trace are correct, shapes and schedule terms are explicit, and assessments diagnose parameterization mismatch rather than mere vocabulary. The narrative also bounds the simplified loss relative to the full variational objective.", "revisionPriorities": ["Keep epsilon-, x-zero-, and velocity-prediction conversion formulas in one persistent comparison block."]}
     },
     {
-      "pageType": "lesson",
-      "id": "diffusion-samplers-schedules",
-      "route": "/generative/diffusion-samplers-schedules/",
-      "readerSnapshotHash": "sha256:9149935af1df6ac537d9481da4c41f1f57207914507c41255d1faa5cc13b205d",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page traces a reverse diffusion trajectory, counts network evaluations, and designs matched comparisons across schedules and stochastic or deterministic samplers.",
-        "feedback": "State transitions, schedule indexing, the deterministic update near 1.205, and the declared model-call accounting are consistent. The quality-versus-cost protocol keeps initial noise, calls, seeds, and evaluator fixed while explicitly retaining trajectory and discretization boundaries.",
-        "revisionPriorities": [
-          "State the denoising-state and network-call counting convention once beside the first trajectory to head off imported off-by-one conventions."
-        ]
-      }
+      "pageType": "lesson", "id": "diffusion-samplers-schedules", "route": "/generative/diffusion-samplers-schedules/", "readerSnapshotHash": "sha256:9149935af1df6ac537d9481da4c41f1f57207914507c41255d1faa5cc13b205d",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson separates training noise schedules from inference timestep selection and stochastic versus deterministic samplers.", "feedback": "The DDIM-style step is numerically inspectable, model-call budgeting is explicit, and the changed cases show why fewer steps do not automatically imply an equivalent trajectory or quality. Evidence labels remain honest about deterministic fixtures.", "revisionPriorities": ["Add a compact timeline showing training indices versus the inference subsequence to reinforce the two schedule roles."]}
     },
     {
-      "pageType": "lesson",
-      "id": "diffusion-model-capstone",
-      "route": "/generative/diffusion-model-capstone/",
-      "readerSnapshotHash": "sha256:654d01fdf6d0b76a96b5bf2127599f1b6371c13b8802f95a3a374d380a708c15",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This capstone assembles a small diffusion training and sampling pipeline, verifies it locally, and runs a paired sampler or schedule intervention with optional accelerator evidence.",
-        "feedback": "The project contract covers forward corruption, target formation, model shapes, optimization, sampling, checkpointing, model-call budgets, raw rows, and failures in a coherent sequence. Required evidence remains CPU-local and self-contained, while the optional GPU extension is bounded and provenance-labeled rather than necessary for mastery.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "diffusion-model-capstone", "route": "/generative/diffusion-model-capstone/", "readerSnapshotHash": "sha256:654d01fdf6d0b76a96b5bf2127599f1b6371c13b8802f95a3a374d380a708c15",
+      "accuracy": 98, "writtenNarrative": 95, "flow": 95, "learningContent": 99, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The capstone guides a complete course-scale diffusion build from corruption arithmetic through sampling and schedule comparison.", "feedback": "The runnable starter, smoke/full profiles, invariant checks, failure preservation, matched changed case, rubric, and artifact boundary create a rigorous self-contained project. Repeated evidence-contract prose adds density but does not obscure the required action or decision.", "revisionPriorities": ["Merge repeated command and evidence-boundary explanations into the build stage while retaining the separate attempt-gated exemplar."]}
     },
     {
-      "pageType": "lesson",
-      "id": "conditional-generation",
-      "route": "/generative/conditional-generation/",
-      "readerSnapshotHash": "sha256:f84344def5ceb41a5ddff1488ab7e31b86c5edf1dd2c0da7fb2a228b013ac604",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson traces condition information through a generator interface and then separates counterfactual adherence from within-condition diversity.",
-        "feedback": "Condition encoding, batch and shape contracts, counterfactual comparisons, and diversity checks are technically coherent and do not let one attractive conditioned sample stand in for evaluation. The lesson moves naturally from interface mechanics to changed-condition evidence and prepares the paired predictions used by classifier-free guidance.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "conditional-generation", "route": "/generative/conditional-generation/", "readerSnapshotHash": "sha256:f84344def5ceb41a5ddff1488ab7e31b86c5edf1dd2c0da7fb2a228b013ac604",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson shows how condition information enters a generator and how adherence must be evaluated separately from sample quality.", "feedback": "The page defines conditioning mechanisms before use, traces condition and sample shapes, and asks learners to diagnose ignored or conflicting conditions. Transfer checks require evidence appropriate to the condition rather than visual impression alone.", "revisionPriorities": ["Place marginal and joint adherence definitions side by side at their first use."]}
     },
     {
-      "pageType": "lesson",
-      "id": "classifier-free-guidance",
-      "route": "/generative/classifier-free-guidance/",
-      "readerSnapshotHash": "sha256:562fe42aa2277648a569d8ddb3568afe71e500c31d2696ff26a15ea89a136e24",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page derives classifier-free guidance from paired conditional and unconditional predictions and chooses scale from a multi-metric trade-off rather than a universal maximum.",
-        "feedback": "The interpolation/extrapolation arithmetic is correct, and the alternate algebraic convention is explicitly identified so coefficient differences do not become a false contradiction. Adherence, diversity, artifacts, and out-of-support risk remain joined to scale selection through a prediction-led changed case.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "classifier-free-guidance", "route": "/generative/classifier-free-guidance/", "readerSnapshotHash": "sha256:562fe42aa2277648a569d8ddb3568afe71e500c31d2696ff26a15ea89a136e24",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 98, "overall": 97, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson derives classifier-free guidance by combining conditional and unconditional predictions and examines its trade-offs.", "feedback": "The interpolation/extrapolation mechanism, guidance-scale arithmetic, and evidence limits are accurate. Prediction-led changed cases prevent the common mistake that larger guidance guarantees better or safer samples.", "revisionPriorities": ["Label the course's guidance-scale convention directly on every formula because alternate conventions exist in the literature."]}
     },
     {
-      "pageType": "lesson",
-      "id": "inverse-problems-editing",
-      "route": "/generative/inverse-problems-editing/",
-      "readerSnapshotHash": "sha256:c9bf4d27c09e6ac850efd8a83979fff026b6cbd2143f70205851e73eda4809d4",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson formulates inverse problems with a measurement operator, likelihood or consistency term, and generative prior, then audits edits for preservation and hallucination.",
-        "feedback": "The observed-versus-unobserved distinction, data-consistency examples, and prior trade-offs are accurate and stay visible through the worked numerical cases. The transfer task requires a bounded claim about what measurements constrain, preventing plausible completion from being mislabeled as recovered truth.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "inverse-problems-editing", "route": "/generative/inverse-problems-editing/", "readerSnapshotHash": "sha256:c9bf4d27c09e6ac850efd8a83979fff026b6cbd2143f70205851e73eda4809d4",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson frames editing and inverse problems as balancing a measurement constraint with a generative prior.", "feedback": "The forward operator, residual, update, and null-space ambiguity are concretely traced, and the learner must distinguish observation consistency from recovery of the unique truth. Changed cases and deterministic feedback expose unsupported reconstruction claims.", "revisionPriorities": ["Show one additional null-space pair beside the first ambiguity explanation to make non-uniqueness instantly visible."]}
     },
     {
-      "pageType": "lesson",
-      "id": "compositional-control",
-      "route": "/generative/compositional-control/",
-      "readerSnapshotHash": "sha256:1d86bca606f63c996f790e7fc52604ba475b318cff0893afa5d5e7598c920aef",
-      "accuracy": 97,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page measures joint adherence and composition gaps, then designs conflict and out-of-support controls for combined conditions.",
-        "feedback": "The joint-rate and gap arithmetic is correct, including the 0.8 × 0.75 − 0.42 = 0.18 fixture, and the prose clearly labels independence-style expectations as diagnostics rather than causal facts. Conflict cases, unsupported combinations, and trade-off evidence keep composition from collapsing into two separate marginal scores.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "compositional-control", "route": "/generative/compositional-control/", "readerSnapshotHash": "sha256:1d86bca606f63c996f790e7fc52604ba475b318cff0893afa5d5e7598c920aef",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson analyzes composition as a multi-objective control problem with joint adherence, conflicts, and non-compensable gates.", "feedback": "Marginal-versus-joint success is calculated correctly, conflict cases are explicit, and the page avoids collapsing fidelity, diversity, consistency, and safety into one score. The decision tasks require a bounded release choice with a retry path.", "revisionPriorities": ["Introduce the joint-adherence gap formula immediately before the first numerical comparison."]}
     },
     {
-      "pageType": "lesson",
-      "id": "conditional-safety-capstone",
-      "route": "/generative/conditional-safety-capstone/",
-      "readerSnapshotHash": "sha256:76d4807eb801e7f7e5af2f19285b9a7b2f791bf49dfa3ec52d4b990244ecd09f",
-      "accuracy": 97,
-      "writtenNarrative": 96,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This capstone builds a conditional-generation audit matrix and turns its adherence, diversity, conflict, misuse, provenance, and authority evidence into a reversible release decision.",
-        "feedback": "The page supplies a concrete project outcome, staged build, deterministic checks, non-compensable gates, failure preservation, rubric, exemplar, and artifact while maintaining a clear boundary between fixtures and deployment claims. Its held-out-combination and contradiction slices add valuable transfer, although the wording can more sharply separate those audit slices from the single intervention variable used in a matched comparison.",
-        "revisionPriorities": [
-          "Name the single changed generation factor separately from held-out-combination and contradiction audit slices in the project protocol."
-        ]
-      }
+      "pageType": "lesson", "id": "conditional-safety-capstone", "route": "/generative/conditional-safety-capstone/", "readerSnapshotHash": "sha256:76d4807eb801e7f7e5af2f19285b9a7b2f791bf49dfa3ec52d4b990244ecd09f",
+      "accuracy": 98, "writtenNarrative": 95, "flow": 95, "learningContent": 99, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The capstone assembles condition, guidance, conflict, diversity, memorization, and release evidence into a generator audit.", "feedback": "The paired condition-scale-seed matrix, hard gates, runnable baseline, failure routing, scoped null results, and attempt-gated reference support a defensible end-to-end decision. The same evidence contract is repeated in several capstone surfaces, creating avoidable density.", "revisionPriorities": ["Consolidate duplicate matrix, manifest, and boundary instructions into a single persistent audit checklist."]}
     },
     {
-      "pageType": "lesson",
-      "id": "generative-data-systems",
-      "route": "/generative/generative-data-systems/",
-      "readerSnapshotHash": "sha256:702e0daa1801b3e45d74ade9d1864af003d5a902da356cd9dde5ecbd996a5d56",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson specifies a complete data, training, memory, throughput, checkpoint, and resume contract for generative systems.",
-        "feedback": "The provenance chain and systems arithmetic are correct: the stated parameter-state and activation terms sum to 3.2 GB, doubled activations yield 4.8 GB, and 200,000 pixels over four seconds gives 50,000 pixels per second. Learners then diagnose changed memory and resume cases with explicit evidence requirements rather than treating a saved weight file as a reproducible run.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "generative-data-systems", "route": "/generative/generative-data-systems/", "readerSnapshotHash": "sha256:702e0daa1801b3e45d74ade9d1864af003d5a902da356cd9dde5ecbd996a5d56",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson separates memory capacity, throughput, provenance, and exact-resume contracts for generative training systems.", "feedback": "The 3.2-to-4.8 GB ledger, checkpoint-state audit, and immutable-data cases are correct and diagnostic. Learners classify the first divergent object and receive precise retries, while browser arithmetic is explicitly not presented as GPU measurement.", "revisionPriorities": ["Add allocator and workspace headroom as a visible ledger row in the changed case, not only as a prose caveat."]}
     },
     {
-      "pageType": "lesson",
-      "id": "memorization-privacy",
-      "route": "/generative/memorization-privacy/",
-      "readerSnapshotHash": "sha256:689d4070b11ffcf98ae75a79ffc4e80d46fe2a6802269ab1bd6a6c44cbf77552",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson designs a provenance-aware memorization audit and interprets positive and null extraction results only within a declared threat model.",
-        "feedback": "Resemblance, verified membership, rarity, collision baselines, thresholds, targets, and query budget remain separate evidence fields throughout the worked canary case and Hamming-distance fixture. The page strongly bounds both positive and null claims, supplies deterministic changed-case feedback, and requires no real private or copyrighted records.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "memorization-privacy", "route": "/generative/memorization-privacy/", "readerSnapshotHash": "sha256:689d4070b11ffcf98ae75a79ffc4e80d46fe2a6802269ab1bd6a6c44cbf77552",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson builds a provenance-aware memorization audit and scopes positive and null attack findings to a threat model.", "feedback": "It correctly separates resemblance, training membership, rarity, extraction, consent, and privacy. The rare-canary and held-out controls, deterministic neighbor fixture, and changed cases teach learners to make the strongest supported claim without universalizing a finite attack.", "revisionPriorities": ["Add one sentence distinguishing membership inference from direct extraction when the audit methods are first listed."]}
     },
     {
-      "pageType": "lesson",
-      "id": "matched-budget-evaluation",
-      "route": "/generative/matched-budget-evaluation/",
-      "readerSnapshotHash": "sha256:ee45f8ead74725a0ee5ae3d68541d28d428719325939af4d59de095848524aaf",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page defines constructs and budget units, exposes residual confounds, and replaces unsupported universal rankings with uncertainty, slices, and Pareto trade-offs.",
-        "feedback": "The 1-versus-50 model-call calculation is exact, and the equal-epochs, equal-calls, and equal-wall-time cases correctly answer different questions rather than pretending to be universally equivalent. The page joins construct validity, paired design, independent-run uncertainty, hard gates, and changed-case ranking diagnosis into a defensible evaluation workflow.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "matched-budget-evaluation", "route": "/generative/matched-budget-evaluation/", "readerSnapshotHash": "sha256:ee45f8ead74725a0ee5ae3d68541d28d428719325939af4d59de095848524aaf",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson teaches evaluation as a construct- and decision-specific comparison under explicitly matched resource units.", "feedback": "Equal samples, model calls, and wall time are accurately distinguished, while uncertainty, slices, hard gates, and Pareto trade-offs prevent a false universal ranking. The code and transfer question expose a fifty-fold call-budget confound in an immediately checkable way.", "revisionPriorities": ["Provide a small budget-unit table that lists what each matching choice controls and leaves confounded."]}
     },
     {
-      "pageType": "lesson",
-      "id": "reproducible-gpu-experiments",
-      "route": "/generative/reproducible-gpu-experiments/",
-      "readerSnapshotHash": "sha256:4113c90bb9917688f161169f85c0a2e7687b5f621611ce8fa54d3b73568cc5dd",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson packages smoke and full GPU profiles into a portable run contract and classifies expected claims as invariants, current-run observations, or reviewed references.",
-        "feedback": "The manifest, stop rules, seed and budget pins, checkpoint/resume status, artifact schema, and provider-neutral command form a complete reproducibility argument. The sampling budget arithmetic—20 batched denoiser calls across 128 examples equals 2,560 per-example evaluations—is correct, and the optional external run promises no fabricated trend or numeric band.",
-        "revisionPriorities": []
-      }
+      "pageType": "lesson", "id": "reproducible-gpu-experiments", "route": "/generative/reproducible-gpu-experiments/", "readerSnapshotHash": "sha256:5b1f462a623e28ee3a2463568c4c5e28b986a9c60ea797e5602e5171ca5e0f6d",
+      "accuracy": 98, "writtenNarrative": 96, "flow": 96, "learningContent": 99, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The lesson specifies a portable smoke/full experiment contract and classifies expected results by evidence type.", "feedback": "Invariant, variable observation, and reviewed-reference claims are separated precisely, with no fabricated performance band. The optional external run is bounded, provider-neutral, pinned, stoppable, and accompanied by artifacts and failure diagnostics while required learning remains local.", "revisionPriorities": ["State earlier that the smoke profile intentionally omits checkpoint creation so learners do not infer resume was tested there."]}
     },
     {
-      "pageType": "lesson",
-      "id": "generative-research-capstone",
-      "route": "/generative/generative-research-capstone/",
-      "readerSnapshotHash": "sha256:f1039b2665171f8aafa43162644c07936d6fb4a9874925a39b2b0e9e222d1b5f",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The final capstone reproduces a bounded baseline, branches one matched intervention, and packages every seed, failure, uncertainty, alternative, and conclusion as inspectable research evidence.",
-        "feedback": "The paired fixture effects sum to 0.01 and average 0.002 as stated, supporting the page's refusal to turn mixed seeds into a win claim. Across specification, local smoke/full execution, acceptance gates, intervention, analysis, rubric, exemplar, artifact, reflection, and final transfer, the required path is complete and treats null or negative outcomes as scientifically valid.",
-        "revisionPriorities": [
-          "Clarify at the first build step how a learner-selected family baseline maps onto the fixed --project generative-research-capstone starter command."
-        ]
-      }
+      "pageType": "lesson", "id": "generative-research-capstone", "route": "/generative/generative-research-capstone/", "readerSnapshotHash": "sha256:f1039b2665171f8aafa43162644c07936d6fb4a9874925a39b2b0e9e222d1b5f",
+      "accuracy": 98, "writtenNarrative": 95, "flow": 95, "learningContent": 99, "overall": 96.75, "pass": true, "blockingDefects": [],
+      "wholePageReview": {"synopsis": "The final capstone requires baseline reproduction followed by one predeclared, matched, seed-level generative intervention.", "feedback": "The page makes baseline acceptance, paired analysis, uncertainty, failed-run preservation, null results, bounded conclusions, and falsifying next experiments operational. Its runnable baseline and attempt-gated artifact complete the learning loop, though repeated evidence-contract wording makes an already demanding project feel longer than necessary.", "revisionPriorities": ["Deduplicate the capstone overview, exemplar, and reference while preserving the full machine-readable evidence schema."]}
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Instructional interaction audit
 
-Reviewed: 17 July 2026
+Reviewed: 20 July 2026
 
 This audit asks one question of every animated or manipulable surface: **what learner-visible mechanism becomes easier to reason about because this moves?** Motion that cannot answer that question is decorative and does not pass.
 
@@ -24,6 +24,14 @@ The motion system has four explicit layers:
 The Three.js adapter animates only material emphasis on the existing progressive scene. Camera, geometry, scroll state, and rendering remain in the established deterministic draw path, so there is no competing render loop. WebGL failure continues to leave `StoryMechanismDiagram` as the semantic carrier.
 
 For `prefers-reduced-motion: reduce`, shared timelines are not created, lab sweeps are hidden, the app-wide orchestrator identifies itself as static, and Three.js remains disabled. Current labels, states, relationships, instructions, answer/retry paths, and assessment controls remain available. No required meaning depends on opacity, direction, speed, color, or motion.
+
+## Editorial motion and phase wayfinding
+
+Ordinary lesson prose is now fully legible on first paint and no longer participates in broad section-arrival animation. Route entry is limited to the breadcrumb, lesson header, and home-hero copy; viewport reveals are limited to semantic diagrams, concept plates, labs, validations, and studios. Feedback emphasis lasts 280 ms and landmark emphasis lasts 340 ms. These effects announce a state that React has already committed; they never delay instructions, hide an answer, or determine completion.
+
+Every lesson exposes a sticky **Orient → Learn → Try → Test → Extend** rail. Selecting a stage changes only the document location; scroll tracking changes only `aria-current="step"`. The rail's numbered labels, focus treatment, and normal document headings preserve meaning without color. Its completion condition is successful arrival at the chosen authored section, not a gamified progress event. Under reduced motion, native smooth scrolling and the backdrop effect are removed while anchors and current-stage semantics remain intact.
+
+The five course-home motifs are deliberately decorative identity layers: token grid, trajectory, distribution, control loop, and coordinate field. Each course also supplies an accent, secondary color, and paper tint, but all instructional diagrams continue to use their audited concept grammar and visible text labels. Removing a motif or all course color leaves the curriculum, directions, causal relationships, and assessment state unchanged.
 
 ## LLM live traces
 
@@ -167,6 +175,8 @@ WebGL and motion remain progressive layers. Labels, values, task instructions, c
 - Added 32 RL decision labs whose case changes make backups, credit, support, planning budgets, constraints, and seed-level evidence observable without presenting fixtures as trained-agent results.
 - Added 30 Embodied AI physical-loop labs whose case changes expose timing, frames, state estimation, data lineage, grounded policies, feedback, authority, and evidence boundaries without presenting browser fixtures as robot measurements.
 - Re-audited the Embodied AI grasp/occlusion, causal action-target, evaluation-uncertainty, and p99 latency cases so their visible state and arithmetic agree with their causal and statistical contracts.
+- Removed broad entrance motion from authored prose, retained short emphasis only for semantic landmarks and committed feedback, and added a reduced-motion-safe five-stage lesson rail.
+- Added five restrained CSS-only course-home motifs as non-semantic identity layers; track labels and concept-specific visual grammars remain the carriers of instructional meaning.
 
 ## Review rule
 

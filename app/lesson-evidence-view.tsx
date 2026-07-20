@@ -40,13 +40,13 @@ export function LessonEvidenceView({ lesson }: { lesson: Lesson }) {
     setStructuredAttempted(false);
   };
 
-  return <section className="lesson-evidence-lab" aria-labelledby={`evidence-title-${lesson.id}`}>
+  return <section className="lesson-evidence-lab" data-surface-tier="anchor" aria-labelledby={`evidence-title-${lesson.id}`}>
     <header className="evidence-lab-header">
       <div><span className="eyebrow">Evidence & transfer lab</span><h2 id={`evidence-title-${lesson.id}`}>Test the chapter’s mechanism at its boundary.</h2><ActivityInfo mode="checked" title="Three decisions are checked locally" detail="Write your explanation first. The page then checks the boundary diagnosis and three lesson-specific decisions, gives first-error feedback, and unlocks the worked solution only after the decisions pass." /></div>
       <p>The explanation, worked trace, and practice above established the mechanism. Now hold it fixed while one assumption changes, then decide whether your original conclusion survives.</p>
     </header>
 
-    <section className="authentic-contrast" aria-labelledby={`contrast-title-${lesson.id}`}>
+    <section className="authentic-contrast" data-content-role="boundary" aria-labelledby={`contrast-title-${lesson.id}`}>
       <header><span className="eyebrow">Boundary-case comparison</span><h3 id={`contrast-title-${lesson.id}`}><MathText>{evidence.contrast.title}</MathText></h3><p>Hold the central mechanism in mind and identify the one assumption that changes the result.</p></header>
       <div className="contrast-cases">
         {[evidence.contrast.left, evidence.contrast.right].map((item, index) => <article key={item.label}>
@@ -56,13 +56,13 @@ export function LessonEvidenceView({ lesson }: { lesson: Lesson }) {
       <div className="contrast-principle"><span>PAUSE BEFORE THE OPTIONS</span><p>Name the one changed assumption that could explain both observed outcomes. Keep that prediction in mind; the causal principle remains hidden until your diagnosis passes.</p></div>
     </section>
 
-    <section className="diagnostic-decision" aria-labelledby={`diagnostic-${lesson.id}`}>
+    <section className="diagnostic-decision" data-content-role="check" aria-labelledby={`diagnostic-${lesson.id}`}>
       <header><span className="eyebrow">Automatically checked diagnosis</span><h3 id={`diagnostic-${lesson.id}`}>Which explanation survives both cases?</h3><p>Choose the causal principle, not the option that merely sounds fluent. A wrong answer identifies the assumption to revisit before transfer can pass.</p></header>
       <div>{diagnosticOptions.map((option, index) => <button key={option.text} className={diagnosticChoice === index ? option.correct ? "selected correct" : "selected incorrect" : ""} onClick={() => setDiagnosticChoice(index)} disabled={diagnosticPassed}><span>{String.fromCharCode(65 + index)}</span><MathText>{option.text}</MathText></button>)}</div>
       {diagnosticChoice !== undefined && <div className={`diagnostic-feedback ${diagnosticPassed ? "pass" : "retry"}`} role="status"><strong>{diagnosticPassed ? "Mechanism diagnosis passed." : "That explanation fails Case B."}</strong><p><MathText>{diagnosticPassed ? `Correct principle: ${evidence.contrast.principle} This accounts for both “${evidence.contrast.left.label}” and “${evidence.contrast.right.label}” without erasing their boundary.` : `Reinspect “${evidence.contrast.right.label}”: ${evidence.contrast.right.outcome} The selected explanation ignores that changed assumption. Choose again.`}</MathText></p>{!diagnosticPassed && <button onClick={() => setDiagnosticChoice(undefined)}>Correct the diagnosis</button>}</div>}
     </section>
 
-    <section className="assessed-transfer" aria-labelledby={`transfer-title-${lesson.id}`}>
+    <section className="assessed-transfer" data-content-role="evidence" aria-labelledby={`transfer-title-${lesson.id}`}>
       <header><div><span className="eyebrow">Assessed transfer</span><h3 id={`transfer-title-${lesson.id}`}>Apply the mechanism in an unfamiliar case.</h3></div><span className={`mastery-status ${passed ? "passed" : ""}`}>{passed ? "✓ Transfer passed" : !diagnosticPassed ? "Boundary diagnosis required" : "Structured transfer required"}</span></header>
       <p className="transfer-prompt"><MathText>{evidence.transfer.prompt}</MathText></p>
       <label className="transfer-draft"><span>Your decision, calculation, or design</span><textarea rows={7} value={draft} disabled={committed} onChange={(event) => setDraft(event.target.value)} placeholder="Commit to an answer and explain the causal mechanism. A correct conclusion without a reason does not pass." /></label>

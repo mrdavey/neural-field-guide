@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { animate, createScope, stagger } from "animejs";
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-const sectionSelector = ".home-view>section,.lesson-view>section,.lesson-view>aside,.lesson-view>.scroll-story";
+const landmarkSelector = ".hero-machine,.scroll-story,.lesson-concept-plate,.lab-shell,.lesson-evidence-lab,.technical-validation,.mastery-studio,.fine-tuning-workshop,.synthesis-map";
 const feedbackSelector = "[role='status'],.item-feedback,.diagnostic-feedback,.transfer-feedback,.objective-check-answer,.guided-result,.code-reflection,.practice-diagnosis,.planner-readout,.exemplar-reveal,.reference-sections";
 
 export function CourseMotionOrchestrator({ routeKey, completed }: { routeKey: string; completed: number }) {
@@ -29,16 +29,16 @@ export function CourseMotionOrchestrator({ routeKey, completed }: { routeKey: st
       seen.add(target);
       if (motionPreference.matches) return;
       scope.execute(() => animate(target, {
-        opacity: [.42, 1],
-        y: [feedback ? 9 : 18, 0],
+        opacity: [feedback ? .72 : .84, 1],
+        y: [feedback ? 7 : 10, 0],
         scale: feedback ? [.985, 1] : [1, 1],
-        duration: feedback ? 460 : 680,
+        duration: feedback ? 280 : 340,
         ease: "out(4)",
         composition: "replace",
       }));
     };
 
-    const sections = Array.from(root.querySelectorAll(sectionSelector));
+    const landmarks = Array.from(root.querySelectorAll(landmarkSelector));
     const intersection = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
@@ -46,7 +46,7 @@ export function CourseMotionOrchestrator({ routeKey, completed }: { routeKey: st
         intersection.unobserve(entry.target);
       });
     }, { rootMargin: "0px 0px -8%", threshold: .06 });
-    sections.forEach((section) => intersection.observe(section));
+    landmarks.forEach((landmark) => intersection.observe(landmark));
 
     const mutation = new MutationObserver((records) => {
       records.flatMap((record) => Array.from(record.addedNodes)).forEach((node) => {
@@ -57,12 +57,12 @@ export function CourseMotionOrchestrator({ routeKey, completed }: { routeKey: st
     });
     mutation.observe(root, { childList: true, subtree: true });
 
-    const routeTargets = root.querySelectorAll(".lesson-breadcrumb,.lesson-header,.hero-copy>* ,.hero-machine>*");
+    const routeTargets = root.querySelectorAll(".lesson-breadcrumb,.lesson-header,.hero-copy>*");
     if (routeTargets.length) scope.execute(() => animate(routeTargets, {
-      opacity: [.24, 1],
-      y: [14, 0],
-      duration: 620,
-      delay: stagger(46),
+      opacity: [.78, 1],
+      y: [9, 0],
+      duration: 360,
+      delay: stagger(30),
       ease: "out(4)",
       composition: "replace",
     }));

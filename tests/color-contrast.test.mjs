@@ -2,11 +2,12 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [globalStyles, learningActivityStyles, contrastStyles, layout, llmData, worldModelData, researchCourseData, llmLabs, worldModelLabs, researchLabs] = await Promise.all([
+const [globalStyles, learningActivityStyles, contrastStyles, layout, catalog, llmData, worldModelData, researchCourseData, llmLabs, worldModelLabs, researchLabs] = await Promise.all([
   readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   readFile(new URL("../app/learning-activities.css", import.meta.url), "utf8"),
   readFile(new URL("../app/contrast.css", import.meta.url), "utf8"),
   readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+  readFile(new URL("../app/course-catalog.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/course-data.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/world-models/index.ts", import.meta.url), "utf8"),
   readFile(new URL("../app/research-curriculum-manifests.ts", import.meta.url), "utf8"),
@@ -53,6 +54,18 @@ test("track accents have a separate AA text color on light course surfaces", () 
     assert.ok(contrast(textColor, "#e8e4da") >= 4.5, `${textColor} from ${track} must contrast with cream`);
     assert.ok(contrast(textColor, "#ffd166") >= 4.5, `${textColor} from ${track} must contrast with yellow callouts`);
     assert.ok(contrast("#0b1020", track) >= 4.5, `ink must contrast with ${track} when the accent is a background`);
+  }
+});
+
+test("course identity palettes keep ink readable on every accent and paper tint", () => {
+  assert.match(globalStyles, /--course-accent-text:color-mix\(in srgb,var\(--course-accent\) 52%,var\(--ink\)\)/);
+  const themes = [...catalog.matchAll(/theme: \{ accent: "(#[0-9a-f]{6})", secondary: "(#[0-9a-f]{6})", paperTint: "(#[0-9a-f]{6})"/gi)];
+  assert.equal(themes.length, 5);
+  for (const [, accent, secondary, paperTint] of themes) {
+    assert.ok(contrast("#0b1020", accent) >= 4.5, `ink must contrast with course accent ${accent}`);
+    assert.ok(contrast("#0b1020", secondary) >= 4.5, `ink must contrast with course secondary ${secondary}`);
+    assert.ok(contrast("#0b1020", paperTint) >= 4.5, `ink must contrast with paper tint ${paperTint}`);
+    assert.ok(contrast(mix(accent, "#0b1020", 0.52), "#f3f0e8") >= 4.5, `mixed accent text from ${accent} must contrast with paper`);
   }
 });
 

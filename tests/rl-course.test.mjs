@@ -116,6 +116,42 @@ test("audited RL lessons execute learned dynamics, behavior cloning, and paired 
   assert.match(sourceText, /2108\.13264/);
 });
 
+test("RL estimator, ending, and tabular-environment contracts remain internally consistent", async () => {
+  const monteCarlo = course.rlLessonById["monte-carlo-estimation"];
+  assert.match(monteCarlo.deep, /first-visit[\s\S]*unbiased/i);
+  assert.match(monteCarlo.deep, /every-visit[\s\S]*finite-sample mean biased/i);
+  assert.match(course.rlCodeExamples["monte-carlo-estimation"].observe, /does not make the every-visit finite-sample mean unbiased/);
+
+  const control = course.rlLessonById["sarsa-q-learning"];
+  assert.match(control.deep, /\\gamma\(1-d_t\)/);
+  assert.match(course.rlCodeExamples["sarsa-q-learning"].code, /continuation=int\(not terminated\)/);
+
+  const valueLedger = course.rlCodeExamples["value-methods-capstone"].code;
+  for (const target of ["td_target", "sarsa_target", "q_target"]) {
+    assert.match(valueLedger, new RegExp(`${target}=reward\\+gamma\\*continuation\\*`), target);
+  }
+  assert.match(course.rlCodeExamples["value-methods-capstone"].observe, /same true-termination mask/);
+
+  const replay = course.rlLessonById["replay-target-networks"];
+  assert.match(replay.deep, /\\gamma\(1-d\)/);
+  assert.match(course.rlCodeExamples["replay-target-networks"].code, /\('terminal',True,False\)/);
+  assert.match(course.rlCodeExamples["replay-target-networks"].observe, /terminal 1\.0/);
+
+  const projectText = JSON.stringify(course.rlCapstoneProjects["tabular-control-capstone"]);
+  assert.match(projectText, /five-state chain MDP/);
+  assert.doesNotMatch(projectText, /three-state MDP/);
+  const artifact = JSON.parse(await readFile(join(root, "public/capstone-artifacts/rl/tabular-control-capstone.json"), "utf8"));
+  assert.deepEqual(
+    {
+      environmentId: artifact.manifest.environmentId,
+      stateCount: artifact.manifest.stateCount,
+      startState: artifact.manifest.startState,
+      terminalStates: artifact.manifest.terminalStates,
+    },
+    { environmentId: "five-state-chain-v1", stateCount: 5, startState: 2, terminalStates: [0, 4] },
+  );
+});
+
 test("RL CPU baselines and research budgets match executable paths", async () => {
   const starter = readFileSync(join(root, "public/capstone-artifacts/rl/rl_capstone_starter.py"), "utf8");
   for (const implementation of ["train_dqn", "train_actor_critic", "fit_tabular_dynamics", "fit_cloning_policy", "rl_research"]) {
@@ -182,6 +218,11 @@ test("RL capstone references match canonical five-seed budgets and all starter m
       assert.equal(dossier.manifest.profile, "smoke");
       assert.match(dossier.evidenceKind, /real local CPU execution/);
       assert.match(dossier.boundary, /not trained-agent performance on an external benchmark/);
+      if (id === "tabular-control-capstone") {
+        assert.equal(dossier.manifest.environmentId, "five-state-chain-v1");
+        assert.equal(dossier.manifest.states, 5);
+        assert.deepEqual(dossier.manifest.terminalStates, [0, 4]);
+      }
       if (["deep-value-capstone", "on-policy-capstone", "model-based-capstone", "sequence-policy-capstone", "rl-research-capstone"].includes(id)) {
         assert.match(dossier.boundary, /training or planning evidence/);
       }

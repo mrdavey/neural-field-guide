@@ -36,7 +36,7 @@ export const worldModelAdvancedSpecs = [
       explanation: "The set representation has no guaranteed semantic order.",
     },
     lab: "wm-latent",
-    prerequisites: ["world-model-operations-case-study"],
+    prerequisites: ["action-conditioned-transitions"],
     sources: [
       wmSources.slotAttention,
       wmSources.objectWorldModels,
@@ -165,7 +165,7 @@ export const worldModelAdvancedSpecs = [
         "The model must decide when abstract states begin, persist, and terminate.",
     },
     lab: "wm-rollout",
-    prerequisites: ["world-model-operations-case-study"],
+    prerequisites: ["imagined-rollouts"],
     sources: [
       wmSources.hierarchicalWorldModels,
       wmSources.dreamer,
@@ -297,7 +297,7 @@ export const worldModelAdvancedSpecs = [
         "Equivariance means output transforms according to the corresponding representation.",
     },
     lab: "wm-state",
-    prerequisites: ["world-model-operations-case-study"],
+    prerequisites: ["system-identification-sim-to-real"],
     sources: [
       wmSources.equivariantWorldModels,
       wmSources.egnn,
@@ -427,7 +427,7 @@ export const worldModelAdvancedSpecs = [
         "An intervention sets the variable rather than conditioning on its natural causes.",
     },
     lab: "wm-belief",
-    prerequisites: ["world-model-operations-case-study"],
+    prerequisites: ["action-conditioned-transitions"],
     sources: [
       wmSources.causalInferenceOverview,
       wmSources.causalRepresentation,
@@ -561,7 +561,7 @@ export const worldModelAdvancedSpecs = [
         "A controlled instruction intervention tests its causal role in the decision.",
     },
     lab: "wm-video",
-    prerequisites: ["world-model-operations-case-study"],
+    prerequisites: ["video-tokenization", "goal-conditioned-robotics"],
     sources: [wmSources.dynalang, wmSources.vjepa2, wmSources.genie],
     objectives: [
       "Trace synchronized language, sensory, state, and action inputs through a multimodal prediction contract",
