@@ -153,17 +153,21 @@ test("Pages build is static-export and public assets are base-path aware", async
 });
 
 test("GitHub Pages is the only configured deployment target", async () => {
-  const [readme, guidance, packageJson] = await Promise.all([
+  const [readme, guidance, packageJson, gitignore] = await Promise.all([
     read("README.md"),
     read("AGENTS.md"),
     read("package.json"),
+    read(".gitignore"),
   ]);
   assert.match(readme, /GitHub Pages is the supported target/);
   assert.match(guidance, /GitHub Pages is the only planned deployment target/);
+  assert.match(gitignore, /^\*\.tsbuildinfo$/m, "generated TypeScript caches must stay untracked");
   for (const removedPackage of ["vinext", "wrangler", "@cloudflare/vite-plugin", "drizzle-kit", "drizzle-orm"]) {
     assert.ok(!packageJson.includes(`"${removedPackage}"`), `${removedPackage} should not remain in the dependency graph`);
   }
   await assert.rejects(access(new URL("../.openai/hosting.json", import.meta.url)));
   await assert.rejects(access(new URL("../vite.config.ts", import.meta.url)));
   await assert.rejects(access(new URL("../worker/index.ts", import.meta.url)));
+  await assert.rejects(access(new URL("../app/chatgpt-auth.ts", import.meta.url)));
+  await assert.rejects(access(new URL("../drizzle/meta/_journal.json", import.meta.url)));
 });
