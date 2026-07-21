@@ -2,18 +2,6 @@
 
 import { useEffect } from "react";
 import { publicPath } from "./public-path";
-import { isCourseId, type CourseId } from "./course-catalog";
-
-const LAST_COURSE_KEY = "neural-field-guide-last-course-v1";
-
-export function CourseRootRedirect() {
-  useEffect(() => {
-    const saved = localStorage.getItem(LAST_COURSE_KEY);
-    const course: CourseId = saved && isCourseId(saved) ? saved : "llm";
-    window.location.replace(publicPath(`/${course}/`));
-  }, []);
-  return <main className="route-forward" role="status"><p>Opening your course…</p><noscript><a href={publicPath("/llm/")}>Open the LLM course</a></noscript></main>;
-}
 
 export function LegacyLessonRedirect({ lessonId }: { lessonId: string }) {
   useEffect(() => {

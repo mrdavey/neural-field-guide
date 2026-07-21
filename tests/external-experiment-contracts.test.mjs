@@ -34,14 +34,15 @@ const template = readFileSync(join(root, "external-executions/EXPERIMENT_TEMPLAT
 const courseApp = readFileSync(join(root, "app/course-app.tsx"), "utf8");
 const experimentView = readFileSync(join(root, "app/external-experiment-view.tsx"), "utf8");
 const courseCatalog = readFileSync(join(root, "app/course-catalog.ts"), "utf8");
-const redirects = readFileSync(join(root, "app/route-redirects.tsx"), "utf8");
+const landingPage = readFileSync(join(root, "app/page.tsx"), "utf8");
 
 test("course navigation and typing are ready for course-local manifests", () => {
   assert.match(courseApp, /Object\.values\(courses\)\.map/);
   assert.doesNotMatch(courseApp, /<option value="llm">LLMs<\/option>/);
   assert.match(courseCatalog, /export type CourseTrack = \{ id: string/);
   assert.match(courseCatalog, /recommendedAfter: CourseId\[\]/);
-  assert.match(redirects, /saved && isCourseId\(saved\)/);
+  assert.match(landingPage, /courseIds\.map/);
+  assert.match(landingPage, /publicPath\(`\/\$\{courseId\}\/`\)/);
 });
 
 test("external experiments separate invariants, reviewed measurements, and fixtures", () => {

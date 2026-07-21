@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("the static root forwards while all five course homes render the finished experience", async () => {
+test("the static root markets and links all five finished course homes", async () => {
   const [root, llm, worldmodel, generative, rl, embodied] = await Promise.all([
     readFile(new URL("../out/index.html", import.meta.url), "utf8"),
     readFile(new URL("../out/llm/index.html", import.meta.url), "utf8"),
@@ -11,7 +11,12 @@ test("the static root forwards while all five course homes render the finished e
     readFile(new URL("../out/rl/index.html", import.meta.url), "utf8"),
     readFile(new URL("../out/embodied/index.html", import.meta.url), "utf8"),
   ]);
-  assert.match(root, /Opening your course/);
+  assert.match(root, /Understand intelligent systems/);
+  assert.match(root, /Five ways into the machinery/);
+  assert.match(root, /Understanding is something you do/);
+  for (const route of ["llm", "worldmodel", "generative", "rl", "embodied"]) {
+    assert.match(root, new RegExp(`href="/${route}/"`));
+  }
   for (const html of [llm, worldmodel, generative, rl, embodied]) {
     assert.match(html, /Neural Field Guide/);
     assert.match(html, /connected frontiers/);
@@ -53,13 +58,14 @@ test("every lesson has a directly rendered canonical static URL and LLM legacy f
   }
 });
 
-test("starter preview is removed and metadata is course-specific", async () => {
+test("starter preview is removed and metadata is field-guide specific", async () => {
   const [page, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8")
   ]);
-  assert.match(page, /CourseRootRedirect/);
+  assert.match(page, /LandingCourseFinder/);
+  assert.doesNotMatch(page, /CourseRootRedirect/);
   assert.match(layout, /Neural Field Guide/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));

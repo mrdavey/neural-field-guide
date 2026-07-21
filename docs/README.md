@@ -2,7 +2,7 @@
 
 Reviewed: 15 July 2026
 
-This directory contains the maintained documentation for the five-course, 182-lesson Neural Field Guide. Including one home for each course, the application exposes 187 canonical pages. This file distinguishes current sources of truth from generated evidence so a new audit does not become a second, conflicting specification.
+This directory contains the maintained documentation for the five-course, 182-lesson Neural Field Guide. The public program landing page links to all 187 canonical pages: one home for each course and 182 lessons. This file distinguishes current sources of truth from generated evidence so a new audit does not become a second, conflicting specification.
 
 ## Maintained documents
 
