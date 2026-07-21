@@ -167,10 +167,10 @@ export function CourseApp({ courseId = "llm", initialLessonId }: { courseId?: Co
       <CourseMotionOrchestrator routeKey={current ? `${course.id}:${current.id}` : `${course.id}:home`} completed={completed} />
       <header className="topbar">
         <div className="topbar-primary">
-          <button className="brand" onClick={openHome} aria-label="Go to course home">
+          <a className="brand" href={publicPath("/")} aria-label="Go to the all-courses landing page">
             <span className="brand-mark">N</span>
             <span><strong>Neural</strong> Field Guide</span>
-          </button>
+          </a>
           <label className="course-selector"><span>Course</span><select value={course.id} onChange={(event) => { const target = event.target.value as CourseId; localStorage.setItem(LAST_COURSE_KEY, target); window.location.assign(publicPath(`/${target}/`)); }}>{Object.values(courses).map((option) => <option key={option.id} value={option.id}>{option.selectorLabel}</option>)}</select></label>
         </div>
         <div className="topbar-actions">
@@ -180,6 +180,10 @@ export function CourseApp({ courseId = "llm", initialLessonId }: { courseId?: Co
       </header>
 
       <aside className={`sidebar ${mobileNav ? "is-open" : ""}`} id="course-navigation">
+        <button className="sidebar-course-home" onClick={openHome}>
+          <span aria-hidden="true">←</span>
+          <span><small>Course overview</small><strong>{course.title}</strong></span>
+        </button>
         <div className="sidebar-progress">
           <div className="progress-orbit" style={{ "--progress": `${percent * 3.6}deg` } as React.CSSProperties}><span>{percent}%</span></div>
           <div><span className="eyebrow">Your expedition</span><strong>{completed === 0 ? "Base camp" : `${completed} lessons complete`}</strong></div>

@@ -19,6 +19,8 @@ test("the static root markets and links all five finished course homes", async (
   }
   for (const html of [llm, worldmodel, generative, rl, embodied]) {
     assert.match(html, /Neural Field Guide/);
+    assert.match(html, /href="\/"[^>]*aria-label="Go to the all-courses landing page"/);
+    assert.match(html, /Course overview/);
     assert.match(html, /connected frontiers/);
     assert.match(html, /The finish line/);
     assert.match(html, /Start the course/);

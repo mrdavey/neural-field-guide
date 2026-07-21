@@ -9,3 +9,63 @@
   transform: none;
   width: 40px;
 }
+
+.brand {
+  text-decoration: none;
+}
+
+.brand:focus-visible {
+  outline: 3px solid var(--course-secondary, var(--yellow));
+  outline-offset: 3px;
+}
+
+.sidebar-course-home {
+  align-items: center;
+  background: #171d2e;
+  border: 1px solid #30374b;
+  color: #f4f1e9;
+  cursor: pointer;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 24px minmax(0, 1fr);
+  margin: 0 0 18px;
+  min-height: 62px;
+  padding: 10px 12px;
+  text-align: left;
+  width: 100%;
+}
+
+.sidebar-course-home:hover {
+  background: #20283b;
+  border-color: var(--course-accent);
+}
+
+.sidebar-course-home:focus-visible {
+  outline-color: var(--course-secondary, var(--yellow));
+}
+
+.sidebar-course-home > span:first-child {
+  color: var(--course-accent);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+}
+
+.sidebar-course-home small,
+.sidebar-course-home strong {
+  display: block;
+}
+
+.sidebar-course-home small {
+  color: #8f98ab;
+  font-family: var(--font-mono);
+  font-size: .52rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.sidebar-course-home strong {
+  font-size: .76rem;
+  line-height: 1.25;
+  margin-top: 4px;
+}

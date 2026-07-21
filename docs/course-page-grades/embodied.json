@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-20T09:14:40Z",
-  "sourceFingerprint": "sha256:fba74387810027ab083a56b0f89f362484ba5dbd2f4ed6b45b7fb8262d846146",
+  "sourceFingerprint": "sha256:f027315e1df017f9c380dfb7f1de98b92116a2876ba8629d9eccd2a036245794",
   "grader": {
     "role": "independent whole-page grader",
     "method": "Blind review of every complete canonical reader snapshot in displayed order, checking factual and arithmetic correctness, narrative continuity, prerequisite and objective coverage, commit-before-reveal transfer, deterministic feedback, self-containment, and evidence boundaries without viewing prior grades.",

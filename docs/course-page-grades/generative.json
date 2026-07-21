@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-20T08:57:14Z",
-  "sourceFingerprint": "sha256:ab0370766d6dd71372b81d2f5993553f602b4d085e6a42495653322f814feea8",
+  "sourceFingerprint": "sha256:a294e4be6f612d775036276b8e8e7b67a5351ffdc7b54379c66a7abe6cfb1390",
   "grader": {
     "role": "independent whole-page grader",
     "method": "Read every learner-facing block in ascending dossier order, preserved each disclosure and interaction sequence, recalculated important arithmetic, and judged each page as one continuous journey against the 2026-07-17 rubric.",

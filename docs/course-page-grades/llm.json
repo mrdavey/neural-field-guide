@@ -1,7 +1,7 @@
 {
   "rubricRevision": "2026-07-17",
   "gradedAt": "2026-07-20T09:00:11Z",
-  "sourceFingerprint": "sha256:7c242e34f9d99c0693507651e802c1bbfcae1c76677d7142b8ca32f6d732b5a1",
+  "sourceFingerprint": "sha256:ab83752805b8ad241138d5a7926b893b4231b70a961ad4af4708b998fbb0e0d3",
   "grader": {
     "role": "independent whole-page grader",
     "method": "Blindly read each current home and lesson dossier in full reading order, evaluated the four rubric dimensions as one learner journey, and recorded only consolidated page judgments.",
