@@ -54,6 +54,12 @@ test("instruction disclosure supports hover, keyboard, and click or tap", () => 
   assert.match(styles, /\.activity-info-trigger:focus-visible/);
 });
 
+test("optional technical depth has an explicit keyboard toggle", () => {
+  assert.match(guide, /event\.key === "Enter" \|\| event\.key === " "/);
+  assert.match(guide, /event\.currentTarget\.closest\("details"\)/);
+  assert.match(guide, /details\.open = !details\.open/);
+});
+
 test("course selection sits in the left brand cluster", () => {
   const topbar = app.slice(app.indexOf('<header className="topbar">'), app.indexOf("</header>", app.indexOf('<header className="topbar">')));
   assert.match(topbar, /className="topbar-primary"[^]*className="brand"[^]*className="course-selector"/);
@@ -69,9 +75,12 @@ test("lesson order follows orient, learn, try, test, extend", () => {
     lessonView.indexOf("<LessonConceptPlate"),
     lessonView.indexOf("<ScrollStory"),
     lessonView.indexOf("<LessonGuideView"),
-    lessonView.indexOf("<LessonLab"),
-    lessonView.indexOf("<LessonEvidenceView"),
+    lessonView.indexOf("{!deferActivities && lessonLab}"),
+    lessonView.indexOf('id="lesson-phase-test"'),
+    lessonView.indexOf("{!deferActivities && lessonTransfer}"),
     lessonView.indexOf('className="knowledge-check"'),
+    lessonView.indexOf('id="lesson-phase-extend"'),
+    lessonView.indexOf("<TechnicalDepthView"),
     lessonView.indexOf("<LessonFurtherReading"),
   ];
   assert.ok(positions.every((position) => position >= 0));
@@ -127,7 +136,7 @@ test("lesson outcomes appear once without a repetitive by-the-end heading", () =
   assert.doesNotMatch(app, /world-model-orient|knowledge-bridge|definition-card/);
   assert.doesNotMatch(discussion, /objectives|What I am expected to be able to do/);
   assert.doesNotMatch(guide, /By the end, you can/);
-  assert.match(guide, /aria-label="Lesson outcomes and checks"/);
+  assert.match(guide, /operationOnly \? "Core operation check" : "Lesson outcomes and checks"/);
   assert.match(guide, /objectiveCoverage\.map/);
 });
 
@@ -135,8 +144,8 @@ test("lesson reading begins with the concept instead of a program bridge predict
   assert.doesNotMatch(app, /CourseAlignmentBridge|courseAlignmentByLesson|Program bridge/);
   const lessonView = app.slice(app.indexOf("function LessonView"), app.indexOf("function SynthesisMap"));
   assert.ok(lessonView.indexOf("<LessonNarrativeView") < lessonView.indexOf("<LessonConceptPlate"));
-  assert.match(lessonView, /<LessonNarrativeView[^]*simple=\{lesson\.simple\}[^]*priorKnowledge=\{priorKnowledge\}[^]*nextUse=\{nextUse\}/);
-  assert.match(lessonView, /<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} heading=\{motionStory\.stages\[0\]\.title\} \/>/);
+  assert.match(lessonView, /<LessonNarrativeView[^]*simple=\{conceptFirstSummaryFor\(lesson, coverage, guide\)\}[^]*priorKnowledge=\{priorKnowledge\}[^]*nextUse=\{nextUse\}/);
+  assert.match(lessonView, /<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} heading=\{coreMotionStory\.stages\[0\]\.title\}/);
 });
 
 test("required transfer and assessment finish before optional external runbooks", () => {
@@ -173,9 +182,9 @@ test("shared lesson surfaces use topic-specific headings instead of repeated fil
     "Words you should now own",
     "See the same idea another way",
   ]) assert.ok(!`${app}\n${guide}`.includes(phrase), phrase);
-  assert.match(app, /motionStory\.stages\[0\]\.title/);
+  assert.match(app, /coreMotionStory\.stages\[0\]\.title/);
   for (const phrase of ["Words used in this chapter", "Choose the answer your mechanism predicts.", "Test the chapter’s mechanism at its boundary."]) assert.ok(`${app}\n${guide}\n${evidence}`.includes(phrase), phrase);
-  assert.match(app, /lessonVisual\.stageDescriptions\[stageIndex\]/);
+  assert.match(app, /coreVisual\.stageDescriptions\[stageIndex\]/);
   assert.doesNotMatch(`${app}\n${guide}`, /By the end, you can/);
   for (const phrase of ["These are learning promises, not a preview checklist", "Use the outcome map to connect each claim", "Choose first. Explanations appear after you commit."]) assert.ok(!`${app}\n${guide}`.includes(phrase), phrase);
   for (const pattern of [
@@ -195,8 +204,8 @@ test("scroll storytelling is wired across home, every lesson, and capstones", ()
   assert.match(app, /steps=\{learningPhases\.map/);
   assert.match(lessonView, /className="lesson-motion-story"/);
   assert.match(lessonView, /scene=\{course\.id === "llm" \? lesson\.track as LlmTrackId : "pipeline"\}/);
-  assert.match(lessonView, /concept=\{motionStory\.concept\}/);
-  assert.match(lessonView, /motionStory\.stages\.map\(\(stage\) => stage\.label\)/);
+  assert.match(lessonView, /concept=\{coreMotionStory\.concept\}/);
+  assert.match(lessonView, /coreMotionStory\.stages\.map\(\(stage\) => stage\.label\)/);
   assert.doesNotMatch(lessonView, /className="lesson-grid"/);
   assert.match(capstone, /className="capstone-assembly"/);
   assert.match(capstone, /draft\.completedStages\.includes\(item\.id\)/);

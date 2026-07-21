@@ -142,6 +142,8 @@ function extractLlmLabMeta() {
 }
 
 const { courseIds, courses } = loadTypeScriptModule(join(root, "app/course-catalog.ts"));
+const { conceptFirstBridgeFor, conceptFirstCoverageFor, conceptFirstGuideFor, conceptFirstPlainText, conceptFirstSummaryFor, hasDeferredTechnicalMaterial: hasFormalTechnicalMaterial } = loadTypeScriptModule(join(root, "app/concept-first-curriculum.ts"));
+const { conceptFirstOperationTraceFor } = loadTypeScriptModule(join(root, "app/concept-first-operation-traces.ts"));
 const { lessonNarrativeResult } = loadTypeScriptModule(join(root, "app/lesson-narrative-handoffs.ts"));
 const {
   continuityRecordForLesson,
@@ -174,7 +176,7 @@ const fineTuningReaderData = loadPrivateReaderData(join(root, "app/fine-tuning-w
 const visualByKey = Object.fromEntries(JSON.parse(readFileSync(join(root, "app/lesson-visual-manifest.json"), "utf8")).map((visual) => [`${visual.courseId}:${visual.lessonId}`, visual]));
 const llmLabMeta = extractLlmLabMeta();
 
-export const COURSE_PAGE_READER_SNAPSHOT_VERSION = "2026-07-17";
+export const COURSE_PAGE_READER_SNAPSHOT_VERSION = "2026-07-21";
 const DOSSIER_VERSION = COURSE_PAGE_READER_SNAPSHOT_VERSION;
 const masteryStudioTitles = {
   "embedding-layer": "One word, one lookup, two contextual states",
@@ -215,6 +217,13 @@ function trackFor(course, lesson) {
 
 function nextUseText(course, lesson, next) {
   const nextGuide = next ? course.guides[next.id] : undefined;
+  const nextCoverage = next ? course.objectiveCoverage[next.id] : undefined;
+  const nextGoal = nextCoverage && next ? conceptFirstSummaryFor(next, nextCoverage, nextGuide) : nextGuide?.objectives[0] ?? next?.keyIdeas[0] ?? "the next mechanism";
+  const currentCoverage = course.objectiveCoverage[lesson.id];
+  const currentGuide = course.guides[lesson.id];
+  const currentResult = currentCoverage && conceptFirstCoverageFor(lesson, currentCoverage, currentGuide).technical.length
+    ? conceptFirstSummaryFor(lesson, currentCoverage, currentGuide)
+    : lessonNarrativeResult(course.id, lesson);
   if (course.id === "worldmodel" && lesson.id === worldModelResearchCapstoneId) return "This completed protocol is the evidence-bearing conclusion of the course: preserve the result, null result, failures, and reproduction boundary together.";
   if (course.id === "worldmodel" && isWorldModelAdvancedBranch(lesson.id)) return "This mechanism can become the chosen branch in the final research study. The other advanced branches remain optional; continue to the capstone after completing one branch.";
   if (course.id === "worldmodel" && lesson.id === course.sharedCoreLessonId) return "The shared spine is complete. Choose one advanced branch, then carry that mechanism into the final research capstone.";
@@ -227,11 +236,11 @@ function nextUseText(course, lesson, next) {
       sameTrack: lesson.track === next.track,
       directDependency: Boolean(next.prerequisites?.includes(lesson.id)),
     });
-    if (relationship === "direct reuse") return `The next chapter, ${next.title}, directly reuses this chapter's mechanism for a new goal: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
-    if (relationship === "extension") return `The next chapter, ${next.title}, extends this result with one new mechanism: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
-    if (relationship === "synthesis") return `The next chapter, ${next.title}, combines this result with earlier interfaces to pursue a larger goal: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
+    if (relationship === "direct reuse") return `The next chapter, ${next.title}, directly reuses this chapter's mechanism for a new goal: ${sentence(nextGoal)}`;
+    if (relationship === "extension") return `The next chapter, ${next.title}, extends this result with one new mechanism: ${sentence(nextGoal)}`;
+    if (relationship === "synthesis") return `The next chapter, ${next.title}, combines this result with earlier interfaces to pursue a larger goal: ${sentence(nextGoal)}`;
     const nextTrack = trackFor(course, next);
-    return `This chapter closes its present thread with this result: ${sentence(lessonNarrativeResult(course.id, lesson))} The next chapter, ${next.title}, begins ${nextTrack.title} with a different goal: ${sentence(nextGuide?.objectives[0] ?? next.keyIdeas[0])}`;
+    return `This chapter closes its present thread with this result: ${sentence(currentResult)} The next chapter, ${next.title}, begins ${nextTrack.title} with a different goal: ${sentence(nextGoal)}`;
   }
   return `Reuse this evidence contract when evaluating a new ${course.subject} design.`;
 }
@@ -514,6 +523,53 @@ function capstoneBlocks(course, lesson) {
   return blocks;
 }
 
+function asTechnicalDepthBlock(item) {
+  return { ...item, surface: item.surface.replace("lesson.", "lesson.technicalDepth.") };
+}
+
+function technicalDepthBlocks(course, lesson, guide, coverage, lab, transfer, validation, capstones) {
+  const { technical } = conceptFirstCoverageFor(lesson, coverage, guide);
+  const deferActivities = hasFormalTechnicalMaterial(lesson, coverage, guide);
+  const code = course.codeExamples[lesson.id];
+  const guidance = course.codeGuidance[lesson.id];
+  const blocks = [block("lesson.technicalDepth", "optionalTechnical", `Formalize and implement ${lesson.title}`, [
+    "The core lesson is complete without this section.",
+    "Use this layer when you want to calculate the mechanism, read its formal notation, or implement its exact contract.",
+    lesson.deep,
+  ], {
+    placement: "after the core knowledge check and mastery control",
+    completionImpact: "none",
+    initiallyCollapsed: true,
+    vocabulary: technical.length ? guide.vocabulary : [],
+  })];
+  if (technical.length) blocks.push(block("lesson.technicalDepth.objectiveChecks", "optionalTechnical", "Exact authored objectives", [], {
+    objectives: technical.map((item) => ({
+      objective: item.objective,
+      interactionSequence: [
+        { phase: "commitTechnicalAttempt", prompt: item.check.prompt },
+        { phase: "revealAfterCommit", workedCase: item.workedExample, expectedReasoning: item.check.expected, retry: item.check.retry, boundary: item.boundary },
+      ],
+    })),
+    additionalExplanation: guide.sections,
+  }));
+  if (code && guidance) blocks.push(block("lesson.technicalDepth.code", "optionalTechnicalCode", code.title, [code.setup], {
+    language: code.language,
+    guidance,
+    interactionSequence: [
+      { phase: "commitBeforeImplementation", prompt: code.predict },
+      { phase: "implementationAfterCommit", code: code.code, expectedObservation: code.observe, changedCase: code.tryIt },
+      ...(code.caveat ? [{ phase: "scopeBoundary", note: code.caveat }] : []),
+    ],
+  }));
+  if (deferActivities) {
+    if (lab) blocks.push(asTechnicalDepthBlock(lab));
+    if (transfer) blocks.push(asTechnicalDepthBlock(transfer));
+    blocks.push(...capstones.map(asTechnicalDepthBlock));
+  }
+  if (validation) blocks.push(asTechnicalDepthBlock(validation));
+  return blocks;
+}
+
 function discussionPrompt(course, lesson) {
   const prerequisiteTitles = (lesson.prerequisites ?? []).map((id) => course.lessonById[id].title);
   return [
@@ -533,21 +589,55 @@ function lessonSnapshot(course, lesson) {
   const previous = course.lessons[index - 1];
   const next = course.lessons[index + 1];
   const track = trackFor(course, lesson);
-  const guide = course.guides[lesson.id];
+  const authoredGuide = course.guides[lesson.id];
   const coverage = course.objectiveCoverage[lesson.id];
   const story = course.motionStories[lesson.id];
   const visual = visualByKey[`${course.id}:${lesson.id}`];
-  const code = course.codeExamples[lesson.id];
-  const guidance = course.codeGuidance[lesson.id];
-  if (!guide || !coverage || !story || !visual) throw new Error(`Incomplete composed-page data for ${course.id}:${lesson.id}`);
+  if (!authoredGuide || !coverage || !story || !visual) throw new Error(`Incomplete composed-page data for ${course.id}:${lesson.id}`);
+  const guide = conceptFirstGuideFor(lesson, authoredGuide, coverage);
+  const coverageSplit = conceptFirstCoverageFor(lesson, coverage, authoredGuide);
+  const conceptSummary = conceptFirstSummaryFor(lesson, coverage, authoredGuide);
+  const hasConceptFirstCore = coverageSplit.technical.length > 0;
+  const deferActivities = hasFormalTechnicalMaterial(lesson, coverage, authoredGuide);
+  const operationTrace = conceptFirstOperationTraceFor(lesson.id, lesson.keyIdeas);
+  const coreVisual = hasConceptFirstCore ? {
+    ...visual,
+    labels: ["INPUT", "OPERATION", "RESULT", "LIMIT"],
+    stageDescriptions: [operationTrace[0], operationTrace[1], operationTrace[2], lesson.misconception].map(conceptFirstPlainText),
+  } : visual;
+  const coreStory = hasConceptFirstCore ? {
+    ...story,
+    headline: `Follow ${lesson.title} as an operation before the notation.`,
+    intro: conceptSummary,
+    stages: story.stages.map((stage, stageIndex) => ({ ...stage, label: coreVisual.labels[stageIndex], title: coreVisual.stageDescriptions[stageIndex] })),
+  } : story;
   const prerequisites = prerequisiteRecords(course, lesson);
-  const priorKnowledge = prerequisiteContext(course, lesson, prerequisites);
+  const rawPriorKnowledge = prerequisiteContext(course, lesson, prerequisites);
+  const continuity = continuityRecordForLesson(course.id, lesson.id);
+  const continuityPrerequisite = continuity ? course.lessonById[continuity.fromLessonId] : undefined;
+  const priorKnowledge = hasConceptFirstCore ? {
+    ...rawPriorKnowledge,
+    prose: continuity && continuityPrerequisite
+      ? [conceptFirstBridgeFor(continuity.bridge, continuityPrerequisite, lesson)]
+      : rawPriorKnowledge.prose.map(conceptFirstPlainText),
+    internalLessons: rawPriorKnowledge.internalLessons.map((item) => {
+      const prerequisite = course.lessonById[item.lessonId];
+      const prerequisiteCoverage = prerequisite ? course.objectiveCoverage[item.lessonId] : undefined;
+      return { ...item, priorIdea: prerequisite && prerequisiteCoverage ? conceptFirstSummaryFor(prerequisite, prerequisiteCoverage, course.guides[item.lessonId]) : conceptFirstPlainText(item.priorIdea) };
+    }),
+    programLessons: rawPriorKnowledge.programLessons.map((item) => {
+      const prerequisiteCourse = courses[item.courseId];
+      const prerequisite = prerequisiteCourse?.lessonById[item.lessonId];
+      const prerequisiteCoverage = prerequisiteCourse?.objectiveCoverage[item.lessonId];
+      return item.priorIdea ? ({ ...item, priorIdea: prerequisite && prerequisiteCoverage ? conceptFirstSummaryFor(prerequisite, prerequisiteCoverage, prerequisiteCourse.guides[item.lessonId]) : conceptFirstPlainText(item.priorIdea) }) : item;
+    }),
+  } : rawPriorKnowledge;
   const blocks = [
     block("lesson.header", "heading", lesson.title, [`${track.title} · Lesson ${String(lesson.number).padStart(2, "0")} · ${lesson.duration} minutes`]),
   ];
   const [opening, ...chapters] = guide.sections;
   if (!opening) throw new Error(`Missing narrative opening for ${course.id}:${lesson.id}`);
-  blocks.push(block("lesson.narrativeOpening", "narrative", opening.title, [lesson.simple], {
+  blocks.push(block("lesson.narrativeOpening", "narrative", opening.title, [conceptSummary], {
     prerequisiteContext: priorKnowledge,
     nextUse: nextUseText(course, lesson, next),
   }));
@@ -558,44 +648,28 @@ function lessonSnapshot(course, lesson) {
     steps: guide.walkthrough,
   }));
   blocks.push(block("lesson.narrativeHandoff", "transition", "See the same mechanism from another angle", [`The illustration and scrolling trace follow the same path from “${headingPhrase(guide.walkthrough[0].title)}” to “${headingPhrase(guide.walkthrough.at(-1).title)}.” As you read them, connect each visible change to the causal step that produced it.`]));
-  blocks.push(block("lesson.visual", "visual", story.stages[0].title, [], {
-    visualKind: visual.kind,
+  blocks.push(block("lesson.visual", "visual", coreStory.stages[0].title, [], {
+    visualKind: coreVisual.kind,
     initiallyVisible: {
-      representation: visual.kind === "raster" ? `Concept illustration for ${lesson.title}. ${lesson.simple}` : "Four-stage deterministic mechanism diagram",
-      labels: visual.labels,
-      mentalModel: lesson.mentalModel,
+      representation: coreVisual.kind === "raster" ? `Concept illustration for ${lesson.title}. ${conceptSummary}` : "Four-stage deterministic mechanism diagram",
+      labels: coreVisual.labels,
+      mentalModel: hasConceptFirstCore ? conceptFirstPlainText(lesson.mentalModel) : lesson.mentalModel,
     },
     disclosureContent: {
       summary: "Read a text-only explanation",
-      stageDescriptions: visual.stageDescriptions.map((description, stageIndex) => ({ label: visual.labels[stageIndex], description })),
-      importantLimit: lesson.misconception,
+      stageDescriptions: coreVisual.stageDescriptions.map((description, stageIndex) => ({ label: coreVisual.labels[stageIndex], description })),
+      importantLimit: hasConceptFirstCore ? conceptFirstPlainText(lesson.misconception) : lesson.misconception,
     },
-    evidenceBoundary: visual.kind === "raster" ? "Generated concept illustration; exact labels are code-rendered; not a measurement." : "Deterministic SVG/HTML diagram; exact labels with illustrative layout.",
+    evidenceBoundary: coreVisual.kind === "raster" ? "Generated concept illustration; exact labels are code-rendered; not a measurement." : "Deterministic SVG/HTML diagram; exact labels with illustrative layout.",
   }));
-  blocks.push(block("lesson.scrollStory", "visualStory", story.headline, [story.intro], {
-    steps: story.stages.map((stage, stageIndex) => ({ label: `STEP ${String(stageIndex + 1).padStart(2, "0")}`, title: visual.labels[stageIndex], body: visual.stageDescriptions[stageIndex], signal: stage.label })),
+  blocks.push(block("lesson.scrollStory", "visualStory", coreStory.headline, [coreStory.intro], {
+    steps: coreStory.stages.map((stage, stageIndex) => ({ label: `STEP ${String(stageIndex + 1).padStart(2, "0")}`, title: coreVisual.labels[stageIndex], body: coreVisual.stageDescriptions[stageIndex], signal: stage.label })),
   }));
   blocks.push(block("lesson.guidedExample", "guidedLearning", guide.guidedExample.title, [guide.guidedExample.setup], {
     interactionSequence: [
       { phase: "commitBeforeReveal", prompt: "Predict the result and explain why." },
       { phase: "revealAfterCommit", steps: guide.guidedExample.steps, result: guide.guidedExample.result },
       { phase: "selfDiagnosis", choices: ["Result and mechanism matched", "Result matched; mechanism differed", "An earlier step needs repair"], feedback: ["Explain the trace once without looking, then try the changed case.", "Find the first causal link that differed, then revise your explanation.", "Restart from the case setup and repair the first incorrect transformation."] },
-    ],
-  }));
-  if (code && guidance) blocks.push(block("lesson.code", "code", code.title, [code.setup], {
-    language: code.language,
-    guidance,
-    interactionSequence: [
-      { phase: "predictBeforeRunning", prompt: code.predict },
-      { phase: "inspectCode", code: code.code },
-      { phase: "revealAfterCommit", expectedObservation: code.observe, comparisonMethod: "Check the output, then trace backward to the first line whose value, shape, or branch differs from your committed reasoning." },
-      { phase: "selfDiagnosis", choices: [
-        { label: "My mechanism matched", feedback: "Self-check recorded. Now make the requested change and predict again; the assessed transfer lab below verifies mastery independently." },
-        { label: "Result matched; reason differed", feedback: "Return to the mechanism walkthrough, identify the first step where your explanation diverged, then revise the prediction before attempting the changed case." },
-        { label: "Prediction missed", feedback: "Use the expected observation to locate the mistaken assumption, revise your response, and recommit before continuing." },
-      ] },
-      { phase: "changedCase", prompt: code.tryIt, completion: "Commit the changed-case prediction, run or trace it, and repair the first changed transformation if the result differs." },
-      ...(code.caveat ? [{ phase: "scopeBoundary", note: code.caveat }] : []),
     ],
   }));
   blocks.push(block("lesson.practice", "guidedPractice", "Changed-case practice", [guide.practice.prompt], {
@@ -610,9 +684,10 @@ function lessonSnapshot(course, lesson) {
       ] },
     ],
   }));
-  blocks.push(block("lesson.objectiveChecks", "guidedLearning", "Can you reconstruct the argument without rereading it?", ["Each prompt refers back to the continuous explanation above. Write first; open the reminder only if you cannot locate the missing causal step."], {
-    objectives: coverage.map((item) => ({
-      objective: item.objective,
+  const operationOnly = coverageSplit.technical.length > 0;
+  blocks.push(block(operationOnly ? "lesson.coreOperationCheck" : "lesson.objectiveChecks", "guidedLearning", operationOnly ? "Can you follow the operation without using a formula?" : "Can you reconstruct the argument without rereading it?", [operationOnly ? "Name the input, the change, the result, and a limit. The lesson's exact authored objectives remain intact in optional technical depth after mastery." : "Each prompt refers back to the continuous explanation above. Write first; open the reminder only if you cannot locate the missing causal step."], {
+    [operationOnly ? "checks" : "objectives"]: coverageSplit.core.map((item) => ({
+      ...(operationOnly ? {} : { objective: item.objective }),
       interactionSequence: [
         { phase: "commitBeforeComparison", prompt: item.check.prompt },
         { phase: "revealAfterCommit", expectedReasoning: item.check.expected, retry: item.check.retry },
@@ -620,9 +695,11 @@ function lessonSnapshot(course, lesson) {
       ],
     })),
   }));
-  const lab = lessonLabBlock(course, lesson); if (lab) blocks.push(lab);
-  const transfer = transferBlock(course, lesson); if (transfer) blocks.push(transfer);
-  const validation = validationBlock(course, lesson); if (validation) blocks.push(validation);
+  const lab = lessonLabBlock(course, lesson);
+  if (!deferActivities && lab) blocks.push(lab);
+  const transfer = transferBlock(course, lesson);
+  if (!deferActivities && transfer) blocks.push(transfer);
+  const validation = validationBlock(course, lesson);
   if (masteryStudioTitles[lesson.id]) blocks.push(block("lesson.decisionStudio", "interactiveStudio", masteryStudioTitles[lesson.id], ["Read each scenario and commit one decision before using its feedback. Identify the assumption, authority boundary, quantity, or causal step that a correction repairs."], {
     learningContract: {
       action: "Read each scenario and commit one decision before using its feedback. For adjustable controls, predict the direction of change before moving them.",
@@ -634,7 +711,8 @@ function lessonSnapshot(course, lesson) {
     initialRenderedState: renderedText(MasteryStudio, { lessonId: lesson.id }),
     ...masteryStudioData(lesson.id),
   }));
-  blocks.push(...capstoneBlocks(course, lesson));
+  const capstones = capstoneBlocks(course, lesson);
+  if (!deferActivities) blocks.push(...capstones);
   blocks.push(block("lesson.quiz", "assessment", "Choose the answer your mechanism predicts.", [lesson.quiz.question], {
     interactionSequence: [
       { phase: "choose", options: lesson.quiz.options },
@@ -642,7 +720,8 @@ function lessonSnapshot(course, lesson) {
     ],
   }));
   blocks.push(block("lesson.completion", "summary", "Record mastery after the knowledge check", ["The knowledge check must pass before mastery is recorded in this browser."]));
-  blocks.push(block("lesson.furtherReading", "sources", "Verify the claims in primary and official sources.", ["The lesson and its assessments are complete without these links."], { reviewedDate: course.reviewedDate, resources: guide.resources }));
+  blocks.push(...technicalDepthBlocks(course, lesson, authoredGuide, coverage, lab, transfer, validation, capstones));
+  blocks.push(block("lesson.furtherReading", "sources", "Verify the claims in primary and official sources.", ["The lesson and its assessments are complete without these links."], { reviewedDate: course.reviewedDate, resources: authoredGuide.resources }));
   const external = externalExperimentBlock(course, lesson); if (external) blocks.push(external);
   if (lesson.id === "sft") blocks.push(block("lesson.fineTuningWorkshop", "optionalExternal", "Fine-tune a modern open-weight model—properly", ["Move from demonstrations to a measured QLoRA adapter. The goal is not merely to make training loss fall; it is to change one behavior without hiding regressions.", "The planner is local; training requires a deliberately prepared external Python/GPU environment."], {
     executionBoundary: "Planning estimates do not allocate hardware or measure memory, throughput, convergence, or model quality.",
@@ -677,7 +756,9 @@ function lessonSnapshot(course, lesson) {
   } else if (next) {
     const directDependency = Boolean(next.prerequisites?.includes(lesson.id));
     const relationship = continuityRelationshipFor({ courseId: course.id, fromLessonId: lesson.id, toLessonId: next.id, sameTrack: lesson.track === next.track, directDependency });
-    blocks.push(block("lesson.next", "nextUse", `Next: ${next.title}`, [], { relationship, reuseLabel: relationship === "new chapter thread" ? "This chapter leaves you with" : course.id === "llm" && relationship === "direct reuse" ? "You will reuse" : "You will carry forward", reuse: sentence(lessonNarrativeResult(course.id, lesson)), nextLabel: relationship === "new chapter thread" ? "The next question" : relationship === "synthesis" ? "To combine" : "To learn", toLearn: sentence(course.guides[next.id]?.objectives[0] ?? next.keyIdeas[0]), previous: previous ? { lessonId: previous.id, title: previous.title } : null, next: { lessonId: next.id, title: next.title } }));
+    const nextCoverage = course.objectiveCoverage[next.id];
+    const nextGoal = nextCoverage ? conceptFirstSummaryFor(next, nextCoverage, course.guides[next.id]) : course.guides[next.id]?.objectives[0] ?? next.keyIdeas[0];
+    blocks.push(block("lesson.next", "nextUse", `Next: ${next.title}`, [], { relationship, reuseLabel: relationship === "new chapter thread" ? "This chapter leaves you with" : course.id === "llm" && relationship === "direct reuse" ? "You will reuse" : "You will carry forward", reuse: sentence(hasConceptFirstCore ? conceptSummary : lessonNarrativeResult(course.id, lesson)), nextLabel: relationship === "new chapter thread" ? "The next question" : relationship === "synthesis" ? "To combine" : "To learn", toLearn: sentence(nextGoal), previous: previous ? { lessonId: previous.id, title: previous.title } : null, next: { lessonId: next.id, title: next.title } }));
   } else {
     blocks.push(block("lesson.next", "nextUse", "Course complete", ["Return to the top."], { previous: previous ? { lessonId: previous.id, title: previous.title } : null }));
   }

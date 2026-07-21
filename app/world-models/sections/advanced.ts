@@ -415,10 +415,10 @@ export const worldModelAdvancedSpecs = [
     misconception:
       "Accurate next-state prediction under the logged policy does not prove correct predictions for actions rarely or never taken.",
     quiz: {
-      question: "What does $do(A=a)$ mean?",
+      question: "What distinguishes an intervention from merely observing the same action?",
       options: [
-        "Observe cases where A happened to equal a",
-        "Replace A's generating mechanism with the fixed value a",
+        "Observe cases where the action happened to have that value",
+        "Actively set the action while leaving the outcome mechanisms in place",
         "Delete every parent of outcomes",
         "Sample a language description",
       ],

@@ -102,8 +102,8 @@ function DeterministicVisual({ visual }: { visual: LessonVisual }) {
   </div>;
 }
 
-export function LessonConceptPlate({ courseId, lesson, heading }: { courseId: CourseId; lesson: Lesson; heading: string }) {
-  const visual = lessonVisualFor(courseId, lesson.id);
+export function LessonConceptPlate({ courseId, lesson, heading, visual: visualOverride, description, mentalModel, boundary }: { courseId: CourseId; lesson: Lesson; heading: string; visual?: LessonVisual; description?: string; mentalModel?: string; boundary?: string }) {
+  const visual = visualOverride ?? lessonVisualFor(courseId, lesson.id);
   const titleId = `lesson-visual-title-${courseId}-${lesson.id}`;
   const style = { "--visual-accent": "var(--track)" } as CSSProperties;
   const asset = visual.assetBase;
@@ -117,18 +117,18 @@ export function LessonConceptPlate({ courseId, lesson, heading }: { courseId: Co
     {visual.kind === "raster" && asset ? <div className="lesson-visual-raster-frame">
       <picture>
         <source media="(max-width: 780px)" srcSet={publicPath(`${asset}-768.webp`)} type="image/webp"/>
-        <img src={publicPath(`${asset}-1536.webp`)} width="1536" height="1024" loading="lazy" decoding="async" alt={`Concept illustration for ${lesson.title}. ${lesson.simple}`}/>
+        <img src={publicPath(`${asset}-1536.webp`)} width="1536" height="1024" loading="lazy" decoding="async" alt={`Concept illustration for ${lesson.title}. ${description ?? lesson.simple}`}/>
       </picture>
       <ol aria-label="Causal stages shown in the illustration">{visual.labels.map((label, index) => <li key={label}><span>{index + 1}</span><strong>{label}</strong></li>)}</ol>
     </div> : <DeterministicVisual visual={visual}/>} 
 
     <figcaption>
-      <div><strong>A useful mental model</strong><p><MathText>{lesson.mentalModel}</MathText></p></div>
+      <div><strong>A useful mental model</strong><p><MathText>{mentalModel ?? lesson.mentalModel}</MathText></p></div>
     </figcaption>
     <details className="lesson-visual-description">
       <summary>Read a text-only explanation</summary>
       <p><MathText>{visual.stageDescriptions.map((description, index) => `${visual.labels[index]}: ${description}`).join(" ")}</MathText></p>
-      <p><strong>Important limit:</strong> <MathText>{lesson.misconception}</MathText></p>
+      <p><strong>Important limit:</strong> <MathText>{boundary ?? lesson.misconception}</MathText></p>
     </details>
     <small className="lesson-visual-evidence">{visual.kind === "raster" ? "Generated concept illustration · exact labels are code-rendered · not a measurement" : "Deterministic SVG/HTML diagram · exact labels, illustrative layout"}</small>
   </figure>;

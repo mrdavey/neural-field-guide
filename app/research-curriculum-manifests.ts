@@ -43,10 +43,10 @@ const generativeTracks: PlannedTrack[] = [
 
 const generativeLessons: PlannedLesson[] = [
   ...lessons("gen-foundations", 1, [
-    ["generation-as-distribution", "What Is a Generative Model?", "Input-to-variation story with visible choices", [], "likelihood-cross-entropy"],
-    ["likelihood-cross-entropy", "Likelihood, Cross-Entropy & Units", "Sequence log-likelihood ledger", ["llm:probability-softmax", "llm:learning-to-predict"], "sampling-randomness"],
-    ["sampling-randomness", "Sampling, Seeds & Random Variables", "Inverse-CDF and ancestral samplers", ["llm:decoding-sampling", "worldmodel:stochastic-futures"], "divergences-distance"],
-    ["divergences-distance", "KL, Divergences & Distance", "Two-distribution divergence explorer", ["worldmodel:stochastic-latents-vaes", "llm:probability-softmax"], "distribution-workbench-capstone"],
+    ["generation-as-distribution", "What Is a Generative Model?", "Input-to-variation story with visible choices", [], "sampling-randomness"],
+    ["sampling-randomness", "Sampling, Seeds & Random Variables", "Inverse-CDF and ancestral samplers", ["worldmodel:stochastic-futures"], "likelihood-cross-entropy"],
+    ["likelihood-cross-entropy", "Likelihood as Feedback for a Generator", "Sequence log-likelihood ledger", ["sampling-randomness", "llm:learning-to-predict"], "divergences-distance"],
+    ["divergences-distance", "How Two Distributions Differ", "Two-distribution divergence explorer", ["likelihood-cross-entropy", "worldmodel:stochastic-latents-vaes"], "distribution-workbench-capstone"],
     ["distribution-workbench-capstone", "Build a Distribution Workbench", "Tested sampler/evaluator package", ["generation-as-distribution", "likelihood-cross-entropy", "sampling-randomness", "divergences-distance"], "autoregressive-generators", true],
   ]),
   ...lessons("gen-latents", 6, [
@@ -98,10 +98,10 @@ const rlTracks: PlannedTrack[] = [
 
 const rlLessons: PlannedLesson[] = [
   ...lessons("rl-foundations", 1, [
-    ["sequential-decision-systems", "What Is Reinforcement Learning?", "Inspectable learn-from-consequences loop", [], "mdps-rewards"],
-    ["mdps-rewards", "MDPs, Rewards & Discounting", "Finite MDP ledger", ["worldmodel:mdps-bellman"], "partial-observation"],
-    ["partial-observation", "Partial Observation & Belief", "Belief-state controller", ["worldmodel:sequential-state", "worldmodel:belief-states-filtering"], "policies-occupancy"],
-    ["policies-occupancy", "Policies, Occupancy & Evaluation", "Policy occupancy calculator", ["rl:mdps-rewards", "generative:sampling-randomness"], "tabular-control-capstone"],
+    ["sequential-decision-systems", "What Is Reinforcement Learning?", "Inspectable learn-from-consequences loop", [], "partial-observation"],
+    ["partial-observation", "What the Agent Can and Cannot Observe", "Belief-state controller", ["worldmodel:sequential-state", "worldmodel:belief-states-filtering"], "policies-occupancy"],
+    ["policies-occupancy", "Policies: How Behavior Chooses Actions", "Policy occupancy calculator", ["partial-observation", "generative:sampling-randomness"], "mdps-rewards"],
+    ["mdps-rewards", "Formalizing the Decision Loop", "Finite MDP ledger", ["sequential-decision-systems", "policies-occupancy", "worldmodel:mdps-bellman"], "tabular-control-capstone"],
     ["tabular-control-capstone", "Build a Tabular Control Workbench", "Tested MDP solver and rollout evaluator", ["mdps-rewards", "policies-occupancy"], "dynamic-programming", true],
   ]),
   ...lessons("rl-value", 6, [
@@ -157,9 +157,9 @@ const embodiedTracks: PlannedTrack[] = [
 const embodiedLessons: PlannedLesson[] = [
   ...lessons("emb-foundations", 1, [
     ["embodied-task-contracts", "What Is Embodied AI?", "Inspectable sense-think-act task story", [], "observation-action-spaces"],
-    ["observation-action-spaces", "Observation & Action Spaces", "Sensor/action schema inspector", ["worldmodel:sequential-state", "rl:mdps-rewards"], "coordinate-frames-time"],
-    ["coordinate-frames-time", "Coordinate Frames, Time & Synchronization", "Frame-transform and timestamp workbench", ["llm:tensors-shapes", "worldmodel:geometry-physical-priors"], "embodied-partial-observation"],
-    ["embodied-partial-observation", "Partial Observation in the Physical Loop", "History/belief estimator comparison", ["worldmodel:belief-states-filtering", "rl:partial-observation"], "task-contract-capstone"],
+    ["observation-action-spaces", "Observation & Action Spaces", "Sensor/action schema inspector", ["worldmodel:sequential-state", "rl:mdps-rewards"], "embodied-partial-observation"],
+    ["embodied-partial-observation", "Partial Observation in the Physical Loop", "History/belief estimator comparison", ["observation-action-spaces", "worldmodel:belief-states-filtering", "rl:partial-observation"], "coordinate-frames-time"],
+    ["coordinate-frames-time", "Frames and Timing Give Commands Meaning", "Frame-transform and timestamp workbench", ["observation-action-spaces", "embodied-partial-observation", "worldmodel:geometry-physical-priors"], "task-contract-capstone"],
     ["task-contract-capstone", "Build an Embodied Task Contract", "Simulation task with assertions and evidence boundary", ["embodied-task-contracts", "observation-action-spaces", "coordinate-frames-time", "embodied-partial-observation"], "cameras-proprioception", true],
   ]),
   ...lessons("emb-perception", 6, [

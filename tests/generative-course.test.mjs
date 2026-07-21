@@ -32,7 +32,7 @@ test("Generative Models ships the reviewed 30-lesson build ladder", () => {
   assert.match(catalogSource, /courseIds = \["llm", "worldmodel", "generative", "rl", "embodied"\]/);
   assert.match(catalogSource, /generative: \{/);
   assert.deepEqual(course.generativeLessonById["generation-as-distribution"].programPrerequisites, []);
-  assert.match(courseAppSource, /<LessonNarrativeView guide=\{guide\}/);
+  assert.match(courseAppSource, /<LessonNarrativeView guide=\{conceptFirstGuide\}/);
   assert.match(courseAppSource, /program-prerequisite-list/);
   assert.doesNotMatch(courseAppSource, /showVocabulary/);
 });

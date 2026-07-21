@@ -10,6 +10,8 @@ All 182 released lessons now place one still concept plate after the continuous 
 
 This surface is intentionally not manipulable: its role is to give the learner an inspectable picture before motion begins. Raster art carries a concrete analogy or scene, while exact words, notation, state relationships, and evidence boundaries stay in HTML/SVG. Reduced motion and WebGL failure therefore change nothing about the plate. The subsequent story and lab continue to own Change → Observe → Explain.
 
+All 182 lessons now use the required formula-free grammar **Input → Operation → Result → Limit** with an explicit lesson-specific causal trace shared by the walkthrough, plate, scroll story, guided reveal, practice, and core check. All exact authored objectives remain inspectable in optional technical depth after the core knowledge check. In the 158 math-bearing lessons, calculation-led labs and transfers move with that formal material; the other 24 lessons keep their formula-free activities in the required Try/Test flow.
+
 ## Anime.js semantic orchestration
 
 Anime.js 4.5.0 is pinned as the shared orchestration layer. It does not own lesson truth, grading, persistence, or required content. React state and deterministic fixtures continue to own values; Anime.js only emphasizes a change that has already occurred in that state.
@@ -180,6 +182,7 @@ WebGL and motion remain progressive layers. Labels, values, task instructions, c
 - Re-audited the Embodied AI grasp/occlusion, causal action-target, evaluation-uncertainty, and p99 latency cases so their visible state and arithmetic agree with their causal and statistical contracts.
 - Removed broad entrance motion from authored prose, retained short emphasis only for semantic landmarks and committed feedback, and added a reduced-motion-safe five-stage lesson rail.
 - Added five restrained CSS-only course-home motifs as non-semantic identity layers; track labels and concept-specific visual grammars remain the carriers of instructional meaning.
+- Applied the concept-first split to all five courses: formula-bearing labs and transfers now move with their precise activity contracts into a collapsed, non-gating technical disclosure after mastery, while the required core uses a static formula-free operation trace and local concept quiz.
 
 ## Review rule
 

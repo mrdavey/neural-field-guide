@@ -4,7 +4,7 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { flushSync } from "react-dom";
 import { type Lesson, type LlmTrackId } from "./course-data";
 import { LessonLab } from "./lesson-labs";
-import { LessonFurtherReading, LessonGuideView, LessonNarrativeView } from "./lesson-guide-view";
+import { LessonFurtherReading, LessonGuideView, LessonNarrativeView, TechnicalDepthView } from "./lesson-guide-view";
 import { LessonEvidenceView } from "./lesson-evidence-view";
 import { CapstoneProjectView } from "./capstone-project-view";
 import { MathText } from "./math-text";
@@ -33,6 +33,8 @@ import {
   worldModelResearchCapstoneId,
 } from "./course-continuity";
 import { LessonPhaseRail } from "./lesson-phase-rail";
+import { conceptFirstBridgeFor, conceptFirstCoverageFor, conceptFirstGuideFor, conceptFirstPlainText, conceptFirstSummaryFor, hasDeferredTechnicalMaterial as hasFormalTechnicalMaterial } from "./concept-first-curriculum";
+import { conceptFirstOperationTraceFor } from "./concept-first-operation-traces";
 
 const FineTuningWorkshop = lazy(() => import("./fine-tuning-workshop"));
 const MasteryStudio = lazy(() => import("./mastery-studios"));
@@ -72,7 +74,7 @@ function Icon({ name }: { name: "spark" | "map" | "search" | "check" | "book" })
 
 export function CourseApp({ courseId = "llm", initialLessonId }: { courseId?: CourseId; initialLessonId?: string } = {}) {
   const course = courses[courseId];
-  const { lessons, tracks, lessonById } = course;
+  const { lessons, lessonById } = course;
   const storageKey = `neural-field-guide-progress-v2:${course.id}`;
   const [view, setView] = useState<View>(() => initialLessonId && lessonById[initialLessonId] ? { kind: "lesson", id: initialLessonId } : { kind: "home" });
   const [progress, setProgress] = useState<Progress>(emptyProgress);
@@ -194,14 +196,15 @@ export function CourseApp({ courseId = "llm", initialLessonId }: { courseId?: Co
           {query && <button onClick={() => setQuery("")} aria-label="Clear search">×</button>}
         </label>
         <nav aria-label="Course lessons" className="lesson-nav">
-          {tracks.map((track) => {
-            const trackLessons = filtered.filter((lesson) => lesson.track === track.id);
-            const fullTrack = lessons.filter((lesson) => lesson.track === track.id);
-            const trackDone = fullTrack.filter((lesson) => progress.completed.includes(lesson.id)).length;
-            if (!trackLessons.length) return null;
-            return <section key={track.id} className="nav-track" style={{ "--track": track.color } as React.CSSProperties}>
-              <div className="nav-track-heading"><span>{track.title}</span><small>{trackDone}/{fullTrack.length}</small></div>
-              {trackLessons.map((lesson) => <button key={lesson.id} onClick={() => openLesson(lesson.id)} className={`nav-lesson ${current?.id === lesson.id ? "active" : ""}`} aria-current={current?.id === lesson.id ? "page" : undefined}>
+          {course.phases.map((phase) => {
+            const fullPhase = phase.lessonIds.map((id) => lessonById[id]).filter(Boolean);
+            const phaseLessons = fullPhase.filter((lesson) => filtered.includes(lesson));
+            const phaseDone = fullPhase.filter((lesson) => progress.completed.includes(lesson.id)).length;
+            const phaseTrack = phaseLessons[0] ? trackFor(course, phaseLessons[0].track) : undefined;
+            if (!phaseLessons.length || !phaseTrack) return null;
+            return <section key={phase.id} className="nav-track" style={{ "--track": phaseTrack.color } as React.CSSProperties}>
+              <div className="nav-track-heading"><span>{phase.title}</span><small>{phaseDone}/{fullPhase.length}</small></div>
+              {phaseLessons.map((lesson) => <button key={lesson.id} onClick={() => openLesson(lesson.id)} className={`nav-lesson ${current?.id === lesson.id ? "active" : ""}`} aria-current={current?.id === lesson.id ? "page" : undefined}>
                 <span className="nav-number">{progress.completed.includes(lesson.id) ? <Icon name="check" /> : String(lesson.number).padStart(2, "0")}</span>
                 <span>{lesson.title}</span>
               </button>)}
@@ -324,8 +327,25 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
   const isComplete = progress.completed.includes(lesson.id);
   const track = trackFor(course, lesson.track);
   const guide = course.guides[lesson.id];
+  const coverage = course.objectiveCoverage[lesson.id];
+  const conceptFirstGuide = guide && coverage ? conceptFirstGuideFor(lesson, guide, coverage) : guide;
+  const coverageSplit = coverage ? conceptFirstCoverageFor(lesson, coverage, guide) : undefined;
   const motionStory = course.motionStories[lesson.id];
   const lessonVisual = lessonVisualFor(course.id, lesson.id);
+  const hasConceptFirstCore = (coverageSplit?.technical.length ?? 0) > 0;
+  const deferActivities = Boolean(guide && coverage && hasFormalTechnicalMaterial(lesson, coverage, guide));
+  const operationTrace = conceptFirstOperationTraceFor(lesson.id, lesson.keyIdeas);
+  const coreVisual = hasConceptFirstCore ? {
+    ...lessonVisual,
+    labels: ["INPUT", "OPERATION", "RESULT", "LIMIT"] as [string, string, string, string],
+    stageDescriptions: [operationTrace[0], operationTrace[1], operationTrace[2], lesson.misconception].map(conceptFirstPlainText) as [string, string, string, string],
+  } : lessonVisual;
+  const coreMotionStory = hasConceptFirstCore ? {
+    ...motionStory,
+    headline: `Follow ${lesson.title} as an operation before the notation.`,
+    intro: conceptFirstSummaryFor(lesson, coverage!, guide),
+    stages: motionStory.stages.map((stage, stageIndex) => ({ ...stage, label: coreVisual.labels[stageIndex], title: coreVisual.stageDescriptions[stageIndex] })) as typeof motionStory.stages,
+  } : motionStory;
   const nextGuide = next ? course.guides[next.id] : undefined;
   const nextTrack = next ? trackFor(course, next.track) : undefined;
   const nextUsesThisLesson = Boolean(next?.prerequisites?.includes(lesson.id));
@@ -345,17 +365,24 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
     : [];
   const specializationCapstone = course.id === "worldmodel" ? lessonById[worldModelResearchCapstoneId] : undefined;
   const externalExperiment = Object.values(externalExperiments).find((contract) => contract.courseId === course.id && contract.lessonId === lesson.id);
+  const continuityPrerequisite = continuity ? lessonById[continuity.fromLessonId] : undefined;
+  const lastPrerequisite = lesson.prerequisites?.length ? lessonById[lesson.prerequisites.at(-1)!] : undefined;
+  const lastPrerequisiteCoverage = lastPrerequisite ? course.objectiveCoverage[lastPrerequisite.id] : undefined;
   const priorKnowledge = <>
-    {continuity ? <p><MathText>{continuity.bridge}</MathText></p> : !lesson.prerequisites?.length && !lesson.programPrerequisites?.length ? <p>{lesson.number === 1 ? "No earlier lesson is required. Begin with the familiar situation in the opening paragraph and use it as the thread for the whole chapter." : "This chapter starts a new branch. Bring the shared core ideas and trace each new term from its definition."}</p> : null}
-    {!continuity && lesson.prerequisites?.length ? <p><MathText>{`The chapter reuses ${lesson.prerequisites.map((id) => lessonById[id].title).join(" and ")}. In particular, keep this earlier idea available: ${lessonById[lesson.prerequisites.at(-1)!].keyIdeas[0]}`}</MathText></p> : null}
+    {continuity ? <p><MathText>{hasConceptFirstCore && continuityPrerequisite
+      ? conceptFirstBridgeFor(continuity.bridge, continuityPrerequisite, lesson)
+      : continuity.bridge}</MathText></p> : !lesson.prerequisites?.length && !lesson.programPrerequisites?.length ? <p>{lesson.number === 1 ? "No earlier lesson is required. Begin with the familiar situation in the opening paragraph and use it as the thread for the whole chapter." : "This chapter starts a new branch. Bring the shared core ideas and trace each new term from its definition."}</p> : null}
+    {!continuity && lesson.prerequisites?.length && lastPrerequisite ? <p><MathText>{`The chapter reuses ${lesson.prerequisites.map((id) => lessonById[id].title).join(" and ")}. In particular, keep this earlier result available: ${hasConceptFirstCore && lastPrerequisiteCoverage ? conceptFirstSummaryFor(lastPrerequisite, lastPrerequisiteCoverage, course.guides[lastPrerequisite.id]) : lastPrerequisite.keyIdeas[0]}`}</MathText></p> : null}
     {lesson.programPrerequisites?.length ? <ul className="program-prerequisite-list">{lesson.programPrerequisites.map((reference) => {
       const prerequisiteCourse = courses[reference.courseId as CourseId];
       const prerequisite = prerequisiteCourse?.lessonById[reference.lessonId];
-      return prerequisiteCourse && prerequisite ? <li key={`${reference.courseId}:${reference.lessonId}`}><a href={publicPath(`/${reference.courseId}/${reference.lessonId}/`)}>{prerequisiteCourse.selectorLabel}: {prerequisite.title}</a><p><MathText>{prerequisite.keyIdeas[0]}</MathText></p></li> : null;
+      const prerequisiteCoverage = prerequisiteCourse?.objectiveCoverage[reference.lessonId];
+      return prerequisiteCourse && prerequisite ? <li key={`${reference.courseId}:${reference.lessonId}`}><a href={publicPath(`/${reference.courseId}/${reference.lessonId}/`)}>{prerequisiteCourse.selectorLabel}: {prerequisite.title}</a><p><MathText>{hasConceptFirstCore && prerequisiteCoverage ? conceptFirstSummaryFor(prerequisite, prerequisiteCoverage, prerequisiteCourse.guides[reference.lessonId]) : prerequisite.keyIdeas[0]}</MathText></p></li> : null;
     })}</ul> : null}
   </>;
-  const nextGoal = next ? nextGuide?.objectives[0] ?? next.keyIdeas[0] : "";
-  const currentResult = asSentence(lessonNarrativeResult(course.id, lesson));
+  const nextCoverage = next ? course.objectiveCoverage[next.id] : undefined;
+  const nextGoal = next ? nextCoverage ? conceptFirstSummaryFor(next, nextCoverage, nextGuide) : nextGuide?.objectives[0] ?? next.keyIdeas[0] : "";
+  const currentResult = asSentence(hasConceptFirstCore && coverage ? conceptFirstSummaryFor(lesson, coverage, guide) : lessonNarrativeResult(course.id, lesson));
   const nextGoalSentence = nextGoal ? asSentence(nextGoal) : "";
   const nextRelationship = next ? continuityRelationshipFor({
     courseId: course.id,
@@ -383,6 +410,18 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
 
   const answerQuiz = (answer: number) => setProgress((current) => ({ ...current, quizAnswers: { ...current.quizAnswers, [lesson.id]: answer } }));
   const toggleComplete = () => setProgress((current) => ({ ...current, completed: current.completed.includes(lesson.id) ? current.completed.filter((id) => id !== lesson.id) : [...current.completed, lesson.id] }));
+  const lessonLab = lesson.lab ? lesson.lab === "research" && course.researchLabs?.[lesson.id]
+    ? <ResearchCourseLab lessonTitle={lesson.title} spec={course.researchLabs[lesson.id]} />
+    : lesson.lab.startsWith("wm-")
+      ? <WorldModelLab type={lesson.lab as WorldModelLabType} lesson={lesson} />
+      : <LessonLab type={lesson.lab as Exclude<NonNullable<Lesson["lab"]>, `wm-${string}` | "research">} lesson={lesson} />
+    : null;
+  const lessonTransfer = guide
+    ? course.transfers?.[lesson.id]
+      ? <WorldModelTransferView lessonId={lesson.id} transfer={course.transfers[lesson.id]} />
+      : <LessonEvidenceView lesson={lesson} />
+    : null;
+  const lessonSynthesis = lesson.capstone ? <SynthesisMap course={course} lesson={lesson} openLesson={openLesson} /> : null;
 
   return <article className="lesson-view" style={{ "--track": track.color } as React.CSSProperties}>
     <div className="reading-progress" aria-hidden="true"><i /></div>
@@ -394,39 +433,37 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
       <div><span className="eyebrow">{track.short}</span><h1>{lesson.title}</h1></div>
     </header>
 
-    {guide && <LessonNarrativeView guide={guide} lessonId={lesson.id} lessonTitle={lesson.title} simple={lesson.simple} priorKnowledge={priorKnowledge} nextUse={nextUse} />}
+    {conceptFirstGuide && coverage && <LessonNarrativeView guide={conceptFirstGuide} lessonId={lesson.id} lessonTitle={lesson.title} simple={conceptFirstSummaryFor(lesson, coverage, guide)} priorKnowledge={priorKnowledge} nextUse={nextUse} />}
 
-    <LessonConceptPlate courseId={course.id} lesson={lesson} heading={motionStory.stages[0].title} />
+    <LessonConceptPlate courseId={course.id} lesson={lesson} heading={coreMotionStory.stages[0].title} visual={coreVisual} description={hasConceptFirstCore && coverage ? conceptFirstSummaryFor(lesson, coverage, guide) : coverageSplit?.core[0].explanation} mentalModel={hasConceptFirstCore ? conceptFirstPlainText(lesson.mentalModel) : lesson.mentalModel} boundary={hasConceptFirstCore ? conceptFirstPlainText(lesson.misconception) : lesson.misconception} />
 
     <ScrollStory
       key={lesson.id}
       className="lesson-motion-story"
-      eyebrow={`${motionStory.stages[0].label} → ${motionStory.stages[3].label}`}
-      title={<MathText>{motionStory.headline}</MathText>}
-      intro={<p><MathText>{motionStory.intro}</MathText></p>}
+      eyebrow={`${coreMotionStory.stages[0].label} → ${coreMotionStory.stages[3].label}`}
+      title={<MathText>{coreMotionStory.headline}</MathText>}
+      intro={<p><MathText>{coreMotionStory.intro}</MathText></p>}
       scene={course.id === "llm" ? lesson.track as LlmTrackId : "pipeline"}
-      concept={motionStory.concept}
-      sceneLabels={motionStory.stages.map((stage) => stage.label)}
-      steps={motionStory.stages.map((stage, stageIndex) => ({
+      concept={coreMotionStory.concept}
+      sceneLabels={coreMotionStory.stages.map((stage) => stage.label)}
+      steps={coreMotionStory.stages.map((stage, stageIndex) => ({
         label: `STEP ${String(stageIndex + 1).padStart(2, "0")}`,
-        title: <MathText>{lessonVisual.labels[stageIndex]}</MathText>,
-        body: <p><MathText>{lessonVisual.stageDescriptions[stageIndex]}</MathText></p>,
+        title: <MathText>{coreVisual.labels[stageIndex]}</MathText>,
+        body: <p><MathText>{coreVisual.stageDescriptions[stageIndex]}</MathText></p>,
         signal: stage.label,
       }))}
     />
 
-    {guide && <LessonGuideView guide={guide} lessonId={lesson.id} lessonTitle={lesson.title} coverage={course.objectiveCoverage[lesson.id]} example={course.codeExamples[lesson.id]} guidance={course.codeGuidance[lesson.id]} />}
+    {conceptFirstGuide && coverageSplit && <LessonGuideView guide={conceptFirstGuide} lessonId={lesson.id} lessonTitle={lesson.title} coverage={coverageSplit.core} example={course.codeExamples[lesson.id]} guidance={course.codeGuidance[lesson.id]} showCode={false} operationOnly={coverageSplit.technical.length > 0} />}
 
-    {lesson.lab && (lesson.lab === "research" && course.researchLabs?.[lesson.id] ? <ResearchCourseLab lessonTitle={lesson.title} spec={course.researchLabs[lesson.id]} /> : lesson.lab.startsWith("wm-") ? <WorldModelLab type={lesson.lab as WorldModelLabType} lesson={lesson} /> : <LessonLab type={lesson.lab as Exclude<NonNullable<Lesson["lab"]>, `wm-${string}` | "research">} lesson={lesson} />)}
+    {!deferActivities && lessonLab}
 
     <div className="lesson-phase-marker" id="lesson-phase-test" data-lesson-phase="test" aria-hidden="true" />
-    {guide && (course.transfers?.[lesson.id] ? <WorldModelTransferView lessonId={lesson.id} transfer={course.transfers[lesson.id]} /> : <LessonEvidenceView lesson={lesson} />)}
-
-    {course.id === "llm" ? <TechnicalValidation lessonId={lesson.id} /> : course.id === "worldmodel" ? <WorldModelTechnicalValidation lessonId={lesson.id} /> : null}
+    {!deferActivities && lessonTransfer}
 
     {masteryStudioLessons.has(lesson.id) && <Suspense fallback={<section className="workshop-loading" role="status">Preparing the decision studio…</section>}><MasteryStudio lessonId={lesson.id} /></Suspense>}
 
-    {lesson.capstone && <SynthesisMap course={course} lesson={lesson} openLesson={openLesson} />}
+    {!deferActivities && lessonSynthesis}
 
     <section className="knowledge-check">
       <div className="quiz-heading"><span className="eyebrow">Retrieval practice</span><h2>Choose the answer your mechanism predicts.</h2><ActivityInfo mode="checked" title="Graded locally" detail="Feedback appears after your choice." /></div>
@@ -445,6 +482,15 @@ function LessonView({ course, lesson, progress, setProgress, openLesson }: { cou
     </section>
 
     <div className="lesson-phase-marker" id="lesson-phase-extend" data-lesson-phase="extend" aria-hidden="true" />
+    {guide && coverage && <TechnicalDepthView lesson={lesson} guide={guide} coverage={coverage} example={course.codeExamples[lesson.id]} guidance={course.codeGuidance[lesson.id]}>
+      {deferActivities && (lessonLab || lessonTransfer || lessonSynthesis) && <section className="technical-depth-activities" aria-label={`${lesson.title} optional technical activities`}>
+        <div><span className="eyebrow">Apply the formal mechanism</span><h3>Optional calculation and implementation practice</h3><p>These activities use the notation, arithmetic, or implementation contract above. They do not affect core lesson completion.</p></div>
+        {lessonLab}
+        {lessonTransfer}
+        {lessonSynthesis}
+      </section>}
+      {course.id === "llm" ? <TechnicalValidation lessonId={lesson.id} /> : course.id === "worldmodel" ? <WorldModelTechnicalValidation lessonId={lesson.id} /> : null}
+    </TechnicalDepthView>}
     {guide && <LessonFurtherReading guide={guide} lessonId={lesson.id} reviewedDate={course.reviewedDate} />}
 
     {externalExperiment && <ExternalExperimentView contract={externalExperiment} />}

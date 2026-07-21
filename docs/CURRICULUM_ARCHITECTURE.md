@@ -1,10 +1,10 @@
 # Neural Field Guide curriculum architecture
 
-Reviewed: 2026-07-20
+Reviewed: 2026-07-21
 
 ## Decision
 
-Neural Field Guide is a five-course personal research program whose primary outcome is building working systems from understandable primitives and whose secondary outcome is conducting controlled original experiments.
+Neural Field Guide is a five-course personal research program whose primary outcome is explaining and using system mechanisms from understandable primitives and whose secondary outcome is conducting controlled original experiments.
 
 The visible recommended sequence is:
 
@@ -14,9 +14,21 @@ The visible recommended sequence is:
 4. Reinforcement Learning & Control
 5. Embodied AI
 
-This list is guidance, not an invented total order. LLMs and World Models are parallel applications after shared numerical foundations. Generative Models bridges explicit density, latent inference, energy, flow and diffusion families. RL depends on numerical foundations plus state, MDP and optimization concepts; completing every generative topic is recommended but not required for tabular RL. Embodied AI is the cumulative synthesis and names its concept-level prerequisites explicitly.
+This list is guidance, not an invented total order. Every course begins from an observable mechanism and defers notation, hand calculation, and code until after the learner can explain the core operation. LLMs and World Models then supply shared numerical foundations as optional technical depth. Generative Models bridges explicit density, latent inference, energy, flow and diffusion families. RL reuses state, decision, and optimization concepts; completing every generative topic is recommended but not required for tabular RL. Embodied AI is the cumulative synthesis and names its concept-level prerequisites explicitly.
 
 The exact released lesson inventory lives in `docs/CURRICULUM_INVENTORY.md`. The machine-readable ownership graph lives in `app/curriculum-graph.ts`; the reviewed manifests that back the three added courses live in `app/research-curriculum-manifests.ts`.
+
+## Concept-first delivery contract
+
+All 182 released lessons use the same two-layer contract; this is not a pilot or a course-specific exception.
+
+1. The required **Orient → Learn → Try → Test** path explains inputs, the operation, its result, and a failure boundary without requiring formulas, hand calculation, or code.
+2. The deterministic core quiz checks explanation, prediction, diagnosis, comparison, or decision-making. Passing it is the only assessment dependency for recording lesson mastery.
+3. **Extend** begins after the mastery control. A collapsed **Optional technical depth** disclosure retains the precise mechanism, every exact authored objective and its worked check, the code notebook, technical validation, and any calculation-led lab, transfer, or capstone.
+4. Opening sequences make the mechanism visible before formalization: text generation before LLM tensor algebra; trajectories and alternative futures before World Model tensors; sampling before likelihood arithmetic; partial observation and policy choice before the formal RL ledger; physical interfaces and hidden state before coordinate transforms.
+5. Stable lesson IDs, routes, storage keys, exact released counts, evidence boundaries, and static-export behavior remain unchanged. The ordering change affects lesson numbers and phase membership, not persistence identity.
+
+`app/concept-first-curriculum.ts` is the shared policy, and `app/concept-first-operation-traces.ts` owns the explicit lesson-specific operation records consumed across all required surfaces. `tests/concept-first-curriculum.test.mjs` inspects all canonical lesson dossiers and rejects formula-bearing core blocks, malformed transformed language, code before mastery, gating technical depth, or a course opening that reverts to formal abstraction first.
 
 ## Canonical concept ownership
 
@@ -31,7 +43,7 @@ The exact released lesson inventory lives in `docs/CURRICULUM_INVENTORY.md`. The
 | Latent priors and posteriors | `worldmodel:stochastic-latents-vaes` | prior/posterior dynamics, ELBO, VAE diagnosis, filtering | World Models introduces latent state for dynamics; Generative Models owns complete variational inference and posterior-collapse treatment. |
 | State, transition and observation | `worldmodel:sequential-state` | action-conditioned dynamics, RL loop, embodied observations/actions | World Models owns predictive state; RL adds preferences over consequences; Embodied AI binds state to timed sensors and actuators. |
 | Belief-state estimation | `worldmodel:belief-states-filtering` | recurrent states, POMDP policies, sensor fusion | A belief is evidence-conditioned state, not proof that hidden reality is identifiable. |
-| Density evaluation and sampling | `generative:likelihood-cross-entropy`, then `generative:sampling-randomness` | flows, EBMs, diffusion, policy/action sampling | Plausible samples do not by themselves establish calibration, controllability or decision usefulness. |
+| Density evaluation and sampling | `generative:sampling-randomness`, then `generative:likelihood-cross-entropy` | flows, EBMs, diffusion, policy/action sampling | Plausible samples do not by themselves establish calibration, controllability or decision usefulness. |
 | Score and diffusion models | `generative:corruption-denoising` | score matching, DDPMs, world dynamics, diffusion policies | Observation, latent-dynamics and action diffusion share denoising mathematics but not variables, conditions or evaluation. |
 | Conditional generation | `generative:conditional-generation` | guidance, multimodal conditioning, language-grounded policies | Condition adherence is measured separately from fidelity, diversity, memorization and safety. |
 | MDPs, rewards and Bellman values | `worldmodel:mdps-bellman` | RL foundations, dynamic programming, value learning | World Models supplies decision vocabulary for planning; RL owns the systematic learning algorithms and estimator comparisons. |
@@ -96,26 +108,24 @@ These remain embedded in every course. The LLM lessons provide canonical pattern
 
 Any objective text change triggers the full exact-coverage update and independent semantic review required by `AGENTS.md`. No objective is changed merely to add a link.
 
-## LLM section continuity audit — 20 July 2026
+## LLM section continuity audit — 21 July 2026
 
-The learner-reported discontinuity at Lesson 02 was genuine. The introduction ended with evidence and authority boundaries, while the next page opened with array notation and described the transition as a direct reuse without explaining the hidden numerical step. The repair now carries forward the introduction's piece-by-piece response model, treats already-divided text as an explicit input, and shows the recurring LLM path from prompt positions to hidden features, learned projection, and the next layer. Tokenization remains owned by Lesson 6 rather than being taught out of order.
+The learner-reported discontinuity at the beginning was genuine: the course asked for shape and matrix fluency before a beginner had seen the text-generation mechanism those tools support. The repaired opening now follows the visible system first—Introduction → Tokenization → Embedding → Position → Attention → Layers → Learning to Predict. Only then do Lessons 08–11 formalize representation, feedback, responsibility, and parameter updates; the tiny GPT synthesis remains Lesson 12.
 
-The same review inspected every remaining Foundations transition and the first page of each later LLM track. No other boundary had an equally severe missing rationale. Four direct or high-value seams had weaker carry-forward wording even though their destination lessons were coherent; those handoffs now name the actual artifact passed forward.
+The mathematical content was not removed. On every affected lesson, the required page explains the operation and tests it with a formula-free decision, then places the complete authored objectives, worked arithmetic, browser lab, changed-case transfer, code, validation, and numerical capstone after mastery in optional technical depth.
 
 | Audited seam | Knowledge carried forward | Continuity decision |
 | --- | --- | --- |
-| Introduction → numerical foundations | A prompt becomes a response piece by piece; the implementation therefore needs a numerical state for every current text position. | High-severity gap repaired in the Lesson 02 title, opening, vocabulary, worked trace, objective check, quiz, code trace, lab, and concept story. |
-| Foundations internal sequence | Numerical states → vocabulary scores and probabilities → loss sensitivity → optimizer update. | The five-lesson chain is cumulative; exact prerequisites and next-use cues remain direct. |
-| Numerical foundations → decoder architecture | The completed learning-step toolkit is available, while Tokenization starts a deliberately new thread by asking how text first becomes IDs. | Existing `new chapter thread` relationship is honest; Tokenization already opens from the fact that neural networks operate on numbers. |
-| Decoder architecture → pre-training | The assembled decoder maps position IDs through hidden states to next-token scores; pre-training turns random transformations into learned parameters through repetition. | Carry-forward result strengthened; destination opening already starts from decoder next-token prediction. |
-| Pre-training → post-training | The audited pre-training recipe produces a base model that continues text but is not yet a dependable assistant policy. | Carry-forward result strengthened; the bridge lesson's lede defines the behavior change before introducing method names. |
-| Post-training → inference and serving | Post-training shapes the policy; runtime decoding still decides which next-token scores become visible text. | Boundary remains an honest new thread, with a stronger reason for why decoding follows. |
-| Inference and serving → applications and reliability | Inference-time compute determines how much processing occurs; context engineering determines which instructions and evidence enter that processing. | Direct-reuse handoff strengthened; the Applications opening already defines the prompt/context control surface. |
-| Applications and reliability → advanced branches | The dependable-system spine is complete; distillation, LoRA, MoE, multimodality, and interpretability are optional goal-driven specializations. | Existing `new chapter thread` plus branch chooser is honest; no artificial prerequisite chain was added. |
+| Conceptual text loop → optional numerical foundations | The learner has already watched text become pieces, representations, contextual states, and next-piece feedback before tensors name how those states are carried. | `learning-to-predict` → `tensors-shapes` is direct reuse; tensor notation begins at Lesson 08 and does not gate the preceding conceptual loop. |
+| Numerical foundations → pre-training | Representation, feedback, responsibility, updates, and the tiny complete stack are available before the course scales the training system. | `gpt2-from-scratch` → `pretraining-overview` remains direct reuse. |
+| Pre-training → post-training | The audited pre-training recipe produces a base model that continues text but is not yet a dependable assistant policy. | The bridge defines the behavior change before method names. |
+| Post-training → inference and serving | Post-training shapes the policy; runtime decoding still decides which next-piece scores become visible text. | Honest new chapter thread with an explicit carry-forward result. |
+| Inference and serving → applications and reliability | Inference-time processing uses the instructions and evidence supplied through context. | Direct-reuse handoff retained. |
+| Applications and reliability → advanced branches | The dependable-system spine is complete; later topics are goal-driven specializations. | New-thread relationship plus branch chooser retained; no artificial prerequisite chain was added. |
 
-`tests/llm-curriculum-continuity.test.mjs` protects the repaired Lesson 01 → 02 explanation, LLM-specific practice and interaction copy, all seven audited section seams, and the distinction between direct reuse, a new thread, and an advanced branch.
+`tests/llm-curriculum-continuity.test.mjs` protects the twelve-lesson opening order, the concept-first tensors page, and the later course seams. `tests/concept-first-curriculum.test.mjs` separately protects the delivery split across all five courses.
 
-## Cross-course continuity audit — 20 July 2026
+## Cross-course continuity audit — 21 July 2026
 
 This was a complete semantic review of the current learner-facing reader dossiers, not a sample or a structural proxy. It inspected 138 canonical handoffs: course home to first lesson, every ordinary next-lesson edge, and every World Models advanced branch entry. Because those advanced lessons are parallel choices rather than a ladder, the parallel advanced branches are counted from their shared entry prerequisite, `world-model-operations-case-study`.
 
@@ -137,10 +147,10 @@ All 31 course-home, track, and advanced-branch entry boundaries were classified 
 
 | Handoff | Severity | Why it is partial | Scoped repair |
 | --- | --- | --- | --- |
-| `world-models` → `dynamics-tensors` | High | The introduction's observation–action–consequence loop jumps to array notation without exposing the numerical representation step. | Turn the loop into small named arrays, axes, and one state-prediction multiplication before generalizing tensor rules. |
-| `dynamics-tensors` → `stochastic-futures` | Medium | Shapes and masks lead directly to distributions without showing why one next-state array is insufficient. | Hold the input shape fixed and contrast one point prediction with two possible futures and their probabilities. |
-| `stochastic-futures` → `learning-dynamics` | High | Multiple-future distributions are followed by a point-estimate mean-squared-error fixture with no boundary. | Label the fixture as deterministic, then connect categorical or Gaussian output parameters to their appropriate predictive losses. |
-| `learning-dynamics` → `sequential-state` | High | The optimizer update does not identify which time-indexed transition supplies its input and target. | Trace $(s_t,a_t)\rightarrow s_{t+1}$ through prediction, loss, gradient, and update before expanding to sequences. |
+| `world-models` → `sequential-state` | High | The introduction's situation–action–consequence story needs a stable ordered experience before any formal model representation. | Turn the story into observation, state, action, and consequence roles without notation. |
+| `sequential-state` → `stochastic-futures` | Medium | One observed sequence can suggest one forced future even when the same apparent situation has several outcomes. | Hold the situation fixed and contrast multiple possible consequences before assigning probability. |
+| `stochastic-futures` → `rewards-returns-policies` | Medium | Possible futures alone do not tell a decision-maker which consequence to prefer. | Add consequences, goals, and an action rule while keeping prediction separate from preference. |
+| `rewards-returns-policies` → `mdps-bellman` | High | Immediate consequences and longer-term policy outcomes need one reusable decision-plus-future operation. | Join them conceptually first; retain the Bellman arithmetic in optional technical depth. |
 | `differentiable-planning` → `actor-critic-lambda` | High | Both optimize imagined return, but the learner is not told that planning changes actions while actor–critic changes policy and value parameters. | Contrast the optimized variables and reuse the same imagined rollout to introduce actor and critic targets. |
 | `dyna-tdmpc-case-study` → `video-tokenization` | High | A planning case study is mislabeled as direct reuse even though video starts a representation-and-scale thread. | Mark a new chapter thread and explain why raw high-dimensional frames first need predictive visual units. |
 | `latent-actions-passive-video` → `jepa-vjepa` | High | Action-conditioned latent dynamics abruptly become action-free representation prediction. | Present JEPA as an alternative foundation-model contract and reactivate feature prediction without pretending actions carry forward. |
@@ -158,9 +168,9 @@ All 31 course-home, track, and advanced-branch entry boundaries were classified 
 
 | Handoff | Severity | Why it is partial | Scoped repair |
 | --- | --- | --- | --- |
-| `generation-as-distribution` → `likelihood-cross-entropy` | High | A distribution is introduced, then maximum likelihood appears without explaining that training scores real examples under that same distribution. | Reuse one probability table to show sample, score, negative log-likelihood, and parameter update roles. |
-| `likelihood-cross-entropy` → `sampling-randomness` | Medium | The scoring interface and sampling interface are adjacent but their common model is implicit. | Use the same categorical distribution for both questions and separate high likelihood from deterministic output. |
-| `sampling-randomness` → `divergences-distance` | Medium | Individual random draws jump to distribution-level discrepancy without separating sampling noise from model mismatch. | Compare repeated empirical frequencies with the target distribution before introducing divergence. |
+| `generation-as-distribution` → `sampling-randomness` | High | The set of possible outputs should become observable before the learner is asked to score it formally. | Draw repeated outcomes first and distinguish replayable randomness from determinism. |
+| `sampling-randomness` → `likelihood-cross-entropy` | Medium | Varied draws need a complementary explanation of how an observed example supplies learning feedback. | Reuse one probability table for sampling and scoring while deferring likelihood arithmetic. |
+| `likelihood-cross-entropy` → `divergences-distance` | Medium | Per-example feedback must broaden to a distribution-level comparison without conflating sampling noise and model mismatch. | Compare repeated frequencies with the target before opening the optional divergence calculations. |
 | `latent-variable-models` → `amortized-inference-elbo` | High | The intractable posterior motivates $q(z\mid x)$, but the next page treats $q$ and the ELBO as a fresh formalism. | Make the relationship direct, define the approximate posterior, and derive the tractable bound from the blocked inference query. |
 | `amortized-inference-elbo` → `vae-posterior-collapse` | High | The reconstruction/KL ledger is not used to explain how an expressive decoder can ignore the latent variable. | Trace an optimization path where $q(z\mid x)$ approaches the prior while likelihood remains competitive. |
 | `latent-models-capstone` → `change-of-variables` | Medium | The activated KL argument order is unused as the course starts an exact-density family. | Mark a new thread and carry forward density normalization and support rather than an irrelevant formula. |
@@ -173,9 +183,9 @@ All 31 course-home, track, and advanced-branch entry boundaries were classified 
 
 | Handoff | Severity | Why it is partial | Scoped repair |
 | --- | --- | --- | --- |
-| `sequential-decision-systems` → `mdps-rewards` | High | The plain-language piece/action/consequence loop jumps to the MDP tuple. | Map each loop element to finite $S$, $A$, $P$, $R$, and discounting with one concrete transition. |
-| `mdps-rewards` → `partial-observation` | Medium | The full-state assumption fails on the next page without being named. | Hold the task fixed, hide one state variable, and introduce observations and beliefs as the required repair. |
+| `sequential-decision-systems` → `partial-observation` | High | The plain-language loop can imply that the agent always knows the true situation. | Hold the task fixed, hide one state variable, and introduce observations and beliefs before formal notation. |
 | `partial-observation` → `policies-occupancy` | Medium | Estimating an information state and choosing actions under it are conflated as one direct progression. | State the shift explicitly: belief or history is the policy input; policy and occupancy describe decisions and visitation. |
+| `policies-occupancy` → `mdps-rewards` | Medium | Once action choice and visitation are visible, the loop needs precise names for analysis. | Formalize the already-understood operation after the policy mechanism has sunk in. |
 | `dynamic-programming` → `monte-carlo-estimation` | Medium | Exact known-model backups switch to sampled returns without explaining why the table is unavailable. | Compare the same value target computed from $P$ and $R$ with an empirical episode return. |
 | `learned-dynamics-control` → `shooting-mpc` | High | The destination uses the learned model to score candidate action sequences but is labeled as a separate thread. | Mark direct extension and trace one candidate sequence through the learned transition model and objective. |
 | `shooting-mpc` → `dyna-imagination` | Medium | Planning with a model and learning from a model are adjacent without contrasting their outputs. | Reuse one imagined transition, showing MPC uses it to choose an action while Dyna uses it as a learning update. |
@@ -189,8 +199,8 @@ All 31 course-home, track, and advanced-branch entry boundaries were classified 
 | Handoff | Severity | Why it is partial | Scoped repair |
 | --- | --- | --- | --- |
 | `embodied-task-contracts` → `observation-action-spaces` | Low | The sense–decide–act–check loop is not explicitly converted into typed interfaces. | Map each loop step to observation fields, action fields, timing, and success checks. |
-| `observation-action-spaces` → `coordinate-frames-time` | Medium | Shape-valid sensor and action arrays can still be physically unusable when their frames or timestamps differ. | Reuse the schema, annotate every field with space and time, and trace a mismatched example. |
-| `coordinate-frames-time` → `embodied-partial-observation` | Low | Stale or unsynchronized measurements do not visibly motivate history or belief state. | Show why one aligned observation is still not the current hidden state and introduce temporal evidence. |
+| `observation-action-spaces` → `embodied-partial-observation` | Medium | A valid sensor packet can still omit the hidden physical condition a controller needs. | Add history and belief before teaching coordinate-transform notation. |
+| `embodied-partial-observation` → `coordinate-frames-time` | Low | Evidence across sensors and moments is useless unless its physical meanings line up. | Reuse the history, then annotate frame, units, timestamp, and synchronization; defer transform arithmetic. |
 | `cameras-proprioception` → `calibration-transforms` | Low | A synchronized sensor packet still lacks the camera-to-robot mapping needed for control. | Reuse the packet and apply a versioned calibration transform to one point. |
 | `state-estimator-capstone` → `teleoperation-demonstrations` | Medium | The estimator output and control commands are not named as the observation/action fields of a demonstration row. | Convert one timed estimator packet plus requested/applied commands into a trajectory record. |
 | `robot-data-quality` → `action-representations-chunking` | Low | Trustworthy rows do not yet specify what the learning target means. | Define end-effector and joint-space targets, frames, horizons, and the effect of chunking on the same data. |

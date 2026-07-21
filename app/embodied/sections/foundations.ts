@@ -394,16 +394,16 @@ export const embodiedFoundationSpecs = [
         },
       },
       quiz: {
-        question: "What does $T^A_B$ do in this course notation?",
+        question: "What does a coordinate-frame transform do?",
         options: [
-          "Maps B-expressed coordinates into frame A",
+          "Maps coordinates expressed in one frame into another frame",
           "Maps time A into time B",
           "Stores reward",
           "Normalizes pixels",
         ],
         answer: 0,
         explanation:
-          "The superscript names destination frame and subscript source frame.",
+          "The transform record must state its destination frame and source frame so the direction is unambiguous.",
       },
       transfer: {
         prompt:

@@ -43,11 +43,13 @@ const workedExampleRemediations = [
   "introduction#2", "tensors-shapes#3", "gradients-backprop#3", "optimizers#1", "tokenization#2", "embedding-layer#1", "positional-encoding#1", "positional-encoding#2", "positional-encoding#3", "attention#1", "gpt2-from-scratch#1",
   "pretraining-overview#1", "pretraining-overview#2", "infrastructure#1", "posttraining-overview#1", "posttraining-overview#3", "sft#1", "sft#2", "preference-optimization#2", "rl-fundamentals#1", "rlhf#1", "rlhf#2", "tools-safety#1", "tulu3-case-study#1",
   "decoding-sampling#1", "decoding-sampling#3", "generation-kv-cache#1", "generation-kv-cache#2", "quantization-memory#3", "serving-systems#2", "serving-systems#3", "test-time-compute#2", "context-engineering#2", "agent-loops#3", "evaluation-design#1", "distillation#2", "lora#3", "moe#1", "multimodal-models#2", "interpretability-editing#1", "interpretability-editing#3",
+  "learning-to-predict#1", "learning-to-predict#2", "scaling-laws#1", "data-engineering#1", "pretraining-evaluation#2", "security-privacy#1",
 ];
 const checkRemediations = [
   "tensors-shapes#2", "optimizers#1", "tokenization#2", "embedding-layer#1", "embedding-layer#3", "positional-encoding#3", "attention#1", "gpt2-from-scratch#1", "gpt2-from-scratch#2", "gpt2-from-scratch#3",
   "pretraining-overview#2", "objectives-details#3", "infrastructure#1", "pretraining-evaluation#1", "pretraining-evaluation#3", "olmo3-case-study#3", "posttraining-overview#1", "posttraining-overview#2", "instruction-tuning-rlhf#1", "instruction-tuning-rlhf#2", "instruction-tuning-rlhf#3", "sft#1", "sft#2", "sft#3", "preference-optimization#2", "rl-fundamentals#1", "tools-safety#1",
   "decoding-sampling#1", "decoding-sampling#2", "generation-kv-cache#1", "generation-kv-cache#2", "quantization-memory#3", "serving-systems#3", "test-time-compute#2", "context-engineering#2", "context-engineering#3", "agent-loops#1", "agent-loops#3", "evaluation-design#1", "lora#3", "moe#1",
+  "learning-to-predict#1", "learning-to-predict#2", "scaling-laws#1", "data-engineering#1", "pretraining-evaluation#2", "security-privacy#1",
 ];
 
 test("all 44 lessons explicitly teach all 132 visible outcomes", () => {
@@ -78,8 +80,8 @@ test("all 44 lessons explicitly teach all 132 visible outcomes", () => {
   assert.equal(new Set(checkPrompts).size, 132, "every objective needs an independently authored check");
 });
 
-test("all 59 semantic partials receive dimension-specific authored remediation", () => {
-  assert.equal(Object.keys(objectiveCoverageRemediations).length, 59);
+test("all 65 semantic findings receive dimension-specific authored remediation", () => {
+  assert.equal(Object.keys(objectiveCoverageRemediations).length, 65);
   for (const key of mechanismRemediations) assert.ok(objectiveCoverageRemediations[key]?.mechanism?.length >= 80, `${key} mechanism remediation`);
   for (const key of workedExampleRemediations) assert.ok(objectiveCoverageRemediations[key]?.workedExample?.length >= 80, `${key} worked-example remediation`);
   for (const key of checkRemediations) {

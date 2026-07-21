@@ -25,11 +25,11 @@ export const worldModelFoundationModelSpecs = [
       "A video token is not an object, action, or physical state by definition; it is a learned compression unit.",
     quiz: {
       question:
-        "At fixed patch size, doubling image height and width changes spatial token count by about what factor?",
-      options: ["2×", "4×", "No change", "8×"],
-      answer: 1,
+        "Why does raising video resolution quickly make future prediction more expensive when patch size stays fixed?",
+      options: ["More patches are needed across both image dimensions", "Every patch disappears", "Time stops contributing tokens", "The model uses no spatial representation"],
+      answer: 0,
       explanation:
-        "Both spatial axes double, so the patch grid contains four times as many tokens.",
+        "Higher and wider frames each require more patches, so the representation grows across both spatial directions. The optional technical depth works out the exact factor.",
     },
     lab: "wm-video",
     prerequisites: ["dyna-tdmpc-case-study"],

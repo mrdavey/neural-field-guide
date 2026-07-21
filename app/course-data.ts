@@ -34,7 +34,7 @@ export type Lesson = {
 };
 
 export const tracks = [
-  { id: "foundations" as const, title: "Foundations", short: "Build the toolkit", description: "Learn the tensors, probabilities, gradients, and optimization every later lesson uses.", outcome: "Trace one numerical learning step by hand.", role: "core" as const, color: "#f59eaf" },
+  { id: "foundations" as const, title: "Foundations", short: "Explain the learning loop", description: "Build an intuitive account of representations, feedback, responsibility, and model updates before choosing the optional mathematics.", outcome: "Explain one complete learning step and diagnose where it can fail.", role: "core" as const, color: "#f59eaf" },
   { id: "architecture" as const, title: "Architecture", short: "Inside the machine", description: "Turn text into predictions, one transparent mechanism at a time.", outcome: "Trace every tensor from text to next-token logits.", role: "core" as const, color: "#ff6b35" },
   { id: "pretraining" as const, title: "Pre-Training", short: "Build the base model", description: "Learn how data, objectives, compute, and evaluation create capability.", outcome: "Design and audit a base-model training run.", role: "core" as const, color: "#ffd166" },
   { id: "posttraining" as const, title: "Post-Training", short: "Shape useful behavior", description: "Transform a text predictor into a helpful, safer assistant.", outcome: "Choose supervision and controls for an assistant behavior.", role: "core" as const, color: "#57d6c7" },
@@ -44,8 +44,8 @@ export const tracks = [
 ];
 
 export const learningPhases = [
-  { id: "numerical", index: "01", title: "Learn the numerical language", range: "Lessons 1–5", tracks: ["foundations"] as TrackId[], summary: "Start with predictions, tensors, probability, gradients, and updates. Nothing later asks you to manipulate unexplained mathematics.", milestone: "Explain one complete learning step" },
-  { id: "decoder", index: "02", title: "Assemble the causal decoder", range: "Lessons 6–12", tracks: ["architecture"] as TrackId[], summary: "Turn text into vectors, add position, route information with attention, and produce the next-token loss.", milestone: "Build and debug a tiny GPT" },
+  { id: "decoder", index: "01", title: "See how an LLM builds text", range: "Lessons 1–7", tracks: ["foundations", "architecture"] as TrackId[], summary: "Follow text through pieces, representations, position, attention, layers, and next-token prediction before opening the formal mathematics.", milestone: "Explain the complete text-to-prediction loop" },
+  { id: "numerical", index: "02", title: "Explain how the loop learns", range: "Lessons 8–12", tracks: ["foundations", "architecture"] as TrackId[], summary: "Return to the visible mechanism and formalize representations, probability, feedback, parameter updates, and the tiny GPT build.", milestone: "Trace one complete learning step" },
   { id: "training", index: "03", title: "Create and shape the model", range: "Lessons 13–28", tracks: ["pretraining", "posttraining"] as TrackId[], summary: "First create broad capability with data and compute; then shape the response policy with demonstrations, preferences, rewards, and safety data.", milestone: "Audit open pre- and post-training recipes" },
   { id: "systems", index: "04", title: "Turn weights into a dependable system", range: "Lessons 29–39", tracks: ["inference", "applications"] as TrackId[], summary: "Learn generation and memory before building retrieval, agents, evaluation, security, and operations around the model.", milestone: "Design and operate an evidence-grounded service" },
   { id: "specialize", index: "05", title: "Choose an advanced branch", range: "Lessons 40–44", tracks: ["advanced"] as TrackId[], summary: "Distillation, LoRA, MoE, multimodality, and interpretability reuse the shared core but do not form one artificial dependency chain.", milestone: "Investigate the specialization relevant to your goal" },
@@ -53,36 +53,36 @@ export const learningPhases = [
 
 const lessonDefinitions: Lesson[] = [
   {
-    id: "tensors-shapes", track: "foundations", title: "From Text to Tensors: Shapes & Matrix Multiplication", number: 2, duration: 26,
-    simple: "An LLM builds text piece by piece, but its learned machinery runs on numbers. Tensors organize the numbers for many text positions, shapes keep their roles straight, and matrix multiplication applies the learned transformations that turn one numerical representation into the next.",
-    deep: "Treat the prompt as already divided into text positions for now; Lesson 6 explains how that division is chosen. The integer text-piece IDs occupying those positions can be stored as $[B,T]$, where $B$ is the number of prompts processed together and $T$ is the number of positions per prompt. An embedding lookup—selecting one learned row per text-piece ID—later produces hidden states $X[B,T,d]$, with $d$ numerical features per position. A learned weight $W[d,d_{out}]$ computes $Y=XW+b$: $$[B,T,d] \\times [d,d_{out}] \\to [B,T,d_{out}].$$ This same shape pattern appears when attention mixes information among positions, when an MLP transforms features within one position, and when the output head produces vocabulary scores. A bias is one learned offset per output feature. Broadcasting reuses a smaller tensor across compatible axes—for example, repeating that feature bias at every prompt-position—but is dangerous when dimensions fit while their meanings do not.",
+    id: "tensors-shapes", track: "foundations", title: "How Models Carry and Transform Representations", number: 8, duration: 26,
+    simple: "An LLM carries a learned feature description for every text position. One reusable learned transformation updates those descriptions while keeping each prompt and position in its proper place.",
+    deep: "The earlier tokenization lesson divided the prompt into text positions, and the embedding lesson gave each position a learned representation. The integer text-piece IDs can be stored as $[B,T]$, where $B$ is the number of prompts processed together and $T$ is the number of positions per prompt. An embedding lookup produces hidden states $X[B,T,d]$, with $d$ numerical features per position. A learned weight $W[d,d_{out}]$ computes $Y=XW+b$: $$[B,T,d] \\times [d,d_{out}] \\to [B,T,d_{out}].$$ This same shape pattern appears when attention mixes information among positions, when an MLP transforms features within one position, and when the output head produces vocabulary scores. A bias is one learned offset per output feature. Broadcasting reuses a smaller tensor across compatible axes—for example, repeating that feature bias at every prompt-position—but is dangerous when dimensions fit while their meanings do not.",
     mentalModel: "Picture a tray for each prompt, a card for each text position, and numbered slots on every card. A learned matrix is one reusable transformation applied to every card; the shape labels stop trays, cards, and slots from being confused.",
     keyIdeas: ["LLMs carry hidden states for many text positions and project each one to raw vocabulary scores", "Matrix multiplication applies the same learned feature transformation at every position", "A shape can be compatible while its axis meaning is wrong"],
     example: "Take two already-divided prompts, each with three text positions. If every position currently carries four features, the hidden-state tensor $X$ has shape $[2,3,4]$. Multiplying by $W[4,6]$ applies the same learned projection to all six positions and returns $Y[2,3,6]$. The prompts and positions remain; only the feature description changes from four numbers to six.",
     misconception: "Tensor arithmetic does not turn language into verified meaning, and one hidden coordinate is not automatically one human-readable concept. Shapes describe how a program organizes and transforms numbers; later evidence is still needed to interpret what a trained model learned.",
-    quiz: { question: "Why does an LLM repeatedly multiply hidden states $X[B,T,d]$ by learned weights $W[d,m]$?", options: ["To turn every continuation into a verified fact", "To apply the same learned feature transformation at each text position while preserving batch and position axes", "To sum away every text position so word order cannot matter", "To convert each tensor value directly into a probability"], answer: 1, explanation: "The shared feature axis $d$ contracts, so the learned transformation changes each position's feature description from width $d$ to width $m$ while $B$ and $T$ remain. Attention, MLPs, and output projections reuse this pattern for different jobs." },
-    lab: "tensors", prerequisites: ["introduction"]
+    quiz: { question: "What stays the same when a learned projection transforms every text position?", options: ["The meaning is guaranteed to be correct", "The prompt and position structure stays in place while each position gets a new feature description", "Every position is merged into one", "The values become probabilities automatically"], answer: 1, explanation: "A learned projection re-describes each text position using a new set of features. It preserves which prompt and position each representation belongs to; the optional technical depth shows the corresponding shapes." },
+    lab: "tensors", prerequisites: ["learning-to-predict"]
   },
   {
-    id: "probability-softmax", track: "foundations", title: "Probability, Softmax & Cross-Entropy", number: 3, duration: 26,
+    id: "probability-softmax", track: "foundations", title: "From Model Scores to Learning Feedback", number: 9, duration: 26,
     simple: "The model produces raw scores called logits. Softmax turns those scores into probabilities, and cross-entropy measures how much probability the model assigned to the correct next token.",
     deep: "For logits $z$, numerically stable softmax is $$p_i=\\frac{\\exp(z_i-m)}{\\sum_j \\exp(z_j-m)},\\qquad m=\\max(z).$$ Subtracting $m$ improves numerical stability without changing probabilities. Adding the same constant to every logit changes nothing; scaling logits changes sharpness. For a one-hot target $y$, cross-entropy is $$H(y,p)=-\\sum_i y_i \\log p_i=-\\log p_{target}.$$ The gradient with respect to logits is $p-y$: non-target probabilities are pushed down while the target is pushed up. Entropy measures distributional uncertainty, while cross-entropy measures mismatch to targets. Perplexity is $\\exp(\\text{mean token cross-entropy})$ on a compatible tokenization and dataset.",
     mentalModel: "Logits are race times before conversion; softmax turns their gaps into betting odds, and cross-entropy penalizes confident bets against the observed winner.",
     keyIdeas: ["Logits are unconstrained scores; probabilities are normalized", "Only relative logit differences matter", "Cross-entropy is a smooth confidence-sensitive training signal"],
     example: "For logits $[2,1,0]$, softmax is about $[0.665,0.245,0.090]$. If class 0 is correct, loss is $-\\ln(0.665)\\approx0.41$; if class 2 is correct, loss is $-\\ln(0.090)\\approx2.41$. The same prediction is punished more when it neglects the target.",
     misconception: "Softmax probabilities are not automatically calibrated beliefs about truth. They are normalized scores under a model and context; calibration must be measured against outcomes.",
-    quiz: { question: "A target token’s probability rises from 0.10 to 0.80. What happens to −log p_target?", options: ["It rises", "It falls from about 2.30 to 0.22", "It stays fixed", "It becomes entropy"], answer: 1, explanation: "Negative log-likelihood falls as target probability rises, with a large penalty for confidently neglecting the target." },
+    quiz: { question: "If the model assigns more probability to the observed next token, what should happen to its training penalty?", options: ["It should rise", "It should fall", "It should stay fixed", "It should become the model's uncertainty"], answer: 1, explanation: "The learning signal penalizes the model less when it gives the observed continuation more probability, and more when it confidently neglects that continuation." },
     lab: "softmax", prerequisites: ["tensors-shapes"]
   },
   {
-    id: "gradients-backprop", track: "foundations", title: "Neural Networks, Gradients & Backpropagation", number: 4, duration: 28,
+    id: "gradients-backprop", track: "foundations", title: "How Error Reaches Earlier Decisions", number: 10, duration: 28,
     simple: "A neural network is a chain of adjustable numerical functions. A gradient says how a tiny change to each parameter would change the loss; backpropagation computes all those gradients efficiently from the end of the chain backward.",
     deep: "A computation graph records operations and intermediate values during the forward pass. The chain rule composes local derivatives: if $L$ depends on $y$ and $y$ on $x$, $$\\frac{dL}{dx}=\\frac{dL}{dy}\\frac{dy}{dx}.$$ Reverse-mode automatic differentiation starts with $dL/dL=1$ and accumulates vector–Jacobian products backward, making one scalar loss efficient even with billions of parameters. Nonlinear activations let stacked linear layers represent nonlinear functions. Initialization controls activation/gradient scale; saturation, exploding values, dead units, and numerical precision can disrupt learning. Backprop computes gradients; the optimizer decides the update.",
     mentalModel: "The forward pass is a row of connected gears producing an error. Backprop turns the final gear backward to measure how much each earlier gear contributed.",
     keyIdeas: ["Forward computes predictions and stores intermediates", "The chain rule assigns credit through composed functions", "Gradients describe local sensitivity, not a guaranteed best global direction"],
     example: "Let $y=wx$ and $L=(y-t)^2$ with $x=3$, $w=2$, and $t=5$. Forward: $y=6$ and $L=1$. Backward: $dL/dy=2(y-t)=2$ and $dy/dw=x=3$, so $dL/dw=6$. A small update $$w \\leftarrow w-0.1 \\times 6=1.4$$ overshoots the exact optimum $5/3$, showing why learning rate matters.",
     misconception: "Backpropagation does not mean the model reasons backward or stores training examples in gradients. It is an algorithm for differentiating a composed numerical program.",
-    quiz: { question: "If L depends on y and y depends on w, how does backprop compute dL/dw?", options: ["Add L and w", "Multiply the upstream derivative dL/dy by the local derivative dy/dw", "Run the tokenizer backward", "Choose a random sign"], answer: 1, explanation: "Reverse-mode differentiation applies the chain rule, propagating upstream sensitivity through each local operation." },
+    quiz: { question: "How does backpropagation assign responsibility to an earlier adjustable parameter?", options: ["It adds the final error directly to every parameter", "It carries sensitivity backward through each operation that connected the parameter to the error", "It runs the tokenizer in reverse", "It chooses a random update direction"], answer: 1, explanation: "Backpropagation follows the recorded operations backward. Each one passes along how strongly its input affected the final error; optional technical depth formalizes that backward credit path." },
     lab: "gradient", prerequisites: ["probability-softmax"]
   },
   {
@@ -97,7 +97,7 @@ const lessonDefinitions: Lesson[] = [
     lab: "orientation"
   },
   {
-    id: "tokenization", track: "architecture", title: "Tokenization", number: 6, duration: 14,
+    id: "tokenization", track: "architecture", title: "Tokenization", number: 2, duration: 14,
     simple: "Tokenization cuts text into reusable pieces and gives each piece a number the model can process.",
     deep: "Modern tokenizers usually learn a subword vocabulary with algorithms such as BPE, WordPiece, or Unigram. Common strings may become one token while rare words split into pieces. A deterministic encoder maps text to IDs; a decoder reverses the mapping. Vocabulary size trades sequence length against embedding-table size and rare-word coverage. Token boundaries affect cost, multilingual fairness, arithmetic, spelling, and the effective context length—but tokens are not necessarily words.",
     mentalModel: "It is a box of magnetic word fragments: common phrases get large pieces; unfamiliar terms are assembled from smaller pieces.",
@@ -108,7 +108,7 @@ const lessonDefinitions: Lesson[] = [
     lab: "tokens", prerequisites: ["introduction"]
   },
   {
-    id: "embedding-layer", track: "architecture", title: "The Embedding Layer", number: 7, duration: 16,
+    id: "embedding-layer", track: "architecture", title: "The Embedding Layer", number: 3, duration: 16,
     simple: "An embedding replaces each token ID with a learnable list of numbers—a location in the model’s internal meaning space.",
     deep: "The token embedding matrix $E \\in \\mathbb{R}^{V \\times d}$ is a learned lookup table with one $d$-dimensional row per vocabulary item. During backpropagation, rows move so tokens useful in similar predictive contexts often acquire related geometry. Embeddings are context-free at lookup time: the row for “bank” is initially identical in “river bank” and “central bank.” Transformer layers then contextualize it. Many decoder models tie the input embedding matrix to the output projection, reducing parameters and aligning input/output geometry.",
     mentalModel: "A token ID is a library card number; its embedding is the rich profile pulled from the catalogue. Later layers update that profile using the surrounding sentence.",
@@ -119,7 +119,7 @@ const lessonDefinitions: Lesson[] = [
     lab: "vectors", prerequisites: ["tokenization"]
   },
   {
-    id: "positional-encoding", track: "architecture", title: "Positional Encoding", number: 8, duration: 16,
+    id: "positional-encoding", track: "architecture", title: "Positional Encoding", number: 4, duration: 16,
     simple: "Position information tells a Transformer which token came first, second, and so on. Unmasked, content-only self-attention has no built-in word order; a decoder's causal mask adds earlier-versus-later access rules, but not a full index or distance geometry.",
     deep: "Unmasked, content-only self-attention without positional signals is permutation-equivariant: reordering inputs merely reorders outputs. A decoder's causal mask is a separate structural signal: it breaks that symmetry by allowing a query to read only itself and earlier positions, so it supplies direction through legal information flow. It still does not encode a reusable absolute index or pairwise distance. Models therefore inject richer order geometry through learned absolute embeddings, sinusoidal features, relative position biases, or rotary position embeddings (RoPE). RoPE rotates query and key pairs by position-dependent angles, making attention scores depend on relative displacement. Position methods influence length extrapolation, recency behavior, and context-window extension; they encode order, not a perfect counter of absolute location.",
     mentalModel: "Tokens are actors wearing numbered stage marks. Attention knows who is present; positions tell it where everyone stands.",
@@ -130,18 +130,18 @@ const lessonDefinitions: Lesson[] = [
     lab: "positions", prerequisites: ["embedding-layer"]
   },
   {
-    id: "attention", track: "architecture", title: "Attention", number: 9, duration: 24,
+    id: "attention", track: "architecture", title: "Attention", number: 5, duration: 24,
     simple: "Attention lets every token decide which earlier tokens matter for interpreting and predicting what comes next.",
     deep: "Each hidden state is projected into a query $Q$, key $K$, and value $V$. Scaled dot-product attention computes $$\\operatorname{Attention}(Q,K,V)=\\operatorname{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}+M\\right)V.$$ Similar queries and keys receive larger weights, creating a content-dependent weighted sum of values. A causal mask $M$ blocks future positions during next-token training. Multiple heads learn distinct projections and can capture different relationships. Attention routes information; the MLP transforms it. Its standard time and memory cost grows quadratically with sequence length.",
     mentalModel: "At a crowded workshop, a token asks a question (query), compares it with everyone’s label (keys), then collects information (values) in proportion to relevance.",
     keyIdeas: ["Q asks, K matches, V carries", "Softmax makes a normalized weighted mixture", "Causal masks prevent looking ahead"],
     example: "In “The trophy did not fit in the suitcase because it was too big,” a query at the later token “big” may legally attend backward to “trophy,” “suitcase,” and “it.” That routing can combine earlier referent evidence without letting “it” look ahead to the adjective.",
     misconception: "Attention weights are useful diagnostics but are not a complete, causal explanation of a model’s reasoning.",
-    quiz: { question: "Why divide $QK^T$ by $\\sqrt{d_k}$?", options: ["To add positions", "To keep dot-product magnitudes from making softmax overly saturated", "To remove the causal mask", "To create token IDs"], answer: 1, explanation: "Dot products tend to grow with dimension; dividing by $\\sqrt{d_k}$ stabilizes softmax and its gradients." },
+    quiz: { question: "Why are attention match scores scaled before they are compared?", options: ["To add position information", "To keep large raw matches from making the comparison too extreme to learn from", "To remove the causal mask", "To create token IDs"], answer: 1, explanation: "As representations get wider, raw match scores can become extreme. Scaling keeps the resulting attention choices responsive enough for learning; the optional technical depth shows the exact factor." },
     lab: "attention", prerequisites: ["positional-encoding"]
   },
   {
-    id: "layers-of-understanding", track: "architecture", title: "Layers of Understanding", number: 10, duration: 15,
+    id: "layers-of-understanding", track: "architecture", title: "Layers of Understanding", number: 6, duration: 15,
     simple: "A Transformer refines each token’s representation repeatedly: early layers often capture local form, while later layers combine broader and more task-relevant information.",
     deep: "A decoder block typically applies normalized self-attention and an MLP with residual connections. The residual stream accumulates updates rather than replacing the whole representation. LayerNorm or RMSNorm stabilizes activation scale; attention moves information between positions; the MLP applies position-wise nonlinear feature transformations. Probing often finds an early-to-late progression, but capabilities are distributed and reused—not stored as a neat stack of syntax, facts, then reasoning.",
     mentalModel: "It is a drafting table: each layer adds annotations to the same page, with residual paths preserving earlier marks.",
@@ -151,14 +151,14 @@ const lessonDefinitions: Lesson[] = [
     quiz: { question: "A pre-norm decoder block starts with x. Which sequence is most accurate?", options: ["MLP → tokenize → softmax", "x + Attention(Norm(x)), then h + MLP(Norm(h))", "Norm(x) replaces x permanently", "Attention → vocabulary IDs → residual"], answer: 1, explanation: "Each sublayer sees a normalized stream and adds a same-width update back through a residual path. Post-norm instead normalizes after each residual addition." }, lab: "block", prerequisites: ["attention"]
   },
   {
-    id: "learning-to-predict", track: "architecture", title: "Learning to Predict", number: 11, duration: 18,
+    id: "learning-to-predict", track: "architecture", title: "Learning to Predict", number: 7, duration: 18,
     simple: "The model learns by predicting a hidden next token, measuring how wrong it was, and nudging its parameters toward the right answer—billions of times.",
     deep: "Teacher forcing supplies the true prefix and computes a distribution for every next position in parallel. Cross-entropy loss −log p(xₜ|x<ₜ) penalizes low probability on the observed token. Backpropagation applies the chain rule to calculate each parameter’s contribution to loss; an optimizer uses those gradients to update weights. Minimizing average next-token loss learns syntax, facts, styles, and latent procedures insofar as they improve prediction, but it does not directly optimize truthfulness or user intent.",
     mentalModel: "Like practicing with answer sheets: attempt every blank, compare confidence with the real answer, then adjust the habits responsible for mistakes.",
     keyIdeas: ["Cross-entropy rewards probability on the target", "Backprop assigns credit through the network", "Teacher forcing trains many positions in parallel"],
     example: "If the target is “blue” and the model gives it probability $0.1$, loss is $-\\ln(0.1)\\approx2.30$. At probability $0.8$, loss falls to $-\\ln(0.8)\\approx0.22$.",
     misconception: "The model does not receive a simple wrong/right signal only at the final word; training uses a differentiable loss at nearly every token position.",
-    quiz: { question: "What happens to cross-entropy loss when target-token probability rises?", options: ["It rises", "It falls", "It stays fixed", "It becomes accuracy"], answer: 1, explanation: "Because loss is −log(probability of the target), assigning the target more probability lowers loss." },
+    quiz: { question: "What happens to cross-entropy loss when target-token probability rises?", options: ["It rises", "It falls", "It stays fixed", "It becomes accuracy"], answer: 1, explanation: "The training penalty rewards moving more probability toward the target, so the penalty falls as target probability rises. The exact log relationship is optional technical depth." },
     lab: "prediction", prerequisites: ["layers-of-understanding"]
   },
   {
@@ -193,7 +193,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["Pre-training is a whole system", "Base-model capability comes from scale and data", "Small design errors compound over long runs"],
     example: "A 1T-token run with global batch 4M tokens requires roughly 250,000 optimizer steps; every step must coordinate data and accelerators reliably.",
     misconception: "More compute alone does not guarantee a better model; data quality, optimization stability, and architecture determine how productively compute is used.",
-    quiz: { question: "A run targets $10^{12}$ tokens with a $4 \\times 10^6$-token global batch. Approximately how many optimizer steps are required?", options: ["$4{,}000$", "$25{,}000$", "$250{,}000$", "$4{,}000{,}000$"], answer: 2, explanation: "$10^{12} \\div (4 \\times 10^6)=250{,}000$ steps. Each step includes batch sampling, forward/backward computation, synchronization, and an update." }, lab: "pipeline", prerequisites: ["gpt2-from-scratch"]
+    quiz: { question: "If the training-token target stays fixed but each optimizer step processes a larger global batch, what happens to the number of update steps?", options: ["It increases", "It decreases", "It is unrelated to batch size", "It becomes the vocabulary size"], answer: 1, explanation: "A larger batch processes more of the fixed token budget per update, so fewer update steps are needed. The optional technical depth works through the division." }, lab: "pipeline", prerequisites: ["gpt2-from-scratch"]
   },
   {
     id: "objectives-details", track: "pretraining", title: "Training Objectives and Architectural Details", number: 14, duration: 20,
@@ -203,7 +203,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["Objectives shape learned behavior", "Architecture allocates capacity", "Useful design balances quality and hardware efficiency"],
     example: "For “Birds `[MASK]` long distances”, a masked encoder can use both left and right context to recover “fly.” A causal decoder instead trains targets ‘can’ from ‘Birds’ and ‘fly’ from ‘Birds can’ simultaneously under a triangular mask. With $d=768$ and $h=12$, each head commonly has dimension $d/h=64$; changing to $h=24$ at fixed $d$ makes 32-dimensional heads, not a wider stream.",
     misconception: "Architecture and objective are not interchangeable: a powerful network trained on a mismatched objective can be poor at the desired task.",
-    quiz: { question: "At fixed residual width $d=768$, what happens if head count rises from $12$ to $24$?", options: ["Residual width doubles", "Typical per-head dimension falls from $64$ to $32$", "The vocabulary doubles", "Causal training becomes sequential"], answer: 1, explanation: "Heads partition the fixed residual width $d$. Teacher-forced causal training still evaluates positions in parallel using a mask." }, lab: "objectives", prerequisites: ["pretraining-overview"]
+    quiz: { question: "At a fixed total representation width, what happens when attention is divided among more heads?", options: ["The total width automatically doubles", "Each head usually receives a narrower slice of that same total width", "The vocabulary doubles", "Causal training becomes sequential"], answer: 1, explanation: "More heads partition the same fixed representation width into more, narrower slices. The optional technical depth shows a numerical example." }, lab: "objectives", prerequisites: ["pretraining-overview"]
   },
   {
     id: "scaling-laws", track: "pretraining", title: "Scaling Laws and Optimization", number: 15, duration: 22,
@@ -340,7 +340,7 @@ const lessonDefinitions: Lesson[] = [
     keyIdeas: ["The base weights stay frozen", "Low rank constrains the update", "Adapter artifacts are small but require a compatible pinned base checkpoint"],
     example: "A $4096 \\times 4096$ update has 16.8M values; rank-8 factors need about 65K—roughly $256 \\times$ fewer trainable values for that matrix.",
     misconception: "LoRA reduces trainable-state memory, but the base model still has to be stored and used unless it is also quantized or otherwise compressed.",
-    quiz: { question: "What does LoRA’s rank $r$ control?", options: ["Vocabulary size", "The dimensional bottleneck and capacity of the learned update", "Context length", "Number of training examples"], answer: 1, explanation: "A higher rank gives $\\Delta W$ more degrees of freedom but uses more trainable parameters and memory." },
+    quiz: { question: "What does LoRA's rank control?", options: ["Vocabulary size", "How much flexibility the compact learned update has", "Context length", "Number of training examples"], answer: 1, explanation: "A higher rank gives the adapter more ways to change the frozen model, but it also uses more trainable parameters and memory. The optional technical depth shows the matrix factorization." },
     lab: "lora", prerequisites: ["tensors-shapes", "optimizers"]
   },
   {
@@ -355,8 +355,8 @@ const lessonDefinitions: Lesson[] = [
     lab: "moe", prerequisites: ["layers-of-understanding", "attention"]
   },
   {
-    id: "optimizers", track: "foundations", title: "Optimizers", number: 5, duration: 22,
-    simple: "In this capstone, you will calculate one complete learning step for a tiny model—from input shapes and prediction to loss, gradients, updated weights, and the next prediction.",
+    id: "optimizers", track: "foundations", title: "How Learning Updates the Model", number: 11, duration: 22,
+    simple: "An optimizer turns information about model error into controlled parameter changes. The core lesson explains that operation and its failure modes; the full numerical learning-step capstone remains available as optional technical depth.",
     deep: "The project starts with fixed numerical inputs and parameters, computes a logit, probability, and cross-entropy loss, then follows the chain rule to every weight. You will apply $$w_{new}=w-\\eta\\nabla_wL,$$ rerun the forward pass, and verify that a sufficiently small step lowers the loss. A finite-difference gradient check or a documented second-step prediction supplies independent evidence. This trace connects tensors, probability, backpropagation, and optimizer policy while exposing sign, scale, precision, and learning-rate failures.",
     mentalModel: "The gradient points downhill through fog; the optimizer is the vehicle’s steering, suspension, and speed control.",
     keyIdeas: ["Learning rate sets update scale", "Momentum smooths noisy directions", "AdamW adapts per coordinate and decouples decay"],

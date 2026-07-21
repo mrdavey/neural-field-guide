@@ -5,8 +5,10 @@ import type { LessonGuide, ObjectiveCoverage } from "./lesson-guides";
 import { lessonCodeExamples, type LessonCodeExample } from "./code-examples";
 import { lessonObjectiveCoverage } from "./lesson-objective-coverage";
 import { MathText } from "./math-text";
-import { ActivityInfo, codeActivityGuidance, type CodeGuidance } from "./activity-info";
+import { ActivityInfo, PredictionGate, codeActivityGuidance, type CodeGuidance } from "./activity-info";
 import { MotionReveal } from "./motion/motion-reveal";
+import type { Lesson } from "./course-data";
+import { conceptFirstCoverageFor } from "./concept-first-curriculum";
 
 type LessonNarrativeViewProps = {
   guide: LessonGuide;
@@ -64,13 +66,13 @@ export function LessonNarrativeView({ guide, lessonId, lessonTitle, simple, prio
   </section>;
 }
 
-function ObjectiveCoverageCard({ item, index }: { item: import("./lesson-guides").ObjectiveCoverage; index: number }) {
+function ObjectiveCoverageCard({ item, index, operationOnly = false }: { item: import("./lesson-guides").ObjectiveCoverage; index: number; operationOnly?: boolean }) {
   const [draft, setDraft] = useState("");
   const [committed, setCommitted] = useState(false);
 
   return <li>
     <span>{String(index + 1).padStart(2, "0")}</span>
-    <h4><MathText>{item.objective}</MathText></h4>
+    <h4><MathText>{operationOnly ? "Input → operation → result → limit" : item.objective}</MathText></h4>
     <div className="objective-evidence" data-content-role="check">
       <strong>Explain the chapter in your own words</strong>
       <p><MathText>{item.check.prompt}</MathText></p>
@@ -93,9 +95,9 @@ function ObjectiveCoverageCard({ item, index }: { item: import("./lesson-guides"
   </li>;
 }
 
-export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, example, guidance }: { guide: LessonGuide; lessonId: string; lessonTitle: string; coverage?: ObjectiveCoverage[]; example?: LessonCodeExample; guidance?: CodeGuidance }) {
-  const codeExample = example ?? lessonCodeExamples[lessonId];
-  const codeGuidance = guidance ?? codeActivityGuidance[lessonId];
+export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, example, guidance, showCode = true, operationOnly = false }: { guide: LessonGuide; lessonId: string; lessonTitle: string; coverage?: ObjectiveCoverage[]; example?: LessonCodeExample; guidance?: CodeGuidance; showCode?: boolean; operationOnly?: boolean }) {
+  const codeExample = showCode ? example ?? lessonCodeExamples[lessonId] : undefined;
+  const codeGuidance = showCode ? guidance ?? codeActivityGuidance[lessonId] : undefined;
   const objectiveCoverage = coverage ?? lessonObjectiveCoverage[lessonId];
   if (!objectiveCoverage) throw new Error(`Missing objective coverage for ${lessonId}`);
   const [codePrediction, setCodePrediction] = useState("");
@@ -145,10 +147,41 @@ export function LessonGuideView({ guide, lessonId, lessonTitle, coverage, exampl
       <div><span className="eyebrow">Changed-case practice</span><p><MathText>{guide.practice.prompt}</MathText></p><ActivityInfo mode="reflect" /></div>
       <div className="practice-reveals"><label className="practice-draft"><span>Your reasoning</span><textarea rows={5} value={practiceDraft} disabled={practiceCommitted} onChange={(event) => setPracticeDraft(event.target.value)} placeholder="Make a decision and explain the mechanism…" /></label>{practiceCommitted ? <button onClick={() => { setPracticeCommitted(false); setPracticeAssessment(undefined); }}>Revise answer</button> : <button disabled={practiceDraft.trim().length < 18} onClick={() => setPracticeCommitted(true)}>Commit before reveal</button>}<details><summary>Need a hint?</summary><p><MathText>{guide.practice.hint}</MathText></p></details>{practiceCommitted && <details open><summary>Worked answer</summary><p><MathText>{guide.practice.answer}</MathText></p></details>}{practiceCommitted && <div className="practice-diagnosis"><span>Self-check only: which comparison is honest?</span><div>{(["matched", "partial", "missed"] as const).map((result) => <button key={result} className={practiceAssessment === result ? "active" : ""} onClick={() => setPracticeAssessment(result)}>{result === "matched" ? "My decision + reason matched" : result === "partial" ? "Decision only matched" : "Needs another attempt"}</button>)}</div>{practiceAssessment && <p className={practiceAssessment === "matched" ? "reflection" : "retry"}>{practiceAssessment === "matched" ? "Self-check recorded. The assessed transfer lab below independently verifies the component-specific transfer." : practiceAssessment === "partial" ? "Name the causal step missing from your explanation, then revise; recognition without mechanism is not yet transfer." : "Use the hint to find the first wrong assumption, then revise without copying the worked wording."}</p>}</div>}</div>
     </section>
-    <section className="learning-objectives" data-content-role="evidence" aria-label="Lesson outcomes and checks">
-      <header><span className="eyebrow">Explain · consolidate the chapter</span><h3>Can you reconstruct the argument without rereading it?</h3><p>Each prompt refers back to the continuous explanation above. Write first; open the reminder only if you cannot locate the missing causal step.</p></header>
-      <ol className="objective-map">{objectiveCoverage.map((item, index) => <ObjectiveCoverageCard key={item.objective} item={item} index={index} />)}</ol>
+    <section className="learning-objectives" data-content-role="evidence" aria-label={operationOnly ? "Core operation check" : "Lesson outcomes and checks"}>
+      <header><span className="eyebrow">{operationOnly ? "Explain · core operation check" : "Explain · consolidate the chapter"}</span><h3>{operationOnly ? "Can you follow the operation without using a formula?" : "Can you reconstruct the argument without rereading it?"}</h3><p>{operationOnly ? "Name the input, the change, the result, and a limit. The lesson's exact authored objectives remain intact in optional technical depth after mastery." : "Each prompt refers back to the continuous explanation above. Write first; open the reminder only if you cannot locate the missing causal step."}</p></header>
+      <ol className="objective-map">{objectiveCoverage.map((item, index) => <ObjectiveCoverageCard key={item.objective} item={item} index={index} operationOnly={operationOnly} />)}</ol>
     </section>
+  </section>;
+}
+
+export function TechnicalDepthView({ lesson, guide, coverage, example, guidance, children }: { lesson: Lesson; guide: LessonGuide; coverage: ObjectiveCoverage[]; example?: LessonCodeExample; guidance?: CodeGuidance; children?: ReactNode }) {
+  const deferredObjectives = conceptFirstCoverageFor(lesson, coverage, guide).technical;
+  const codeExample = example ?? lessonCodeExamples[lesson.id];
+  const codeGuidance = guidance ?? codeActivityGuidance[lesson.id];
+
+  return <section className="technical-depth lesson-extension" data-surface-tier="metadata" aria-labelledby={`${lesson.id}-technical-depth-title`}>
+    <details>
+      <summary onKeyDown={(event) => { const details = event.currentTarget.closest("details"); if ((event.key === "Enter" || event.key === " ") && details) { event.preventDefault(); details.open = !details.open; } }}><span>Optional technical depth</span><strong id={`${lesson.id}-technical-depth-title`}>Formalize and implement {lesson.title}</strong><small>Open after you can explain the core mechanism.</small></summary>
+      <div className="technical-depth-body">
+        <header><div><span className="eyebrow">Extend · notation, calculation, and code</span><h2>The core lesson is complete without this section.</h2><p>Use this layer when you want to calculate the mechanism, read its formal notation, or implement its exact contract.</p></div><ActivityInfo mode="optional" title="Optional technical depth" detail="This section preserves the formal and implementation path without making it a prerequisite for core mastery." /></header>
+        <section className="technical-depth-explanation"><h3>Precise mechanism</h3><p><MathText>{lesson.deep}</MathText></p>{deferredObjectives.length > 0 && <dl className="technical-depth-vocabulary">{guide.vocabulary.map((item) => <div key={item.term}><dt><MathText>{item.term}</MathText></dt><dd><MathText>{item.meaning}</MathText></dd></div>)}</dl>}{deferredObjectives.length > 0 && guide.sections.map((section) => <article key={section.title}><h4><MathText>{section.title}</MathText></h4>{section.paragraphs.map((paragraph) => <p key={paragraph}><MathText>{paragraph}</MathText></p>)}</article>)}{deferredObjectives.length > 0 && <div className="technical-depth-objectives"><span>Original objectives in technical depth</span><ul>{deferredObjectives.map((item) => <li key={item.objective}><MathText>{item.objective}</MathText></li>)}</ul></div>}</section>
+        {deferredObjectives.map((item) => <section className="technical-depth-check" key={item.objective}>
+          <h3><MathText>{item.objective}</MathText></h3>
+          <PredictionGate prompt={<MathText>{item.check.prompt}</MathText>} title="Predict or calculate before revealing the worked reasoning" commitLabel="Commit technical attempt">
+            <div className="technical-depth-worked"><article><strong>Worked case</strong><p><MathText>{item.workedExample}</MathText></p></article><article><strong>Expected reasoning</strong><p><MathText>{item.check.expected}</MathText></p></article><aside><strong>Retry route</strong><p><MathText>{item.check.retry}</MathText></p></aside><aside><strong>Boundary</strong><p><MathText>{item.boundary}</MathText></p></aside></div>
+          </PredictionGate>
+        </section>)}
+        {codeExample && codeGuidance && <section className="technical-depth-code">
+          <header><div><span className="eyebrow">Optional code notebook · {codeExample.language}</span><h3><MathText>{codeExample.title}</MathText></h3><p><MathText>{codeExample.setup}</MathText></p></div><ActivityInfo mode={codeGuidance.mode} requirements={codeGuidance.requirements} /></header>
+          <PredictionGate prompt={<MathText>{codeExample.predict}</MathText>} title="Predict before opening the implementation" commitLabel="Commit prediction and open code">
+            <details className="code-sample-disclosure" open><summary>Implementation</summary><pre tabIndex={0} aria-label={`${codeExample.title} optional technical code example`}><code>{codeExample.code}</code></pre></details>
+            <div className="technical-depth-worked"><article><strong>Expected observation</strong><p><MathText>{codeExample.observe}</MathText></p></article><article><strong>Change one thing</strong><p><MathText>{codeExample.tryIt}</MathText></p></article></div>
+            {codeExample.caveat && <p className="code-caveat"><strong>Scope note:</strong> <MathText>{codeExample.caveat}</MathText></p>}
+          </PredictionGate>
+        </section>}
+        {children}
+      </div>
+    </details>
   </section>;
 }
 

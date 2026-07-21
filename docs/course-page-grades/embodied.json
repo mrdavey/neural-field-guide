@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-20T09:14:40Z",
-  "sourceFingerprint": "sha256:f027315e1df017f9c380dfb7f1de98b92116a2876ba8629d9eccd2a036245794",
+  "gradedAt": "2026-07-21T06:23:10Z",
+  "sourceFingerprint": "sha256:5e9f332f337340d6ccb23fdc8147c3634eed189242591b186099b6ce378ee48f",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "Blind review of every complete canonical reader snapshot in displayed order, checking factual and arithmetic correctness, narrative continuity, prerequisite and objective coverage, commit-before-reveal transfer, deterministic feedback, self-containment, and evidence boundaries without viewing prior grades.",
+    "method": "Fresh independent blind read of every block in ascending reader-snapshot order after the complete source-fingerprint repair; checked physical-loop definitions, notation and arithmetic, coherent input-operation-output surfaces, prerequisite and next-use continuity, evidence boundaries, commit-before-reveal transfer, and all exact authored objectives without consulting prior grades or reports.",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -16,17 +16,17 @@
       "pageType": "home",
       "id": "home",
       "route": "/embodied/",
-      "readerSnapshotHash": "sha256:8490cb22c883f5abb45884c499727e85ac54aa50ed9aa916c2052664c7eeb5dd",
+      "readerSnapshotHash": "sha256:23a03379afc5bb1c8e5671a1760d91db2df795d4e756404eea1856c6625fb5d4",
       "accuracy": 98,
-      "writtenNarrative": 98,
+      "writtenNarrative": 97,
       "flow": 98,
       "learningContent": 97,
-      "overall": 97.75,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The home page presents a six-territory path from embodied task contracts and state estimation through data, multimodal policies, control, operations, and a final research study.",
-        "feedback": "The sequence is coherent, prerequisites and cumulative capstones are visible, and the page clearly separates self-contained browser fixtures from optional external execution. Its course-scale scope, time expectations, and progression give a beginner an accurate map without disguising simulations as robot evidence.",
+        "synopsis": "The home opens with “Ground intelligence. Close the physical loop.”, grounds intelligence in a physical sensor-to-action loop, maps six cumulative territories, and closes with a self-contained path toward an operated perception–language–action system.",
+        "feedback": "The grounding–control–evidence promise, 6-territory progression, and 6-frontier course map accurately reflect the released Embodied AI curriculum. The narrative moves cleanly from body and task contracts through perception, demonstrations, policies, feedback, operations, and original study, while keeping frame notation and implementation optional until the physical mechanism is visible. Simulation and external-run boundaries remain explicit, and the next action is credible and useful.",
         "revisionPriorities": []
       }
     },
@@ -34,529 +34,7 @@
       "pageType": "lesson",
       "id": "embodied-task-contracts",
       "route": "/embodied/embodied-task-contracts/",
-      "readerSnapshotHash": "sha256:fb7b4c97807f417d5090b0ddf328df726bff71d250301b11c7ed855048d46cdb",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson builds an embodied task contract around body, sensors, actuators, feedback, and a sense-decide-act-check loop, then applies it to a mug-placement trace.",
-        "feedback": "The current camera, force, displacement, and human-entry cases make continue, retry, and stop decisions observable, while the deterministic code and changed stale-camera case preserve the same authority logic. Both objectives are taught, rehearsed before reveal, and transferred to a new person-path case with specific local feedback.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "observation-action-spaces",
-      "route": "/embodied/observation-action-spaces/",
-      "readerSnapshotHash": "sha256:640ecac392807480e858dcefc3783c8bc8e2f1f167f8a9b62e0e160809e3bdbf",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page turns observations and actions into typed interface contracts covering shapes, units, frames, time, validity, bounds, hold behavior, and saturation.",
-        "feedback": "The seven-degree-of-freedom example and normalized-action calculation correctly distinguish requested from applied motion, including rotation and clipping. Non-finite and dimension failures plus the two-robot changed case force learners to reason from the contract rather than memorize field names.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "coordinate-frames-time",
-      "route": "/embodied/coordinate-frames-time/",
-      "readerSnapshotHash": "sha256:ee415b9b2341986f31fd78516d24728a761fc40414f017657361b073bea3db36",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson explains transform direction, composition, inversion, timestamps, and staleness as one contract for placing measurements in a common frame and time.",
-        "feedback": "The notation and one-dimensional 0.2 + 0.5 + 1.0 trace are correct, and the 120 ms motion error and 40 ms rejection threshold connect timing to spatial error. Direction, inverse, stale-data, and nonmatching-chain checks provide meaningful changed cases with no missing prerequisite.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "embodied-partial-observation",
-      "route": "/embodied/embodied-partial-observation/",
-      "readerSnapshotHash": "sha256:826ec577a08be937eb3d6c3d2aedea177c989a735c5f80101c408d62f8f4332b",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page develops belief state from observation history and applied actions, then adds synchronized evidence, uncertainty, and attachment validity under occlusion.",
-        "feedback": "The cube propagation from 0.40 to 0.46 and variance growth from 0.001 to 0.0022 are internally consistent and correctly bounded by grasp evidence. The no-grasp, contradiction, paired-occlusion, and dropout cases expose why hidden state is a qualified estimate rather than remembered truth.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "task-contract-capstone",
-      "route": "/embodied/task-contract-capstone/",
-      "readerSnapshotHash": "sha256:1d29d46b18dd5e082e10f51cca9d00116c56d1fed9dc7041cc0dc0a1ea7d4e8a",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This capstone asks learners to implement a versioned reset-and-step task interface with validation, requested/applied actions, replay, failure injection, and explicit evidence.",
-        "feedback": "The stale and future timestamp rejection leaves state untouched, while the repaired 0.07 request clips to 0.03 with an inspectable receipt. Staged instructions, local tests, smoke verification, rubric, downloadable artifact, and simulator boundary make the project executable and honestly scoped.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "cameras-proprioception",
-      "route": "/embodied/cameras-proprioception/",
-      "readerSnapshotHash": "sha256:c7ed18b749d2990ccdcd74fd43d99ab0619ff18b4895f4c58c7273f3eef85609",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson assembles camera, joint, force, and depth readings into a synchronized sensor packet governed by age, shape, unit, frame, and calibration checks.",
-        "feedback": "The 18/4/7 ms valid readings, 61 ms stale depth, negative-age camera, and revision mismatch sharply distinguish freshness from mere availability. The executable validation and saturation/common-clock transfers sustain the mechanism from explanation through assessment.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "calibration-transforms",
-      "route": "/embodied/calibration-transforms/",
-      "readerSnapshotHash": "sha256:4b7abfa4e95447c7e5142ee042c47cb07e7f5e8453eb3813b3d9a5925ed7d7e1",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page separates camera intrinsics from extrinsics and treats calibration as a fitted, held-out, versioned estimate whose uncertainty affects action clearance.",
-        "feedback": "The 0.004 versus 0.006 acceptance gate, post-change 0.011 invalidation, and combined 0.010 uncertainty calculation are correct and decision-relevant. Learners must predict the held-out failure and connect calibration revision drift to downstream motion rather than accept fit error alone.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "spatial-object-representations",
-      "route": "/embodied/spatial-object-representations/",
-      "readerSnapshotHash": "sha256:b29c02e960db6b9ec4cae8447bd9e62c31928579ab2fd438558585d3456f4106",
-      "accuracy": 97,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson defines a query-driven object representation with identity, pose uncertainty, frame, extent, time, visibility, and relations.",
-        "feedback": "The cup example correctly shows why a 0.06 center distance fails a 0.05 reach rule while an extent-aware 0.09 clearance can pass a different geometric query. Permutation invariance, stable IDs, and unknown-versus-free space are carried into the lab and transfer check without overclaiming a universal representation.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "sensor-fusion-tracking",
-      "route": "/embodied/sensor-fusion-tracking/",
-      "readerSnapshotHash": "sha256:5c579c1f6826ccd89d0c019a998f252e523fbe277c682129458e933045446c0e",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page traces prediction, innovation gating, Kalman-style update, missed observations, coverage, likelihood, and identity recovery as one tracking workflow.",
-        "feedback": "The innovation variance 0.05, squared Mahalanobis distance 0.20, gain 0.8, posterior 0.48 with variance 0.008, and dropout update are arithmetically sound. Coverage and NLL are kept separate from identity recovery, while the common-bias transfer prevents learners from treating fusion as automatic truth.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "state-estimator-capstone",
-      "route": "/embodied/state-estimator-capstone/",
-      "readerSnapshotHash": "sha256:808e3149c31c314ca8f38c40051ff253d9e160e5a1f1c08aa23987f0b6329c21",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This project integrates packet validation, transforms, covariance propagation, association, tracking, and truth-isolated evaluation into a reproducible state estimator.",
-        "feedback": "The 90-degree point and covariance rotation are correct, and the three-packet recovery trace makes freshness and recovery observable. The staged build, paired sensor degradation, failure rows, local verifier, and machine-readable reference satisfy the full capstone contract without relying on an external judge.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "teleoperation-demonstrations",
-      "route": "/embodied/teleoperation-demonstrations/",
-      "readerSnapshotHash": "sha256:9edfa7d05b396e0dda8b938ffb1d9d5d0ff962b1bdf153d1e6ec9eeb7ea87430",
-      "accuracy": 97,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson frames demonstrations as provenance-rich transition records containing requested and applied actions, timing, operator/session identity, corrections, failures, and usage rights.",
-        "feedback": "The joystick-to-4 cm request, 3 cm applied limit, and 70 ms latency correctly establish which action owns the transition. Operator and easy-start confounding plus explicit retention of failed demonstrations make the data-collection lesson causal, inspectable, and transferable.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "trajectory-datasets",
-      "route": "/embodied/trajectory-datasets/",
-      "readerSnapshotHash": "sha256:09d907744e56aa4af6f8654a6e7be5dc965220d956b3e9eb1060379d30550ab2",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page constructs trajectory datasets from versioned episodes and steps, with checksums, lineage, rights, and group-level splitting before window extraction.",
-        "feedback": "The E7/E8 split and labeled 98-versus-74 teaching fixture clearly demonstrate how random windows can leak episode identity without pretending those values are measured performance. The executable source episode-step overlap check catches the injected E1 row and supports a genuine changed-case assessment.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "robot-data-quality",
-      "route": "/embodied/robot-data-quality/",
-      "readerSnapshotHash": "sha256:caeb8c3f5701d7163d302f715160e27edb1ef8c1c9dda4af3b2eb669bafed5e9",
-      "accuracy": 97,
-      "writtenNarrative": 96,
-      "flow": 96,
-      "learningContent": 97,
-      "overall": 96.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson audits robot data through independent schema, timing, duplication, coverage, and rights gates rather than a single quality score.",
-        "feedback": "The 12 recoveries in 10,000 rows correctly yield 0.12 percent and reveal thin critical-slice coverage despite dataset size. The 92-to-71 deduplication fixture and independently blocking missing-consent case give learners concrete, locally checked reasons to reject superficially large data.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "action-representations-chunking",
-      "route": "/embodied/action-representations-chunking/",
-      "readerSnapshotHash": "sha256:e180ae57c936cc2e7d0160d356c74d9ce3ad39cba697bed40bad54221a98281e",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page specifies absolute, delta, joint, and task-space actions with units, frames, rates, gripper semantics, chunk horizon, execution prefix, and masks.",
-        "feedback": "The four-step chunk at 20 Hz correctly spans 0.2 seconds and the two-valid-step mask is explicit. Incompatible absolute/delta and reversed gripper meanings, plus executable dimension and unit rejection, make the representation boundary observable before policy training.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "behavior-cloning-capstone",
-      "route": "/embodied/behavior-cloning-capstone/",
-      "readerSnapshotHash": "sha256:2eea4a29bd863568ea566c8f088e476e0e25cb49c0b3de17fe8ff0a7948b2448",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This capstone builds a behavior-cloning pipeline with dataset lineage, masks, scaling, a tiny fit, resume evidence, critical slices, and closed-loop evaluation.",
-        "feedback": "The two-centimeter intervention and explicitly explained zero-based support-departure indices make compounding error traceable rather than rhetorical. Full project stages, checkpoint and artifact contracts, paired evaluation, deterministic verification, and bounded claims support both implementation and transfer.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "language-grounding",
-      "route": "/embodied/language-grounding/",
-      "readerSnapshotHash": "sha256:c3644337817fdb81503ecd0e009d8e1af92c4f35355d77715fb1c1e9f9b33f3d",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson parses instructions into referents, relations, goals, and constraints, then separates semantic confidence from physical affordance.",
-        "feedback": "The two-candidate case correctly rejects both objects under a 0.7 joint threshold even though each is strong on only one axis. The ambiguous pronoun transfer requires asking or abstaining, preserving the distinction between language plausibility and safe executable grounding.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "multimodal-policy-encoders",
-      "route": "/embodied/multimodal-policy-encoders/",
-      "readerSnapshotHash": "sha256:26e82132571d10dd34bbb375104095cd9cc855a648970f7b3a571bd0299eb5ea",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page turns vision, proprioception, language, and special tokens into one masked multimodal sequence for policy encoding.",
-        "feedback": "The 64 + 12 + 1 + 1 token count, width 128, attention-score shape, and alternate mask shapes are consistent. The batch-two missing-proprioception example leaves 77 valid tokens, while counterfactual texture tests expose shortcut reliance rather than equating attention with causal use.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "transformer-action-policies",
-      "route": "/embodied/transformer-action-policies/",
-      "readerSnapshotHash": "sha256:efd0c720679f917a0ad6998e0d3816aeb37065da4cd22c303dffadaedcf77f96",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson derives causal serialization and target masks for transformer action prediction, then connects teacher forcing to closed-loop exposure bias.",
-        "feedback": "The instruction-observation-action sequence correctly places each action target after its observation and excludes diagonal answer-token leakage. Three valid losses, future-edit invariance, and the 95-versus-40 teacher-forced/rollout contrast form a coherent changed-case learning journey.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "diffusion-policies",
-      "route": "/embodied/diffusion-policies/",
-      "readerSnapshotHash": "sha256:799e94e0b2406b127912d1e185deeb8d3118f577bf64215b184d255cb26ff7e5",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page explains conditional action diffusion through corruption, noise prediction, clean-action reconstruction, iterative sampling, and receding-horizon timing.",
-        "feedback": "The alpha 0.8 and sigma 0.6 arithmetic yields the stated noisy and reconstructed actions, with shapes and conditioning declared. Comparing 20 steps at 120 ms against five at 30 ms under a 50 ms deadline, plus stale-condition rejection, correctly ties generative flexibility to control constraints.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "vla-policy-capstone",
-      "route": "/embodied/vla-policy-capstone/",
-      "readerSnapshotHash": "sha256:2362addb7ba9a8284cb6336190c875bb0bfd34bdab9407c4b7b17b01a5ebe1fb",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This capstone compares causal-transformer and diffusion vision-language-action policies under matched data, encoders, actions, updates, seeds, and evaluation.",
-        "feedback": "The hard gates correctly reject a 60 ms diffusion policy under a 50 ms deadline and a 20 ms transformer that ignores the blue-target instruction. Smoke/full profiles, attention evidence, future-edit invariance, paired interventions, and preserved failures make the comparison controlled and locally verifiable.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "feedback-control",
-      "route": "/embodied/feedback-control/",
-      "readerSnapshotHash": "sha256:ebda1d2fea5a3e7b768d076281d6f706f437968d3d3f9f7807d505dc4401bd3a",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson develops proportional feedback, clipping, delay, queues, anti-windup, and bounded authority from a simple closed-loop plant.",
-        "feedback": "The 0.4 error, 0.8 raw command, 0.5 clip, and delayed-state outcomes are correct, and the anti-windup and oscillatory delay traces expose distinct failure mechanisms. The executable delayed queue and authority boundary carry the math into a meaningful changed case.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "world-model-robot-planning",
-      "route": "/embodied/world-model-robot-planning/",
-      "readerSnapshotHash": "sha256:57908c8b79bdd867e56040cd57abab1dfb673003d848a9fadaee1d387da08417",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page uses uncertainty-penalized model predictions to rank plans, execute only a prefix, observe reality, and replan or fall back.",
-        "feedback": "The 8 minus 1 versus 11 minus 5 comparison is correct, while the horizon-three code shows a slip-induced replan and an independent hold when all candidates violate constraints. Rank reversal and matched planning-budget cases directly address model exploitation and unfair comparison.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "hierarchical-skills",
-      "route": "/embodied/hierarchical-skills/",
-      "readerSnapshotHash": "sha256:cab8c2f6c4c118ebc63d89868002d4831dbc283cf475b6605ccca29e3de25d85",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson specifies hierarchical skills through typed arguments, preconditions, invariants, effects, termination, and recovery rather than opaque names.",
-        "feedback": "The cup-grasp timeout correctly withholds the holding effect when contact is absent, and the executable workspace violation triggers hold before later contact. Selection, argument, and execution diagnoses help learners locate the failed layer and choose a bounded recovery.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "sim-to-real-identification",
-      "route": "/embodied/sim-to-real-identification/",
-      "readerSnapshotHash": "sha256:cbb6bea0f677e0a02f918c1844d4e20846a7888c121bbe321c408c3398b2cc3d",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page treats sim-to-real work as parameter identification under observability limits, held-out validation, randomized support, and protected final tests.",
-        "feedback": "The frictionless force-acceleration mass calculation, least-squares inverse mass, held-out error, and rank-one confounding diagnosis are correct. The out-of-range friction and final-test retuning cases clearly distinguish robustness evidence from adaptive reuse of evaluation data.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "recovery-intervention-capstone",
-      "route": "/embodied/recovery-intervention-capstone/",
-      "readerSnapshotHash": "sha256:b35679782cf41d3f83b17096d07042e78bad0e0b3d106b422ac9837175f769df",
-      "accuracy": 97,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.25,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This capstone integrates independent constraints, watchdog stopping, rollback, replay state, human authority, fault injection, and autonomy labeling.",
-        "feedback": "The 80 ms stale command is correctly replaced by hold under a 40 ms limit, rollback restores state and RNG, and the repaired fresh-count sequence is consistent with reset behavior. The project keeps watchdog, authority, resume, assisted outcomes, and residual-risk evidence separate enough for local verification.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "embodied-evaluation-suites",
-      "route": "/embodied/embodied-evaluation-suites/",
-      "readerSnapshotHash": "sha256:17ed456eec31f90cddd96434eab55661778ef7ff7ae2d903572b6856a9ba1f34",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson builds evaluation as a task-by-shift matrix with independent autonomy, assistance, safety, grounding, deadline, and uncertainty records.",
-        "feedback": "The Wilson intervals for 9/10 and 2/10 and the 0.55 macro average are correct, while the prose appropriately avoids treating interval nonoverlap as a hypothesis test. The correlated-frame changed case prevents inflated sample counts and reinforces the independent-unit denominator.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "robustness-generalization",
-      "route": "/embodied/robustness-generalization/",
-      "readerSnapshotHash": "sha256:aa15c97a7a127510b9b4acea222cf0430bf5682d65f3e42ddc156e2b681d0e94",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page distinguishes nuisance, causal, compositional, and out-of-range shifts using held groups, counterfactuals, severity curves, and calibration checks.",
-        "feedback": "Texture-preserving versus target-changing interventions correctly separate shortcut behavior from causal response, and the 0/2/4 cm severity results locate the failure onset. The confidence-after-collapse example and final-layout selection warning prevent aggregate robustness and validation reuse from being mistaken for generalization.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "latency-safety-operations",
-      "route": "/embodied/latency-safety-operations/",
-      "readerSnapshotHash": "sha256:1b205d4b0e9665574476481033c5314a17ac5eb55b7665a34ace5240235b4e3a",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 98,
-      "overall": 97.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson separates a window-level p99 release SLO from per-command watchdog admission, then adds provenance, incident replay, authority, and rollback compatibility.",
-        "feedback": "The nearest-rank 100-command fixture correctly yields p50 32 ms and p99 88 ms, blocking promotion while still admitting a current valid 32 ms command under the declared mode and holding an 88 ms one. Changed mode/provenance cases and the incompatible-schema rollback check make both operational decisions explicit without implying hardware certification.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "reproducible-embodied-gpu",
-      "route": "/embodied/reproducible-embodied-gpu/",
-      "readerSnapshotHash": "sha256:5689b459351fc8309e190b91b1fb193c82bed29102a0115b08b59b1df9fae33e",
-      "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 98,
-      "learningContent": 98,
-      "overall": 97.75,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The page defines portable smoke and full accelerator profiles with pinned environments, device receipts, paired episode contracts, stop rules, and complete external artifacts.",
-        "feedback": "The smoke gate recomputes checkpoint, full episode specification, action opportunity, finite-row, schema, and seed invariants rather than trusting self-reported flags. It accurately treats success rates and treatment direction as variable observations, preserves null or mixed results, and bounds hosted simulation evidence away from browser or physical-robot claims.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "embodied-research-capstone",
-      "route": "/embodied/embodied-research-capstone/",
-      "readerSnapshotHash": "sha256:00ed3124f0cc93cb1022df020239220794715c17c62eaaa853fe02cd7272d066",
+      "readerSnapshotHash": "sha256:20bb99109df8705b3d74917a06053f0d5944df8e7a26f286e2d2944316b770d7",
       "accuracy": 98,
       "writtenNarrative": 98,
       "flow": 98,
@@ -565,8 +43,530 @@
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The final capstone first reproduces a pinned bounded proportional controller, then changes only gain from 0.35 to 0.55 under paired disturbances and hard operational gates.",
-        "feedback": "The raw-trace verifier independently regenerates starts and disturbances, replays clipped actions and states, rejects a finite forgery, and withholds treatment interpretation until the full seed-by-arm matrix passes. Detailed stages, local commands, hard deadline logic, evidence dossier, rubric, attempt-gated exemplar, and bounded simulator conclusion provide a complete cumulative research journey.",
+        "synopsis": "The chapter opens by why this subject is worth learning, traces the physical mechanism from “A task goal, sensed situation, body capabilities, and safety boundary enter the embodied loop.” through “The result is changed world state plus new evidence for the next closed-loop decision.”, then uses Sense–act–check story, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "What Is Embodied AI? accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that A successful simulated pick does not prove that real cameras, friction, timing, contact forces, or people will behave like the simulation. The worked explanation, Sense–act–check story, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Explain what changes when AI must sense and act through a body and Trace a sense–decide–act–check cycle and identify when the system should retry or stop—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Observation and action spaces are typed interfaces that say exactly what the policy receives and what commands it may send.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "observation-action-spaces",
+      "route": "/embodied/observation-action-spaces/",
+      "readerSnapshotHash": "sha256:b597fbbb48c5df60c45178610bc56cda608735311cf60f0d27787362ed3210d4",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which schema catches shape-only, unit, and saturation failures?, traces the physical mechanism from “Raw sensor values and permitted commands enter typed observation and action interfaces.” through “The result is an inspectable contract between sensing, policy computation, and physical control.”, then uses Interface schema inspector, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Observation & Action Spaces accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that Matching shapes does not imply matching physical meaning; meters mistaken for millimeters can pass tensor checks and still create dangerous commands. The worked explanation, Interface schema inspector, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Design and validate a multimodal observation schema and Design a bounded action interface with explicit control semantics—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A physical controller acts from incomplete, delayed, noisy, and sometimes occluded evidence, so it needs memory or a belief about hidden state.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "embodied-partial-observation",
+      "route": "/embodied/embodied-partial-observation/",
+      "readerSnapshotHash": "sha256:bf13acfea5f28b4a40ecb9d66110d5f0546eb11ff65472aaaa1ccae1863c9d25",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by how should object state and action change as evidence disappears or contradicts the attachment model?, traces the physical mechanism from “Noisy observations, action history, timing, and a prior belief enter state estimation.” through “The result is a belief or memory state used for the next control decision.”, then uses Occlusion memory clinic, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Partial Observation in the Physical Loop accurately connects the prior result from Observation & Action Spaces to one inspectable input → operation → physical result chain, with the explicit boundary that Memory can preserve a biased or hallucinated state. In particular, an unobserved grasp break invalidates the rigid-attachment prediction, so confidence without attachment validity, calibration, and recovery tests can make failure harder to detect. The worked explanation, Occlusion memory clinic, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build a history or belief update for an embodied state estimator and Compare memoryless and stateful control under occlusion and sensor shift—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Coordinate frames and timestamps tell the system where a measurement lives and when it was true.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "coordinate-frames-time",
+      "route": "/embodied/coordinate-frames-time/",
+      "readerSnapshotHash": "sha256:05bd974505a641e20cb0f65a6680240ad45ff51850427bcf99d75fcc88cd2205",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which transform/timestamp record supports a spatial control decision?, traces the physical mechanism from “Measurements with source frames and timestamps enter alignment.” through “The result is synchronized spatial evidence whose direction and age are explicit.”, then uses Frame and clock workbench, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Frames and Timing Give Commands Meaning accurately connects the prior result from Observation & Action Spaces and Partial Observation in the Physical Loop to one inspectable input → operation → physical result chain, with the explicit boundary that A mathematically valid transform can be wrong because calibration drifted, axes were mislabeled, or samples came from different times. The worked explanation, Frame and clock workbench, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Compose and invert rigid transforms with explicit frame direction and Align sensor and action records under timestamp and latency limits—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “The task-contract capstone packages one bounded simulated task, typed interfaces, timing, assertions, and changed-case evidence before any learned policy is introduced.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "task-contract-capstone",
+      "route": "/embodied/task-contract-capstone/",
+      "readerSnapshotHash": "sha256:7ec11110589ac0e67541959c11b23030055cc0cf8502fb901f2417c9681373f5",
+      "accuracy": 98,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which artifact proves a local interface invariant, exposes a fault, or overclaims transfer?, traces the physical mechanism from “A bounded simulated task, typed interfaces, timing rules, and assertions enter the package.” through “The result is a testable task contract ready for later learned policies.”, then uses Task acceptance dossier, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Build an Embodied Task Contract accurately connects the prior result from What Is Embodied AI? and Observation & Action Spaces and Frames and Timing Give Commands Meaning and Partial Observation in the Physical Loop to one inspectable input → operation → physical result chain, with the explicit boundary that A verified simulated task is infrastructure for experiments; it is not evidence that contact, perception, or safety will transfer to hardware. The worked explanation, Task acceptance dossier, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build and locally verify a complete simulated embodied-task interface and Run a controlled task-contract failure-injection study—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “An embodied observation packet joins external sensors such as cameras with proprioception—measurements of the robot's own joints and motion—without hiding noise, age, or missing data.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "cameras-proprioception",
+      "route": "/embodied/cameras-proprioception/",
+      "readerSnapshotHash": "sha256:4f5c03ff9243384aa54153debc6f7addafe6f40370f6392aa33469877277882b",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which packet is fresh, missing, saturated, or contradictory?, traces the physical mechanism from “Camera observations, robot-internal measurements, timestamps, and validity flags enter one packet.” through “The result is a multimodal observation with inspectable age, noise, and availability.”, then uses Multisensor packet triage, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Cameras, Proprioception & Sensor Noise accurately connects the prior result from Observation & Action Spaces and Frames and Timing Give Commands Meaning to one inspectable input → operation → physical result chain, with the explicit boundary that A synchronized packet can still be wrong through common clock error, calibration drift, saturation, or a shared physical disturbance. The worked explanation, Multisensor packet triage, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Construct and validate a synchronized camera-proprioception packet and Diagnose sensor noise, dropout, saturation, and disagreement—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Calibration estimates the numeric relationship between sensor readings and physical frames, then records enough uncertainty and revision data to know when that relationship no longer holds.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "calibration-transforms",
+      "route": "/embodied/calibration-transforms/",
+      "readerSnapshotHash": "sha256:e38e9a15722916e166bca77d3a813464f5023ee1b2c9d9ae9be0f251f63af650",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which evidence supports fitting, held-out validity, or recalibration?, traces the physical mechanism from “Matched sensor and physical reference observations enter calibration.” through “The result is a transform record with direction, uncertainty, provenance, and expiration evidence.”, then uses Calibration release gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Calibration & Spatial Transforms accurately connects the prior result from Frames and Timing Give Commands Meaning to one inspectable input → operation → physical result chain, with the explicit boundary that Low reprojection error on narrow calibration poses can coexist with large 3-D or workspace-edge error and does not establish mechanical rigidity over time. The worked explanation, Calibration release gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Fit, validate, and version camera-to-robot calibration and Propagate calibration uncertainty into a spatial decision—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A spatial representation turns sensor pixels and points into objects, geometry, relationships, and uncertainty that a controller can query.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "spatial-object-representations",
+      "route": "/embodied/spatial-object-representations/",
+      "readerSnapshotHash": "sha256:3dd11bcd259bb2130f9ccf12e942b000241921c5884e3675eb94e61dd86acc40",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which representation preserves identity, geometry, and unknown space under control queries?, traces the physical mechanism from “Synchronized pixels, points, poses, and uncertainty enter spatial parsing.” through “The result is a controller-queryable world state rather than an unqualified scene claim.”, then uses Scene representation probe, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Spatial & Object Representations accurately connects the prior result from Calibration & Spatial Transforms to one inspectable input → operation → physical result chain, with the explicit boundary that Object labels and scene relations are estimates; a crisp graph can hide occlusion, identity swaps, deformable geometry, or uncertainty between objects. The worked explanation, Scene representation probe, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build a control-oriented object and scene representation and Test geometric relations, invariances, and representation failures—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Sensor fusion combines complementary evidence over time while a tracker preserves object hypotheses, uncertainty, and identity through noise and dropout.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "sensor-fusion-tracking",
+      "route": "/embodied/sensor-fusion-tracking/",
+      "readerSnapshotHash": "sha256:d255b28d67c59f0e9d78dee8d5c54155faf6720063228b2fdc35aea67a32a58c",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by how do measurement precision, dropout, and association affect a track?, traces the physical mechanism from “Time-aligned measurements and prior object hypotheses enter the tracker.” through “The result is a temporal set of object beliefs that can survive noise and bounded dropout.”, then uses Fusion and identity clinic, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Sensor Fusion & Tracking accurately connects the prior result from Cameras, Proprioception & Sensor Noise and Calibration & Spatial Transforms and Spatial & Object Representations to one inspectable input → operation → physical result chain, with the explicit boundary that A filter can be confidently wrong when motion and sensor models share bias, association is incorrect, or reported covariance is uncalibrated. The worked explanation, Fusion and identity clinic, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Compute a predict-associate-update tracking step and Evaluate fusion calibration, dropout recovery, and identity errors—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “The state-estimator capstone builds a synchronized multimodal tracker whose state, covariance, identity, calibration, and recovery can be inspected under changed sensors.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "state-estimator-capstone",
+      "route": "/embodied/state-estimator-capstone/",
+      "readerSnapshotHash": "sha256:f0e329e90bdc8ae8b7c093621c2747c8fe5d1384d16c31521e772b76ef39d7d1",
+      "accuracy": 98,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which artifact proves arithmetic, exposes changed-sensor recovery, or overclaims transfer?, traces the physical mechanism from “Versioned sensors, calibration, timing, motion assumptions, and baseline trajectories enter the estimator.” through “The result is an inspectable state-estimation artifact and bounded robustness decision.”, then uses Estimator evidence gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Build a Multimodal State Estimator accurately connects the prior result from Cameras, Proprioception & Sensor Noise and Calibration & Spatial Transforms and Spatial & Object Representations and Sensor Fusion & Tracking to one inspectable input → operation → physical result chain, with the explicit boundary that A calibrated estimator in one simulator and noise suite does not establish physical perception, contact state, or general object understanding. The worked explanation, Estimator evidence gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build and verify an end-to-end multimodal state estimator and Run a controlled changed-sensor estimation and recovery study—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Teleoperation records a human or expert controlling the body, including what they saw, commanded, corrected, and handed over—not just successful final trajectories.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "teleoperation-demonstrations",
+      "route": "/embodied/teleoperation-demonstrations/",
+      "readerSnapshotHash": "sha256:2a48f61fe0ca8271371d0f394742db5fec578bc516286da76ecf94eedf041abf",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which record preserves causal action, timing, and collection difficulty?, traces the physical mechanism from “Operator observations, commands, corrections, timestamps, and handoffs enter recording.” through “The result is demonstration data that explains what the expert saw and did, not just final success.”, then uses Demonstration recorder audit, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Teleoperation & Demonstrations accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that Human demonstration is not ground truth: operators vary, adapt to latency, make errors, and may avoid difficult but important states. The worked explanation, Demonstration recorder audit, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Design and validate a teleoperation demonstration protocol and Audit operator latency, interventions, quality, and provenance—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A trajectory dataset stores complete episodes in a versioned schema so every observation, action, event, split, and use condition can be traced.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "trajectory-datasets",
+      "route": "/embodied/trajectory-datasets/",
+      "readerSnapshotHash": "sha256:aec6a4b828adae6a21d69fb470af31f577a641f9cac1265374b5e9cf88d4009c",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which schema or split supports reproducibility and the declared transfer claim?, traces the physical mechanism from “Complete episodes, schema definitions, provenance, rights, and split rules enter dataset construction.” through “The result is a traceable trajectory dataset and card with known use limits.”, then uses Trajectory lineage gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Trajectory Schemas & Dataset Cards accurately connects the prior result from Teleoperation & Demonstrations to one inspectable input → operation → physical result chain, with the explicit boundary that A complete dataset card makes gaps inspectable but cannot make a biased, unsafe, or unconsented collection suitable for every use. The worked explanation, Trajectory lineage gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Implement a versioned episode and trajectory schema and Write leakage-resistant splits and a decision-useful dataset card—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Robot data quality asks whether the recorded episodes cover the decisions a policy must make without leakage, corrupted timing, hidden rights problems, or misleading success mixtures.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "robot-data-quality",
+      "route": "/embodied/robot-data-quality/",
+      "readerSnapshotHash": "sha256:b9357fea0010aa9fc4c74786bb1ed579a9e58f8ba145cc3957f5482990cdc438",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which evidence distinguishes volume, critical coverage, leakage, and allowed use?, traces the physical mechanism from “Task requirements and recorded episodes enter a coverage and integrity audit.” through “The result is a map of supported behavior, gaps, and data that must be repaired or excluded.”, then uses Robot data audit, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Robot Data Quality & Coverage accurately connects the prior result from Trajectory Schemas & Dataset Cards to one inspectable input → operation → physical result chain, with the explicit boundary that Coverage counts do not reveal unobserved outcomes or prove causal usefulness; more low-diversity data can repeat the same blind spot. The worked explanation, Robot data audit, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Compute decision-relevant robot-data coverage and quality slices and Diagnose leakage, duplication, imbalance, and governance failures—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “An action representation chooses what the policy predicts—joint commands, end-effector changes, or short action chunks—and therefore changes control frequency, ambiguity, and error recovery.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "action-representations-chunking",
+      "route": "/embodied/action-representations-chunking/",
+      "readerSnapshotHash": "sha256:76adb0d7c5f8e1a734fb5dfa05782cce57a88f7c3072ee92bb72c69edebcd1c1",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by how do chunk length and executed prefix change feedback and masking?, traces the physical mechanism from “Current context and a declared action parameterization enter the policy decoder.” through “The result is physical command behavior whose ambiguity, latency, and recovery depend on that representation.”, then uses Action chunk frontier, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Action Representations & Chunking accurately connects the prior result from Observation & Action Spaces and Trajectory Schemas & Dataset Cards to one inspectable input → operation → physical result chain, with the explicit boundary that Longer executed prefixes can smooth motion, but they also delay feedback and can compound one bad prediction. Predicting several futures together does not itself create multimodality: the decoder and training objective must explicitly represent distinct plausible action sequences. The worked explanation, Action chunk frontier, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Implement and validate typed action and chunk targets and Choose chunk execution from latency, smoothness, and recovery evidence—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “The behavior-cloning capstone trains a typed trajectory policy and tests whether imitation survives its own closed-loop state distribution.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "behavior-cloning-capstone",
+      "route": "/embodied/behavior-cloning-capstone/",
+      "readerSnapshotHash": "sha256:d15a1f233eaae3eca8e27464aaca48290fe2dbe1b034e4378c60aa299b58479b",
+      "accuracy": 98,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which artifact proves supervised correctness, reveals compounding error, or overclaims autonomy?, traces the physical mechanism from “Typed trajectories, a policy interface, seeds, and a supervised baseline enter the build.” through “The result is a behavior-cloning artifact with open-loop and closed-loop evidence kept separate.”, then uses Cloning release dossier, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Build a Behavior-Cloning Policy accurately connects the prior result from Trajectory Schemas & Dataset Cards and Robot Data Quality & Coverage and Action Representations & Chunking to one inspectable input → operation → physical result chain, with the explicit boundary that A behavior-cloning policy passing one simulator does not establish causal recovery, real-world control, or competence beyond demonstration support. The worked explanation, Cloning release dossier, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build and locally verify a complete behavior-cloning policy and Run a controlled compounding-error and recovery experiment—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Language grounding connects words such as ‘red cup’ or ‘put inside’ to observable entities, relations, task state, and feasible skills in the current environment.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "language-grounding",
+      "route": "/embodied/language-grounding/",
+      "readerSnapshotHash": "sha256:b397a1c5559855cdbf0f5eca5e10f7656f3251f671f5a5030839fa779ad74912",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which candidate satisfies language, physical feasibility, and ambiguity rules?, traces the physical mechanism from “An instruction and current scene evidence enter grounding.” through “The result is an executable referent-and-action interpretation or an explicit request for clarification.”, then uses Grounding and affordance gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Language Grounding accurately connects the prior result from Spatial & Object Representations to one inspectable input → operation → physical result chain, with the explicit boundary that A correct noun phrase does not imply the object exists, is reachable, or can be manipulated safely; language-model fluency is not grounded evidence. The worked explanation, Grounding and affordance gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Bind language instructions to scene entities, relations, and goal predicates and Resolve ambiguity using semantic, affordance, and abstention evidence—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A multimodal policy encoder turns images, language, proprioception, and task state into aligned tokens while preserving modality identity, timing, masks, and geometry.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "multimodal-policy-encoders",
+      "route": "/embodied/multimodal-policy-encoders/",
+      "readerSnapshotHash": "sha256:69b75cabf5652494cd9d9a9f1c1d1f676873537b69f404004630139e78e298b2",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which shape, mask, or counterfactual exposes a valid fusion interface?, traces the physical mechanism from “Images, language, proprioception, task state, timing, and masks enter modality-specific encoders.” through “The result is a joint representation the policy can attend to without losing source meaning.”, then uses Multimodal token inspector, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Multimodal Policy Encoders accurately connects the prior result from Cameras, Proprioception & Sensor Noise and Language Grounding to one inspectable input → operation → physical result chain, with the explicit boundary that A shared token width or attention weight does not establish alignment, grounding, causal reliance, or robustness to a missing modality. The worked explanation, Multimodal token inspector, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Construct and trace a vision-language-state token interface and Test multimodal fusion with masks, ablations, and counterfactual inputs—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A transformer action policy predicts the next action or action chunk from a causal sequence of grounded observations, instructions, states, and earlier applied actions.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "transformer-action-policies",
+      "route": "/embodied/transformer-action-policies/",
+      "readerSnapshotHash": "sha256:96b3b15ffc2e02f1ad69f3de1dea6a6aa17c082999012f9c9723254f51872b33",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which target placement is causal, leaked, or closed-loop unsupported?, traces the physical mechanism from “A causal sequence of grounded observations, instructions, states, and applied actions enters the policy.” through “The result is a command distribution tied to the declared sequence and timing contract.”, then uses Causal action sequence gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Transformer Action Policies accurately connects the prior result from Multimodal Policy Encoders and Action Representations & Chunking to one inspectable input → operation → physical result chain, with the explicit boundary that Correct target shifting prevents one leakage path but does not solve exposure bias, action discretization error, unsupported states, or closed-loop instability. The worked explanation, Causal action sequence gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Implement a causal transformer action-policy serialization and loss and Diagnose leakage, teacher-forcing gaps, and closed-loop action error—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A diffusion policy generates an action sequence by repeatedly denoising random action noise while conditioning on the current observation and task.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "diffusion-policies",
+      "route": "/embodied/diffusion-policies/",
+      "readerSnapshotHash": "sha256:308869d4f8d4365fd5713bf88de5c20610973a837998c58f5fae07a43248d1b0",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by how do denoising count, condition age, and executed prefix change control evidence?, traces the physical mechanism from “Random action noise, current observation, and task condition enter the policy sampler.” through “The result is one sampled control trajectory whose execution still requires feedback and safety checks.”, then uses Diffusion action sampler frontier, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Diffusion Policies accurately connects the prior result from Action Representations & Chunking to one inspectable input → operation → physical result chain, with the explicit boundary that Diffusion can represent multiple action modes but does not guarantee they are feasible, safe, grounded, or fast enough for the control deadline. The worked explanation, Diffusion action sampler frontier, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Compute and implement conditional action-chunk corruption and denoising and Choose diffusion sampling and execution settings from mode, latency, and recovery evidence—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “The language-conditioned policy capstone builds one grounded multimodal interface and compares causal transformer and diffusion-style action decoders under matched data and control evidence.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "vla-policy-capstone",
+      "route": "/embodied/vla-policy-capstone/",
+      "readerSnapshotHash": "sha256:d4ea81821bd4aeb1e0e579f222c8fb7e38e8ce728548b55203407f1dd923bd6d",
+      "accuracy": 98,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which evidence supports a shared baseline, hard failure, or bounded comparison?, traces the physical mechanism from “A grounded multimodal interface, matched demonstrations, and two action decoders enter the build.” through “The result is a paired evidence package exposing accuracy, latency, diversity, and closed-loop trade-offs.”, then uses VLA decoder decision gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Build a Language-Conditioned Action Policy accurately connects the prior result from Language Grounding and Multimodal Policy Encoders and Transformer Action Policies and Diffusion Policies to one inspectable input → operation → physical result chain, with the explicit boundary that A matched simulator comparison cannot establish a universal VLA architecture ranking or safe real-robot behavior. The worked explanation, VLA decoder decision gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build and verify a grounded vision-language-action policy stack and Conduct a matched transformer-versus-diffusion action-policy experiment—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Feedback control compares desired and observed state, then corrects action repeatedly so disturbances and policy errors do not run open-loop.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "feedback-control",
+      "route": "/embodied/feedback-control/",
+      "readerSnapshotHash": "sha256:5b5240a6d9d896909c656532adabadc17386903059d5b38e5973221cc5c29923",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by how do gain, delay, and saturation change correction and stability?, traces the physical mechanism from “Desired state, observed state, and independent constraints enter the controller.” through “Repeated feedback reduces disturbances while exposing instability, delay, and saturation limits.”, then uses Feedback response bench, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Feedback Control for Learned Policies accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that A feedback loop can be unstable with delay, wrong sign, unmodeled dynamics, or saturation; bounded commands alone do not prove stability. The worked explanation, Feedback response bench, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Compute and implement a bounded feedback correction around a learned policy and Diagnose delay, saturation, windup, overshoot, and stability evidence—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “World-model robot planning predicts candidate action consequences, then closes the loop with current state, uncertainty, constraints, and real outcome checks.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "world-model-robot-planning",
+      "route": "/embodied/world-model-robot-planning/",
+      "readerSnapshotHash": "sha256:c707b6d9c09c26fd3051a20ec17db22b2e56abe411b38993e78b1a28b20a55f3",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which trace is feasible, uncertain, or model-exploiting?, traces the physical mechanism from “Current state, candidate actions, a predictive model, uncertainty, and constraints enter planning.” through “The result is a closed-loop plan that is revised when model predictions and physical outcomes disagree.”, then uses Planner exploitation gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "World-Model Planning for Robots accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that Uncertainty penalties and replanning reduce exposure but cannot prevent shared model bias or guarantee safe contacts. The worked explanation, Planner exploitation gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Assemble a constrained receding-horizon world-model planner and Detect model exploitation using predicted-real action evidence—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A hierarchical controller chooses a reusable skill, supplies arguments, watches termination, and recovers when the skill no longer matches the world.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "hierarchical-skills",
+      "route": "/embodied/hierarchical-skills/",
+      "readerSnapshotHash": "sha256:c8204bf49238245633612425450b419fdae7b539e426ee464d4d1b3ade3d65d2",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which layer owns selection, argument, or execution failure?, traces the physical mechanism from “A high-level goal and current world state enter the skill selector.” through “The result is long-horizon behavior assembled from bounded, interruptible skill executions.”, then uses Skill contract debugger, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Hierarchical Skills & Long Horizons accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that Named skills can hide brittle controllers, ambiguous effects, and errors that compound across long plans. The worked explanation, Skill contract debugger, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Design and execute typed hierarchical skill interfaces and Diagnose selection, execution, termination, and recovery failures—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “System identification estimates physical parameters from action-response data, while sim-to-real testing asks whether those estimates and randomized simulations support control under changed dynamics.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "sim-to-real-identification",
+      "route": "/embodied/sim-to-real-identification/",
+      "readerSnapshotHash": "sha256:9384732cd07ec10a4ad1bfed62e10c194302a41cd17b8366f64f38e2efc239fa",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which evidence identifies a parameter or exposes confounding?, traces the physical mechanism from “Action-response data and uncertain physical parameters enter system identification.” through “The result is a bounded dynamics model and transfer claim tied to the tested conditions.”, then uses Identification and transfer gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "System Identification & Sim-to-Real accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that Many parameter combinations can explain the same trajectory, and randomization can hide rather than eliminate structural error. The worked explanation, Identification and transfer gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Fit and validate an identifiable dynamics parameter from action-response data and Design a bounded domain-randomization and transfer experiment—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “This capstone operates a learned controller inside feedback, planning, skill, transfer, and independent recovery boundaries, then tests when control must hand off.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "recovery-intervention-capstone",
+      "route": "/embodied/recovery-intervention-capstone/",
+      "readerSnapshotHash": "sha256:bf3a394f3ef01be45a893b8d05a1a1f10827b7d50f8da809e588e49e3b476811",
+      "accuracy": 98,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which event is autonomous, assisted, or invalid?, traces the physical mechanism from “A learned controller, independent monitors, recovery actions, and human authority rules enter operation.” through “The result is task evidence plus a trace of every intervention, stop, and authority transition.”, then uses Recovery authority dossier, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Recovery, Intervention & Human Control accurately connects the prior result from Feedback Control for Learned Policies and World-Model Planning for Robots and Hierarchical Skills & Long Horizons and System Identification & Sim-to-Real to one inspectable input → operation → physical result chain, with the explicit boundary that A tested fallback suite cannot prove absence of unknown hazards or authorize physical deployment. The worked explanation, Recovery authority dossier, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build and verify a closed-loop learned controller with independent fallback authority and Run a controlled recovery and human-intervention experiment—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “An embodied evaluation suite crosses tasks with object, layout, instruction, dynamics, sensor, intervention, and embodiment conditions instead of hiding them in one success rate.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "embodied-evaluation-suites",
+      "route": "/embodied/embodied-evaluation-suites/",
+      "readerSnapshotHash": "sha256:0814d5090ae302dcf981d1317a25d1df59ec1142ffe5f5391dffadefcde24ffd",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which summary preserves shift, sampling uncertainty, assistance, and hard gates?, traces the physical mechanism from “Tasks and a declared matrix of objects, layouts, instructions, dynamics, sensors, and interventions enter evaluation.” through “The result is a coverage-aware evidence table rather than one hidden aggregate success rate.”, then uses Evaluation matrix and uncertainty reader, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Embodied Evaluation Suites accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that A broad simulated suite remains finite, can reflect benchmark design, and does not establish physical deployment validity. A confidence interval quantifies sampling uncertainty under its independent-unit assumptions, not simulator bias or transfer error. The worked explanation, Evaluation matrix and uncertainty reader, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Design a task-by-shift embodied evaluation matrix and Aggregate success, constraints, assistance, latency, and uncertainty without hiding failures—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Robustness tests controlled perturbations near known conditions; generalization tests new objects, layouts, instructions, or dynamics that were withheld by design.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "robustness-generalization",
+      "route": "/embodied/robustness-generalization/",
+      "readerSnapshotHash": "sha256:ceb85d34f4092527a9ba47bdc9ea97bf16386d8f97d7ebd8509d15650daf99da",
+      "accuracy": 97,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 97,
+      "overall": 96.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which response indicates invariance, grounding, or a shortcut?, traces the physical mechanism from “A pinned baseline and predeclared familiar, perturbed, and withheld cases enter testing.” through “The result separates local robustness from genuine generalization to withheld conditions.”, then uses Robustness and shortcut probe, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Robustness & Generalization accurately connects the prior result from Embodied Evaluation Suites to one inspectable input → operation → physical result chain, with the explicit boundary that Passing enumerated shifts cannot establish open-world generalization or rule out all shortcuts and coupled factors. The worked explanation, Robustness and shortcut probe, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Design controlled robustness and held-out generalization tests and Diagnose shortcuts and failure onset with counterfactual and severity evidence—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Operating an embodied policy means every sensed decision and command must arrive before a deadline, stay within independent constraints, and leave enough evidence to stop, recover, and roll back.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "latency-safety-operations",
+      "route": "/embodied/latency-safety-operations/",
+      "readerSnapshotHash": "sha256:dbcb723a516ce4b5bf8407cf44dafd382337f6f11909c242be8541c3846bd147",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which trace meets the p99 SLO, triggers watchdog, or blocks rollback?, traces the physical mechanism from “Timestamped sensing, policy computation, commands, deadlines, and independent safety limits enter the runtime.” through “The result is a bounded action plus an operational trace sufficient for recovery and diagnosis.”, then uses Operations deadline gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Latency, Safety & Operations accurately connects a concrete embodied situation requiring no hidden prerequisite to one inspectable input → operation → physical result chain, with the explicit boundary that Simulation timing and software gates do not establish physical stop distance, hardware certification, or complete hazard coverage. A percentile SLO also depends on its load, sample window, clock, and quantile method. The worked explanation, Operations deadline gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Build an end-to-end latency, constraint, and provenance ledger and Design watchdog, rollback, incident, and residual-risk operations—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “A reproducible embodied accelerator run pins simulator, data, policy, hardware, seeds, budgets, evaluation matrix, video/trajectory artifacts, and stop rules behind portable smoke and full profiles.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "reproducible-embodied-gpu",
+      "route": "/embodied/reproducible-embodied-gpu/",
+      "readerSnapshotHash": "sha256:57904967836f1d352f27b993e31af5c2c00db6063d3fa2aa9380b904511aced9",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which artifact is an invariant, variable observation, or invalid claim?, traces the physical mechanism from “Pinned simulator, data, policy, hardware, seeds, budgets, and stop rules enter execution.” through “The result is a portable artifact with claims limited to the exact simulator and evaluation matrix.”, then uses GPU evidence classifier, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Reproducible Embodied GPU Runs accurately connects the prior result from Embodied Evaluation Suites and Latency, Safety & Operations to one inspectable input → operation → physical result chain, with the explicit boundary that A successful hosted GPU run is external simulation evidence, not a browser execution, physical robot run, or universal architecture result. The worked explanation, GPU evidence classifier, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Execute a portable bounded embodied-policy smoke and full profile and Classify exact invariants, variable observations, failures, and authentic artifacts—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “The final capstone reproduces the pinned portable-linear-reach-v1 controller, then changes only its feedback gain under paired disturbances and hard operational gates.” follows from the chapter’s result.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "embodied-research-capstone",
+      "route": "/embodied/embodied-research-capstone/",
+      "readerSnapshotHash": "sha256:090a09b6eaf4ad8bebbe4d09c91091a26740aefcf423db189f570ecb7a231ec3",
+      "accuracy": 98,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "The chapter opens by which package is a reproduction, controlled study, or overclaim?, traces the physical mechanism from “A reproduced controller baseline and one feedback-gain intervention enter paired disturbed trials.” through “The result is a bounded positive, null, or negative conclusion about that intervention under the tested disturbances.”, then uses Original study release gate, changed-case transfer, and the mastery check before optional technical depth.",
+        "feedback": "Original Embodied-System Study accurately connects the prior result from Reproducible Embodied GPU Runs and Latency, Safety & Operations to one inspectable input → operation → physical result chain, with the explicit boundary that One simulator, embodiment, task matrix, seed set, and budget support only a bounded course-scale conclusion, never a physical deployment claim. The worked explanation, Original study release gate, deterministic transfer decision, and quiz reinforce the same causal contract while keeping simulator, fixture, and deployment evidence distinct. Both authored objectives—Reproduce and verify a complete embodied-policy baseline and Conduct and report one original controlled embodied-system intervention—include a committed attempt, concrete worked case, expected reasoning, targeted retry, and failure boundary. Technical notation and implementation remain collapsed after mastery with no completion impact, and the handoff to “Course complete” follows from the chapter’s result.",
         "revisionPriorities": []
       }
     }

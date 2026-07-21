@@ -35,38 +35,38 @@ export const courseContinuityRecords: readonly CourseContinuityRecord[] = [
   {
     courseId: "worldmodel",
     fromLessonId: "world-models",
-    toLessonId: "dynamics-tensors",
+    toLessonId: "sequential-state",
     severity: "high",
     relationship: "direct reuse",
     bridge:
-      "The introduction left you with a situation, possible actions, predicted consequences, and a reality check. A computer cannot pass those roles between layers as a sketch, so this chapter turns a tiny observation–action record into named arrays: rows for time or examples, columns for features, and a learned matrix that produces the next-state features used by later dynamics models.",
+      "The introduction left you with a situation, possible actions, predicted consequences, and a reality check. This chapter gives those roles names in an ordered experience: the agent receives an observation, carries a state, takes an action, and sees what follows. That visible sequence is the conceptual spine that later probability, reward, and model-update lessons formalize.",
   },
   {
     courseId: "worldmodel",
-    fromLessonId: "dynamics-tensors",
+    fromLessonId: "sequential-state",
     toLessonId: "stochastic-futures",
     severity: "medium",
-    relationship: "direct reuse",
+    relationship: "extension",
     bridge:
-      "The previous chapter established the shape of one predicted next-state array. Real systems can reach different next states from the same recorded input, so this chapter keeps those axes fixed but replaces one forced answer with possible futures and explicit probability mass; those distributions become training targets in the following chapter.",
+      "The previous chapter traced one state–action–consequence sequence. Real systems can reach different next states from the same apparent situation, so this chapter replaces one forced continuation with several possible futures and asks how confidence should be distributed among them.",
   },
   {
     courseId: "worldmodel",
     fromLessonId: "stochastic-futures",
-    toLessonId: "learning-dynamics",
-    severity: "high",
-    relationship: "direct reuse",
+    toLessonId: "rewards-returns-policies",
+    severity: "medium",
+    relationship: "extension",
     bridge:
-      "You can now represent more than one possible future. Learning asks which model parameters make the observed future less surprising: the small mean-squared-error trace below is deliberately a deterministic point-prediction fixture, while categorical probabilities or Gaussian parameters require their corresponding likelihood loss. Later recurrent models reuse the same prediction–loss–update loop at every time step.",
+      "You can now represent more than one possible future. A decision still needs a reason to prefer one branch over another, so this chapter adds consequences, goals, and an action rule while keeping predicted possibilities separate from what the agent is asked to value.",
   },
   {
     courseId: "worldmodel",
-    fromLessonId: "learning-dynamics",
-    toLessonId: "sequential-state",
+    fromLessonId: "rewards-returns-policies",
+    toLessonId: "mdps-bellman",
     severity: "high",
-    relationship: "extension",
+    relationship: "direct reuse",
     bridge:
-      "The last chapter updated parameters from a prediction error. This chapter supplies the time-indexed training row that update was missing: current state and action $(s_t,a_t)$ enter the transition model, predicted $s_{t+1}^{pred}$ is compared with observed $s_{t+1}$, and the process repeats through a sequence. That state–action–next-state contract anchors the rest of the course.",
+      "The reward chapter separated immediate consequences, longer-term outcomes, and the policy that chooses future actions. This chapter joins those pieces into one decision-plus-future backup: compare an action's immediate result with what the next situation makes possible, then reuse that pattern throughout planning and control.",
   },
   {
     courseId: "worldmodel",
@@ -180,29 +180,29 @@ export const courseContinuityRecords: readonly CourseContinuityRecord[] = [
   {
     courseId: "generative",
     fromLessonId: "generation-as-distribution",
-    toLessonId: "likelihood-cross-entropy",
+    toLessonId: "sampling-randomness",
     severity: "high",
     relationship: "direct reuse",
     bridge:
-      "The introduction treated a generator as a probability distribution over possible outputs. Training now asks how much probability that same distribution assigns to real examples: for a target with probability $0.25$, the negative log-likelihood is $-\\log(0.25)$, and an update tries to reduce it. Scoring and sampling remain two interfaces to one model.",
-  },
-  {
-    courseId: "generative",
-    fromLessonId: "likelihood-cross-entropy",
-    toLessonId: "sampling-randomness",
-    severity: "medium",
-    relationship: "direct reuse",
-    bridge:
-      "Likelihood answered how a model scores an observed outcome. Sampling asks the complementary question—how to draw an outcome from the same probability table—so a high-probability item appears often but is not guaranteed. Later evaluations must distinguish randomness in a finite sample from a wrong underlying distribution.",
+      "The introduction treated a generator as a set of possible outputs with unequal chances. Sampling makes that picture observable first: repeated draws turn those chances into varied outcomes, while a fixed seed lets you replay one random path without pretending the model became deterministic.",
   },
   {
     courseId: "generative",
     fromLessonId: "sampling-randomness",
+    toLessonId: "likelihood-cross-entropy",
+    severity: "medium",
+    relationship: "direct reuse",
+    bridge:
+      "Sampling showed how one probability table produces varied outcomes. Likelihood asks the complementary learning question: when a real example is observed, did that same table treat it as plausible, and how should the model change when it did not? Scoring and sampling remain two interfaces to one model.",
+  },
+  {
+    courseId: "generative",
+    fromLessonId: "likelihood-cross-entropy",
     toLessonId: "divergences-distance",
     severity: "medium",
     relationship: "extension",
     bridge:
-      "A handful of random draws can differ from their own source distribution by chance. Before comparing models, this chapter moves from individual samples to distribution-level mass: repeated frequencies estimate each outcome probability, and a divergence measures systematic mismatch after finite-sample noise is accounted for.",
+      "Likelihood supplied feedback for one observed example under one generator. Comparing complete generators requires a distribution-level view: inspect how their probability mass differs across all outcomes, distinguish systematic mismatch from finite-sample variation, and only then use a divergence as the optional formal summary.",
   },
   {
     courseId: "generative",
@@ -298,20 +298,20 @@ export const courseContinuityRecords: readonly CourseContinuityRecord[] = [
   {
     courseId: "rl",
     fromLessonId: "sequential-decision-systems",
-    toLessonId: "mdps-rewards",
+    toLessonId: "partial-observation",
     severity: "high",
-    relationship: "direct reuse",
+    relationship: "extension",
     bridge:
-      "The introduction's loop had a situation, an action, a consequence, and an update that changes later choices. An MDP gives those roles precise names: states $S$, actions $A$, transition probabilities $P$, rewards $R$, and a discount for later consequences. The notation is useful because every later value or policy calculation points back to one part of this same loop.",
+      "The introduction's loop had a situation, an action, a consequence, and an update that changes later choices. Before formalizing it, this chapter asks what the agent can actually know: an observation may omit the hidden condition that determines what follows, so history or belief must sometimes stand in for a fully visible state.",
   },
   {
     courseId: "rl",
-    fromLessonId: "mdps-rewards",
-    toLessonId: "partial-observation",
+    fromLessonId: "policies-occupancy",
+    toLessonId: "mdps-rewards",
     severity: "medium",
-    relationship: "extension",
+    relationship: "direct reuse",
     bridge:
-      "The MDP calculation assumed the agent could observe the state that makes future outcomes predictable. Hide a door's lock status or add noisy sensors and that assumption fails: the agent receives an observation, then uses history or a belief distribution to represent what the hidden state might be before choosing an action.",
+      "The policy chapter made action choice visible and showed that repeated choices determine which situations the agent visits. Formalization now names the state or information state, available actions, possible consequences, rewards, and future horizon so the same loop can be analyzed without changing its meaning.",
   },
   {
     courseId: "rl",
@@ -398,20 +398,20 @@ export const courseContinuityRecords: readonly CourseContinuityRecord[] = [
   {
     courseId: "embodied",
     fromLessonId: "observation-action-spaces",
-    toLessonId: "coordinate-frames-time",
+    toLessonId: "embodied-partial-observation",
     severity: "medium",
     relationship: "extension",
     bridge:
-      "An array can have the expected shape and still be physically wrong if its position is expressed in the camera frame while the action expects the robot-base frame, or if the values come from different times. This chapter annotates the existing observation/action schema with frame, units, timestamp, and synchronization before control uses it.",
+      "The observation/action schema says which fields the system can receive and command, but a valid packet can still omit an occluded object, contact state, or velocity. History and belief combine evidence across time so the controller does not mistake one partial view for the complete physical situation.",
   },
   {
     courseId: "embodied",
-    fromLessonId: "coordinate-frames-time",
-    toLessonId: "embodied-partial-observation",
+    fromLessonId: "embodied-partial-observation",
+    toLessonId: "coordinate-frames-time",
     severity: "low",
-    relationship: "extension",
+    relationship: "direct reuse",
     bridge:
-      "Aligned frames and timestamps make measurements comparable, but one measurement can still omit occluded objects, contact state, or velocity. History and belief state combine timed evidence to estimate the hidden situation the policy actually needs.",
+      "A belief can combine multiple observations only when their meanings line up. This chapter annotates the existing observation/action history with coordinate frame, units, timestamp, and synchronization so evidence from different sensors and moments can be compared before control uses it.",
   },
   {
     courseId: "embodied",

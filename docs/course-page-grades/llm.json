@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-20T09:00:11Z",
-  "sourceFingerprint": "sha256:ab83752805b8ad241138d5a7926b893b4231b70a961ad4af4708b998fbb0e0d3",
+  "gradedAt": "2026-07-21T06:24:53Z",
+  "sourceFingerprint": "sha256:fdb64dcbce0a4ee39457dc942d85f1b0fcc89016de93bb54b4a04cd579e830d6",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "Blindly read each current home and lesson dossier in full reading order, evaluated the four rubric dimensions as one learner journey, and recorded only consolidated page judgments.",
+    "method": "Fresh blind top-to-bottom semantic review of the current 45-page reader dossiers, including mechanism recalculation, concept-first sequence checks, and all 132 exact objective records against the five-dimension coverage contract.",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -13,407 +13,818 @@
   "population": 45,
   "pages": [
     {
-      "pageType": "home", "id": "home", "route": "/llm/", "readerSnapshotHash": "sha256:2d2b459a99e41bec2a0885bc4dabe0760a0d3f9b8b22443d4c489af03f27d60b",
-      "accuracy": 97, "writtenNarrative": 96, "flow": 95, "learningContent": 96, "overall": 96, "pass": true, "blockingDefects": [],
+      "pageType": "home",
+      "id": "home",
+      "route": "/llm/",
+      "readerSnapshotHash": "sha256:d19f0e6ab3bda8a74084c8cdedeac8a8717f6b23de9e21854806925a08fa1a38",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 98,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The home page frames a five-phase journey from next-token prediction through architecture, training, deployment, reliability, and advanced specialization.",
-        "feedback": "The page gives a motivated beginner a credible map of the full stack, clear evidence boundaries, and a strong cumulative reason to proceed. Phase and track descriptions make the learning destination concrete without presenting optional external work as required.",
-        "revisionPriorities": ["Reconcile the phase-five ‘lessons 40–44’ label with the later statement that lessons 41–44 are parallel specializations."]
-      }
-    },
-    {
-      "pageType": "lesson", "id": "introduction", "route": "/llm/introduction/", "readerSnapshotHash": "sha256:20940fa806ca76af5b6911800f6ba4d2d2475e1f6167d7693033a8c4cced3afe",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The opening lesson turns a familiar prompt-response interaction into a system-level account of predictions, evidence, authority, and appropriate trust.",
-        "feedback": "The meeting-notes, live-weather, and ticket-transfer contrasts steadily raise the stakes while preserving the central mechanism. Prediction gates and the changed case make learners distinguish model output from evidence and runtime authority rather than merely repeat a definition.",
+        "synopsis": "The course home begins with the visible text-to-prediction loop, expands it through five cumulative phases, distinguishes the shared spine from parallel advanced branches, and ends with a self-contained first action.",
+        "feedback": "The home accurately frames the full LLM stack without presenting the model as magic or overstating browser fixtures. Its concise pitch, phase arc, track outcomes, evidence boundary, duration, and start/continue action form a coherent promise that is borne out by the 44-lesson route.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "tensors-shapes", "route": "/llm/tensors-shapes/", "readerSnapshotHash": "sha256:06cbaf34db545f97653f7c89b4db3aa55abd445ee630d200d0e2ed172ebc1e04",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "introduction",
+      "route": "/llm/introduction/",
+      "readerSnapshotHash": "sha256:5a8dd7647e79374cad7f8a1cbfcc2cc5aaf363f7f82468e7cf4d4fcc3a62fc2b",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 98,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This lesson builds the tensor-shape language needed to follow batched token representations and their projections through an LLM.",
-        "feedback": "Concrete dimensions, the manual red/fox projection, broadcasting boundaries, and shape-aware transfer checks make the abstractions inspectable. The arithmetic and notation agree across prose, code, lab, and assessment, so the learner can trace rather than memorize shapes.",
+        "synopsis": "Introduction moves from “A text prompt and the model's learned language patterns enter generation.” through “The model repeatedly predicts plausible next text from the prompt and the continuation so far.” to “The result is generated text whose claims still require evidence and external checking.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Which task can an LLM complete from the supplied text alone with the clearest evidence boundary?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "probability-softmax", "route": "/llm/probability-softmax/", "readerSnapshotHash": "sha256:8f84d1abdbca7baf8b3d18c69c0b68ebb20e3d7fb58338483bd056ba3434d149",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "tokenization",
+      "route": "/llm/tokenization/",
+      "readerSnapshotHash": "sha256:833bd33402572b8fdc58f0282d6dbd4586e2116f200a2b004503b62967c38652",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson follows logits through stable softmax and cross-entropy while separating probability normalization from calibration and correctness.",
-        "feedback": "The numerical losses, masked-token example, and changed distributions expose exactly what the objective rewards. Misconceptions about confidence and truth are handled explicitly, and the learner must calculate and diagnose before seeing the expected reasoning.",
+        "synopsis": "Tokenization moves from “Raw text enters a fixed tokenizer with a declared vocabulary and splitting rules.” through “The tokenizer divides the text into reusable pieces and replaces each piece with its stable identifier.” to “The result is an ordered token sequence that the model can process and later decode back to text.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why not give every possible word its own vocabulary entry?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "gradients-backprop", "route": "/llm/gradients-backprop/", "readerSnapshotHash": "sha256:3fb739d0c54a35f0615079b6368c79ffaf2af6aa36fcdb2982dc46dd1ae6a754",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "embedding-layer",
+      "route": "/llm/embedding-layer/",
+      "readerSnapshotHash": "sha256:bdba60f36077cfd7afffaff2d1b29e0d1885f7d9c84643c342c618399e80e5f5",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page explains gradients as local sensitivities composed backward through a computation graph to assign parameter-level credit.",
-        "feedback": "The worked chain-rule value, autograd comparison, shape checks, and failure diagnoses form a coherent bridge from scalar derivatives to model training. Learners must identify the first incorrect transformation and transfer the mechanism to a changed graph.",
+        "synopsis": "The Embedding Layer moves from “An ordered token identifier enters a learned embedding table.” through “The table retrieves the adjustable feature vector stored for that token type.” to “The result is an initial token representation that later context-mixing layers can revise.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “When does the embedding for “bank” become different in river and finance sentences?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "optimizers", "route": "/llm/optimizers/", "readerSnapshotHash": "sha256:e81145146fa6a95030d0b33543a0877a3ab473b44c9be81498c8a7a350d51692",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "positional-encoding",
+      "route": "/llm/positional-encoding/",
+      "readerSnapshotHash": "sha256:24b4ba8df12b54def94581626b6335b1fcc0dc2b8da3aba7a68cd4d1556cf03b",
+      "accuracy": 99,
+      "writtenNarrative": 95,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The optimizer lesson connects gradients, state, learning-rate schedules, update rules, memory cost, and matched-quality comparisons.",
-        "feedback": "The page does more than name SGD and Adam: it traces how stored moments and schedules change updates, then makes learners inspect stability and resource trade-offs. The cumulative foundations project provides a meaningful synthesis rather than a click-through ending.",
+        "synopsis": "Positional Encoding moves from “Token representations and their positions in the sequence enter the position mechanism.” through “The mechanism adds or applies index and distance information while causal access rules restrict which positions can interact.” to “The result lets attention distinguish order and relative placement rather than seeing an unordered collection.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What would unmasked, content-only self-attention lack without positional information?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
+        "revisionPriorities": [
+          "Repair the minor grammar glitch in the RoPE subsection heading on the next copy-edit pass."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "attention",
+      "route": "/llm/attention/",
+      "readerSnapshotHash": "sha256:bf318c8588064ba8a0509900e2d14d0b2bd2303afc96de19b906de4619e8022c",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "Attention moves from “A token's current representation and the allowed earlier representations enter an attention head.” through “The head compares the query with candidate keys, normalizes their relevance, and combines the corresponding values.” to “The result is a context update containing information selected from allowed positions.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why are attention match scores scaled before they are compared?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "tokenization", "route": "/llm/tokenization/", "readerSnapshotHash": "sha256:06395823a2380824ff393818827e366abfa0aa71a311334ecf76daa40537e69d",
-      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 95, "overall": 96, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "layers-of-understanding",
+      "route": "/llm/layers-of-understanding/",
+      "readerSnapshotHash": "sha256:45e89b5d9a3924e309e58f71f3bb100c01ba9835a26f69ffc99afee85e1f8445",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson explains tokenization as a reversible model-specific interface, covering subwords, bytes, vocabulary IDs, boundaries, and production compatibility.",
-        "feedback": "The byte and subword traces clearly separate text, token pieces, and integer identities, while the transfer task tests the tokenizer-model contract. One exact-ID retrieval prompt is harder than necessary because its arbitrary toy mapping is revealed only after commitment, but the surrounding mechanism and independent assessment remain complete.",
-        "revisionPriorities": ["Expose the toy vocabulary-to-ID mapping before asking learners to reproduce the exact numeric ID trace."]
-      }
-    },
-    {
-      "pageType": "lesson", "id": "embedding-layer", "route": "/llm/embedding-layer/", "readerSnapshotHash": "sha256:0b96c2069a199c8825d33931abfb6f547656556c4349aef75f6eed850a43bd2a",
-      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 97, "overall": 96.5, "pass": true, "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "This page presents embeddings as learned vocabulary-row lookups and distinguishes static input rows from later contextual hidden states.",
-        "feedback": "Shapes, lookup arithmetic, a pinned GPT-2 validation boundary, and the decision studio reinforce the same causal story. The lesson anticipates the common claim that one vector permanently contains a word's meaning and gives learners multiple ways to correct it.",
+        "synopsis": "Layers of Understanding moves from “All position representations enter one Transformer block.” through “Attention mixes information across allowed positions, the feed-forward path transforms each position, and residual paths preserve prior state.” to “Repeating blocks produces progressively revised representations for prediction.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “A pre-norm decoder block starts with x. Which sequence is most accurate?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "positional-encoding", "route": "/llm/positional-encoding/", "readerSnapshotHash": "sha256:cca3fe356e7beb111feba14b80f86c8dc50e836cd087aeb37541d3dd982c11ea",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "learning-to-predict",
+      "route": "/llm/learning-to-predict/",
+      "readerSnapshotHash": "sha256:b121d3ba70f72efc7937eb5248b5db83de73aaa8fefc954723d23164f2fad1f6",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson separates permutation symmetry, causal direction, absolute position, and relative distance before introducing positional methods such as RoPE.",
-        "feedback": "Controlled reorderings and long-context falsifiers make the invisible role of position observable. The page carefully avoids implying that a causal mask alone supplies full position geometry, and every objective receives a concrete mechanism, boundary, and changed-case check.",
+        "synopsis": "Learning to Predict moves from “A tokenized sequence is split into each visible prefix and its actual next-token target.” through “The model predicts every allowed next token, compares predictions with targets, and sends the errors backward.” to “The result is a learning signal that changes parameters while respecting document and causal boundaries.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What happens to cross-entropy loss when target-token probability rises?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "attention", "route": "/llm/attention/", "readerSnapshotHash": "sha256:258c6aa60ae6205d847068a7afd8f0b152623f3fc902c09d61f21510d4b4d4ff",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "tensors-shapes",
+      "route": "/llm/tensors-shapes/",
+      "readerSnapshotHash": "sha256:4818b251b483851c011a34e1b36860dccde4cb967f7f7ad123942b7857865f4b",
+      "accuracy": 98,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The attention page traces queries, keys, values, scaled scores, masks, normalized weights, and value mixing with explicit tensor shapes.",
-        "feedback": "The worked calculation, code trace, and assessed transfer maintain one precise mechanism from token states to contextual outputs. It also places an important interpretability limit on attention weights, preventing a visually compelling matrix from being mistaken for a full causal explanation.",
+        "synopsis": "How Models Carry and Transform Representations moves from “A batch of token-position feature records enters a learned projection.” through “The same projection changes the feature description at every position while preserving batch and position identity.” to “The result is a new feature representation for each original prompt position.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What stays the same when a learned projection transforms every text position?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "layers-of-understanding", "route": "/llm/layers-of-understanding/", "readerSnapshotHash": "sha256:127719dba7d204942f5d9a9b931d4d8d0f8894d39fb74596861d98f6c2d6acbd",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "probability-softmax",
+      "route": "/llm/probability-softmax/",
+      "readerSnapshotHash": "sha256:4177fc8fc2a2cf868d40ae5f602588bc31ee0913ecc2b584dbcf0edab25d8a68",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page assembles attention, MLPs, residual streams, and normalization into a shape-preserving Transformer block and cumulative depth story.",
-        "feedback": "Pre-norm and post-norm contrasts are causal rather than merely architectural labels, and the page states where analogies about layered understanding break. Worked shapes, residual updates, and a changed-case assessment support transfer without claiming clean one-layer concepts.",
+        "synopsis": "From Model Scores to Learning Feedback moves from “Raw vocabulary scores and the correct next-token target enter the feedback operation.” through “Softmax turns the scores into a probability distribution and cross-entropy reads the probability assigned to the target.” to “The result is a scalar loss whose size reflects the model's surprise at the correct token.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “If the model assigns more probability to the observed next token, what should happen to its training penalty?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "learning-to-predict", "route": "/llm/learning-to-predict/", "readerSnapshotHash": "sha256:4a8ba5ee37a01112915f695f24fa5a1b15776d2188baeb39c71f26f9c319dc10",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "gradients-backprop",
+      "route": "/llm/gradients-backprop/",
+      "readerSnapshotHash": "sha256:e7b1d50c7b457e626f22b535185cf8461c0ffe3ed1370a59009da2743b65d0dc",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson turns text into shifted next-token training pairs and explains masking, packing boundaries, teacher forcing, and autoregressive generation.",
-        "feedback": "Token-level traces expose exactly which inputs predict which targets and why packed examples need segment-aware masks. The comparison between parallel training and sequential generation is precise, and changed cases test leakage and boundary handling rather than definition recall.",
+        "synopsis": "How Error Reaches Earlier Decisions moves from “A forward computation and its final loss enter backward credit assignment.” through “Backpropagation follows the recorded operations in reverse and combines each local change effect along every path.” to “The result is one gradient for every adjustable parameter showing how it influenced the loss.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “How does backpropagation assign responsibility to an earlier adjustable parameter?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "gpt2-from-scratch", "route": "/llm/gpt2-from-scratch/", "readerSnapshotHash": "sha256:816def2218183f55a9c2e3179d9de6fae9fc240b1e51e6934c53d45df1d9249c",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "optimizers",
+      "route": "/llm/optimizers/",
+      "readerSnapshotHash": "sha256:109c23c997ffacf56ffe4038583ddca519a5ab5b89d6543dcedee27998947c74",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This synthesis page carries one batch through embeddings, repeated Transformer blocks, vocabulary logits, shifted loss, optimization, checkpointing, and generation.",
-        "feedback": "The complete shape spine and leakage/resume checks turn prior lessons into an implementable mental model. Pinned external evidence is clearly optional, while the required capstone includes scaffolding, local correctness checks, failure evidence, rubric, and a gated worked reference.",
+        "synopsis": "How Learning Updates the Model moves from “Parameter values, their gradients, and optimizer state enter an update step.” through “The optimizer scales and reshapes the proposed changes using its learning-rate and memory rules.” to “The result is a new parameter state intended to reduce future loss without destabilizing learning.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why use learning-rate warmup?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "pretraining-overview", "route": "/llm/pretraining-overview/", "readerSnapshotHash": "sha256:cafb40ad32c9f1bf101c19bf94b0aae1393452c7ebe02c1d71e30be76dcb4dbc",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "gpt2-from-scratch",
+      "route": "/llm/gpt2-from-scratch/",
+      "readerSnapshotHash": "sha256:d2f5c90f6027afd0abdca51e3199b8a2d29643d1ce30934567eea0c55987396a",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The pre-training overview connects data, token accounting, objective, optimization, checkpoints, evaluation, and evidence into one reproducible pipeline.",
-        "feedback": "The page orients the learner to the whole lifecycle before later chapters deepen individual stages. Token-budget arithmetic, decision practice, and the OLMo validation boundary consistently distinguish deterministic teaching fixtures from claims about an actual training run.",
+        "synopsis": "GPT-2 → nanochat: Build the Stack moves from “Token batches, a decoder-only Transformer configuration, and correctness fixtures enter the build.” through “The implementation embeds tokens, applies causal blocks, predicts next-token scores, and updates from shifted targets.” to “The result is a tested small language-model stack plus evidence separating correctness from capability.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “A tiny GPT compiles but cannot overfit one repeated batch. What should you inspect first?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "objectives-details", "route": "/llm/objectives-details/", "readerSnapshotHash": "sha256:0d1d6ddfc3258e61bb6754bfe88dcfb08d9e830c0bfe24f83001c29de5b3530b",
-      "accuracy": 97, "writtenNarrative": 96, "flow": 96, "learningContent": 97, "overall": 96.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "pretraining-overview",
+      "route": "/llm/pretraining-overview/",
+      "readerSnapshotHash": "sha256:c15cad36f7d87c3658e4d173f126b28e66324810302daae718e5ddb69b48da99",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page treats an objective as a complete target, mask, serialization, and stage contract rather than a loss-function name alone.",
-        "feedback": "Causal LM, role masking, tool-call serialization, and architectural normalization contrasts are tied to concrete records and failure modes. The checks ask learners to decide which tokens bear loss and why, preserving the distinction between syntactic formatting and the behavior being trained.",
+        "synopsis": "Overview moves from “Versioned token data and a randomly initialized model enter the training loop.” through “Repeated next-token prediction, feedback, optimization, evaluation, and checkpointing change the model across many batches.” to “The result is a base model and an evidence trail for how it learned and where it failed.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “If the training-token target stays fixed but each optimizer step processes a larger global batch, what happens to the number of update steps?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "scaling-laws", "route": "/llm/scaling-laws/", "readerSnapshotHash": "sha256:cbfcf3cd629fa170f60d4fa8583152877cd8a992830bb5f2620369540c37ec70",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "objectives-details",
+      "route": "/llm/objectives-details/",
+      "readerSnapshotHash": "sha256:0e744f8da4706d3a2a6671d83595fb44d8d7f61c48838005386eeb260a9de9ef",
+      "accuracy": 99,
+      "writtenNarrative": 97,
+      "flow": 97,
+      "learningContent": 99,
+      "overall": 98,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson explains empirical scaling curves and compute allocation while keeping extrapolation, data quality, and deployment objectives in view.",
-        "feedback": "The matched $6ND$ calculation makes parameter-token trade-offs concrete, and the page repeatedly labels scaling relationships as empirical rather than physical laws. Transfer questions require selecting evidence under fixed constraints instead of treating bigger models as automatically better.",
+        "synopsis": "Training Objectives and Architectural Details moves from “A prepared sequence, target rule, and architecture-specific access pattern enter training.” through “The objective decides which positions are predicted and scored while the architecture limits which information each prediction can use.” to “The result is a learning signal whose meaning depends jointly on target construction and information access.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “At a fixed total representation width, what happens when attention is divided among more heads?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "data-engineering", "route": "/llm/data-engineering/", "readerSnapshotHash": "sha256:27f8e5f64aaba3c429204880e0197944b18e18ef290cd70d2c714fbc6bacf423",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.25, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "scaling-laws",
+      "route": "/llm/scaling-laws/",
+      "readerSnapshotHash": "sha256:71093ac1c03c1ebba22adb44c207e03714efa283cc5cb52650808a20e79e3225",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The data-engineering lesson follows sources through rights, parsing, filtering, deduplication, mixtures, splits, provenance, and governance decisions.",
-        "feedback": "The lesson treats data quality as a causal systems problem rather than a cleaning checklist. Concrete filtering and language cases, contamination boundaries, and the decision studio make learners weigh coverage, harm, leakage, and reversibility with inspectable evidence.",
+        "synopsis": "Scaling Laws and Optimization moves from “Measurements from smaller training runs and a fixed resource question enter a scaling analysis.” through “The analysis fits trends, holds out scales for validation, and compares model-versus-data allocations under the same budget.” to “The result is a conditional planning estimate with uncertainty, not a physical law.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What does compute-optimal scaling try to balance?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "infrastructure", "route": "/llm/infrastructure/", "readerSnapshotHash": "sha256:d5057f0fc6af00369b83da6a07ddf976bf3477960bc92ca623e02bc8f49bf4e6",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "data-engineering",
+      "route": "/llm/data-engineering/",
+      "readerSnapshotHash": "sha256:642e3b665437a71ddd5d9091ed07a5fb589df6470beeed313d74ce410d599db5",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This lesson maps data, tensor, pipeline, and sequence parallelism to ownership, communication, topology, memory, and restart behavior.",
-        "feedback": "Each parallel method is explained by what is partitioned, what is replicated, which collective is required, and where it helps. The learner must trace failures and checkpoints across ranks, so the page teaches distributed correctness rather than presenting a collection of acronyms.",
+        "synopsis": "Training Data Engineering moves from “Collected source records, rights metadata, and a training purpose enter the data pipeline.” through “The pipeline filters, deduplicates, mixes, tokenizes, versions, and records deletion lineage.” to “The result is an auditable training dataset whose composition and rebuild path are explicit.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why deduplicate data before training?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "advanced-objectives", "route": "/llm/advanced-objectives/", "readerSnapshotHash": "sha256:4fcbbb289a87274e34e049cb0c69e1f5c5c7c47c2a078a9976ed65dec2f0c437",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "infrastructure",
+      "route": "/llm/infrastructure/",
+      "readerSnapshotHash": "sha256:dfcd833aaacd7b8677b7f1c7342385bf8811c5a13ee2b9a64e72269bf8932537",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page compares causal, masked, span-corruption, and fill-in-the-middle objectives through their serialization, visibility, targets, and task fit.",
-        "feedback": "The objective families are not reduced to names: learners inspect what context each target may see and what the loss trains. Equal-token comparison and the pinned optional reproduction preserve a strong evidence boundary while the required changed cases remain local and deterministic.",
+        "synopsis": "Training Infrastructure and Systems moves from “Model state, data batches, and a distributed hardware plan enter the training system.” through “Workers divide computation and state, synchronize the required updates, and preserve enough state to recover after failure.” to “The result is one coherent training trajectory rather than many diverging replicas.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “After a failed run resumes from weights but not RNG or data position, what is most likely?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "pretraining-evaluation", "route": "/llm/pretraining-evaluation/", "readerSnapshotHash": "sha256:3c5c9dd4598f26d27638c2d696407bfb0c97a019149877cf02409ceac49972d4",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "advanced-objectives",
+      "route": "/llm/advanced-objectives/",
+      "readerSnapshotHash": "sha256:f07ed69bc5c93642e4e98eeba2ac15be16b300862bafed7a311f421aece360b1",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson builds a multi-axis pre-training evaluation contract spanning loss, capability, contamination, safety, systems health, and uncertainty.",
-        "feedback": "Perplexity is accurately bounded by tokenizer and data assumptions, while capability and contamination checks are separated from training telemetry. The release decisions use predeclared gates and paired slices, preventing a single favorable curve from standing in for model quality.",
+        "synopsis": "Advanced Pretraining Objectives moves from “Prepared inputs and a declared additional prediction target enter an advanced objective.” through “The training recipe changes which evidence is hidden, predicted, contrasted, or rewarded and where the new loss applies.” to “The result is an extra learning signal whose value must be isolated under matched conditions.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “You want a code model to insert a function body between existing prefix and suffix. Which construction best matches?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "olmo3-case-study", "route": "/llm/olmo3-case-study/", "readerSnapshotHash": "sha256:32e04bd3f415470358aa4a53c5603970b2ccd707c3aa65793fde764cf5dc19a6",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "pretraining-evaluation",
+      "route": "/llm/pretraining-evaluation/",
+      "readerSnapshotHash": "sha256:e445ade5c1bb2afa6ecd6e67f380f44bbd99f65d9045232606d6b434238bc53c",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The OLMo 3 case study synthesizes staged data mixtures, long-context continuation, infrastructure evidence, controls, artifacts, and bounded conclusions.",
-        "feedback": "Pinned revisions and explicit stage handoffs make the real system inspectable without generalizing one recipe into a universal rule. The extensive capstone asks for matched controls, failure logs, reproducibility evidence, and a decision memo, completing the pre-training arc at the right level of rigor.",
+        "synopsis": "Evaluation During Pretraining moves from “Pinned checkpoints, clean evaluation cases, scorer versions, and comparison rules enter evaluation.” through “The evaluator runs matched predictions, aggregates paired evidence with uncertainty, and inspects regressions and contamination.” to “The result is a checkpoint or training decision tied to a reproducible protocol.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Train loss keeps falling while validation loss rises. What is the best first diagnosis?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "instruction-tuning-rlhf", "route": "/llm/instruction-tuning-rlhf/", "readerSnapshotHash": "sha256:669a1fef81db1449432c2393a685d2f410ea4e0a6e1abb74c73a1ff656d1c12d",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "olmo3-case-study",
+      "route": "/llm/olmo3-case-study/",
+      "readerSnapshotHash": "sha256:a5370c1157d83769d2643737f39e5385ec3035305fc374835e122ce9d24f6933",
+      "accuracy": 99,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 99,
+      "overall": 97.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This bridge lesson separates what post-training can change in weights from the evidence and runtime controls required for dependable behavior.",
-        "feedback": "The page reactivates pre-training concepts and establishes demonstrations, preferences, and runtime authority as distinct levers. Its scenarios and local checks prepare the learner for later SFT, preference, RL, and safety lessons without prematurely collapsing them into one alignment method.",
+        "synopsis": "Case Study — OLMo 3 Model Flow moves from “A documented base recipe, staged data mixtures, checkpoints, and release evidence enter the reconstruction.” through “The learner traces what changes at each stage and compares one controlled stage intervention against its matched baseline.” to “The result is an evidence-bounded account of the model flow and one falsifiable capability claim.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Code performance rises after Dolmino. Which comparison best tests whether the targeted stage caused the gain?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
+        "revisionPriorities": [
+          "Remove the duplicated opening outcome sentence so the case-study setup advances immediately."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "instruction-tuning-rlhf",
+      "route": "/llm/instruction-tuning-rlhf/",
+      "readerSnapshotHash": "sha256:e5dc17b99c24abcbe208e657fee9320726ac45ce897e1adf2d0b1e0cbc074030",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "Bridge: From Base Model to Assistant moves from “A capable base model and examples or feedback about desired responses enter post-training.” through “Successive stages imitate demonstrations, compare responses, or optimize verified outcomes while monitoring drift.” to “The result is an assistant policy whose behavior differs from the base continuation policy.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “A base model writes fluent continuations but follows requests inconsistently. Which intervention most directly establishes the target response format first?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "posttraining-overview", "route": "/llm/posttraining-overview/", "readerSnapshotHash": "sha256:a7d8d4f5e256ddf92640012579b71be4dd7c633a837c8bb83364bdc1a2bd3103",
-      "accuracy": 97, "writtenNarrative": 97, "flow": 97, "learningContent": 97, "overall": 97, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "posttraining-overview",
+      "route": "/llm/posttraining-overview/",
+      "readerSnapshotHash": "sha256:a2009251999201cc59b8d7c61225c9ec43d274dfecbc153f8b9647f0b3300303",
+      "accuracy": 98,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.25,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The overview organizes post-training by the supervision available: demonstrations, comparisons, outcome checks, and deployment constraints.",
-        "feedback": "Stage boundaries and multidimensional regression gates prevent the learner from treating post-training as a guaranteed monotonic ladder. The Tülu evidence and decision practice are clearly scoped, while the required path remains understandable without external tools or accounts.",
+        "synopsis": "Overview moves from “A base model, target behaviors, risk boundaries, and evaluation cases enter post-training design.” through “The designer selects the smallest combination of demonstrations, preferences, rewards, and runtime controls that addresses each gap.” to “The result is a staged assistant policy and evidence plan rather than one undifferentiated tuning step.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why can a smaller post-training dataset matter so much?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "sft", "route": "/llm/sft/", "readerSnapshotHash": "sha256:6018c731199a764650e367071526a054f74be07eab2b064f004adfb2da818f23",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 97, "learningContent": 98, "overall": 97.75, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "sft",
+      "route": "/llm/sft/",
+      "readerSnapshotHash": "sha256:f75057d7ed18c1829bf24d4d6eb15bdf7b84618916d7f06b50eae60e10ba80ab",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The SFT page teaches demonstrations as serialized, masked training records and extends the mechanism into a carefully bounded fine-tuning workshop.",
-        "feedback": "Role templates, assistant-only loss, packing boundaries, truncation, and evaluation are aligned across prose and exercises. The optional QLoRA workshop names its inputs and external boundary, while the required transfer task and readiness gates remain deterministic and self-contained.",
+        "synopsis": "Supervised Fine-Tuning moves from “A prompt, a high-quality target response, and an explicit loss mask enter supervised fine-tuning.” through “The model predicts the response tokens and receives feedback only on the positions declared trainable.” to “The result is a policy more likely to imitate the demonstrated response pattern.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why mask user tokens in many SFT recipes?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "preference-optimization", "route": "/llm/preference-optimization/", "readerSnapshotHash": "sha256:34a6274a3c35a37f9e8cdc91e0f83147de266a55024f78e5908c32b8f6c7f309",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "preference-optimization",
+      "route": "/llm/preference-optimization/",
+      "readerSnapshotHash": "sha256:c3a8bdb58461de8aca9e5436ed2cba2a4a78a7e6d7703b55b7f25e946da0f795",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson explains pairwise preference learning through relative policy-reference log-probability gaps, data quality, and shortcut risks.",
-        "feedback": "The DPO mechanism, beta convention, chosen/rejected records, and verbosity shortcut are treated with appropriate precision. Learners calculate relative changes and diagnose label quality before transfer, so the page does not imply that any preference pair constitutes ground truth.",
+        "synopsis": "Preference Optimization moves from “One prompt, preferred and rejected responses, and a reference policy enter preference learning.” through “The objective increases the preferred response's relative score while controlling movement from the reference behavior.” to “The result is a policy shifted toward the comparison data, with uncertainty outside its coverage.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What does DPO remove from the classic RLHF pipeline?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "rl-fundamentals", "route": "/llm/rl-fundamentals/", "readerSnapshotHash": "sha256:eabfb5a2e1f4a965e59b225e48b0e78216f6aba9187998c620eb840393bedacf",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "rl-fundamentals",
+      "route": "/llm/rl-fundamentals/",
+      "readerSnapshotHash": "sha256:39d166f4d6582b304e9af5d9be07bd75b76691d339e1320c144b56e5ae7f70fa",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page introduces policies, trajectories, rewards, returns, baselines, and advantages as the credit-assignment language needed for RL post-training.",
-        "feedback": "The worked batch advantage and delayed-credit cases make policy updates observable without hiding uncertainty behind jargon. The page defines its symbols before use, distinguishes reward from value, and verifies transfer on a changed trajectory with specific retry feedback.",
+        "synopsis": "RL Fundamentals moves from “A policy takes an action and receives an outcome-based reward from an environment or verifier.” through “The learner estimates which choices led to better returns and changes the policy toward those choices.” to “The result is behavior optimized for the reward signal, including any loopholes in that signal.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What does an advantage estimate express?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "rlhf", "route": "/llm/rlhf/", "readerSnapshotHash": "sha256:5ee013f792fc9c14125ee8681d915cf7c73a44fe0ea04e3af3dc9156edc9a97c",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "rlhf",
+      "route": "/llm/rlhf/",
+      "readerSnapshotHash": "sha256:60c029f218d4b87ffcd2341fc8cb0589ab432b1489a9000ad0af5101225c4b7e",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The RLHF lesson traces demonstrations, comparison data, reward-model fitting, on-policy sampling, PPO-style updates, and KL control.",
-        "feedback": "The page accurately presents the reward model as a fallible proxy and makes reward exploitation, reference drift, and independent evaluation central to the mechanism. Its numerical and decision checks separate training telemetry from real outcome evidence.",
+        "synopsis": "RLHF moves from “Human response comparisons first enter a reward-model learner.” through “The learned reward scores policy responses, and constrained policy optimization increases that score while limiting drift.” to “The result is a policy aligned to the sampled preference signal rather than direct access to human intent.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What is the reference-policy KL penalty for?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "tools-safety", "route": "/llm/tools-safety/", "readerSnapshotHash": "sha256:6e9b26f56e1f66633c096938dc7453cd094755674ff8e4a80f246b4286b9835c",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "tools-safety",
+      "route": "/llm/tools-safety/",
+      "readerSnapshotHash": "sha256:d126247e5fd5898cda64555ddb1f35345472320595f29cdefcd64fe47c58c1c8",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson treats tool calls as constrained action proposals and places schema, authorization, confirmation, execution, recovery, and audit in runtime code.",
-        "feedback": "The injected calendar trace, idempotent email action, safety/usefulness slices, trust-boundary lab, and decision studio all reinforce defense in depth. Learners must allow legitimate capabilities while blocking unauthorized effects, avoiding both magical autonomy and universal refusal.",
+        "synopsis": "Tools and Safety Tuning moves from “A user request, model proposal, tool schema, and authorization policy enter the runtime boundary.” through “The system validates arguments and permission before execution, then returns a bounded result for the next model step.” to “The result is an allowed tool action or a refusal that preserves authority outside the model's text.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why are runtime permissions still needed after safety tuning?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "tulu3-case-study", "route": "/llm/tulu3-case-study/", "readerSnapshotHash": "sha256:3f282ffebb123d6df57bf9433965cc9499ecdbeb15b0268912ef50782a175a96",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "tulu3-case-study",
+      "route": "/llm/tulu3-case-study/",
+      "readerSnapshotHash": "sha256:08dd9bfe6be9abae168704045806369fd3d2b897216ce90fe07e9c3e51289f5e",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This capstone traces Tülu 3 through curation, SFT, length-normalized DPO, and RLVR, then contrasts DR Tulu's tool-mediated evolving-rubric research loop.",
-        "feedback": "Exact verification and open-ended rubric evaluation are matched to their answer structures, with verifier spoofing, evaluator drift, tool cost, and runtime authority kept visible. The staged project, artifacts, controls, and launch memo make the post-training synthesis complete and inspectable.",
+        "synopsis": "Case Study — Tülu 3 → DR Tulu moves from “A base model, demonstration data, preference records, verifiable tasks, and release gates enter the stack design.” through “Each stage applies the signal it can actually verify, while tool and safety boundaries remain independently enforced.” to “The result is a post-training protocol with stage-specific artifacts, checks, and rollback decisions.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why does DR Tulu use evolving rubrics rather than only Tülu 3-style exact verifiers?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "decoding-sampling", "route": "/llm/decoding-sampling/", "readerSnapshotHash": "sha256:f12e7b32ef1e30ae9b8b302e60774a1e739a8a2b69344349742984009f76bf23",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "decoding-sampling",
+      "route": "/llm/decoding-sampling/",
+      "readerSnapshotHash": "sha256:a6d8feb1018a2276aa158e788237da844b6ef07a163e3fbe5b209eec120d1e35",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The decoding lesson turns vocabulary logits into token choices through temperature, top-k, top-p, greedy selection, sampling, constraints, and stopping.",
-        "feedback": "Stable-softmax and nucleus calculations are correct, inclusive cutoff conventions are explicit, and the lesson distinguishes selection policy from learned knowledge. Task-specific policy choices for extraction, creativity, and tested code make the transfer check genuinely unfamiliar.",
+        "synopsis": "Decoding and Sampling moves from “Next-token probabilities, allowed-token constraints, and a decoding policy enter selection.” through “The policy reshapes or truncates the distribution and chooses one next token deterministically or with controlled randomness.” to “The selected token extends the context and the operation repeats until a stop condition.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What does top-p sampling retain?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "generation-kv-cache", "route": "/llm/generation-kv-cache/", "readerSnapshotHash": "sha256:0617713de2ca4c3e9f8e68398c365e303a1657506f0ee6fa6a50d3baece5e1a2",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "generation-kv-cache",
+      "route": "/llm/generation-kv-cache/",
+      "readerSnapshotHash": "sha256:117186134c33e16054cf84b599df56b4a06727222e6937e34a39ed7bacb68590",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page separates prompt prefill from sequential decode and accounts for how cached keys and values trade memory for avoided recomputation.",
-        "feedback": "The prefix-work comparison, cache-size formula, grouped-query boundary, and serving examples are arithmetically and conceptually aligned. Learners distinguish what is newly computed, what is reused, and why prefix sharing still requires exact identity and tenant-safe invalidation.",
+        "synopsis": "The Generation Loop and KV Cache moves from “A prompt enters prefill, then each newly selected token enters one decode step.” through “The model stores earlier attention keys and values and computes only the new token's additions before attending over the cache.” to “The result is the next-token distribution with less repeated prompt computation and more cache memory use.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What is the main benefit of a KV cache during decode?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "quantization-memory", "route": "/llm/quantization-memory/", "readerSnapshotHash": "sha256:4286020cf8a1e4a8b0d38bee0fe3f81f60598ffe273525688a11bb04278059f4",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "quantization-memory",
+      "route": "/llm/quantization-memory/",
+      "readerSnapshotHash": "sha256:e57b075cc061ca431d1d7edc016545a1ce143042059a30e5f463c102e087b66c",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This lesson explains low-bit grids, scales, granularity, calibration, outliers, kernels, and the full inference-memory budget beyond model weights.",
-        "feedback": "The symmetric 3-bit reconstruction and 7B memory examples are transparent fixtures, not performance claims. Quality slices, kernel support, cache-dominated workloads, and a gated deployment choice prevent bit width from being mistaken for guaranteed speed or acceptable accuracy.",
+        "synopsis": "Quantization and Memory moves from “Model values and a chosen low-precision format enter quantization.” through “The quantizer maps values onto a smaller representable set and stores the scale information needed to interpret them.” to “The result uses less memory and movement bandwidth while introducing bounded rounding error.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why can per-channel scales preserve quality better than one scale for a whole tensor?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "serving-systems", "route": "/llm/serving-systems/", "readerSnapshotHash": "sha256:c3fcffe23f1b096f5b2397147cac00e7c60d3058c62202658cc8979ad402f5bb",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 98, "learningContent": 98, "overall": 97.75, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "serving-systems",
+      "route": "/llm/serving-systems/",
+      "readerSnapshotHash": "sha256:84d609e43b56c609cb30d36d8432b63a289bbe6bc2545a39772e612f3e9c082e",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The serving lesson treats queues, batching, prefill/decode scheduling, overload, latency tails, throughput, utilization, and goodput as one product system.",
-        "feedback": "The 2,000-versus-1,700 token example clearly demonstrates why SLO-satisfying goodput can reverse a throughput ranking. Static, dynamic, and continuous batching are compared on uneven traffic, and numeric per-tier overload rules turn the objectives into testable operational decisions.",
+        "synopsis": "Serving: Batching, Throughput and Latency moves from “Arriving requests, model capacity, cache state, and latency targets enter the serving scheduler.” through “The scheduler queues, batches, admits, and releases work while allocating memory across prefill and decode.” to “The result is completed responses plus throughput, latency, and rejection evidence.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What problem does continuous batching address?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "test-time-compute", "route": "/llm/test-time-compute/", "readerSnapshotHash": "sha256:47f8a26a3767d2288115e52adc5f7d2c67bc4e2ff4131d26ed2c2c555c884be1",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "test-time-compute",
+      "route": "/llm/test-time-compute/",
+      "readerSnapshotHash": "sha256:3be9797ed50d69718ef530311447d233d5f19e8964435ebaf2f8891a32a3936a",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page explains test-time compute through candidate diversity, search, critique, verification, adaptive budgets, early stopping, and deployable selection.",
-        "feedback": "The self-consistency example and pass@N versus best-of-N diagnosis correctly separate candidate generation from selection. The service capstone integrates decoding, cache, precision, batching, reasoning, latency, memory, quality, and cost into an evidence-bearing SLO decision.",
+        "synopsis": "Reasoning and Test-Time Compute moves from “A request, candidate generation strategies, verifier quality, and a resource budget enter inference planning.” through “The system allocates sequential reasoning or parallel candidates, checks them, and stops when marginal value no longer justifies cost.” to “The result is a selected answer and a quality-cost record bounded by the verifier.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “When can best-of-N sampling fail despite using more compute?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "context-engineering", "route": "/llm/context-engineering/", "readerSnapshotHash": "sha256:6d84bd5cc97ed567e30d8bcea108de1f235d12a7a7be894f71ae1b5c772f1dd8",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "context-engineering",
+      "route": "/llm/context-engineering/",
+      "readerSnapshotHash": "sha256:ed92d208f166e76dbfe40afaec9aa840981eaae2fcbb9a4757269f8451885570",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson presents context engineering as a finite interface for authority, task state, evidence, examples, constraints, and output contracts.",
-        "feedback": "The 4,000-token ledger, underspecified summarizer repair, injection boundary, and perturbation matrix make prioritization and robustness observable. Delimiters are correctly described as interpretive aids rather than security enforcement, and required work is locally checkable.",
+        "synopsis": "Prompting and Context Engineering moves from “Task instructions, evidence, examples, tools, and prior state compete for a limited context window.” through “The system selects, orders, labels, and isolates the information the model should use for the present decision.” to “The result is a bounded prompt state whose omissions and trust levels remain inspectable.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why can adding more context reduce quality?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "rag", "route": "/llm/rag/", "readerSnapshotHash": "sha256:2bf203e89df80a927b0d3f6eee211c091a348d5265b2a5bea0055342266e4297",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "rag",
+      "route": "/llm/rag/",
+      "readerSnapshotHash": "sha256:9c7cf658224af43d6085c932d995018b28be730033705236ec8658895cffd6db",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The RAG lesson traces versioned, authorized chunks through hybrid retrieval, reranking, context assembly, grounded generation, citation validation, and abstention.",
-        "feedback": "Retrieval failure is cleanly separated from evidence-use failure through oracle-context reasoning and distinct metrics. Chunking, filters, source versions, citation entailment, multilingual transfer, and the toy lab all preserve the rule that similarity is neither truth nor permission.",
+        "synopsis": "Embeddings, Semantic Search and RAG moves from “A user query and an indexed evidence collection enter retrieval.” through “The retriever finds candidate passages, applies access and relevance checks, and places supported evidence into the model context.” to “The model produces an answer tied to retrieved sources, with abstention when evidence is insufficient.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “If the correct evidence is absent from retrieved context, what is the first bottleneck?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "agent-loops", "route": "/llm/agent-loops/", "readerSnapshotHash": "sha256:56dcb9a4de8774254c4862c16b16f410dd82cd40ff740a4b54d0c1e4577e5258",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "agent-loops",
+      "route": "/llm/agent-loops/",
+      "readerSnapshotHash": "sha256:80bad43a099355815ba44009ea8815ab3fe33c7d3d713b1f5b938d1fb7523132",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This lesson distinguishes deterministic workflows from bounded agent loops and assigns state, authorization, retries, idempotency, cost, and termination to the orchestrator.",
-        "feedback": "The sold-out booking and ambiguous-timeout traces expose how errors compound when state or operation IDs are missing. Learners choose the least autonomy required, design typed transitions, and handle non-idempotent side effects under numeric limits and explicit human escalation.",
+        "synopsis": "Tool Use and Agent Loops moves from “A goal, current context, allowed actions, and stop budget enter the agent controller.” through “The model proposes one action, the controller authorizes and executes it, and the observation returns as new context.” to “The loop yields a bounded result or stops on completion, failure, or a declared limit.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Which component should enforce whether a destructive tool call is permitted?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "evaluation-design", "route": "/llm/evaluation-design/", "readerSnapshotHash": "sha256:962240537b114ba6366272acfe395c8d846043b8e9851cd6e7645b126728847a",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "evaluation-design",
+      "route": "/llm/evaluation-design/",
+      "readerSnapshotHash": "sha256:6d3f6d4dffc49d9e579ebdfa816eb506ef82748e1df1eeb1e90d8e6ba96c4102",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The evaluation lesson begins with a shipping decision and builds a portfolio of exact, human, and calibrated model-based measurements with slices and uncertainty.",
-        "feedback": "The position-biased judge example demonstrates instrument failure rather than merely warning about it. Numeric release gates, paired comparisons, severe non-compensable slices, evaluator versions, and adjudication make the lesson a complete decision-design journey.",
+        "synopsis": "LLM Evaluation and LLM-as-a-Judge moves from “A decision, target population, representative cases, scoring rule, and uncertainty plan enter evaluation.” through “The evaluator runs systems on matched cases, combines automatic and human evidence where appropriate, and inspects failures by slice.” to “The result is a decision-relevant measurement rather than a decontextualized benchmark number.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “How should an LLM judge be introduced into a high-stakes evaluation?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "security-privacy", "route": "/llm/security-privacy/", "readerSnapshotHash": "sha256:79911176806eb9a5c872c352bf19fb0529074b25bd62e867f65290fd67843e82",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "security-privacy",
+      "route": "/llm/security-privacy/",
+      "readerSnapshotHash": "sha256:1a6f6c9085d3ee8c4b2a9a63cf659ebbd4aa75d3b8c5fee569d05415cdeaad5b",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page threat-models assets, actors, data paths, models, retrieval, tools, users, and downstream systems under prompt injection and privacy risk.",
-        "feedback": "Cross-tenant retrieval and injected-content cases correctly enforce authorization before data exposure and treat generated output as untrusted downstream input. Least privilege, minimization, retention, monitoring, incident response, fairness, and appeals are integrated without suggesting a prompt can create a security boundary.",
+        "synopsis": "Security, Privacy and Prompt Injection moves from “Untrusted content, private data, model output, tools, and user authority enter a threat model.” through “The system keeps those trust zones separate, filters data access, and authorizes every external action outside the model.” to “The result is a blocked attack edge or a permitted operation with an auditable authority path.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What is the safest interpretation of instructions found inside retrieved content?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "observability-governance", "route": "/llm/observability-governance/", "readerSnapshotHash": "sha256:8fa178a6866e0b6ee91cd3ee993d51a01baf4704164cc27ab9c83c8f08a3beb6",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "observability-governance",
+      "route": "/llm/observability-governance/",
+      "readerSnapshotHash": "sha256:b999d8f9581b4985ae3b96d3883c2ab4d80a99d324a1608ffb6262a190728ffd",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This synthesis page links request traces, stage metrics, cost attribution, privacy, release governance, canaries, rollback, incidents, and ownership.",
-        "feedback": "The hidden cost-regression trace shows how versions and spans localize a pipeline change without indiscriminate secret retention. The safe research-agent capstone joins context, RAG, tools, evaluation, security, operations, artifacts, and rehearsed recovery into a rigorous final applications project.",
+        "synopsis": "Production Observability, Cost and Governance moves from “A source-grounded agent, privacy requirements, stage metrics, and launch gates enter operations design.” through “The system records bounded traces, evaluates each stage, monitors cost and failures, and invokes rollback or human control when gates fail.” to “The result is an inspectable launch-and-recovery decision rather than unbounded autonomous behavior.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why attach prompt, retrieval, model, and tool spans to one trace?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "distillation", "route": "/llm/distillation/", "readerSnapshotHash": "sha256:f80877269d4c455de39707b0a609b2fb8b592e26e3254454351a68129e4ec729",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "distillation",
+      "route": "/llm/distillation/",
+      "readerSnapshotHash": "sha256:4d050cffabc7746338b35fedbdf14e8eef2a46e9bb85e35a285eb35396baf75f",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson compares response, logit, feature, sequence-level, and on-policy distillation while accounting for teacher quality, student capacity, and total cost.",
-        "feedback": "Soft-target probabilities and temperature-scaled KL make the extra supervision concrete, while calibration and minority-slice failures expose inherited error. The response-only API transfer case correctly limits the available method and requires verified ground truth and held-out gates.",
+        "synopsis": "Distillation moves from “Teacher outputs or probability patterns and student inputs enter student training.” through “The student learns to match the teacher signal, often alongside original targets, under a smaller capacity budget.” to “The result is a smaller model that preserves selected behavior with measurable losses and possible inherited errors.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What extra information can soft teacher targets provide?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "lora", "route": "/llm/lora/", "readerSnapshotHash": "sha256:eb385da80e5d49cbff25277d91ef10733a44e4b1fd6c7e3760051af2362609ca",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "lora",
+      "route": "/llm/lora/",
+      "readerSnapshotHash": "sha256:422d4a3a87f79990262c4edfc6cf2eee91e5fef7e2f24bbdd156de763c949b46",
+      "accuracy": 99,
+      "writtenNarrative": 96,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The LoRA page derives a low-rank additive update, counts trainable parameters, explains initialization, and compares rank, targets, QLoRA, merging, and routing.",
-        "feedback": "The $4096\times4096$ rank-16 example and runnable first-gradient check make both savings and the zero-initialization pitfall visible. The deployment transfer preserves base-adapter provenance, tenant isolation, quality gates, and the fact that frozen-base compute and activations remain.",
+        "synopsis": "LoRA moves from “A frozen model representation enters two small trainable low-rank projections.” through “The first compresses the update path and the second expands it back before adding it to the frozen layer output.” to “The result is an adaptable layer with far fewer changed parameters and a rank-limited update.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What does LoRA's rank control?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
+        "revisionPriorities": [
+          "Remove the duplicated opening definition so the analogy follows a single clean introduction."
+        ]
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "moe",
+      "route": "/llm/moe/",
+      "readerSnapshotHash": "sha256:954bb0e13e184ecc03843507c7ebeceedba0f303b775c4b0422236e88259e962",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "Mixture of Experts (MoE) moves from “Each token representation enters a router and a bank of specialist sublayers.” through “The router assigns the token to a small allowed subset, combines their outputs, and tracks load balance and capacity.” to “The result is token-specific computation with more total parameters than active work per token.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “What is the core efficiency idea of sparse MoE?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "moe", "route": "/llm/moe/", "readerSnapshotHash": "sha256:620b3741c00c99cbeb709bc13f4969bb5e3792481765210a8d423d645527b197",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "multimodal-models",
+      "route": "/llm/multimodal-models/",
+      "readerSnapshotHash": "sha256:ed8e47b09b4cd0e514c51f2c4058e23ad043e49ad1ae120044c7d9dc7648270e",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 98,
+      "learningContent": 99,
+      "overall": 98.5,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The MoE lesson traces per-token router scores through top-k dispatch, expert capacity, weighted combination, load balancing, communication, and serving cost.",
-        "feedback": "Router arithmetic and the 1,024-token capacity example are correct and transparently linked to overflow choices. The page explicitly rejects human-readable expert mythology and the claim that sparse active FLOPs erase full-weight memory, all-to-all, imbalance, or small-batch inefficiency.",
+        "synopsis": "Multimodal Language Models moves from “Text and another modality enter modality-specific encoders and an alignment interface.” through “The system converts both into compatible representations and lets the language model attend to or predict across them.” to “The result is a multimodal response whose grounding depends on the encoder and alignment evidence.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Why project image features into the language model’s hidden width?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     },
     {
-      "pageType": "lesson", "id": "multimodal-models", "route": "/llm/multimodal-models/", "readerSnapshotHash": "sha256:904f1bbf8138bb5907513f929e328dead0c6f070791c335f3a5e4216536906e3",
-      "accuracy": 98, "writtenNarrative": 97, "flow": 97, "learningContent": 98, "overall": 97.5, "pass": true, "blockingDefects": [],
+      "pageType": "lesson",
+      "id": "interpretability-editing",
+      "route": "/llm/interpretability-editing/",
+      "readerSnapshotHash": "sha256:cdae74a68f64fe9e9bc6c18f88c14ab75a2e5ba09a0c61761fa7ec11c18d2e8d",
+      "accuracy": 99,
+      "writtenNarrative": 98,
+      "flow": 99,
+      "learningContent": 99,
+      "overall": 98.75,
+      "pass": true,
+      "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The multimodal lesson follows patches or frames through modality encoders, connectors, positional information, decoder interfaces, grounding, and modality-specific evaluation.",
-        "feedback": "Patch-count arithmetic exposes the resolution-token-cost trade-off, while projection, cross-attention, and unified-stream designs are compared by mechanism. Noise ablations and the audio transfer case separate processor, perception, localization, reasoning, and language-prior failures.",
-        "revisionPriorities": []
-      }
-    },
-    {
-      "pageType": "lesson", "id": "interpretability-editing", "route": "/llm/interpretability-editing/", "readerSnapshotHash": "sha256:bb5cf8a824d5ce08c10e2e3d8924b96f4be5bc2755aa936a1bed6931c93f9b3d",
-      "accuracy": 98, "writtenNarrative": 98, "flow": 98, "learningContent": 98, "overall": 98, "pass": true, "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The final page distinguishes behavioral, attribution, probing, and causal evidence, then evaluates interventions and model edits by efficacy, locality, generalization, and persistence.",
-        "feedback": "The Paris/Rome patching trace, sham-control boundaries, and edit fixture consistently constrain claim strength. The capstone asks learners to choose the least invasive remedy, explicitly rejects unlearning claims without a threat model, and requires reproducible controls, artifacts, side-effect evidence, and rollback.",
+        "synopsis": "Interpretability and Model Editing moves from “A reproducible false claim, model activations, and a causal hypothesis enter investigation.” through “The learner intervenes on the suspected mechanism, checks changed behavior and collateral effects, and compares less invasive corrections.” to “The result is a bounded causal finding and the smallest correction supported by the evidence.” It then transfers that causal chain to a changed case before offering the exact authored objectives as optional post-mastery depth.",
+        "feedback": "The page keeps its mechanism technically consistent across the chapter narrative, operation trace, visual explanation, guided reveal, practice, and the changed-case check “Which result best supports a causal claim about an internal feature?”. Its prerequisite bridge, explicit limit, diagnostic retry, and three concrete objective records make the learning path cumulative, self-contained, and assessable without an external grader.",
         "revisionPriorities": []
       }
     }

@@ -22,7 +22,7 @@ test("the home page sells the destination while preserving the cumulative course
   for (const phase of ["numerical", "decoder", "training", "systems", "specialize"]) {
     assert.match(source.course, new RegExp(`id: "${phase}"`), `missing ${phase} phase`);
   }
-  for (const range of ["Lessons 1–5", "Lessons 6–12", "Lessons 13–28", "Lessons 29–39", "Lessons 40–44"]) {
+  for (const range of ["Lessons 1–7", "Lessons 8–12", "Lessons 13–28", "Lessons 29–39", "Lessons 40–44"]) {
     assert.ok(source.course.includes(range), `missing learning range ${range}`);
   }
   assert.match(source.course, /role: "specialization"/);
@@ -58,14 +58,14 @@ test("lesson pages make prior knowledge and the next reuse explicit", () => {
   ]) {
     assert.ok(source.courseView.includes(phrase), `missing progression cue: ${phrase}`);
   }
-  assert.match(source.courseView, /lessonById\[lesson\.prerequisites\.at\(-1\)!\]\.keyIdeas\[0\]/);
-  assert.match(source.courseView, /nextGuide\?\.objectives\[0\]/);
+  assert.match(source.courseView, /conceptFirstSummaryFor\(lastPrerequisite, lastPrerequisiteCoverage, course\.guides\[lastPrerequisite\.id\]\)/);
+  assert.match(source.courseView, /nextCoverage \? conceptFirstSummaryFor\(next, nextCoverage, nextGuide\)/);
   assert.match(source.courseView, /nextUsesThisLesson = Boolean\(next\?\.prerequisites\?\.includes\(lesson\.id\)\)/);
   assert.match(source.courseView, /lessonNarrativeResult\(course\.id, lesson\)/);
   assert.doesNotMatch(source.courseView, /nextBridgeParent/);
   assert.match(source.guideView, /Where this chapter begins/);
   assert.match(source.guideView, /Where the idea leads/);
-  assert.match(source.guideView, /aria-label="Lesson outcomes and checks"/);
+  assert.match(source.guideView, /operationOnly \? "Core operation check" : "Lesson outcomes and checks"/);
   assert.doesNotMatch(source.guideView, /By the end, you can/);
   assert.doesNotMatch(source.courseView, /By the end, you can/);
 });

@@ -27,11 +27,9 @@ const essentialLessonSurfaces = [
   "lesson.scrollStory",
   "lesson.guidedExample",
   "lesson.practice",
-  "lesson.objectiveChecks",
-  "lesson.lab",
-  "lesson.transfer",
   "lesson.quiz",
   "lesson.completion",
+  "lesson.technicalDepth",
   "lesson.furtherReading",
   "lesson.discussion",
   "lesson.next",
@@ -39,6 +37,10 @@ const essentialLessonSurfaces = [
 
 function blockFor(snapshot, surface) {
   return snapshot.blocks.find((block) => block.surface === surface);
+}
+
+function blockAtCoreOrTechnicalDepth(snapshot, surface) {
+  return blockFor(snapshot, surface) ?? blockFor(snapshot, surface.replace("lesson.", "lesson.technicalDepth."));
 }
 
 test("reader snapshots cover all five homes and 182 lessons in canonical route order", () => {
@@ -110,18 +112,21 @@ test("lesson dossiers preserve the rendered narrative and learning sequence", ()
     assert.deepEqual(blockFor(snapshot, "lesson.practice").interactionSequence.map((item) => item.phase), ["draft", "optionalHint", "revealAfterCommit", "selfDiagnosis"], `${key} practice reveal order`);
     const practiceDiagnosis = blockFor(snapshot, "lesson.practice").interactionSequence.find((item) => item.phase === "selfDiagnosis");
     assert.ok(practiceDiagnosis.choices.length === 3 && practiceDiagnosis.choices.every((choice) => choice.label && choice.feedback), `${key} practice choice-specific feedback`);
-    const code = blockFor(snapshot, "lesson.code");
+    const code = blockFor(snapshot, "lesson.technicalDepth.code");
     if (code) {
-      const codeDiagnosis = code.interactionSequence.find((item) => item.phase === "selfDiagnosis");
-      assert.ok(codeDiagnosis.choices.length === 3 && codeDiagnosis.choices.every((choice) => choice.label && choice.feedback), `${key} code choice-specific feedback`);
+      assert.deepEqual(code.interactionSequence.slice(0, 2).map((item) => item.phase), ["commitBeforeImplementation", "implementationAfterCommit"], `${key} optional code gate`);
+      assert.ok(code.order > blockFor(snapshot, "lesson.completion").order, `${key} code follows mastery`);
     }
-    const objectiveChecks = blockFor(snapshot, "lesson.objectiveChecks").objectives;
+    const exactObjectiveBlock = blockFor(snapshot, "lesson.technicalDepth.objectiveChecks") ?? blockFor(snapshot, "lesson.objectiveChecks");
+    const objectiveChecks = exactObjectiveBlock.objectives;
     assert.ok(objectiveChecks.length >= 1, `${key} objective checks`);
     assert.ok(objectiveChecks.every((objective) => {
       const [commit, reveal, disclosure] = objective.interactionSequence;
-      return commit.prompt && reveal.expectedReasoning && reveal.retry && disclosure.explanation && disclosure.mechanism && disclosure.workedExample && disclosure.boundary;
+      return exactObjectiveBlock.surface.startsWith("lesson.technicalDepth.")
+        ? commit.prompt && reveal.workedCase && reveal.expectedReasoning && reveal.retry && reveal.boundary
+        : commit.prompt && reveal.expectedReasoning && reveal.retry && disclosure.explanation && disclosure.mechanism && disclosure.workedExample && disclosure.boundary;
     }), `${key} complete objective feedback and disclosure content`);
-    const transfer = blockFor(snapshot, "lesson.transfer");
+    const transfer = blockAtCoreOrTechnicalDepth(snapshot, "lesson.transfer");
     if (snapshot.courseId === "llm") {
       assert.deepEqual(transfer.interactionSequence.map((item) => item.phase), ["boundaryContrast", "diagnosticDecision", "commitUnfamiliarCase", "structuredDecisionsAfterCommit", "workedSolutionAfterPass"], `${key} boundary-to-transfer order`);
       assert.ok(transfer.interactionSequence[1].correctFeedback && transfer.interactionSequence[1].incorrectFeedback, `${key} diagnostic branch feedback`);
@@ -150,7 +155,7 @@ test("lesson dossiers preserve the rendered narrative and learning sequence", ()
 
 test("lab dossiers include instructions, boundaries, and inspectable results for every lab family", () => {
   for (const snapshot of lessons) {
-    const lab = blockFor(snapshot, "lesson.lab");
+    const lab = blockAtCoreOrTechnicalDepth(snapshot, "lesson.lab");
     const key = `${snapshot.courseId}:${snapshot.id}`;
     assert.ok(lab.activity.change && lab.activity.observe && lab.activity.explain && lab.activity.complete && lab.activity.boundary, `${key} Change → Observe → Explain contract`);
     assert.ok(Array.isArray(lab.results) && lab.results.length >= 2, `${key} contrasting lab results`);
@@ -164,7 +169,7 @@ test("lab dossiers include instructions, boundaries, and inspectable results for
   assert.ok(llmLab.results[0].renderedInstrument.includes("Rewrite notes"));
   assert.ok(llmLab.results[0].renderedInstrument.includes("SUPPLIED TEXT"));
   assert.notEqual(llmLab.results[0].renderedInstrument, llmLab.results[1].renderedInstrument, "LLM lab evaluates a contrasting control state");
-  const numericWorldModelLab = blockFor(buildCoursePageReaderSnapshot("worldmodel", "learning-dynamics"), "lesson.lab");
+  const numericWorldModelLab = blockAtCoreOrTechnicalDepth(buildCoursePageReaderSnapshot("worldmodel", "learning-dynamics"), "lesson.lab");
   assert.deepEqual(numericWorldModelLab.results.map((result) => result.input), [1, 2, 3, 4], "world-model dossier includes every authored completion value");
   const worldModelLab = blockFor(buildCoursePageReaderSnapshot("worldmodel", "world-models"), "lesson.lab");
   assert.ok(worldModelLab.results.length >= 2, "world-model control has contrasting evaluated states");
@@ -173,26 +178,26 @@ test("lab dossiers include instructions, boundaries, and inspectable results for
 });
 
 test("capstone dossiers retain the complete build, evidence, source, reflection, and review order", () => {
-  const capstones = lessons.filter((snapshot) => blockFor(snapshot, "lesson.capstoneOverview"));
+  const capstones = lessons.filter((snapshot) => blockAtCoreOrTechnicalDepth(snapshot, "lesson.capstoneOverview"));
   assert.ok(capstones.length >= 30);
   for (const snapshot of capstones) {
     const key = `${snapshot.courseId}:${snapshot.id}`;
     const ordered = ["lesson.capstoneSynthesis", "lesson.capstoneOverview", "lesson.capstoneStages", "lesson.capstoneRubric", "lesson.capstoneExemplar", "lesson.capstoneReflection", "lesson.capstoneReview"].map((surface) => {
-      const item = blockFor(snapshot, surface);
+      const item = blockAtCoreOrTechnicalDepth(snapshot, surface);
       assert.ok(item, `${key} includes ${surface}`);
       return item.order;
     });
     assert.deepEqual([...ordered].sort((left, right) => left - right), ordered, `${key} capstone reading order`);
-    assert.ok(blockFor(snapshot, "lesson.capstoneStages").stages.length >= 1, `${key} capstone stages`);
-    const exemplar = blockFor(snapshot, "lesson.capstoneExemplar");
+    assert.ok(blockAtCoreOrTechnicalDepth(snapshot, "lesson.capstoneStages").stages.length >= 1, `${key} capstone stages`);
+    const exemplar = blockAtCoreOrTechnicalDepth(snapshot, "lesson.capstoneExemplar");
     assert.deepEqual(exemplar.interactionSequence.map((item) => item.phase), ["attemptGate", "revealAfterAttempt"], `${key} exemplar attempt gate`);
     assert.ok(exemplar.interactionSequence[1].summary && exemplar.interactionSequence[1].decisions, `${key} exemplar reveal content`);
-    const reference = blockFor(snapshot, "lesson.capstoneReference");
+    const reference = blockAtCoreOrTechnicalDepth(snapshot, "lesson.capstoneReference");
     if (reference) {
       assert.deepEqual(reference.interactionSequence.map((item) => item.phase), ["attemptGate", "revealAfterAttempt"], `${key} reference attempt gate`);
       assert.ok(reference.interactionSequence[1].sections && reference.interactionSequence[1].artifact, `${key} reference reveal content`);
     }
-    assert.ok(blockFor(snapshot, "lesson.capstoneReview").reviewLinks.length >= 1, `${key} synthesis review links`);
+    assert.ok(blockAtCoreOrTechnicalDepth(snapshot, "lesson.capstoneReview").reviewLinks.length >= 1, `${key} synthesis review links`);
   }
 });
 

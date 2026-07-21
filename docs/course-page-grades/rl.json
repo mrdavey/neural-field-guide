@@ -1,10 +1,10 @@
 {
   "rubricRevision": "2026-07-17",
-  "gradedAt": "2026-07-20T09:11:25Z",
-  "sourceFingerprint": "sha256:b4d735aa711358a071606ce2c297eeb6b0ce9e52c4f66e39f6d5002bd10971df",
+  "gradedAt": "2026-07-21T06:20:12Z",
+  "sourceFingerprint": "sha256:d73d45900d1ec4606f11e72353e31318864cd3608fea1ec13839a808fc584285",
   "grader": {
     "role": "independent whole-page grader",
-    "method": "Read every learner-facing block in ascending order from a freshly generated RL reader snapshot, recalculated worked arithmetic, executed every runnable Python fixture, and judged each complete page against the four whole-page dimensions without consulting prior grades.",
+    "method": "Read all 33 current canonical RL reader dossiers top to bottom in ascending block order without prior grades, recalculated important belief, return, backup, gradient, planning, support, and uncertainty arithmetic, traced every required operation across surfaces, and semantically checked all 64 exact objectives for explanation, mechanism, worked case, boundary, committed reasoning, and retry.",
     "input": "course-page-reader-snapshot",
     "blind": true,
     "priorGradesSeen": false
@@ -16,57 +16,35 @@
       "pageType": "home",
       "id": "home",
       "route": "/rl/",
-      "readerSnapshotHash": "sha256:86280a26bf06ff7d3328f8aa489403e8f4cd2d59637227318b00084fe436aa6e",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 99,
-      "learningContent": 98,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:3e15f42e7f035e0bcb9b8982c3258193344baae4de3dca8818d0badfb3b12181",
+      "accuracy": 97,
+      "writtenNarrative": 97,
+      "flow": 98,
+      "learningContent": 96,
+      "overall": 97,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The course home frames reinforcement learning as a consequence-driven decision discipline, then carries that promise through seven cumulative territories from finite decision systems to a reproducible seed-level study.",
-        "feedback": "The control-loop opening is accurate, concrete, and immediately bounded as illustrative. The payoffs, staged course arc, track manifest, evidence promise, primary sources, and start action agree about what learners will build and how claims will be checked. The page reads as a coherent invitation rather than a catalog, and it clearly separates browser fixtures and optional external runs from required learning.",
-        "revisionPriorities": [
-          "Vary the repeated track-description cadence so the seven-frontier manifest feels slightly less templated while preserving its clear cumulative arc."
-        ]
+        "synopsis": "The Reinforcement Learning & Control home frames learning as repeated action and consequence, maps seven cumulative territories from the decision loop through reliable research, and closes with a clear start action and course-scale evidence boundary.",
+        "feedback": "The promise, control-loop visual, seven-stage course arc, milestones, sources, duration, and completion outcome agree with the released 32-lesson curriculum. The page distinguishes reward from intended success and safety, separates browser fixtures from measurement and optional execution, and gives a coherent route through tabular values, deep agents, policy gradients, model-based control, logged-data learning, constraints, and independent-run evidence.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "sequential-decision-systems",
       "route": "/rl/sequential-decision-systems/",
-      "readerSnapshotHash": "sha256:82db18ec7b6220bd7b87ee3a572975e8dbe0f7f93bfbbb67f7c679c25d45f18a",
-      "accuracy": 98,
+      "readerSnapshotHash": "sha256:6f6e407faeac13ad8b463eba9511f1ad1d0c949b32fb65ac0f7c33581182c421",
+      "accuracy": 97,
       "writtenNarrative": 97,
-      "flow": 98,
+      "flow": 97,
       "learningContent": 98,
-      "overall": 97.75,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The opening lesson develops reinforcement learning from a maze choice-and-consequence loop, then uses score shortcuts to separate optimized feedback from intended success and safety.",
-        "feedback": "The page introduces agent, environment, feedback, and policy before relying on them, sustains the maze and warehouse examples across explanation, diagram, code, practice, lab, transfer, and quiz, and never presents its deterministic preference update as a trained agent. Commit-before-reveal and option-specific retry paths test both the basic loop and reward-shortcut diagnosis. The handoff to formal MDP records is natural and prerequisite-safe.",
-        "revisionPriorities": [
-          "Add one compact two-step delayed-consequence example to foreshadow temporal credit assignment without importing later return notation."
-        ]
-      }
-    },
-    {
-      "pageType": "lesson",
-      "id": "mdps-rewards",
-      "route": "/rl/mdps-rewards/",
-      "readerSnapshotHash": "sha256:fbe8ab89e6e30f8acf4097ea049c2a49b107d79f5f283394c04d56f36f67066a",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
-      "pass": true,
-      "blockingDefects": [],
-      "wholePageReview": {
-        "synopsis": "The lesson formalizes the decision loop as an MDP, computes immediate expectation and discounted returns, and then tests reward misspecification and non-Markov state aliasing.",
-        "feedback": "Definitions, timing, notation, and arithmetic agree throughout: the crash mixture has mean zero, the delayed reward gives 2.5 versus 8.1, and the aliasing diagnosis correctly depends on action-conditioned futures changing with hidden history. The page preserves tail outcomes instead of letting an expectation erase them, distinguishes reward from success and constraints, and carries the same mechanism into executable code, three diagnostic lab cases, changed-case transfer, and a precise next use in belief filtering.",
+        "synopsis": "What Is Reinforcement Learning? opens with why this subject is worth learning, establishes its starting situation without assuming an earlier course lesson, and follows a visible operation from An agent receives a situation and a set of actions it can take. It chooses an action, observes the consequence and feedback, then carries that evidence into later choices. Repeated interaction produces an improving policy only to the extent that the feedback and experience are informative. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Feedback teaches exactly the behavior it rewards. If points favor speed while the real goal also requires safety, an agent can learn a fast but unacceptable shortcut. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Explain reinforcement learning as repeated choice, consequence, and improvement; Distinguish the feedback an agent optimizes from the success and safety outcomes people intend—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: What the Agent Can and Cannot Observe handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -74,17 +52,17 @@
       "pageType": "lesson",
       "id": "partial-observation",
       "route": "/rl/partial-observation/",
-      "readerSnapshotHash": "sha256:27a444fc0302a0342f326e6263a27aa6dd8d61b9f7f65bd77b641978d2dd396b",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:9f0af1383a9d3e7871350dd7de6aa99692485e8b9c5c11607b5add6b85ecd18e",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The chapter repairs non-Markov observations with a belief state, tracing action prediction, likelihood weighting, normalization, and recovery from impossible or misleading evidence.",
-        "feedback": "The two-state calculation is internally exact: the prior predicts to [.52,.48], the likelihood produces evidence .488, and the posterior is approximately [.213,.787]. The narrative defines the hidden-state contract before the Bayes update, explicitly refuses zero-evidence normalization, and separates low entropy from calibration or safety. Code, lab, objective checks, and transfer all preserve prediction-before-observation ordering and require an explicit recovery policy.",
+        "synopsis": "What the Agent Can and Cannot Observe opens with how do action prediction, evidence quality, and impossible evidence change the posterior?, activates State, Observation, Action and Trajectory and Belief States: Revising Hidden Possibilities, and follows a visible operation from The current observation, prior history, and action record enter the state estimator. The estimator predicts hidden-state possibilities through the action and updates them with new evidence. The result is a history summary or belief used for action selection under remaining uncertainty. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A confident belief may be wrong when observation or transition models are misspecified; low entropy is not a safety certificate. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute a finite belief prediction and observation update; Choose history or belief representations from decision evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Policies: How Behavior Chooses Actions handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -92,97 +70,107 @@
       "pageType": "lesson",
       "id": "policies-occupancy",
       "route": "/rl/policies-occupancy/",
-      "readerSnapshotHash": "sha256:cddc87d7b143f9907a76b44442d268fa4a0218344873ac68d18574de62aa8820",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:8f5ece478151b14b8b752558dcbddce1e165e422fa963a08508037b4e82bbead",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson moves from state-conditioned action probabilities to policy-induced occupancy, then uses behavior-target overlap to bound off-policy evaluation claims.",
-        "feedback": "The discounted occupancy definition, .4×.7=.28 state-action example, zero-support diagnosis, and importance-ratio boundary are accurate and mutually consistent. The prose explains why marginal action frequency is inadequate, and the lab distinguishes full, thin, and absent overlap without inventing unseen outcomes. Learners predict before reveal, receive local diagnostic feedback, and transfer the support rule to a critical unseen target action.",
-        "revisionPriorities": [
-          "Add one tiny numeric importance-weight and effective-sample-size calculation so the defined ESS term becomes directly inspectable before later offline evaluation work."
-        ]
+        "synopsis": "Policies: How Behavior Chooses Actions opens with which behavior dataset supports the target policy's critical action choices?, activates What the Agent Can and Cannot Observe and Sampling, Seeds & Random Variables, and follows a visible operation from A policy, starting situations, environment dynamics, and horizon enter the behavior process. Policy choices interact with transitions repeatedly, changing which states and actions are visited. The resulting occupancy distribution records where the policy actually gathers outcomes and evidence. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Matching average action frequencies does not imply matching state-conditioned occupancy or returns. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute policy action and simple occupancy probabilities; Diagnose behavior-target support and evaluation mismatch—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Formalizing the Decision Loop handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
+      }
+    },
+    {
+      "pageType": "lesson",
+      "id": "mdps-rewards",
+      "route": "/rl/mdps-rewards/",
+      "readerSnapshotHash": "sha256:3b0e6adab3f0103e1d40cc76174868140b98b2c582d3b8bbf77508b309156404",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
+      "pass": true,
+      "blockingDefects": [],
+      "wholePageReview": {
+        "synopsis": "Formalizing the Decision Loop opens with which mdp record exposes tail risk, delay weighting, or state aliasing?, activates What Is Reinforcement Learning? and Policies: How Behavior Chooses Actions and One Decision Plus What Comes Next, and follows a visible operation from The current state and action enter a transition-and-reward model. The model distributes possible next states and immediate consequences according to the decision process. The result is a next-state and reward distribution that can be chained into longer-term decisions. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A scalar expected reward can hide tail risk, reward hacking, and state aliasing; optimizing it does not prove task success. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Specify and inspect a finite MDP transition-reward table; Diagnose reward misspecification and non-Markov state—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Build a Tabular Control Workbench handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "tabular-control-capstone",
       "route": "/rl/tabular-control-capstone/",
-      "readerSnapshotHash": "sha256:87f3eb0e5f3e843ec82de61688fbbe3c04cc6ae76e7796076975751e9702582a",
+      "readerSnapshotHash": "sha256:5428292d1db5a82a971d81126c35a099ee77beae50ce581710dfdfc0197b2889",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
+      "learningContent": 98,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This synthesis page turns MDP specification, exact solution, seeded rollouts, occupancy, and constraints into a staged finite-control workbench and changed-dynamics study.",
-        "feedback": "The page consistently distinguishes exact model evidence from sampled estimates and universal overreach. Its runnable Bellman fixture, evidence gate, transfer check, four-stage build, local smoke/full commands, acceptance checks, rubric, attempt-gated exemplar, artifact, and bounded decision rule form a complete self-contained project journey. Primitive budgets, failure preservation, and constraint-first decisions are especially strong, and the next lesson can reuse the validated solver directly.",
-        "revisionPriorities": [
-          "Label the three-state value-1.8 worked case and the downloadable five-state project as explicitly separate fixtures at their first mention."
-        ]
+        "synopsis": "Build a Tabular Control Workbench opens with which artifact is exact model evidence, sampled evidence, or an invalid overclaim?, activates Formalizing the Decision Loop and Policies: How Behavior Chooses Actions, and follows a visible operation from A finite environment contract, policy, seeds, and exact transition table enter the workbench. The workbench evaluates or improves policies and contrasts exact planning with sampled rollouts and coverage checks. The result is a tested control package with bounded evidence about value and behavior. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and integrates the section in an evidence-bearing build.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Passing a tiny tabular workbench does not establish scalability, function approximation stability, or real-system validity. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Build and verify a reusable finite-MDP solver and rollout evaluator; Run a controlled changed-environment control experiment—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The staged project, local checks, rubric, attempt-gated exemplar, machine-readable reference, and evidence labels make the capstone self-contained and keep claims bounded to its environment, seeds, budgets, and evaluator.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "dynamic-programming",
       "route": "/rl/dynamic-programming/",
-      "readerSnapshotHash": "sha256:2f5ff742a704614caf03ca2dc8a62e73bf1d40afa3a13ac79118a256443a78d0",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:954b25e28847f9a2cde3c0f46794513d65c196c70333ed58e6b7f12be3918862",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page distinguishes fixed-policy evaluation from optimality backups, follows exact Bellman arithmetic, and separates solver convergence from model transfer.",
-        "feedback": "The .596 policy average and .89 greedy backup are correct, while the executable self-loop example deliberately exposes a later policy reversal rather than hiding it. Residuals, transition validation, direct-versus-iterative checks, changed dynamics, and sampled rollout evidence are assigned distinct roles. The progression from known-model planning to Monte Carlo estimation is coherent, and the changed-case transfer correctly preserves solver correctness while diagnosing model mismatch.",
-        "revisionPriorities": [
-          "State the exact changed-slip transition row behind the lab's .68 backup on the card so that every displayed number is recomputable in place."
-        ]
+        "synopsis": "Dynamic Programming opens with how do policy choice, optimality choice, and changed dynamics alter one backup?, activates Build a Tabular Control Workbench and One Decision Plus What Comes Next, and follows a visible operation from A known transition table, rewards, and a current value estimate enter a backup. The backup combines immediate consequence with the value of possible next states, then repeats across the table. The values and policy stabilize toward the solution supported by the known finite model. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Planning from a declared table is exact only for that table; model error or omitted states can make the computed policy poor in the actual process. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute policy-evaluation and value-iteration backups; Diagnose convergence and model-mismatch claims—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Monte Carlo Estimation handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "monte-carlo-estimation",
       "route": "/rl/monte-carlo-estimation/",
-      "readerSnapshotHash": "sha256:b2e258eb9edcbb82783042e537d00e6b13f07ced0428ef5108e0416d678f2630",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:db1ff3e904eccb065fc70e24e24f611c0592414223401e9f2f130dfb44aa513e",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson computes complete episodic returns, contrasts first-visit and every-visit counting, and identifies the complete seeded run as the uncertainty unit for training reliability.",
-        "feedback": "The backward returns [1,2,2], first-visit sample [1], and dependent every-visit pair [1,2] are correct and retained consistently across prose, code, checks, and lab. The page carefully qualifies first-visit unbiasedness, finite-sample every-visit behavior, truncation, and dependence, then prevents evaluation episodes from masquerading as independent trained policies. The changed-case assessment tests the hierarchy rather than merely repeating a definition.",
-        "revisionPriorities": [
-          "Add a second short episode to make the difference between within-episode visit dependence and across-episode averaging visually explicit."
-        ]
+        "synopsis": "Monte Carlo Estimation opens with which counting rule and uncertainty unit match the declared value claim?, activates Policies: How Behavior Chooses Actions, and follows a visible operation from Complete sampled episodes and their observed rewards enter the estimator. The estimator accumulates each episode's later rewards and averages returns for the visited decisions. The result is a model-free value estimate with uncertainty from finite episode sampling. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that First-visit unbiasedness does not transfer to every-visit finite samples; more correlated episodes or visits do not create independent algorithm replications, and truncation mishandling can bias either return estimator. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute episodic returns and Monte Carlo value estimates; Design episode and seed aggregation with honest uncertainty—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Temporal-Difference Learning handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "temporal-difference-learning",
       "route": "/rl/temporal-difference-learning/",
-      "readerSnapshotHash": "sha256:d18385e75796208724b792c129f367c182f280e3beaf6735f914d10fd9ae61ba",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 99,
-      "learningContent": 99,
-      "overall": 98.75,
+      "readerSnapshotHash": "sha256:a74e25d6d3c15426c2b17651f9be74e5ded649aa83faca1da10593e8a21642c4",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The chapter derives a TD(0) target, error, and update, then uses terminal-versus-truncation semantics to diagnose systematic bootstrapping bias.",
-        "feedback": "All arithmetic agrees: target 3.7, error 1.7, and updated value 2.17. The narrative earns each transition from Monte Carlo and dynamic programming, keeps target construction separate from mutation, and repeatedly distinguishes true termination from a continuing-task time limit. The code, lab, transfer, and quiz reinforce that ownership with specific feedback and a changed-case retry, while the limitations correctly anticipate function approximation and off-policy instability.",
+        "synopsis": "Temporal-Difference Learning opens with how do next value and ending semantics change the same one-step target?, activates Dynamic Programming and Monte Carlo Estimation, and follows a visible operation from A current value estimate, one observed reward, and the next state's estimate enter the update. The learner compares the old estimate with a one-step bootstrapped target and moves toward the difference. The result is an updated value before the episode has to finish. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A small TD error can reflect self-consistent wrong values under function approximation, state aliasing, or off-policy instability. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute and implement a TD(0) update; Diagnose bootstrapping bias and ending-mask failures—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: SARSA, Q-Learning & Off-Policy Targets handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -190,77 +178,71 @@
       "pageType": "lesson",
       "id": "sarsa-q-learning",
       "route": "/rl/sarsa-q-learning/",
-      "readerSnapshotHash": "sha256:1e377a2dc18d994562af51257b8813fd863926608854093ff20d704e608e8669",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:33a5244277579f89655ad37d32df29e544e7923cdcfe480411f440c273c45192",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson contrasts SARSA's behavior-selected continuation with Q-learning's greedy continuation and then evaluates the deployed behavior under exploration and constraints.",
-        "feedback": "The 3.6 versus 5.4 target arithmetic, termination handling, and on-policy/off-policy terminology are accurate. The cliff-style risk discussion is presented as a bounded example rather than a universal ranking, and the page ties maximization bias, tie behavior, occupancy, greedy evaluation, and deployed epsilon behavior into one decision protocol. Commit-before-options transfer correctly rejects a greedy-only metric when exploration remains active in deployment.",
-        "revisionPriorities": [
-          "Turn the optional double-Q changed case into one visible selection-versus-evaluation arithmetic trace to complete the maximization-bias extension."
-        ]
+        "synopsis": "SARSA, Q-Learning & Off-Policy Targets opens with which next-action rule produces each control target and risk profile?, activates Temporal-Difference Learning, and follows a visible operation from A transition and the behavior policy's next action enter SARSA, while the same transition and candidate next actions enter Q-learning. SARSA bootstraps from the action actually chosen; Q-learning bootstraps from the best estimated next action. The updates produce different action-value targets and different sensitivity to behavior coverage. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that The larger Q-learning target is not automatically more accurate; maximization bias and risky exploratory occupancy can reverse performance. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute SARSA and Q-learning targets from one transition; Choose and evaluate on-policy versus greedy-target control under exploration—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Build a Value-Learning Agent handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "value-methods-capstone",
       "route": "/rl/value-methods-capstone/",
-      "readerSnapshotHash": "sha256:1200850693a7c792755f830bc3399519be115fe6b5a7d2b4eaed0481ade6f306",
+      "readerSnapshotHash": "sha256:906384bc3c6f6093eb8fcdd4c4b71fc46ffe4792b2a5cb8b4ef6516d8764cbf0",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
+      "learningContent": 98,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This capstone unifies exact planning, Monte Carlo, TD, SARSA, and Q-learning behind shared transition, ending, budget, seed, and changed-dynamics contracts.",
-        "feedback": "The page makes target ownership and matched exposure the central comparison logic, then supplies a complete project path with runnable CPU smoke/full profiles, exact references, behavior-versus-greedy evaluation, seed-level failures, constraint gates, rubric, exemplar, and machine-readable artifact. Its pseudocode correctly varies only the continuation estimator across one-step methods. The learning journey remains bounded to a finite course fixture and treats low loss with bad ending masks as failure evidence.",
-        "revisionPriorities": [
-          "Mark the opening five-seed outcome pattern explicitly as a preserved course reference scenario so readers cannot mistake it for a promised result from their run."
-        ]
+        "synopsis": "Build a Value-Learning Agent opens with which artifact package permits baseline acceptance, intervention, or a bounded conclusion?, activates Dynamic Programming and SARSA, Q-Learning & Off-Policy Targets, and follows a visible operation from One finite environment, matched seeds, and several value-learning methods enter the comparison. The learner verifies each target and update, then changes the transition process while holding evaluation conditions fixed. The result is an evidence package showing where planning, sampling, and bootstrapping agree or fail. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and integrates the section in an evidence-bearing build.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A finite comparison establishes implementation and mechanism in scope, not a ranking for nonlinear or continuous control. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Build and verify a common value-learning workbench; Conduct a seed-level changed-dynamics comparison—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The staged project, local checks, rubric, attempt-gated exemplar, machine-readable reference, and evidence labels make the capstone self-contained and keep claims bounded to its environment, seeds, budgets, and evaluator.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "function-approximation",
       "route": "/rl/function-approximation/",
-      "readerSnapshotHash": "sha256:e952e51d9fa64009305379daa3175dc0dee72ac0749439ed71505ed6160fe125",
+      "readerSnapshotHash": "sha256:c66c6428966ba69828d6f295fa83392fd0def802ba66f857527d43d7c99a2745",
       "accuracy": 98,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.25,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page replaces isolated table cells with shared parameters, computes one linear semi-gradient update, and traces its effect on an unsampled neighboring state.",
-        "feedback": "The source prediction, error, weight update to [.6,-.05], and neighbor change from -.25 to -.05 are correct. Shapes, target ownership, interference, held-out support, gradient scale, and bootstrapped instability form a coherent extension from the tabular workbench. The lab's orthogonal/shared/opposed cases make parameter sharing observable, and the transfer check correctly separates low visited-state loss from unsupported extrapolation.",
-        "revisionPriorities": [
-          "Replace the opaque executable expression `target=.1*0+1.0` with `target=1.0` so the otherwise transparent fixture has no unexplained arithmetic."
-        ]
+        "synopsis": "Function Approximation opens with how does feature sharing alter both the trained point and an untrained neighbor?, activates Build a Value-Learning Agent and How Error Reaches Earlier Decisions, and follows a visible operation from A state representation and shared adjustable parameters enter a value predictor. The predictor maps the state to a value and uses prediction error to change parameters shared across many states. The result is generalization to related states together with possible interference between their updates. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Low training error can coexist with harmful extrapolation, interference between states, and unstable bootstrapped targets. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute a linear value-function update and trace parameter sharing; Diagnose approximation generalization and instability—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Replay Buffers & Target Networks handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "replay-target-networks",
       "route": "/rl/replay-target-networks/",
-      "readerSnapshotHash": "sha256:bd2c492f5a21beeac9930f3ba1341926e42496549194159c9cc1739edd1af648",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:ad50c8921f9e34dc40c363f186eb710392a1f5d386bff71295374fbf95616e34",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson treats replay and delayed targets as one data-and-target system, tracing row provenance, ending masks, target lag, and adaptation after change.",
-        "feedback": "The continuing, terminal, and time-limit targets 5.05, 1.0, and 5.05 are correct, as are the 8.2 Polyak update and 7.3 online-network contrast. The page does not claim replay makes data on-policy, and it links capacity, age, source policy, update-to-data ratio, and target rule to both stability and freshness. The deterministic dashboard is honestly labeled and the changed-case transfer diagnoses stale objectives rather than rewarding a falling loss.",
+        "synopsis": "Replay Buffers & Target Networks opens with how do buffer age and target lag change stability and adaptation?, activates Function Approximation and SARSA, Q-Learning & Off-Policy Targets and Trajectory Data, Replay and Coverage, and follows a visible operation from Stored transitions and a slowly refreshed target network enter a learning update. Replay resamples past evidence while the target copy holds the bootstrap reference stable for several steps. The result is a less correlated, slower-moving target process whose remaining staleness must be monitored. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Replay does not make old data on-policy, and a stale target can slow adaptation or preserve obsolete errors. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Trace replay sampling and target-network TD targets; Choose buffer and target-update settings from stability and freshness evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Deep Q-Networks handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -268,17 +250,17 @@
       "pageType": "lesson",
       "id": "dqn",
       "route": "/rl/dqn/",
-      "readerSnapshotHash": "sha256:2c6a7d5fc94679d7be3af66476121d2533629e4e435e71a2d1f6c254bbd08da5",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:ca9fcdbc4b7093a5d3783086c27ba239ce6f9715ba5d296f36796bdfb7d53f07",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The chapter assembles DQN from collection through replay, logged-action gather, delayed targets, optimization, target copying, and frozen greedy evaluation.",
-        "feedback": "Tensor shapes [B,...] to [B,A] to [B] and target ownership are precise, while the pseudocode and objective checks keep sampled actions, no-grad target construction, and ending masks aligned. The narrative correctly rejects falling TD loss as sufficient evidence when Q scale explodes or return falls. Coverage, replay contents, policy separation, checkpoint state, and failure gates form a coherent diagnostic journey into exploration.",
+        "synopsis": "Deep Q-Networks opens with which joint signal indicates learning, instability, or an invalid evaluation?, activates Function Approximation and Replay Buffers & Target Networks, and follows a visible operation from A state enters a network that produces one value estimate for every discrete action. A replayed transition forms a one-step target using reward and a target-network estimate, then prediction error updates the online network. The result is a revised action-value function used to select future actions. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A decreasing DQN loss can accompany Q overestimation, replay collapse, insufficient exploration, or worse policy return. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Assemble and verify a complete minimal DQN loop; Diagnose DQN learning from Q scale, coverage, and policy evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Exploration in Deep RL handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -286,97 +268,89 @@
       "pageType": "lesson",
       "id": "exploration-deep-rl",
       "route": "/rl/exploration-deep-rl/",
-      "readerSnapshotHash": "sha256:8d850e6ea24117e68bdc15b91482b302aa4be0550d7681b112546a18a316401b",
+      "readerSnapshotHash": "sha256:90bf7dcbcd0911579b0a7d2eb534314bb4b5d249ec5314957e9fe6237d41a0ad",
       "accuracy": 98,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.25,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson compares epsilon randomness, count-based novelty, and ensemble disagreement, then chooses exploration using coverage, learning, calibration, and safety evidence.",
-        "feedback": "The .1 versus .5 count bonus and the larger doorway ensemble spread support the worked decision without turning uncertainty into an oracle. The page clearly distinguishes action entropy from task-relevant occupancy, accounts for matched interaction budgets and hard constraints, and preserves shared ensemble bias as a boundary. Lab and transfer cases force the learner to reject unsafe mean-return gains and to diagnose high entropy with no new state coverage.",
-        "revisionPriorities": [
-          "Show the simple disagreement statistic used for the two ensemble examples so the preference is numerically inspectable rather than only qualitatively obvious."
-        ]
+        "synopsis": "Exploration in Deep RL opens with how do randomness, coverage, and constraint exposure move across exploration policies?, activates Deep Q-Networks and Uncertainty, Calibration and Ensembles, and follows a visible operation from Current value beliefs, uncertainty, and the available action set enter the exploration rule. The rule sometimes selects information-seeking or randomized actions instead of the current greedy choice. The resulting experience can improve coverage, while its cost and risk remain part of the decision. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that More coverage is not automatically better when exploration violates constraints or visits irrelevant regions. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compare epsilon, bonus, and uncertainty exploration mechanisms; Choose an exploration policy from coverage, learning, and safety evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Build and Diagnose a DQN handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "deep-value-capstone",
       "route": "/rl/deep-value-capstone/",
-      "readerSnapshotHash": "sha256:0e78fa58f2d05d7ba4a563a6fdf62ca0bc916842b82b1153835eb54b2ea2f274",
+      "readerSnapshotHash": "sha256:91693c96d38d6fefe7ad014b89232390904c0975d0cb251af6179ac5010f4bee",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
+      "learningContent": 98,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This synthesis page builds, resumes, reproduces, and diagnoses a minimal DQN before allowing one matched replay, target, loss, or exploration intervention.",
-        "feedback": "Micro-tests, replay and RNG state, exact next-update resume, baseline acceptance, primitive budgets, Q-scale gates, seed failures, and bounded conclusions are joined into one project rather than presented as disconnected checks. The local CPU starter, smoke/full profiles, artifact, attempt-gated reference, and rubric make the required path self-contained. A forced NaN remains part of treatment reliability, and the page explicitly refuses Atari, continuous-control, or deployment claims.",
-        "revisionPriorities": [
-          "Identify opening five-seed baseline statements as reference-fixture evidence at first mention, matching the stronger provenance language used later in the page."
-        ]
+        "synopsis": "Build and Diagnose a DQN opens with which evidence package permits a long run, an intervention, or a conclusion?, activates Deep Q-Networks and Exploration in Deep RL, and follows a visible operation from A pinned environment, replay schema, target network, seeds, and reproduced DQN baseline enter the study. The learner verifies mechanics and changes one stability or exploration choice under matched runs. The result is a reproducible evidence package with curves, failures, and a bounded intervention decision. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and integrates the section in an evidence-bearing build.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Course-scale DQN evidence does not establish Atari performance, continuous control, or safe deployment. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Assemble and audit every state transition in an end-to-end DQN-style agent; Run a matched seed-level DQN intervention with failure evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The staged project, local checks, rubric, attempt-gated exemplar, machine-readable reference, and evidence labels make the capstone self-contained and keep claims bounded to its environment, seeds, budgets, and evaluator.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "policy-gradients",
       "route": "/rl/policy-gradients/",
-      "readerSnapshotHash": "sha256:5b7124d50d3162c4a1ba1ecc6e9af8ec838092cdf7fdbbb1631b88c0f3a6df7d",
+      "readerSnapshotHash": "sha256:08d10e9e08edfe05882672630289b5a380433fed4390679051ccffbf7c35b649",
       "accuracy": 98,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.25,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The chapter derives the sampled-action likelihood-ratio term, follows its gradient sign, and then designs on-policy collection and seed-level variance evaluation.",
-        "feedback": "For equal logits and advantage two, the probability, loss 1.386, and direction of both softmax logits are correct. The page keeps trajectories attached to the generating revision, separates evaluation episodes from training replicates, and reads equal means alongside run-level spread rather than pooling timesteps. The positive, zero, and negative advantage lab and stale-policy transfer provide genuine changed-case retrieval with precise repair routes.",
-        "revisionPriorities": [
-          "Clarify in the quiz that the differentiable probability is evaluated under the current on-policy revision corresponding to the behavior batch, not an arbitrary stored stale behavior value."
-        ]
+        "synopsis": "Policy Gradients opens with how do positive, zero, and negative advantages change a sampled action's probability?, activates Policies: How Behavior Chooses Actions and Monte Carlo Estimation and RL Fundamentals and Likelihood as Feedback for a Generator, and follows a visible operation from Sampled actions, their policy probabilities, and later returns enter the policy update. Actions followed by above-reference outcomes receive pressure to become more likely, while worse outcomes push the other way. The result is a changed stochastic policy estimated from sampled trajectories. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that One high-return trajectory produces a noisy gradient and does not prove the credited actions caused the outcome. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute a categorical likelihood-ratio policy-gradient term; Design on-policy collection and variance-aware evaluation—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Baselines, Advantages & GAE handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "baselines-advantages",
       "route": "/rl/baselines-advantages/",
-      "readerSnapshotHash": "sha256:3c51c2859c611f1e2c4d482e85b0fdb852c261e92896fa9cd6dde517016f7bbd",
-      "accuracy": 97,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
+      "readerSnapshotHash": "sha256:7eb41c199271b71d8f2c045e7cce404824e8b5cba82749d27baf0f4ba3ee7bba",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson separates action-independent baselines from GAE trace length, computes the backward residual recursion, and tests ending and critic-quality assumptions.",
-        "feedback": "The GAE arithmetic [-.5,.14,1.1008] in reverse order is correct and consistent across prose, executable code, lab, and objective checks. The narrative distinguishes centering credit from extending residual reach, treats time-limit bootstrapping explicitly, and joins advantage scale with value error and policy outcomes. The only precision weakness is wording that can momentarily attribute bias to a learned baseline itself when the actual risks arise through bootstrapped or leaky advantage construction.",
-        "revisionPriorities": [
-          "Qualify the baseline-bias sentence so it explicitly attributes bias to bootstrapping, action dependence, or leakage rather than to every learned action-independent baseline."
-        ]
+        "synopsis": "Baselines, Advantages & GAE opens with how does lambda change residual reach and critic dependence?, activates Policy Gradients and Actor–Critic Learning and λ-Returns, and follows a visible operation from Observed returns and a state-value baseline enter the credit estimator. The estimator subtracts expected outcome and optionally mixes short and long temporal evidence. The result is an advantage signal that preserves direction while reducing avoidable variance. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A learned baseline can add bias through bad bootstrapping or leakage even while reducing apparent variance. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute TD residuals and GAE backward; Choose baseline and lambda from bias, variance, and ending evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Actor-Critic Methods handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "actor-critic",
       "route": "/rl/actor-critic/",
-      "readerSnapshotHash": "sha256:12847eb5513f760e3860b293021bd24ad801b0cf07253ba8a81dd0d7e6bec9d2",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:63262d082f5b3a83f2bf75fdc7a20b2bc8e2ea937dab6da3d33edc4eaa5fbd98",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page joins actor, critic, entropy, and PPO ratio terms, computes their signed contributions, and diagnoses shared-gradient domination and invalid policy ownership.",
-        "feedback": "The ratio 1.5, clipping to 1.2, surrogate 2.4, critic loss .16, entropy .673, and total loss about -2.3267 all agree. Advantages and targets are detached according to their intended owners, old action probabilities remain available for PPO, and critic fit never substitutes for behavior evaluation. The loss-board and changed-case transfer expose both critic domination and accidental actor-to-critic gradients with specific repairs.",
+        "synopsis": "Actor-Critic Methods opens with which trace reveals healthy coupling, critic domination, or an invalid ppo ratio?, activates Baselines, Advantages & GAE and Actor–Critic Learning and λ-Returns, and follows a visible operation from Shared trajectories enter a critic that estimates value and an actor that assigns action probabilities. The critic forms a credit signal; the actor changes choices using that signal while both learn from the same experience. The result is an updated policy and value model whose errors can interact. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A low critic loss does not establish good actions, and aggressive clipping can hide stalled learning or poor advantage estimates. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Trace actor, critic, entropy, and clipped-ratio losses; Diagnose shared-gradient and policy-update failures—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Build an On-Policy Agent handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -384,57 +358,53 @@
       "pageType": "lesson",
       "id": "on-policy-capstone",
       "route": "/rl/on-policy-capstone/",
-      "readerSnapshotHash": "sha256:73ccfb5ee52ce18f2041ec54b8b500cced0fb0957d3024ca40df57a8fe5113dd",
+      "readerSnapshotHash": "sha256:71af8784d60cdb289af7158c3d3367951890b14278ee79d86db112db1a79bcd8",
       "accuracy": 98,
-      "writtenNarrative": 97,
+      "writtenNarrative": 96,
       "flow": 98,
-      "learningContent": 99,
-      "overall": 98,
+      "learningContent": 98,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This capstone turns frozen-policy rollouts, GAE, actor-critic objectives, checkpoints, evaluation, and one estimator intervention into a paired seed-level study.",
-        "feedback": "The page preserves actions, old log probabilities, values, rewards, endings, revision IDs, and update counts as one batch contract. It requires arithmetic and gradient gates before long runs, matches both interaction and optimization exposure, retains KL and finite-value failures, and supplies runnable local profiles, staged evidence prompts, an attempt-gated exemplar, rubric, and downloadable artifact. Claims remain bounded to the chosen environment, policy class, horizon, seeds, and budget.",
-        "revisionPriorities": [
-          "Expand the pseudocode value-loss call to name both critic predictions and return targets, matching the otherwise explicit actor/critic ownership."
-        ]
+        "synopsis": "Build an On-Policy Agent opens with which package supports arithmetic debugging, baseline branching, or a bounded result?, activates Policy Gradients and Actor-Critic Methods, and follows a visible operation from A categorical policy, value critic, rollout contract, and independent seeds enter the build. The learner verifies returns and advantages, then compares one credit or update intervention on fresh on-policy trajectories. The result is a reproducible agent and a bounded decision supported by complete seed evidence. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and integrates the section in an evidence-bearing build.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A small on-policy result does not establish scalable continuous control or universal PPO defaults. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Build and verify a complete on-policy actor-critic agent; Conduct a paired estimator or policy-update intervention—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The staged project, local checks, rubric, attempt-gated exemplar, machine-readable reference, and evidence labels make the capstone self-contained and keep claims bounded to its environment, seeds, budgets, and evaluator.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "learned-dynamics-control",
       "route": "/rl/learned-dynamics-control/",
-      "readerSnapshotHash": "sha256:4fd9d3d7ca8cd27cefee46adc379207284ba9d68a403503fb0b1c3cbf07c15ad",
+      "readerSnapshotHash": "sha256:1a5f2e68ee8697b1331f2ac01bf01731107bd6de038b7046efc174ebc0ad5306",
       "accuracy": 98,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.25,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson builds an action-conditioned next-state, reward, and ending model, then judges it by multistep rollout and the real consequences of model-selected actions.",
-        "feedback": "The hand audit correctly identifies .4 state error, .3 reward error, and a termination false negative, while the executable fit genuinely learns action dependence and exposes open-loop compounding. Average prediction loss is never allowed to replace action-ranking, support, constraint, or realized-outcome checks. The lab and transfer make ignored actions and planner-induced exploitation observable and preserve the limits of finite adversarial tests.",
-        "revisionPriorities": [
-          "Bridge the hand-worked action-two audit and the executable plus/minus-one fitting fixture with one sentence explicitly naming them as separate controlled cases."
-        ]
+        "synopsis": "Learned Dynamics for Control opens with how do one-step accuracy, rollout bias, and action sensitivity affect control?, activates Action-Conditioned Transition Models and Observation, Reward and Continuation Targets, and follows a visible operation from A current state and candidate action enter a learned transition-and-reward model. The model predicts the action's possible consequence and immediate feedback. The predicted next state and reward become evidence for planning, bounded by model error and coverage. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Low average error can hide rare catastrophic transition error and policy-induced exploitation outside training support. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Build and verify an action-conditioned transition-reward model; Audit model error by rollout and control consequence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Shooting, CEM & Model Predictive Control handoff reuses the established result without introducing an unsupported prerequisite.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "shooting-mpc",
       "route": "/rl/shooting-mpc/",
-      "readerSnapshotHash": "sha256:a95fbcb847ce74205e773a4763eca035ffccfd0d3a7cafbc9a08646475a36046",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:7f6c94e2fcf74510412a5ecff725a7dfd8660144f1049007db2dbe52e3675d33",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The chapter traces random shooting, CEM elite refitting, and receding-horizon MPC while accounting for predicted-transition calls, real feedback, constraints, and model error.",
-        "feedback": "The elite set, per-step proposal mean [+1,0], and 4,000-call budget are correct. Predicted scores and realized outcomes remain distinct, hard constraints precede ranking, and deeper search is treated as a cost-and-bias tradeoff rather than automatic improvement. The lab contrasts replanning with open loop, and the changed-case assessment requires a matched-call frontier before claiming a CEM win.",
+        "synopsis": "Shooting, CEM & Model Predictive Control opens with how do horizon, feedback, and model calls change planner evidence?, activates Random Shooting and the Cross-Entropy Method and Model-Predictive Control and Replanning, and follows a visible operation from A current state, candidate action sequences, and a predictive model enter the planner. The planner simulates and scores each sequence, selects one, executes only its first action, then observes again. The result is closed-loop model-predictive behavior that repeatedly corrects its plan. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that More search can worsen real behavior when it exploits a biased model or overfits noisy predicted rewards. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Trace shooting and CEM sequence optimization; Choose MPC horizon and search budget from cost, uncertainty, and real outcomes—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Dyna & Imagination Learning handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -442,17 +412,17 @@
       "pageType": "lesson",
       "id": "dyna-imagination",
       "route": "/rl/dyna-imagination/",
-      "readerSnapshotHash": "sha256:1780b447a560ded8aa37c7ab747bdc01dff9ab03f774b711c56c8520773bd2fc",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:b46117f7bea59cf0685ccc68fa6810eda2351ae0e37206b28f9a7d174ce477c8",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson traces one real Dyna transition through direct value learning, model fitting, search control, and a provenance-labeled imagined backup.",
-        "feedback": "Real and imagined rows, model revisions, search-control starts, environment steps, updates, calls, and compute remain separately countable. The 1,000-real/10,000-imagined ledger is exact, and the narrative correctly shows that higher imagination ratio can amplify systematic model error. The changed-case lab and transfer require support and uncertainty gates instead of interpreting a favorable real-step curve as compute efficiency or truth.",
+        "synopsis": "Dyna & Imagination Learning opens with how do real exposure, imagined updates, and bias risk change with ratio?, activates Imagined Rollouts and Return Estimates and Case Study — Dyna, Dreamer, MuZero and TD-MPC, and follows a visible operation from Real transitions and a learned model enter a shared learning process. The learner updates from real evidence and also generates bounded imagined transitions for extra planning or value updates. The result is more updates per environment step, with bias when imagined experience is wrong. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that More imagined data can accelerate the wrong solution when the model's errors are systematic or exploitable. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Assemble a Dyna real-model-imagination loop; Choose imagination ratio and search control from bias and efficiency evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Model Uncertainty & Exploitation handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -460,17 +430,17 @@
       "pageType": "lesson",
       "id": "model-uncertainty-exploitation",
       "route": "/rl/model-uncertainty-exploitation/",
-      "readerSnapshotHash": "sha256:0779ba7f1d4eb42219c3e2e6300d16ffa9e6f5664adbe222a2ffa1874621a4f4",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 99,
-      "learningContent": 99,
-      "overall": 98.75,
+      "readerSnapshotHash": "sha256:eb7c1ace26822cfeb8de51238697d7ed59b549777effda702218e3213bb41120",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page uses ensemble disagreement as a calibrated diagnostic, computes penalized action scores, and defines abstention and fallback when support or realized-error gates fail.",
-        "feedback": "The 9.5 versus 9 score calculation is correct and explicitly limited to the declared mean-minus-standard-deviation rule. The narrative separates mean error, disagreement, actual error, support distance, aleatoric effects, and shared ensemble bias, then closes the loop with realized action rankings and deterministic authority. Lab, transfer, and quiz consistently reject low disagreement as proof of safety or accuracy.",
+        "synopsis": "Model Uncertainty & Exploitation opens with which evidence permits planning, penalization, or fallback?, activates Compounding Error and Model Exploitation and Uncertainty, Calibration and Ensembles, and follows a visible operation from Candidate plans, model predictions, and uncertainty evidence enter the planner's admission check. The check distinguishes supported consequences from uncertain or out-of-distribution predictions and penalizes or rejects unsafe optimism. The result is a plan choice that exposes rather than silently exploits model error. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Low disagreement does not establish accuracy when ensemble members share data, architecture, and optimization bias. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute uncertainty-penalized model-based action scores; Design exploitation detection, abstention, and fallback tests—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Build a Model-Based Agent handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -478,37 +448,35 @@
       "pageType": "lesson",
       "id": "model-based-capstone",
       "route": "/rl/model-based-capstone/",
-      "readerSnapshotHash": "sha256:de7212acf39949283fe308a2679efe3a5c674b57592fdabe24d05e7cef9bbcb0",
+      "readerSnapshotHash": "sha256:59e79dbe503005bb67eb98c8f68b7a3c3b47876e05d340298b3dfc15d9ef755e",
       "accuracy": 98,
-      "writtenNarrative": 97,
-      "flow": 97,
-      "learningContent": 99,
-      "overall": 97.75,
+      "writtenNarrative": 96,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This capstone validates a learned model and bounded MPC controller separately, then permits one horizon, uncertainty, ensemble, or imagination intervention with fallback evidence.",
-        "feedback": "The page supplies a complete build path through action-sensitivity tests, multistep slices, planner budgets, real-versus-predicted rankings, constraints, abstention, local smoke/full profiles, seed rows, rubric, exemplar, and artifact. It correctly requires both prediction and realized-control gates and teaches that matched real interactions alone do not match planner compute. The one flow weakness is that some project instructions say only to hold real steps fixed even though the opening question and rubric require matched model-call budgets for the intended comparison.",
-        "revisionPriorities": [
-          "Repeat the matched model-call requirement directly in the intervention deliverable and execution step, not only in the question, narrative, and rubric."
-        ]
+        "synopsis": "Build a Model-Based Agent opens with which package permits planner use, intervention, or a bounded conclusion?, activates Learned Dynamics for Control and Model Uncertainty & Exploitation, and follows a visible operation from A pinned environment, learned model, planner, seeds, and reproduced baseline enter the study. The learner verifies model and planner separately, then changes one horizon, search, imagination, or uncertainty mechanism. The result is a bounded comparison with model-error and control evidence kept distinct. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and integrates the section in an evidence-bearing build.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A small model-based result cannot certify real robotics, long-horizon fidelity, or universal planner settings. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Build and verify a complete learned-model MPC agent; Conduct a matched planner or uncertainty intervention—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The staged project, local checks, rubric, attempt-gated exemplar, machine-readable reference, and evidence labels make the capstone self-contained and keep claims bounded to its environment, seeds, budgets, and evaluator.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "behavior-cloning",
       "route": "/rl/behavior-cloning/",
-      "readerSnapshotHash": "sha256:fb0ce4ffcc7a95c207c59e46645c8d1b4374964c16a766f12c465fa40af586af",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:11ff7040f5d487fed456e95b7f5f28dad9f3b6587d898646be7c15f40d4f9f18",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The chapter derives supervised action fitting, then exposes class imbalance, temporal leakage, and closed-loop covariate shift through episode-level and recovery evaluation.",
-        "feedback": "Softmax, cross-entropy, gradient, and updated logits are correct, and the executable classifier genuinely splits whole episodes and checks both rare-turn performance and a perturbed rollout. The narrative distinguishes aggregate imitation fit from scenario slices and policy-induced observations, while the lab makes majority-class success, window leakage, and recovery failure separately visible. Transfer requires episode-first splitting with a concrete retry.",
+        "synopsis": "Behavior Cloning opens with which evaluation exposes majority-class success, leakage, or closed-loop recovery failure?, activates Supervised Fine-Tuning and Trajectory Data, Replay and Coverage, and follows a visible operation from Recorded observations and expert actions enter a supervised policy learner. The learner predicts the demonstrated action for each recorded situation and adjusts its policy from prediction error. The result is an imitation policy whose reliability is limited by demonstration coverage and closed-loop shift. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Low supervised loss does not establish closed-loop control because small errors change future observations and can compound off data support. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Build and verify a supervised trajectory policy; Diagnose dataset imbalance and closed-loop covariate shift—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Covariate Shift & Dataset Aggregation handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -516,17 +484,17 @@
       "pageType": "lesson",
       "id": "covariate-shift-dagger",
       "route": "/rl/covariate-shift-dagger/",
-      "readerSnapshotHash": "sha256:b7d2864673deb47c11c3d505fe5f873df51d600750c8e80713f9742446514970",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:882045352caf51e0aa180301a561252bc23809a140125bc6ce696cdfb52522bd",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson traces a complete DAgger iteration from learner occupancy through expert labeling, provenance-preserving aggregation, retraining, and held-out recovery evaluation.",
-        "feedback": "The 100-plus-40 row arithmetic, 35/5 labels, and 8/10 versus 0/10 recovery comparison are consistent and honestly presented as fixtures. Executed actions and expert labels retain different causal ownership, while mixture schedules, query costs, shields, resets, disagreements, and unvisited-state limits enter the same decision protocol. The assessment catches the subtle case where low query count reflects blocked coverage rather than improvement.",
+        "synopsis": "Covariate Shift & Dataset Aggregation opens with how do learner occupancy, expert queries, and shields change usable recovery evidence?, activates Behavior Cloning and Compounding Error and Model Exploitation, and follows a visible operation from The current learner policy enters the environment and visits states its original demonstrations may omit. An expert labels those learner-visited states, and the new examples are aggregated into the training set. Retraining produces a policy with evidence on more of its own state distribution. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that DAgger can be unsafe or expensive when learner mistakes cannot be tolerated or expert labels are inconsistent. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Trace a complete DAgger collection and aggregation iteration; Choose query, mixture, and safety policies from coverage and intervention evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Offline RL, Coverage & Conservatism handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -534,17 +502,17 @@
       "pageType": "lesson",
       "id": "offline-rl-coverage",
       "route": "/rl/offline-rl-coverage/",
-      "readerSnapshotHash": "sha256:50e2d1c9178a9435a923c282fcbc565ffe495115963a8bb4a128a9de528998f3",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 98,
-      "learningContent": 99,
-      "overall": 98.5,
+      "readerSnapshotHash": "sha256:0e4dad00c579269f68901bddd14cb4903322a83ba68ede958194dab1553fc148",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The page audits fixed-dataset state-action support, diagnoses optimistic values on unseen actions, and applies conservatism or abstention before making offline improvement claims.",
-        "feedback": "The [100,0] count and [5,20] value example cleanly separates a learned extrapolation from logged evidence, and the strict support-mask code implements exactly the declared fixture rule. The narrative neither promises that conservatism recovers missing causal outcomes nor trusts an evaluator trained on the same narrow support. Thin versus absent coverage, trusted evaluation assumptions, and changed-case abstention all receive explicit feedback and retry paths.",
+        "synopsis": "Offline RL, Coverage & Conservatism opens with which target action is supported, thin, or requires abstention?, activates SARSA, Q-Learning & Off-Policy Targets and Trajectory Data, Replay and Coverage, and follows a visible operation from A fixed logged dataset, its behavior coverage, and a candidate policy enter offline learning. The learner estimates improvement while constraining or penalizing actions unsupported by the logged evidence. The result is a policy whose claim must remain inside the dataset's support and uncertainty boundary. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Conservatism reduces some unsupported optimism but cannot recover absent causal outcomes or guarantee safe policy improvement. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Audit offline dataset coverage and value extrapolation; Choose a conservative offline policy and evaluation claim—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Sequence Policies from Logged Data handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -552,37 +520,35 @@
       "pageType": "lesson",
       "id": "sequence-policy-capstone",
       "route": "/rl/sequence-policy-capstone/",
-      "readerSnapshotHash": "sha256:bfbb429276195a37affe59aecb75741a44f83bb5c1d40c537c44fccf4894e9b5",
+      "readerSnapshotHash": "sha256:6c2cd73166f696cbc5762f0969cf797af2b5ea57b22fad334e19cf8f2f776771",
       "accuracy": 98,
-      "writtenNarrative": 98,
+      "writtenNarrative": 96,
       "flow": 98,
-      "learningContent": 99,
-      "overall": 98.25,
+      "learningContent": 98,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "This synthesis page serializes causal trajectory prefixes, verifies masks and target shifts, compares a sequence policy with cloning, and gates unsupported return-conditioned actions.",
-        "feedback": "The `[R0,s0,a0,R1,s1,a1]` ownership, state-position prediction, [2,6,32] hidden shape, [2,1,6,6] mask, [2,6,2] logits, trajectory split, padding exclusion, and changed-future invariance test agree. Desired return remains context rather than causal evidence, and the capstone includes matched data/updates, trusted rollouts, support abstention, runnable profiles, stages, rubric, exemplar, and artifact. The page is technically dense but retains a readable causal thread.",
-        "revisionPriorities": [
-          "Add the foundational Decision Transformer paper to optional reading so the return-conditioned sequence-policy mechanism has a direct primary source alongside offline-dataset references."
-        ]
+        "synopsis": "Sequence Policies from Logged Data opens with which artifact permits debugging, baseline comparison, or a bounded policy conclusion?, activates Offline RL, Coverage & Conservatism and GPT-2 → nanochat: Build the Stack, and follows a visible operation from Versioned trajectories, a causal sequence interface, and a supported baseline enter the build. The learner trains a sequence policy and compares its decisions with a simpler policy under matched logged evidence. The result is a tested policy plus an audit of whether any apparent gain escapes dataset support. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and integrates the section in an evidence-bearing build.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Conditioning on a high desired return does not create causal knowledge of unsupported actions or prove online performance. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Build and verify a causal sequence policy from logged trajectories; Conduct a matched sequence-versus-cloning coverage study—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The staged project, local checks, rubric, attempt-gated exemplar, machine-readable reference, and evidence labels make the capstone self-contained and keep claims bounded to its environment, seeds, budgets, and evaluator.",
+        "revisionPriorities": []
       }
     },
     {
       "pageType": "lesson",
       "id": "rl-evaluation-seeds",
       "route": "/rl/rl-evaluation-seeds/",
-      "readerSnapshotHash": "sha256:f520e84842b187eaeb6ea2bac90969fe53517b85cc3fdf9d871c6f4a76f98b71",
-      "accuracy": 99,
-      "writtenNarrative": 99,
-      "flow": 99,
-      "learningContent": 99,
-      "overall": 99,
+      "readerSnapshotHash": "sha256:8b2e8948ac3f402453c37c436f261f6b4e949dc4da70b478def9f99f1b1d4bbc",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson makes complete seeded training runs the experimental unit, matches primitive budgets, and executes a declared paired percentile bootstrap while preserving a failed seed.",
-        "feedback": "The paired effects [5,5,2,3,-54], mean -7.8, fixed analysis seed, 10,000 resamples, interpolation rule, and interval [-31.0,4.6] are exact and executable. AUC, final-window return, training trajectories, frozen-policy episodes, failures, constraints, and aggregation sensitivity answer distinct questions without post hoc deletion. The changed-case checks directly test invalid pairing, non-independent episodes, and metric-dependent decisions, making the page unusually complete as both a statistical explanation and an RL evaluation contract.",
+        "synopsis": "RL Evaluation, Seeds & Uncertainty opens with how do summary choice and failed runs alter an rl conclusion?, activates LLM Evaluation and LLM-as-a-Judge and Evaluating World Models, and follows a visible operation from Independent training seeds, complete curves, evaluation episodes, and failures enter analysis. The evaluator preserves each run, aggregates at the independent-run level, and quantifies uncertainty and sensitivity. The result is a distribution of performance evidence rather than a selected final score. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Five seeds and one environment give bounded uncertainty; they do not establish universal algorithm rankings. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Design matched RL evaluation with independent seed-level evidence; Interpret curves, intervals, failures, and aggregation choices—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Constraints, Intervention & Safe RL handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -590,17 +556,17 @@
       "pageType": "lesson",
       "id": "safe-constrained-rl",
       "route": "/rl/safe-constrained-rl/",
-      "readerSnapshotHash": "sha256:5202e2c54e9c5fbd89ecbdb06644e184f99721af3e90360c25666333665f4f6b",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 99,
-      "learningContent": 99,
-      "overall": 98.75,
+      "readerSnapshotHash": "sha256:059089280559cc4e892005b1e2d22f618cc6f9a9c657a752a071b1721c45c8b2",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The chapter separates reward, expected cost, hard permissions, shields, intervention authority, and fallback before ranking feasible policies.",
-        "feedback": "The .05 feasibility rule correctly rejects policy A despite return 100 and admits policy B at cost .03. The narrative distinguishes constrained-MDP expectations from non-compensable event gates, then broadens evaluation to violation magnitude, false positives and negatives, latency, recovery, reset, residual-risk ownership, and distribution shift. Lab and transfer preserve both safety benefit and usability cost without treating finite simulation as a real-world guarantee.",
+        "synopsis": "Constraints, Intervention & Safe RL opens with how do feasibility, shield error, and fallback change the deployment decision?, activates Safe and Constrained Planning and Tools and Safety Tuning, and follows a visible operation from Task reward, separate safety costs, permissions, and intervention rules enter the controller. The learner improves performance only among behaviors that satisfy independent gates or trigger declared fallback. The result is a policy decision that cannot trade away a hard safety requirement for more reward. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that A constraint measured in simulation can miss real hazards, and a learned cost model can be wrong or exploited. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Compute constrained-policy feasibility before reward ranking; Design intervention, fallback, and residual-risk evidence—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Reproducible GPU RL handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -608,17 +574,17 @@
       "pageType": "lesson",
       "id": "reproducible-rl-gpu",
       "route": "/rl/reproducible-rl-gpu/",
-      "readerSnapshotHash": "sha256:b19bdd19302656a082d62495e5757e00497a0a326839b52ec0f43c5ec8fb0e04",
-      "accuracy": 99,
-      "writtenNarrative": 98,
-      "flow": 99,
-      "learningContent": 99,
-      "overall": 98.75,
+      "readerSnapshotHash": "sha256:be5a94590461faba8a95c28310fe605c730ecda827df90929ce9773d18cb3a46",
+      "accuracy": 98,
+      "writtenNarrative": 96,
+      "flow": 97,
+      "learningContent": 98,
+      "overall": 97.25,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The lesson packages a portable bounded DQN smoke/full protocol and classifies every expectation as an invariant, current-run observation, or provenance-matched reference.",
-        "feedback": "Shapes, 200/20,000 interaction budgets, 137/19,937 post-warmup updates, target-copy counts, evaluation episodes, seeds, and stop conditions agree across narrative, executable manifest check, objectives, lab, and optional runbook. The page explicitly refuses promised return direction, bitwise GPU identity, or unreviewed reference numbers, and records OOM or provider drift as protocol changes. The external extension remains optional and its provenance, hardware, diagnostics, schema, and scope boundary are complete.",
+        "synopsis": "Reproducible GPU RL opens with which expected result is exact, variable, or reference-bound?, activates RL Evaluation, Seeds & Uncertainty and Reproducible GPU Experiments, and follows a visible operation from A pinned environment, agent, budgets, seeds, evaluation schedule, and artifact schema enter execution. The runner performs bounded smoke or full training and records every trajectory, failure, and resume component. The result is a portable run artifact with claims limited to its exact execution contract. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and hands the established result to the next chapter.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that Provider reproducibility does not guarantee bitwise GPU determinism, correct science, or transfer beyond the pinned environment and revision. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Execute or inspect a portable bounded RL smoke/full protocol; Interpret exact invariants, variable curves, and reviewed reference results—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The Next: Reproduced Baseline + Original Intervention handoff reuses the established result without introducing an unsupported prerequisite.",
         "revisionPriorities": []
       }
     },
@@ -626,17 +592,17 @@
       "pageType": "lesson",
       "id": "rl-research-capstone",
       "route": "/rl/rl-research-capstone/",
-      "readerSnapshotHash": "sha256:dea707124e04b1639e8163a05259945d90fdfac447b96422bbf07a08ccfeb15d",
+      "readerSnapshotHash": "sha256:c2fa870d57a79d955152116003a3e3d59bb6ef2823e2c7cac924c244b4e7ab62",
       "accuracy": 98,
-      "writtenNarrative": 98,
-      "flow": 99,
-      "learningContent": 99,
-      "overall": 98.5,
+      "writtenNarrative": 96,
+      "flow": 98,
+      "learningContent": 98,
+      "overall": 97.5,
       "pass": true,
       "blockingDefects": [],
       "wholePageReview": {
-        "synopsis": "The final page requires an accepted baseline before one isolated intervention, then derives a bounded conclusion from complete paired seed, budget, failure, constraint, and uncertainty evidence.",
-        "feedback": "Smoke/full acceptance, canonical seeds, initialization ownership, 200/20,000 interactions, 137/19,937 updates, evaluation episodes, target-copy treatment, run-level bootstrap, hard gates, null outcomes, and failure retention form one coherent research contract. The runnable NumPy path, staged workspace, local checks, rubric, attempt-gated exemplar, artifact, alternatives, and falsifier make the capstone executable and self-contained. Its mixed-effect example correctly rejects sign counting and does not confuse an interval containing zero with equivalence.",
+        "synopsis": "Reproduced Baseline + Original Intervention opens with which conclusion matches complete paired seed evidence and hard gates?, activates Reproducible GPU RL and Constraints, Intervention & Safe RL, and follows a visible operation from An accepted RL baseline and one predeclared intervention enter a matched multi-seed study. The learner reproduces the baseline, changes only the target mechanism, and evaluates all curves, failures, and constraints. The result is a bounded positive, null, or negative conclusion with alternatives preserved. It then applies the mechanism in a changed case, tests it locally, preserves the exact objectives after mastery, and integrates the section in an evidence-bearing build.",
+        "feedback": "The complete page is technically consistent and beginner-readable: vocabulary, visual disclosure, guided reveal, practice, core check, quiz, lab, transfer task, and technical depth agree on the causal mechanism and the limit that One environment, agent implementation, seed set, budget, and evaluator support only a bounded conclusion. Learners commit before answers, receive diagnostic feedback and a specific retry route, while the objectives—Reproduce an RL baseline with complete acceptance evidence; Conduct and report one original controlled RL intervention—each provide a concrete worked case, precise reasoning, a failure boundary, and a changed-case check. The staged project, local checks, rubric, attempt-gated exemplar, machine-readable reference, and evidence labels make the capstone self-contained and keep claims bounded to its environment, seeds, budgets, and evaluator.",
         "revisionPriorities": []
       }
     }

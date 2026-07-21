@@ -27,19 +27,19 @@ function handoffsFor(courseId) {
 }
 
 const directReuseFindings = new Set([
-  "worldmodel:world-models->dynamics-tensors",
-  "worldmodel:dynamics-tensors->stochastic-futures",
-  "worldmodel:stochastic-futures->learning-dynamics",
+  "worldmodel:world-models->sequential-state",
+  "worldmodel:rewards-returns-policies->mdps-bellman",
   "worldmodel:system-identification-sim-to-real->safe-constrained-planning",
-  "generative:generation-as-distribution->likelihood-cross-entropy",
-  "generative:likelihood-cross-entropy->sampling-randomness",
+  "generative:generation-as-distribution->sampling-randomness",
+  "generative:sampling-randomness->likelihood-cross-entropy",
   "generative:latent-variable-models->amortized-inference-elbo",
   "generative:amortized-inference-elbo->vae-posterior-collapse",
-  "rl:sequential-decision-systems->mdps-rewards",
+  "rl:policies-occupancy->mdps-rewards",
   "rl:learned-dynamics-control->shooting-mpc",
   "rl:dyna-imagination->model-uncertainty-exploitation",
   "rl:safe-constrained-rl->reproducible-rl-gpu",
   "embodied:embodied-task-contracts->observation-action-spaces",
+  "embodied:embodied-partial-observation->coordinate-frames-time",
   "embodied:cameras-proprioception->calibration-transforms",
 ]);
 
@@ -65,10 +65,10 @@ function expectedFindingRelationship(finding) {
 }
 
 const findings = [
-  ["worldmodel", "world-models", "dynamics-tensors", "high"],
-  ["worldmodel", "dynamics-tensors", "stochastic-futures", "medium"],
-  ["worldmodel", "stochastic-futures", "learning-dynamics", "high"],
-  ["worldmodel", "learning-dynamics", "sequential-state", "high"],
+  ["worldmodel", "world-models", "sequential-state", "high"],
+  ["worldmodel", "sequential-state", "stochastic-futures", "medium"],
+  ["worldmodel", "stochastic-futures", "rewards-returns-policies", "medium"],
+  ["worldmodel", "rewards-returns-policies", "mdps-bellman", "high"],
   ["worldmodel", "differentiable-planning", "actor-critic-lambda", "high"],
   ["worldmodel", "dyna-tdmpc-case-study", "video-tokenization", "high"],
   ["worldmodel", "latent-actions-passive-video", "jepa-vjepa", "high"],
@@ -82,9 +82,9 @@ const findings = [
   ["worldmodel", "world-model-operations-case-study", "language-multimodal-world-models", "low"],
   ["worldmodel", "world-model-operations-case-study", "world-model-research-capstone", "high"],
 
-  ["generative", "generation-as-distribution", "likelihood-cross-entropy", "high"],
-  ["generative", "likelihood-cross-entropy", "sampling-randomness", "medium"],
-  ["generative", "sampling-randomness", "divergences-distance", "medium"],
+  ["generative", "generation-as-distribution", "sampling-randomness", "high"],
+  ["generative", "sampling-randomness", "likelihood-cross-entropy", "medium"],
+  ["generative", "likelihood-cross-entropy", "divergences-distance", "medium"],
   ["generative", "latent-variable-models", "amortized-inference-elbo", "high"],
   ["generative", "amortized-inference-elbo", "vae-posterior-collapse", "high"],
   ["generative", "latent-models-capstone", "change-of-variables", "medium"],
@@ -93,9 +93,9 @@ const findings = [
   ["generative", "generative-data-systems", "memorization-privacy", "medium"],
   ["generative", "memorization-privacy", "matched-budget-evaluation", "medium"],
 
-  ["rl", "sequential-decision-systems", "mdps-rewards", "high"],
-  ["rl", "mdps-rewards", "partial-observation", "medium"],
+  ["rl", "sequential-decision-systems", "partial-observation", "high"],
   ["rl", "partial-observation", "policies-occupancy", "medium"],
+  ["rl", "policies-occupancy", "mdps-rewards", "medium"],
   ["rl", "dynamic-programming", "monte-carlo-estimation", "medium"],
   ["rl", "learned-dynamics-control", "shooting-mpc", "high"],
   ["rl", "shooting-mpc", "dyna-imagination", "medium"],
@@ -105,8 +105,8 @@ const findings = [
   ["rl", "safe-constrained-rl", "reproducible-rl-gpu", "medium"],
 
   ["embodied", "embodied-task-contracts", "observation-action-spaces", "low"],
-  ["embodied", "observation-action-spaces", "coordinate-frames-time", "medium"],
-  ["embodied", "coordinate-frames-time", "embodied-partial-observation", "low"],
+  ["embodied", "observation-action-spaces", "embodied-partial-observation", "medium"],
+  ["embodied", "embodied-partial-observation", "coordinate-frames-time", "low"],
   ["embodied", "cameras-proprioception", "calibration-transforms", "low"],
   ["embodied", "state-estimator-capstone", "teleoperation-demonstrations", "medium"],
   ["embodied", "robot-data-quality", "action-representations-chunking", "low"],

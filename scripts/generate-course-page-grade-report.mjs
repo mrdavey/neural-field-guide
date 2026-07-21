@@ -148,7 +148,7 @@ assert.equal(finalPassing, finalPopulation, "report generation is blocked until 
 const lines = [
   "# Course page grades",
   "",
-  "Reviewed: 20 July 2026",
+  "Reviewed: 21 July 2026",
   "",
   "This report applies `docs/COURSE_PAGE_GRADING_RUBRIC.md` to each complete page as one reading journey. Independent graders read a blind top-to-bottom dossier before assigning four whole-page scores. Repository tests validate population, hashes, schema, arithmetic, and thresholds; they do not award semantic grades.",
   "",
@@ -173,6 +173,8 @@ lines.push(
   "## Blind whole-page regrade",
   "",
   `Final status: **${finalPassing}/${finalPopulation} pages pass** all four 95-point floors, the 95-point overall mean, and the no-blocker gate.`,
+  "",
+  "On 21 July 2026, independent reviewers regenerated every course record after the coordinated concept-first release. The blind dossiers confirm that required lessons explain the operation without formula work, keep their narrative, visual, guided reveal, practice, and core check internally consistent, and place the exact authored objectives in collapsed, non-gating technical depth after mastery.",
   "",
   "On 20 July 2026, a separate continuity review reconstructed all 138 non-LLM course handoffs from current blind reader dossiers. After 48 initial repairs and three further Generative Models remediations surfaced by the independent pass, the fresh regrade closed at 138 pass, 0 partial, and 0 fail; no affected destination page was internally contradictory.",
   "",

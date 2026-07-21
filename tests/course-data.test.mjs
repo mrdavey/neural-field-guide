@@ -5,14 +5,14 @@ import test from "node:test";
 const source = await readFile(new URL("../app/course-data.ts", import.meta.url), "utf8");
 
 const expectedTopics = [
-  "From Text to Tensors: Shapes & Matrix Multiplication", "Probability, Softmax & Cross-Entropy", "Neural Networks, Gradients & Backpropagation",
+  "How Models Carry and Transform Representations", "From Model Scores to Learning Feedback", "How Error Reaches Earlier Decisions",
   "Introduction", "Tokenization", "The Embedding Layer", "Positional Encoding", "Attention",
   "Layers of Understanding", "Learning to Predict", "Bridge: From Base Model to Assistant", "GPT-2 → nanochat: Build the Stack",
   "Overview", "Training Objectives and Architectural Details", "Scaling Laws and Optimization",
   "Training Data Engineering", "Training Infrastructure and Systems", "Advanced Pretraining Objectives",
   "Evaluation During Pretraining", "Case Study — OLMo 3 Model Flow", "Overview", "Supervised Fine-Tuning",
   "Preference Optimization", "Tools and Safety Tuning", "Case Study — Tülu 3 → DR Tulu", "Distillation", "LoRA",
-  "Mixture of Experts (MoE)", "Optimizers", "RL Fundamentals", "RLHF",
+  "Mixture of Experts (MoE)", "How Learning Updates the Model", "RL Fundamentals", "RLHF",
   "Decoding and Sampling", "The Generation Loop and KV Cache", "Quantization and Memory",
   "Serving: Batching, Throughput and Latency", "Reasoning and Test-Time Compute",
   "Prompting and Context Engineering", "Embeddings, Semantic Search and RAG", "Tool Use and Agent Loops",
@@ -65,7 +65,8 @@ test("capstone opening descriptions explain the project work", () => {
     const start = source.indexOf(`id: "${id}"`);
     const end = source.indexOf("\n  },", start);
     const block = source.slice(start, end);
-    assert.match(block, /simple: "In this capstone, you will/);
+    if (id === "optimizers") assert.match(block, /simple: "An optimizer[\s\S]*optional technical depth/);
+    else assert.match(block, /simple: "In this capstone, you will/);
     assert.match(block, /deep: "The project/);
     assert.doesNotMatch(block, /better .* capstone|right transparent architecture target|clearest open general post-training recipe/i);
   }

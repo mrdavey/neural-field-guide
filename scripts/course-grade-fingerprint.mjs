@@ -22,6 +22,8 @@ const generatedFileSuffixes = [".class", ".map", ".orig", ".pyc", ".pyo", ".rej"
 const common = [
   "app/activity-info.tsx",
   "app/capstone-project-view.tsx",
+  "app/concept-first-curriculum.ts",
+  "app/concept-first-operation-traces.ts",
   "app/course-app.tsx",
   "app/course-catalog.ts",
   "app/course-continuity.ts",
@@ -41,6 +43,7 @@ const common = [
   "app/math-text.tsx",
   "app/motion",
   "app/research-courses",
+  "app/research-curriculum-manifests.ts",
   "app/scroll-story-progress.ts",
   "app/scroll-story.tsx",
   "app/three-story-canvas.tsx",

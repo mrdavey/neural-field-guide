@@ -121,7 +121,7 @@ test("prompt and provenance records preserve accuracy and evidence boundaries", 
 
 test("the shared plate is accessible, responsive, and placed before the lesson scroll story", () => {
   assert.equal((courseApp.match(/<LessonConceptPlate /g) ?? []).length, 1);
-  assert.match(courseApp, /<LessonNarrativeView[\s\S]*<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} heading=\{motionStory\.stages\[0\]\.title\} \/>[\s\S]*<ScrollStory[\s\S]{0,100}className="lesson-motion-story"/);
+  assert.match(courseApp, /<LessonNarrativeView[\s\S]*<LessonConceptPlate courseId=\{course\.id\} lesson=\{lesson\} heading=\{coreMotionStory\.stages\[0\]\.title\}[\s\S]*\/>[\s\S]*<ScrollStory[\s\S]{0,100}className="lesson-motion-story"/);
   assert.match(component, /publicPath\(`\$\{asset\}-768\.webp`\)/);
   assert.match(component, /publicPath\(`\$\{asset\}-1536\.webp`\)/);
   assert.match(component, /loading="lazy" decoding="async"/);

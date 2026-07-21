@@ -1,6 +1,6 @@
 # Lesson objective coverage review
 
-Reviewed: 20 July 2026
+Reviewed: 21 July 2026
 
 Scope: all five released courses — 182 lessons and 408 exact visible outcomes
 
@@ -23,7 +23,22 @@ Every lesson outcome has an explicit record in its course registry. The LLM reco
 4. a boundary, failure case, or misconception;
 5. an observable check with expected reasoning and a retry route.
 
-The lesson renderer places this sequence immediately after each visible outcome. A learner must write and commit an explanation before expected reasoning appears. Existing long-form sections, guided examples, changed-case practice, and deterministic transfer labs remain later in the lesson, so the objective sequence is a map into deeper teaching rather than a replacement for it.
+The lesson renderer preserves this complete sequence for every visible authored outcome. Every one of the 182 lessons now begins with one formula-free, lesson-specific operation trace and changed-case check; all exact authored outcomes and their five dimensions appear after core mastery inside optional technical depth. Of those lessons, 158 contain notation, an equation-like trace, or a calculation instruction, so their calculation-led labs and transfers move with the formal material; formula-free activities remain in the required Try/Test flow. The core operation check is practice, not a newly generated or substitute learning outcome; it is deliberately not rendered or serialized as an authored objective.
+
+## Concept-first delivery review — 21 July 2026
+
+The five-course release now uses one shared delivery rule across all 182 lessons and 187 canonical pages:
+
+- required core blocks through the mastery control contain no mathematical notation;
+- all required quizzes ask for an explanation, prediction, diagnosis, comparison, or decision rather than hand calculation;
+- every one of the 152 existing code notebooks appears only after the mastery control;
+- any lab, transfer, or capstone attached to a math-bearing lesson moves with its complete authored objective checks into the same optional technical disclosure;
+- the disclosure is collapsed initially and has no effect on the existing local progress schema or completion gate;
+- the original 408 explicit objective records remain the source of truth and retain their explanations, mechanisms, worked cases, boundaries, committed checks, and retry routes.
+
+The reader-dossier regression inspects the rendered order rather than source keywords alone. `tests/concept-first-curriculum.test.mjs` rejects a formula in any pre-completion block, a code notebook in core, a technical activity before mastery, a gating disclosure, a missing exact-objective handoff, or a formal-first opening in any of the five courses. The existing course-specific objective tests continue to verify the exact 408-record join.
+
+Fresh independent blind reviews of the final source passed all **187/187 canonical pages** and all **408/408 exact authored objectives** with no blocking defect. Each record is tied to the current complete course-source fingerprint and the SHA-256 hash of its top-to-bottom reader dossier; changing either the shared concept-first policy or any learner-facing page invalidates the stored evidence and requires another review.
 
 The course-specific curriculum tests load the real TypeScript registries and fail when a lesson is missing, objective text/order diverges, a coverage field is empty, a check is reused, or an exact count changes. The LLM resolver also fails at application startup on unknown lessons, missing objectives, duplicate indices, empty source lists, or out-of-range content pointers. These checks protect structure; they do not award the semantic grades summarized above.
 
@@ -54,6 +69,8 @@ Remediation pass 1 adds one keyed, independently authored override for each of t
 - the objective-check button now has a 44px minimum touch target after narrow-screen QA measured the prior control at 41px.
 
 At the end of pass 1, the focused test locked the exact 59-key remediation set, the 7/41/41 dimension assignments, the two formerly missing-evidence cases, and the prerequisite-leak repairs. This is still an authoring record rather than a self-awarded semantic pass; the independent grader must re-grade all 132 resolved records and may reopen any objective whose revised content remains incomplete.
+
+The 21 July 2026 concept-first regrade reopened six LLM objective records whose changed-case prompts were more specific than their worked evidence. The remediation registry now contains 65 keyed records: both packed causal-language-model objectives include the exact document pairs and segment mask; scaling includes a withheld-scale extrapolation and falsifier; governed data follows one licensed source through deletion-capable shards; pre-training evaluation includes a pinned paired checkpoint result with uncertainty; and security traces cross-tenant retrieval through an outbound-email exfiltration boundary. These six additions repair worked examples and expected/retry reasoning without changing the exact objectives.
 
 ## Remediation pass 2
 
