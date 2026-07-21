@@ -2,6 +2,10 @@
 
 Neural Field Guide is a self-contained personal learning and research program for building intelligent systems from understandable primitives, then using those systems for controlled original experiments.
 
+## Built with Codex and GPT-5.6
+
+**[OpenAI Codex](https://developers.openai.com/codex/) with [GPT-5.6](https://developers.openai.com/api/docs/guides/latest-model) was used across essentially the entire project:** curriculum research and architecture, lesson writing, UI and interaction design, implementation, testing, debugging, documentation, and release verification. The project owner set the direction, reviewed the work, and made the final decisions.
+
 The program currently contains 182 lessons across five complete courses:
 
 | Course | Lessons | Canonical home | What the learner builds |
