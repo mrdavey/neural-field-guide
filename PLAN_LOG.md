@@ -10,7 +10,7 @@ Implement a unified concept-first curriculum across all five Neural Field Guide 
 4. [x] Migrate Generative Models, Reinforcement Learning, and Embodied AI through the shared research-course contracts - Done when all seeds and rendered pages follow the same core/technical split and their opening orders, assessments, labs, code, capstones, and prerequisites are coherent.
 5. [x] Repair program-wide concept ownership, cross-course prerequisites, continuity, documentation, audits, and reader-grade evidence - Done when every changed handoff and objective is represented consistently and the 187-page source of truth is current.
 6. [x] Add and update executable tests for concept-first guarantees and all changed exact contracts - Done when focused curriculum, objective, continuity, rendering, progress, and course tests pass.
-7. [ ] Run full verification and visual QA, fix every discovered gap, and commit only the complete in-scope implementation - Done when npm run lint and npm test pass, representative desktop/narrow/keyboard/reduced-motion checks pass, PLAN_LOG has no unresolved gaps, and the scoped commit succeeds.
+7. [x] Run full verification and visual QA, fix every discovered gap, and commit only the complete in-scope implementation - Done when npm run lint and npm test pass, representative desktop/narrow/keyboard/reduced-motion checks pass, PLAN_LOG has no unresolved gaps, and the scoped commit succeeds.
 
 ### Clarifications
 - Constraints: One coordinated five-course release; no pilot or partial completion; preserve 182 lesson IDs, 187 canonical pages, routes, storage keys, static export, evidence honesty, accessibility, and unrelated work.
@@ -29,7 +29,7 @@ Implement a unified concept-first curriculum across all five Neural Field Guide 
 1. [x] Catch un-delimited equations, arithmetic traces, and calculation-led quizzes that escaped the first notation-only audit; rewrite required mastery checks to explain or decide without hand calculation.
 2. [x] Replace degraded whole-chapter sanitization and the rejected generic scaffold with topic-specific authored prose, plain prerequisite/next-use bridges, conceptual changed cases, and operation traces while retaining the complete original formal narrative and vocabulary after mastery.
 3. [x] Complete a fresh independent blind semantic review of all 187 pages and every exact objective, repair any reported page, and regenerate current grade evidence only after a zero-gap pass.
-4. [ ] Re-run the full lint/build/artifact/test suite, inspect representative desktop/narrow/keyboard/reduced-motion states, perform final objective and context re-checks, then commit and push the complete implementation.
+4. [x] Re-run the full lint/build/artifact/test suite, inspect representative desktop/narrow/keyboard/reduced-motion states, perform final objective and context re-checks, then commit and push the complete implementation.
 
 ### Plan 2 verification
 
@@ -43,3 +43,4 @@ Implement a unified concept-first curriculum across all five Neural Field Guide 
 - The final grading audit found that the two new concept-first source modules and the shared research manifest were missing from the course-level source fingerprint. They are now part of every course fingerprint, with a focused provenance regression test; all final independent grades have been regenerated against that complete source bundle.
 - Final independent evidence passes 187/187 canonical pages and all 408/408 exact authored objectives with no blocker. After the keyboard disclosure handler received a type-safe `HTMLDetailsElement` lookup, all 187 reader hashes remained unchanged; only the course-source provenance fingerprints required refresh.
 - Final repository verification passes `npm run lint` and `npm test`: the Pages production build and TypeScript check succeed, 182 canonical lesson routes plus 44 legacy forwards export correctly, preserved artifacts and all 182 lesson visuals verify, and the complete regression run closes at 240 pass, 0 fail.
+- Release closure: commit `80ccb34` contains the complete implementation and passed the isolated direct-main hook, including both Pages URL shapes, before being pushed to `origin/main`.
