@@ -44,4 +44,4 @@ The internal export name `plannedCourseManifests` is retained for compatibility,
 
 ## Retired reports
 
-The former component grade, content UX audit, curriculum audit, curriculum progression review, grading report, per-course objective grade snapshots, and one-off task seed files were removed after their still-relevant conclusions were consolidated into the documents above. Their history remains available in Git. Future reviews should update the canonical architecture, objective, interaction, or page-grade document instead of restoring parallel reports.
+The former component grade, content UX audit, curriculum audit, curriculum progression review, grading report, per-course objective grade snapshots, one-off task seed files, and completed root planning/change ledgers were removed after their still-relevant conclusions were consolidated into the documents above. Their history remains available in Git. Local workflow ledgers are ignored rather than retained as current documentation. Future reviews should update the canonical architecture, objective, interaction, or page-grade document instead of restoring parallel reports.

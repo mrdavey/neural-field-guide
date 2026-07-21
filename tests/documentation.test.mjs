@@ -109,3 +109,10 @@ test("superseded reports and one-off task seeds stay retired", () => {
     "docs/WORLD_MODEL_CONTENT_GRADES.md",
   ]) assert.equal(existsSync(resolve(root, path)), false, `${path} should not return as a competing source of truth`);
 });
+
+test("completed root workflow ledgers stay local", () => {
+  const ignore = read(".gitignore");
+  for (const path of ["/PLAN_LOG.md", "/CHANGES.log", "agent-tasks*"]) {
+    assert.ok(ignore.split("\n").includes(path), `${path} should remain ignored`);
+  }
+});
