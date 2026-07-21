@@ -29,3 +29,13 @@ test("the header mark is a compact transparent PNG", async () => {
   assert.equal(png.readUInt32BE(20), 256);
   assert.equal(png[25], 6, "PNG should use RGBA color type for transparent header placement");
 });
+
+test("the shareable logo export meets the upload contract", async () => {
+  const png = await readFile(new URL("public/brand/neural-field-guide-logo-3x2.png", root));
+
+  assert.deepEqual([...png.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.equal(png.readUInt32BE(16), 1200);
+  assert.equal(png.readUInt32BE(20), 800);
+  assert.equal(png[25], 6, "logo export should preserve transparency");
+  assert.ok(png.byteLength <= 5 * 1024 * 1024, "logo export must stay at or below 5 MB");
+});
