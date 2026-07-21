@@ -492,6 +492,8 @@ button:focus-visible,input:focus-visible { outline:3px solid var(--orange); outl
   .course-pitch,.home-scroll-story,.home-finale{padding-left:20px;padding-right:20px}
 }
 
+.story-mechanism-diagram .is-on{opacity:1}
+
 @media(prefers-reduced-motion:reduce){
   .hero-machine:after{display:none}
   .lesson-phase-rail{backdrop-filter:none}

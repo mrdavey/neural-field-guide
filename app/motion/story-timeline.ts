@@ -21,17 +21,26 @@ export function createStoryTimeline(root: HTMLElement, concept: ThreeStoryConcep
   const allTargets = Array.from(root.querySelectorAll<SVGElement>(contract.targets));
   const laterTargets = contract.stages.slice(1).flatMap((selector) => Array.from(root.querySelectorAll<SVGElement>(selector)));
 
-  if (allTargets.length) timeline.set(allTargets, { opacity: .16, scale: .92 }, 0);
   const firstTargets = Array.from(root.querySelectorAll<SVGElement>(contract.stages[0]));
-  if (firstTargets.length) timeline.set(firstTargets, { opacity: 1, scale: 1 }, 0);
-  if (laterTargets.length) timeline.set(laterTargets, { opacity: .16, scale: .92 }, 0);
+  allTargets.forEach((target) => {
+    target.style.opacity = ".16";
+    target.style.transform = "scale(.92)";
+  });
+  firstTargets.forEach((target) => {
+    target.style.opacity = "1";
+    target.style.transform = "scale(1)";
+  });
+  laterTargets.forEach((target) => {
+    target.style.opacity = ".16";
+    target.style.transform = "scale(.92)";
+  });
 
   contract.stages.slice(1).forEach((selector, index) => {
     const targets = Array.from(root.querySelectorAll<SVGElement>(selector));
     if (!targets.length) return;
     timeline.add(targets, {
-      opacity: 1,
-      scale: 1,
+      opacity: [.16, 1],
+      scale: [.92, 1],
       duration: 620,
       delay: stagger(34),
       ease: contract.effect === "snap" ? "outBack" : "out(4)",

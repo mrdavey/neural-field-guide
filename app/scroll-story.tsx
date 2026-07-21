@@ -63,6 +63,7 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
       const revealedPosition = furthestStoryStagePosition(furthestStagePositionRef.current, stagePosition);
       furthestStagePositionRef.current = revealedPosition;
       const progress = lastIndex > 0 ? clampStoryValue(stagePosition / lastIndex) : 0;
+      const revealedProgress = lastIndex > 0 ? clampStoryValue(revealedPosition / lastIndex) : 0;
       const nextActive = activeStoryStage(stagePosition, centers.length);
       const nextRevealedThrough = activeStoryStage(revealedPosition, centers.length);
       const direction = stagePosition >= previousStage ? "forward" : "backward";
@@ -81,7 +82,7 @@ export function ScrollStory({ eyebrow, title, intro, scene, concept, sceneLabels
       visual.style.setProperty("--story-wave-c", (.5 + Math.sin(progress * Math.PI * 3 + 3.8) * .22).toFixed(3));
       visual.style.setProperty("--story-pulse", (.84 + Math.sin(progress * Math.PI * 4) * .12).toFixed(3));
       visual.style.setProperty("--story-reveal", `${(12 + progress * 76).toFixed(2)}%`);
-      storyTimeline?.seek(progress);
+      storyTimeline?.seek(revealedProgress);
       visual.dispatchEvent(new CustomEvent(STORY_PROGRESS_EVENT, { detail: {
         progress,
         stagePosition,

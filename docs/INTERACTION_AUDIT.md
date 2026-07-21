@@ -1,6 +1,6 @@
 # Instructional interaction audit
 
-Reviewed: 20 July 2026
+Reviewed: 21 July 2026
 
 This audit asks one question of every animated or manipulable surface: **what learner-visible mechanism becomes easier to reason about because this moves?** Motion that cannot answer that question is decorative and does not pass.
 
@@ -22,6 +22,8 @@ The motion system has four explicit layers:
 4. `MotionReveal` and the course orchestrator emphasize committed explanations, newly revealed reasoning, changed feedback, active workshop/capstone stages, route entry, and reading progress. Lesson-lab controls and deterministic readouts remain immediately available; only the compact comparison note is gated.
 
 The Three.js adapter animates only material emphasis on the existing progressive scene. Camera, geometry, scroll state, and rendering remain in the established deterministic draw path, so there is no competing render loop. WebGL failure continues to leave `StoryMechanismDiagram` as the semantic carrier.
+
+Diagram stages reveal cumulatively. Each stage fades from its low-emphasis state to full opacity, and the timeline seeks from the furthest stage reached rather than the current scroll direction. Earlier boxes therefore remain fully visible while the next box appears, including on all five course-home introductions; scrolling back changes the active explanation without hiding already revealed mechanism state.
 
 For `prefers-reduced-motion: reduce`, shared timelines are not created, lab sweeps are hidden, the app-wide orchestrator identifies itself as static, and Three.js remains disabled. Current labels, states, relationships, instructions, answer/retry paths, and assessment controls remain available. No required meaning depends on opacity, direction, speed, color, or motion.
 
@@ -169,6 +171,7 @@ WebGL and motion remain progressive layers. Labels, values, task instructions, c
 - Put research-lab values, meters, and explanations behind a prediction commitment while leaving the comparable case names visible.
 - Preserved reduced-motion behavior: the diagrams show the current state without continuous animation, and the instructional copy remains complete.
 - Made the midpoint-selected scroll-story step authoritative for opacity: the active explanation now stays fully visible for its complete scroll interval, while the view timeline only softens non-active steps entering or leaving the viewport.
+- Made the shared mechanism timeline cumulative: each diagram box fades in once and remains fully visible while later boxes appear, with the same behavior across all five course introductions.
 - Replaced the LLM introduction's temperature sampler with a prerequisite-free trust-boundary comparison, and rewrote the first World Models, Generative Models, RL, and Embodied AI case labs around concrete choices before their later mathematical machinery.
 - Added World Models stories by reusing semantic grammars rather than track-themed motion, plus nine audited control modes and six preserved deterministic validation dossiers.
 - Retired the prominent program-bridge gate from lesson openings; prerequisite knowledge and next use now sit inside the chapter orientation, while transfer remains tested after teaching.

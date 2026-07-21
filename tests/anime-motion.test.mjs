@@ -47,13 +47,16 @@ test("Anime.js is pinned and every animation family has an explicit semantic con
   }
 });
 
-test("story timelines are scroll-seekable, reversible, and preserve reduced-motion output", () => {
+test("story timelines are scroll-seekable, cumulative, and preserve reduced-motion output", () => {
   assert.match(files.timeline, /createTimeline\(\{ autoplay: false/);
   assert.match(files.timeline, /prefers-reduced-motion: reduce/);
   assert.match(files.timeline, /timeline\.seek/);
   assert.match(files.timeline, /timeline\.revert/);
   assert.match(files.story, /createStoryTimeline\(visual, concept, nodes\.length\)/);
-  assert.match(files.story, /storyTimeline\?\.seek\(progress\)/);
+  assert.match(files.story, /const revealedProgress = lastIndex > 0 \? clampStoryValue\(revealedPosition \/ lastIndex\) : 0/);
+  assert.match(files.story, /storyTimeline\?\.seek\(revealedProgress\)/);
+  assert.match(files.timeline, /target\.style\.opacity = "\.16"/);
+  assert.match(files.timeline, /opacity: \[\.16, 1\]/);
   assert.match(files.story, /storyTimeline\?\.revert\(\)/);
   assert.equal(motionStageTime(-1, 4), 0);
   assert.equal(motionStageTime(.5, 4), 1500);
